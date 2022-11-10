@@ -13,10 +13,10 @@ interface HitProps {
 export const Hit = ({ hit }: HitProps) => (
   <div key={hit.id}>
     <div className="hit-name">
-      <Highlight attribute="name" hit={hit} />
+      <Highlight attribute="bag-num-volledig" hit={hit} />
     </div>
-    <div className="hit-description">
+    {/* <div className="hit-description">
       <Snippet attribute="epl_pand_gebouwtype_s" hit={hit} />
-    </div>
+    </div> */}
   </div>
 );

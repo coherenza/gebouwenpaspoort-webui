@@ -1,4 +1,11 @@
-import "instantsearch.css/themes/algolia-min.css";
+// Include only the reset
+import "instantsearch.css/themes/reset.css";
+// or include a full theme
+// import 'instantsearch.css/themes/satellite.css';
+// import "instantsearch.css/themes/algolia-min.css";
+// Custom styles
+import "./App.css";
+
 import React from "react";
 import {
   InstantSearch,
@@ -12,50 +19,35 @@ import {
   Configure,
   Snippet,
 } from "react-instantsearch-dom";
-import "./App.css";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import { importData, indexName, server } from "./import";
 import { Hit } from "./Hit";
 import { filterProps } from "./schema";
-import { Panel } from "./Panel";
+import { Filter } from "./Property";
 
 const searchClient = instantMeiliSearch(server);
 
 const App = () => (
   <div className="ais-InstantSearch">
-    <h1>Gebouwenpaspoort</h1>
+    <h1>
+      Gebouwenpaspoort <button onClick={importData}>run import</button>
+    </h1>
     <InstantSearch indexName={indexName} searchClient={searchClient}>
       <div className="app">
         <div className="left-panel">
-          <button onClick={importData}>import</button>
           <ClearRefinements />
-          {/* <SortBy
-          defaultRefinement={indexName}
-          items={[
-            { value: indexName, label: "Relevant" },
-            {
-              value: "steam-video-games:recommendationCount:desc",
-              label: "Most Recommended"
-            },
-            {
-              value: "steam-video-games:recommendationCount:asc",
-              label: "Least Recommended"
-            }
-          ]}
-        /> */}
-          {filterProps.map((prop) => (
-            <Panel title={prop} id={prop} >
-              <RefinementList attribute={prop} />
-            </Panel>
-          ))}
+          {filterProps.map((prop) => {
+            return <Filter {...prop} />;
+          })}
+          {/* <RefinementList attribute={filterProps[3].key} /> */}
           <Configure
-            hitsPerPage={6}
+            hitsPerPage={50}
             attributesToSnippet={["description:50"]}
             snippetEllipsisText={"..."}
           />
         </div>
         <div className="right-panel">
-          <SearchBox />
+          <SearchBox autoFocus/>
           <Hits hitComponent={Hit} />
           <Pagination showLast={true} />
         </div>

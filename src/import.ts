@@ -5,10 +5,13 @@ import testData from '../testData.json'
 export const server = 'http://127.0.0.1:7700';
 export const indexName = 'testData';
 
+const keys: string[] = filterProps.map((prop) => prop.key);
 
 export function importData() {
   const client = new MeiliSearch({ host: server })
   client.index(indexName).addDocuments(testData)
     .then((res) => console.log('add document', res))
-  client.index(indexName).updateFilterableAttributes(filterProps)
+  client.index(indexName).updateFilterableAttributes(keys)
+    .then((res) => console.log('apply filters document', res))
+    console.log('keys', keys)
 }

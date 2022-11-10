@@ -1,8 +1,25 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 .left-panel {
-  width: 300px;
+  display: flex;
+  flex-basis: 300px;
+  flex-direction: column;
+}
+
+.right-panel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
 
 .app {
   display: flex;
+  width: 100vw;
   flex-direction: row;
+}
+
+.ais-SearchBox-input {
+  margin-bottom: 1rem;
 }
