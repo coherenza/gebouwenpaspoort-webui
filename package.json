@@ -1,0 +1,27 @@
+{
+  "name": "gebouwenpaspoort",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "import": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@meilisearch/instant-meilisearch": "^0.9.0",
+    "instantsearch.css": "7.4.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-instantsearch-dom": "^6.38.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "@types/react-instantsearch-dom": "^6.12.3",
+    "@vitejs/plugin-react": "^2.2.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.2.3"
+  }
+}
