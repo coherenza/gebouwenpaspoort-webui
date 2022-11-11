@@ -1,10 +1,7 @@
-// Include only the reset
-import "instantsearch.css/themes/reset.css";
-// or include a full theme
-// import 'instantsearch.css/themes/satellite.css';
-// import "instantsearch.css/themes/algolia-min.css";
 // Custom styles
+import "./reset.css";
 import "./App.css";
+import "./global.css";
 
 import React from "react";
 import {
@@ -13,12 +10,9 @@ import {
   SortBy,
   SearchBox,
   Pagination,
-  Highlight,
   ClearRefinements,
-  RefinementList,
   CurrentRefinements,
   Configure,
-  Snippet,
 } from "react-instantsearch-dom";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import { importData } from "./import";
@@ -31,19 +25,10 @@ const searchClient = instantMeiliSearch(server);
 
 const App = () => (
   <div className="ais-InstantSearch">
-    <h1>
-      Gebouwenpaspoort <button onClick={importData}>run import</button>
-    </h1>
     <InstantSearch indexName={indexName} searchClient={searchClient}>
       <div className="app">
         <div className="left-panel">
-          <SortBy
-            items={sortProps.map((item) => {return {
-              value: item.sortBy,
-              label: item.label,
-            }})}
-            defaultRefinement={sortProps[0].sortBy}
-          />
+          <h2 className="logo">Gebouwenpaspoort</h2>
           {/* <CurrentRefinements /> */}
           <ClearRefinements />
           {filterProps.map((prop) => {
@@ -56,7 +41,20 @@ const App = () => (
           />
         </div>
         <div className="right-panel">
-          <SearchBox autoFocus />
+          <div className="search-bar-wrapper">
+            <SearchBox autoFocus translations={{submitTitle: "Zoeken..."}} />
+            <button onClick={importData}>run import</button>
+            {"sorteren op:"}
+            <SortBy
+              items={sortProps.map((item) => {
+                return {
+                  value: item.sortBy,
+                  label: item.label,
+                };
+              })}
+              defaultRefinement={sortProps[0].sortBy}
+            />
+          </div>
           <Hits hitComponent={Hit} />
           <Pagination showLast={true} />
         </div>

@@ -1,17 +1,56 @@
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 .left-panel {
   display: flex;
   flex-basis: 300px;
   flex-direction: column;
+  padding-right: 2rem;
 }
 
 .right-panel {
   display: flex;
   flex: 1;
   flex-direction: column;
+}
+
+.logo {
+  color: var(--primary-color);
+  border-left: solid 4px var(--accent-color);
+  padding-left: 3px;
+  margin-bottom: 2rem;
+}
+
+.ais-Hits {
+  overflow-y: scroll;
+}
+
+.ais-Menu-link {
+  text-decoration: none;
+  display: flex;
+  flex: 1;
+}
+
+.ais-Menu-count,
+.ais-RefinementList-count {
+  font-size: .8rem;
+  background-color: var(--g1);
+  color: var(--g3);
+  padding: .1rem;
+  border-radius: var(--border-radius);
+  margin-left: .3rem;
+  height: 1.3rem;
+}
+
+.ais-RefinementList-item * {
+  cursor: pointer;
+}
+
+.ais-SearchBox-input {
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  padding: 5px;
 }
 
 .panel {
@@ -27,10 +66,33 @@ body {
 
 .app {
   display: flex;
-  width: 100vw;
   flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+  padding: 1rem;
 }
 
-.ais-SearchBox-input {
+.search-bar-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.ais-SearchBox {
+  flex: 1;
+}
+
+.ais-Pagination-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ais-Pagination-item {
+  margin: 0 0.5rem;
 }

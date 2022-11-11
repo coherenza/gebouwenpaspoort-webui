@@ -27,6 +27,11 @@ export const filterProps: FilterProp[] = [
     label: "Energieklasse",
     type: "single",
   },
+  {
+    propKey: "bag-pnd-status",
+    label: "Status",
+    type: "single",
+  },
 ];
 
 export interface Gebouw {
