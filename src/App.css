@@ -43,6 +43,10 @@ body {
   height: 1.3rem;
 }
 
+.ais-Menu-item--selected {
+  color: var(--primary-color-dark);
+}
+
 .ais-RefinementList-item * {
   cursor: pointer;
 }
@@ -58,10 +62,15 @@ body {
 }
 
 .panel-label {
+  background: none;
   cursor: pointer;
   margin-bottom: 1rem;
   margin: 0;
   padding: 0;
+}
+
+.panel-label:hover {
+  background-color: var(--g1);
 }
 
 .app {

@@ -20,7 +20,7 @@ export const Hit = ({ hit }: HitProps) => {
           <Dialog.Overlay className="DialogOverlay" />
           <Dialog.Content className="DialogContent">
             <Dialog.Title className="DialogTitle">
-              {hit["bag-num-volledig"]}
+              {hit["bag-num-volledig"] || 'geen adres'}
             </Dialog.Title>
             <HitProps hit={hit} />
             <Dialog.Close asChild>
