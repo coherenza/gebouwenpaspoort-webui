@@ -8,9 +8,9 @@ import {
 } from "react-instantsearch-dom";
 
 export const Filter = (filter: FilterProp) => {
-  console.log('filter', filter);
+  if (filter.type === "range") return null;
   return (
-    <Panel title={filter.label} id={filter.propKey}>
+    <Panel key={filter.propKey} title={filter.label} id={filter.propKey}>
       {filter.type === "single" && (<Menu attribute={filter.propKey} />)}
       {filter.type === "multi" && (<RefinementList attribute={filter.propKey} operator="and" />)}
       {/* {filter.type === "range" && (<RangeInput attribute={filter.propKey} defaultRefinement={{ min: 0, max: 1000 }} />)} */}

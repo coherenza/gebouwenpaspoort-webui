@@ -1,15 +1,32 @@
+import { indexName } from "./config";
+
 export interface FilterProp {
   label: string;
   propKey: string;
   type: "single" | "multi" | "geo" | "date" | "range";
 }
 
+export interface SortProp {
+  /** {index}:{propKey}:{asc/desc} */
+  sortBy: string,
+  label: string,
+}
+
+export const sortProps: SortProp[] = [
+  { sortBy: `${indexName}:bag-num-volledig:asc`, label: "Adres" },
+  { sortBy: indexName, label: "Most popular" },
+];
+
 export const filterProps: FilterProp[] = [
   { propKey: "bag-aob-gebruiksdoel", label: "Gebruiksdoel", type: "multi" },
   { propKey: "bag-aob-oppervlakte", label: "Oppervlakte (m2)", type: "range" },
   { propKey: "epl_pand_gebouwtype_s", label: "Gebouwtype", type: "single" },
   { propKey: "bag-aob-voorkomen", label: "Voorkomen", type: "single" },
-  { propKey: "epl_pand_energieklasse_s", label: "Energieklasse", type: "single" },
+  {
+    propKey: "epl_pand_energieklasse_s",
+    label: "Energieklasse",
+    type: "single",
+  },
 ];
 
 export interface Gebouw {

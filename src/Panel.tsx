@@ -8,9 +8,9 @@ export const Panel = ({ title, children, id }) => {
   };
 
   return (
-    <div id={id}>
-      <h5 onClick={toggleOpen}>
-        <i className="fa fa-chevron-right" /> {title}
+    <div id={id} className="panel">
+      <h5 onClick={toggleOpen} className="panel-label">
+        <i className="fa fa-chevron-right" /> {title} {isOpen ? '▼' : '►'}
       </h5>
       {isOpen && children}
     </div>

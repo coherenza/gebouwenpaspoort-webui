@@ -16,14 +16,16 @@ import {
   Highlight,
   ClearRefinements,
   RefinementList,
+  CurrentRefinements,
   Configure,
   Snippet,
 } from "react-instantsearch-dom";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
-import { importData, indexName, server } from "./import";
+import { importData } from "./import";
 import { Hit } from "./Hit";
-import { filterProps } from "./schema";
+import { filterProps, sortProps } from "./schema";
 import { Filter } from "./Property";
+import { indexName, server } from "./config";
 
 const searchClient = instantMeiliSearch(server);
 
@@ -35,11 +37,18 @@ const App = () => (
     <InstantSearch indexName={indexName} searchClient={searchClient}>
       <div className="app">
         <div className="left-panel">
+          <SortBy
+            items={sortProps.map((item) => {return {
+              value: item.sortBy,
+              label: item.label,
+            }})}
+            defaultRefinement={sortProps[0].sortBy}
+          />
+          {/* <CurrentRefinements /> */}
           <ClearRefinements />
           {filterProps.map((prop) => {
             return <Filter {...prop} />;
           })}
-          {/* <RefinementList attribute={filterProps[3].key} /> */}
           <Configure
             hitsPerPage={50}
             attributesToSnippet={["description:50"]}
@@ -47,7 +56,7 @@ const App = () => (
           />
         </div>
         <div className="right-panel">
-          <SearchBox autoFocus/>
+          <SearchBox autoFocus />
           <Hits hitComponent={Hit} />
           <Pagination showLast={true} />
         </div>
