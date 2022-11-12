@@ -15,3 +15,5 @@ pnpm dev
 # Press `import`
 # Search things!
 ```
+
+- If you want maps, add a `.env` file with `VITE_GOOGLE_MAPS_API_KEY={key}`

@@ -39,11 +39,11 @@ export const Hit = ({ hit }: HitProps) => {
 const HitProps = ({ hit }: HitProps) => {
   return (
     <div className="HitProps">
-      {Object.entries(hit).map(([key, value]) => {
+      {Object.entries(hit).map(([key, _value]) => {
         return (
           <>
-            <strong>{key}: </strong>
-            <Highlight attribute={key} hit={hit} tagName="mark" />
+            <strong key={`prop-${key}`}>{key}: </strong>
+            <Highlight key={`val-${key}`} attribute={key} hit={hit} tagName="mark" />
           </>
         );
       })}

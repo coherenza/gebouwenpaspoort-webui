@@ -20,6 +20,7 @@ import { Hit } from "./Hit";
 import { filterProps, sortProps } from "./schema";
 import { Filter } from "./Property";
 import { indexName, server } from "./config";
+import { Map } from "./Map";
 
 const searchClient = instantMeiliSearch(server);
 
@@ -30,10 +31,12 @@ const App = () => (
         <div className="left-panel">
           <h2 className="logo">Gebouwenpaspoort</h2>
           {/* <CurrentRefinements /> */}
+          <Map />
           <ClearRefinements />
           {filterProps.map((prop) => {
             return <Filter {...prop} />;
           })}
+
           <Configure
             hitsPerPage={50}
             attributesToSnippet={["description:50"]}
@@ -42,7 +45,7 @@ const App = () => (
         </div>
         <div className="right-panel">
           <div className="search-bar-wrapper">
-            <SearchBox autoFocus translations={{submitTitle: "Zoeken..."}} />
+            <SearchBox autoFocus translations={{ submitTitle: "Zoeken..." }} />
             <button onClick={importData}>run import</button>
             {"sorteren op:"}
             <SortBy

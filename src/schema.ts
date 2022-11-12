@@ -111,4 +111,9 @@ export interface Gebouw {
   stl_inspectiedatum_s: string;
   stl_uitkragendebalkons_s: string;
   _version_: number;
+  // Meilisearch fields
+  _geo: {
+    lat: number;
+    lng: number;
+  }
 }

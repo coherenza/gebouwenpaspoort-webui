@@ -14,6 +14,7 @@ specifiers:
   react: ^18.2.0
   react-dom: ^18.2.0
   react-instantsearch-dom: ^6.38.0
+  react-instantsearch-dom-maps: ^6.38.0
   typescript: ^4.6.4
   vite: ^3.2.3
 
@@ -27,6 +28,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-instantsearch-dom: 6.38.0_fzyfqr3mixyxftdbf7mmfo2jb4
+  react-instantsearch-dom-maps: 6.38.0_ehtfiifd6wpnbql4fn66j5hgsy
 
 devDependencies:
   '@types/react': 18.0.25
@@ -1225,6 +1227,23 @@ packages:
       react-fast-compare: 3.2.0
     dev: false
 
+  /react-instantsearch-dom-maps/6.38.0_ehtfiifd6wpnbql4fn66j5hgsy:
+    resolution: {integrity: sha512-+4b/PBWggCjUbXZFN3g42b+CjzdmlHTvG6MxeT8Jc2q3zwwxtVDGWbZF2D1Wic/8DGFFqm1lEfNVsS1u18CMmw==}
+    peerDependencies:
+      algoliasearch: '>= 3.1 < 5'
+      react: '>= 16.3.0 < 19'
+      react-dom: '>= 16.3.0 < 19'
+      react-instantsearch-dom: 6.38.0
+    dependencies:
+      '@babel/runtime': 7.20.1
+      algoliasearch: 4.14.2
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-instantsearch-dom: 6.38.0_fzyfqr3mixyxftdbf7mmfo2jb4
+      scriptjs: 2.5.9
+    dev: false
+
   /react-instantsearch-dom/6.38.0_fzyfqr3mixyxftdbf7mmfo2jb4:
     resolution: {integrity: sha512-yE0y9U1GCPZ/Jqzbd2BHTdx83/DYIEbXqAt7a+a5TLi4qQgwjTpVrtAkqzhT8f1/TRhNqu0wYAT4HFixVsW8FA==}
     peerDependencies:
@@ -1336,6 +1355,10 @@ packages:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
       loose-envify: 1.4.0
+    dev: false
+
+  /scriptjs/2.5.9:
+    resolution: {integrity: sha512-qGVDoreyYiP1pkQnbnFAUIS5AjenNwwQBdl7zeos9etl+hYKWahjRTfzAZZYBv5xNHx7vNKCmaLDQZ6Fr2AEXg==}
     dev: false
 
   /semver/6.3.0:
