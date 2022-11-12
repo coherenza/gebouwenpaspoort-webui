@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
-import { Highlight } from "react-instantsearch-dom";
+import { Highlight } from "react-instantsearch-hooks-web";
 import { Gebouw } from "./schema";
 import "./Hit.css";
+import { Hit } from "meilisearch";
 
 interface HitProps {
-  hit: Gebouw;
+  hit: Hit<Gebouw>;
 }
 
 /** A single SearchResult */
-export const Hit = ({ hit }: HitProps) => {
+export const MyHit = ({ hit }: HitProps) => {
   return (
     <Dialog.Root key={hit.id}>
       <Dialog.Trigger className="Hit">{hit["bag-num-volledig"]}</Dialog.Trigger>

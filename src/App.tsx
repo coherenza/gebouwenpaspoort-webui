@@ -11,12 +11,11 @@ import {
   SearchBox,
   Pagination,
   ClearRefinements,
-  CurrentRefinements,
   Configure,
-} from "react-instantsearch-dom";
+} from "react-instantsearch-hooks-web";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import { importData } from "./import";
-import { Hit } from "./Hit";
+import { MyHit } from "./Hit";
 import { filterProps, sortProps } from "./schema";
 import { Filter } from "./Property";
 import { indexName, server } from "./config";
@@ -29,7 +28,6 @@ const App = () => (
       <div className="app">
         <div className="left-panel">
           <h2 className="logo">Gebouwenpaspoort</h2>
-          {/* <CurrentRefinements /> */}
           <ClearRefinements />
           {filterProps.map((prop) => {
             return <Filter {...prop} />;
@@ -42,7 +40,7 @@ const App = () => (
         </div>
         <div className="right-panel">
           <div className="search-bar-wrapper">
-            <SearchBox autoFocus translations={{submitTitle: "Zoeken..."}} />
+            <SearchBox autoFocus />
             <button onClick={importData}>run import</button>
             {"sorteren op:"}
             <SortBy
@@ -52,10 +50,10 @@ const App = () => (
                   label: item.label,
                 };
               })}
-              defaultRefinement={sortProps[0].sortBy}
+              defaultValue={sortProps[0].sortBy}
             />
           </div>
-          <Hits hitComponent={Hit} />
+          <Hits hitComponent={MyHit} />
           <Pagination showLast={true} />
         </div>
       </div>
