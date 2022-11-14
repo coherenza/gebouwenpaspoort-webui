@@ -13,6 +13,7 @@ export interface SortProp {
 }
 
 export const sortProps: SortProp[] = [
+  { sortBy: `${indexName}:bag-num-huisnummer:asc`, label: "Huisnummer" },
   { sortBy: `${indexName}:bag-num-volledig:asc`, label: "Adres" },
   { sortBy: indexName, label: "Most popular" },
 ];
