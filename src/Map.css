@@ -1,3 +1,11 @@
 .Map {
   height: 10rem;
+  margin-bottom: 2rem;
+}
+
+.ais-GeoSearch {
+  height: 100%
+}
+.ais-GeoSearch-map {
+  height: 100%
 }
