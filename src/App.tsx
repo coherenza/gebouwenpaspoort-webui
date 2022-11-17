@@ -33,7 +33,7 @@ export const AppContext = createContext<AppContextI>(undefined);
 const App = () => {
   const [current, setCurrent] = React.useState(undefined);
   const [showFilter, setShowFilter] = React.useState(false);
-  const [showMap, setShowMap] = React.useState(false);
+  const [showMap, setShowMap] = React.useState(true);
 
   return (
     <AppContext.Provider value={{ setCurrent, current }}>

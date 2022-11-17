@@ -75,11 +75,6 @@ body {
   cursor: pointer;
 }
 
-.ais-SearchBox-input {
-  border: 1px solid #ccc;
-  border-radius: var(--border-radius);
-  padding: 5px;
-}
 
 
 .app {
@@ -90,14 +85,6 @@ body {
   padding: 1rem;
 }
 
-.search-bar-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 1rem;
-  gap: 1rem;
-}
-
 .sort-wrapper {
   display: flex;
   flex-direction: row;
@@ -105,33 +92,7 @@ body {
   gap: 1rem;
 }
 
-.ais-SearchBox {
-  flex: 1;
-  display: flex;
-}
 
-.ais-SearchBox-form {
-  flex: 1;
-  display: flex;
-}
-
-.ais-SearchBox-form button {
-  padding: 0rem 0.5rem;
-  border-radius: 0;
-}
-
-.ais-SearchBox-form button:last-child {
-  border-bottom-right-radius: var(--border-radius);
-  border-top-right-radius: var(--border-radius);
-}
-
-.ais-SearchBox-input {
-  flex: 1;
-  display: flex;
-  border-radius: 0;
-  border-top-left-radius: var(--border-radius);
-  border-bottom-left-radius: var(--border-radius);
-}
 
 .ais-Pagination-list {
   display: flex;

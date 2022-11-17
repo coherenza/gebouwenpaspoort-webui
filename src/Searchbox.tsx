@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchBox } from "react-instantsearch-hooks-web";
+import "./Searchbox.css";
 import useDebounce from "./useDebounce";
 
 export const SearchBox = () => {
