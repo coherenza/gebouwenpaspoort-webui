@@ -1,129 +1,101 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import "./Map.css";
+import { useGeoSearch } from "./useGeoSearch";
+import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
+import "mapbox-gl/dist/mapbox-gl.css";
 
-import OlMap from 'ol/Map'
-import View from 'ol/View'
-import TileLayer from 'ol/layer/Tile'
-import VectorLayer from 'ol/layer/Vector'
-import VectorSource from 'ol/source/Vector'
-import XYZ from 'ol/source/XYZ'
-import {transform} from 'ol/proj'
-import {Coordinate, toStringXY} from 'ol/coordinate';
-import { useGeoSearch } from './useGeoSearch';
-import { Feature } from 'ol';
-import { Point, Polygon } from 'ol/geom';
+const mapboxToken =
+  "pk.eyJ1Ijoiam9lcGlvIiwiYSI6ImNqbTIzanZ1bjBkanQza211anFxbWNiM3IifQ.2iBrlCLHaXU79_tY9SVpXA";
+mapboxgl.accessToken = mapboxToken;
 
 export function Map() {
-  const {
-    items,
-  } = useGeoSearch();
+  const { items } = useGeoSearch();
 
-  const feature = new Feature({
-    labelPoint: new Point([0, 0]),
-    name: 'My Polygon',
+  const mapContainer = useRef(null);
+  const mapRef = useRef(null);
+  const [lng, setLng] = useState(5.1213);
+  const [lat, setLat] = useState(52.0907);
+  const [zoom, setZoom] = useState(9);
+
+  console.log("items", items);
+
+  useEffect(() => {
+    if (mapRef.current) return; // initialize map only once
+    let map = mapRef.current;
+    map = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [lng, lat],
+      zoom: zoom,
+    });
+    map.on("load", () => {
+      map.addSource("points", {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features: items.map((i) => {
+            console.log('adding', i)
+            return {
+              type: "Feature",
+              geometry: {
+                type: "Point",
+                coordinates: [i._geoloc.lat, i._geoloc.lng],
+              },
+              properties: {
+                title: "Mapbox DC",
+              },
+            };
+          }),
+        },
+      });
+
+      map.addLayer({
+        id: "clusters",
+        type: "circle",
+        source: "points",
+        filter: ["has", "point_count"],
+        paint: {
+          // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+          // with three steps to implement three types of circles:
+          //   * Blue, 20px circles when point count is less than 100
+          //   * Yellow, 30px circles when point count is between 100 and 750
+          //   * Pink, 40px circles when point count is greater than or equal to 750
+          "circle-color": [
+            "step",
+            ["get", "point_count"],
+            "#51bbd6",
+            100,
+            "#f1f075",
+            750,
+            "#f28cb1",
+          ],
+          "circle-radius": [
+            "step",
+            ["get", "point_count"],
+            20,
+            100,
+            30,
+            750,
+            40,
+          ],
+        },
+      });
+    });
   });
 
-  return <MapWrapper features={[]} />
-}
+  useEffect(() => {
+    if (!mapRef.current) return; // wait for map to initialize
+    const map = mapRef.current;
+    map.current.on("move", () => {
+      setLng(map.current.getCenter().lng.toFixed(4));
+      setLat(map.current.getCenter().lat.toFixed(4));
+      setZoom(map.current.getZoom().toFixed(2));
+    });
+  });
 
-// thanks to https://taylor.callsen.me/using-openlayers-with-react-functional-components/
-function MapWrapper(props) {
-  const [ map, setMap ] = useState()
-  const [ featuresLayer, setFeaturesLayer ] = useState()
-  const [ selectedCoord , setSelectedCoord ] = useState<Coordinate>()
-  const mapElement = useRef()
-
-  // create state ref that can be accessed in OpenLayers onclick callback function
-  //  https://stackoverflow.com/a/60643670
-  const mapRef = useRef()
-  mapRef.current = map
-
-  // initialize map on first render - logic formerly put into componentDidMount
-  useEffect( () => {
-
-    // create and add vector source layer
-    const initalFeaturesLayer = new VectorLayer({
-      source: new VectorSource()
-    })
-
-    // create map
-    const initialMap = new OlMap({
-      target: mapElement.current,
-      layers: [
-
-        // USGS Topo
-        // new TileLayer({
-        //   source: new XYZ({
-        //     url: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
-        //   })
-        // }),
-
-        // Google Maps Terrain
-        new TileLayer({
-          source: new XYZ({
-            url: 'http://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}',
-          })
-        }),
-        initalFeaturesLayer
-
-      ],
-      view: new View({
-        projection: 'EPSG:3857',
-        center: [0, 0],
-        zoom: 2
-      }),
-      controls: []
-    })
-
-    // set map onclick handler
-    initialMap.on('click', handleMapClick)
-
-    // save map and vector layer references to state
-    setMap(initialMap)
-    setFeaturesLayer(initalFeaturesLayer)
-  },[])
-
-  // update map if features prop changes - logic formerly put into componentDidUpdate
-  useEffect( () => {
-
-    if (props.features.length) { // may be null on first render
-
-      // set features to map
-      featuresLayer.setSource(
-        new VectorSource({
-          features: props.features // make sure features is an array
-        })
-      )
-
-      // fit map to feature extent (with 100px of padding)
-      map.getView().fit(featuresLayer.getSource().getExtent(), {
-        padding: [100,100,100,100]
-      })
-
-    }
-
-  },[props.features])
-
-  // map click handler
-  const handleMapClick = (event) => {
-
-    // get clicked coordinate using mapRef to access current React state inside OpenLayers callback
-    //  https://stackoverflow.com/a/60643670
-    const clickedCoord = mapRef.current?.getCoordinateFromPixel(event.pixel);
-
-    // transform coord to EPSG 4326 standard Lat Long
-    const transormedCoord = transform(clickedCoord, 'EPSG:3857', 'EPSG:4326')
-
-    // set React state
-    setSelectedCoord( transormedCoord )
-
-    console.log(transormedCoord)
-
-  }
-
-  // render component
   return (
-    <div ref={mapElement} className="map-container"></div>
-  )
-
+    <div>
+      <div ref={mapContainer} className="map-container" />
+    </div>
+  );
 }
