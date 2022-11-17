@@ -30,6 +30,7 @@ button {
   border: none;
   background-color: var(--g1);
   cursor: pointer;
+  padding: 0.2rem 0.8rem;
 }
 
 button:hover {

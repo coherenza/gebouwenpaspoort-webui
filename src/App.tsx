@@ -51,7 +51,7 @@ const App = () => {
                 return <Filter {...prop} />;
               })}
               <Configure
-                hitsPerPage={150}
+                hitsPerPage={30}
                 attributesToSnippet={["description:50"]}
                 snippetEllipsisText={"..."}
               />

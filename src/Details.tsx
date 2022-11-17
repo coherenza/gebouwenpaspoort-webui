@@ -9,10 +9,10 @@ export function Details() {
     <div className="details-panel">
       {current ? (
         <>
-          <h2>
-            {current["bag-num-volledig"]}{" "}
+          <div className="details-panel__header">
+            <h2>{current["bag-num-volledig"]} </h2>
             <button onClick={() => setCurrent(undefined)}>sluit</button>
-          </h2>
+          </div>
           <HitProps hit={current} />
         </>
       ) : (

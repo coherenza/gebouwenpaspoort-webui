@@ -62,6 +62,7 @@ export async function importData() {
   // index.updateFilterableAttributes(filterableProps);
   index.updateSynonyms({
     "afval": ["vuilnis", "container"],
+    "vuilnis": ["afval", "container"],
   })
   // index.updateSortableAttributes(["bag-num-volledig", "bag-num-huisnummer"]);
 }

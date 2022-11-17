@@ -1,7 +1,16 @@
 .details-panel {
   flex: 1;
   overflow: auto;
-  padding-left: 2rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.details-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .details-props {
