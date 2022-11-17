@@ -14,15 +14,15 @@ export interface SortProp {
 
 export const sortProps: SortProp[] = [
   { sortBy: `${indexName}:bag-num-huisnummer:asc`, label: "Huisnummer" },
+  { sortBy: `${indexName}`, label: "Relevantie" },
   { sortBy: `${indexName}:bag-num-volledig:asc`, label: "Adres" },
-  { sortBy: indexName, label: "Most popular" },
 ];
 
 export const filterProps: FilterProp[] = [
   { propKey: "bag-aob-gebruiksdoel", label: "Gebruiksdoel", type: "multi" },
   { propKey: "bag-aob-oppervlakte", label: "Oppervlakte (m2)", type: "range" },
   { propKey: "epl_pand_gebouwtype_s", label: "Gebouwtype", type: "single" },
-  { propKey: "bag-aob-voorkomen", label: "Voorkomen", type: "single" },
+  { propKey: "bag-pnd-oorspronkelijk-bouwjaar", label: "Bouwjaar", type: "range" },
   {
     propKey: "epl_pand_energieklasse_s",
     label: "Energieklasse",
@@ -31,7 +31,7 @@ export const filterProps: FilterProp[] = [
   {
     propKey: "bag-pnd-status",
     label: "Status",
-    type: "single",
+    type: "multi",
   },
 ];
 

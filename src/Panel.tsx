@@ -1,7 +1,8 @@
 import { useState } from "react";
+import "./Panel.css";
 
-export const Panel = ({ title, children, id }) => {
-  const [isOpen, setIsOpen] = useState(false);
+export const Panel = ({ title, children, id, startOpen }) => {
+  const [isOpen, setIsOpen] = useState(!!startOpen);
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);

@@ -56,11 +56,14 @@ filterableProps.push("_geo");
 
 export async function importData() {
   const client = new MeiliSearch({ host: server })
-  await client.deleteIndex(indexName)
+  // await client.deleteIndex(indexName)
   const index = client.index(indexName);
-  createSolrQuery(index);
-  index.updateFilterableAttributes(filterableProps);
-  index.updateSortableAttributes(["bag-num-volledig", "bag-num-huisnummer"]);
+  // createSolrQuery(index);
+  // index.updateFilterableAttributes(filterableProps);
+  index.updateSynonyms({
+    "afval": ["vuilnis", "container"],
+  })
+  // index.updateSortableAttributes(["bag-num-volledig", "bag-num-huisnummer"]);
 }
 
 // export async function importDataDemo() {

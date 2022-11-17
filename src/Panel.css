@@ -1,0 +1,16 @@
+
+.panel {
+  margin-top: 1rem;
+}
+
+.panel-label {
+  background: none;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.panel-label:hover {
+  background-color: var(--g1);
+}

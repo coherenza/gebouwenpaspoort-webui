@@ -1,6 +1,6 @@
 .Map {
-  height: 10rem;
-  margin-bottom: 2rem;
+  min-height: 50vh;
+  margin-bottom: 1rem;
 }
 
 .ais-GeoSearch {
@@ -8,4 +8,9 @@
 }
 .ais-GeoSearch-map {
   height: 100%
+}
+
+/* No 'search as i type' toggle */
+.ais-GeoSearch-control {
+  display: none;
 }
