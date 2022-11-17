@@ -15,6 +15,7 @@ specifiers:
   react: ^18.2.0
   react-dom: ^18.2.0
   react-instantsearch-hooks-web: ^6.38.0
+  react-map-gl: ^7.0.19
   typescript: ^4.6.4
   vite: ^3.2.3
 
@@ -30,6 +31,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-instantsearch-hooks-web: 6.38.0_fzyfqr3mixyxftdbf7mmfo2jb4
+  react-map-gl: 7.0.19_wncmjf7gwcz6cg7gkzeel3s2iq
 
 devDependencies:
   '@types/react': 18.0.25
@@ -716,12 +718,22 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@types/geojson/7946.0.10:
+    resolution: {integrity: sha512-Nmh0K3iWQJzniTuPRcJn5hxXkfB1T1pgB89SBig5PlJQU5yocazeu4jATJlaA0GYFKWMqDdvYemoSnF2pXgLVA==}
+    dev: false
+
   /@types/google.maps/3.50.5:
     resolution: {integrity: sha512-RuZf1MJtctGlpW+Gd4a/eGtAufUDjMf+eyN1l+B3fbe2YLScJbg8KEljJfb+6vnSPFAeM1/48geVIEg3vqOkxw==}
     dev: false
 
   /@types/hogan.js/3.0.1:
     resolution: {integrity: sha512-D03i/2OY7kGyMq9wdQ7oD8roE49z/ZCZThe/nbahtvuqCNZY9T2MfedOWyeBdbEpY2W8Gnh/dyJLdFtUCOkYbg==}
+    dev: false
+
+  /@types/mapbox-gl/2.7.8:
+    resolution: {integrity: sha512-dqjHeYcUquenNOUMjhlZtbxrPJAE0+UwFq/KhAG5VWO2tX0ZxagSOmMPTruySf3sn7RFHMDd2kQKYmJlPC33xA==}
+    dependencies:
+      '@types/geojson': 7946.0.10
     dev: false
 
   /@types/prop-types/15.7.5:
@@ -1428,6 +1440,17 @@ packages:
       instantsearch.js: 4.49.1_algoliasearch@4.14.2
       react: 18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
+
+  /react-map-gl/7.0.19_wncmjf7gwcz6cg7gkzeel3s2iq:
+    resolution: {integrity: sha512-s3E8aU6BursSDVwzQZbzdDzDRUX4kdfRqZODYvkdDbInr3RzaNdlbhJ5tojXKWOonsxV6wt+Acv9JCaOMKaf0A==}
+    peerDependencies:
+      mapbox-gl: '*'
+      react: '>=16.3.0'
+    dependencies:
+      '@types/mapbox-gl': 2.7.8
+      mapbox-gl: 2.11.0
+      react: 18.2.0
     dev: false
 
   /react-refresh/0.14.0:

@@ -48,7 +48,7 @@ const App = () => {
               <h3>Filters</h3>
               {/* <CurrentRefinements /> */}
               {filterProps.map((prop) => {
-                return <Filter {...prop} />;
+                return <Filter key={prop.label}{...prop} />;
               })}
               <Configure
                 hitsPerPage={30}
@@ -82,7 +82,6 @@ const App = () => {
                       label: item.label,
                     };
                   })}
-                  defaultRefinement={sortProps[0].sortBy}
                 />
               </div>
               <Hits hitComponent={HitLine} />

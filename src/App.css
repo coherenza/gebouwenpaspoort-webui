@@ -51,6 +51,7 @@ body {
 
 .ais-Hits {
   overflow-y: scroll;
+  flex: 1;
 }
 
 .ais-Menu-link {

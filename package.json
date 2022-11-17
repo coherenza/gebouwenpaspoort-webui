@@ -20,7 +20,8 @@
     "meilisearch": "^0.29.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-instantsearch-hooks-web": "^6.38.0"
+    "react-instantsearch-hooks-web": "^6.38.0",
+    "react-map-gl": "^7.0.19"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",
