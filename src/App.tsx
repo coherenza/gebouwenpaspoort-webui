@@ -8,12 +8,10 @@ import {
   InstantSearch,
   Hits,
   SortBy,
-  SearchBox,
   Pagination,
   ClearRefinements,
-  CurrentRefinements,
   Configure,
-} from "react-instantsearch-dom";
+} from "react-instantsearch-hooks-web";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import { importData } from "./import";
 import { HitLine, HitProps } from "./HitLine";
@@ -22,6 +20,7 @@ import { Filter } from "./Property";
 import { indexName, server } from "./config";
 import { Map } from "./Map";
 import { Details } from "./Details";
+import { SearchBox } from "./Searchbox";
 
 interface AppContextI {
   setCurrent: (gebouw: Gebouw) => void;
@@ -34,7 +33,7 @@ export const AppContext = createContext<AppContextI>(undefined);
 const App = () => {
   const [current, setCurrent] = React.useState(undefined);
   const [showFilter, setShowFilter] = React.useState(false);
-  const [showMap, setShowMap] = React.useState(true);
+  const [showMap, setShowMap] = React.useState(false);
 
   return (
     <AppContext.Provider value={{ setCurrent, current }}>
@@ -66,14 +65,11 @@ const App = () => {
                     Filters
                   </button>
                   <button onClick={() => setShowMap(!showMap)}>Kaart</button>
-                  <ClearRefinements clearQuery={true} />
+                  <ClearRefinements />
                 </div>
               </div>
               <div className="search-bar-wrapper">
-                <SearchBox
-                  autoFocus
-                  translations={{ submitTitle: "Zoeken..." }}
-                />
+                <SearchBox />
               </div>
               {showMap && <Map />}
               <div className="sort-wrapper">

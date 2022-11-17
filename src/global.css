@@ -13,7 +13,7 @@ li {
   list-style-type: none;
 }
 
-ul {
+ul, ol{
   padding-left: 0;
 }
 

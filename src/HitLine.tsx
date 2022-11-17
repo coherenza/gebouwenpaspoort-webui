@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
-import { Highlight } from "react-instantsearch-dom";
+import { Highlight } from "react-instantsearch-hooks-web";
 import { Gebouw } from "./schema";
 import "./Hit.css";
 import { AppContext } from "./App";
