@@ -51,7 +51,7 @@ const App = () => {
                 return <Filter key={prop.label}{...prop} />;
               })}
               <Configure
-                hitsPerPage={30}
+                hitsPerPage={100}
                 attributesToSnippet={["description:50"]}
                 snippetEllipsisText={"..."}
               />
@@ -82,6 +82,7 @@ const App = () => {
                       label: item.label,
                     };
                   })}
+                  defaultValue={sortProps[0].sortBy}
                 />
               </div>
               <Hits hitComponent={HitLine} />
