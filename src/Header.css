@@ -1,11 +1,3 @@
-
-.header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
 .header--buttons {
   display: flex;
   flex-direction: row;
@@ -22,6 +14,7 @@
   box-shadow: var(--box-shadow);
   left: 50%;
   transform: translateX(-50%);
+  max-widht: calc(100vw - 2rem);
 }
 
 .header .logo {

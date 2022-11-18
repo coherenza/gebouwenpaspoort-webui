@@ -9,7 +9,7 @@ export function Header() {
 
   return (
     <div className="app-header">
-      <div className="header">
+      <div className="Titlebar header">
         <h2 className="logo">Gebouwenpaspoort</h2>
         <div className="header--buttons">
           <button onClick={() => setShowFilter(!showFilter)}>Filters</button>

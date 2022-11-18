@@ -11,7 +11,7 @@ export function Results() {
     return null;
   }
   return (
-    <div className={`Results ${open ? "Results--open" : ""}`}>
+    <div className={`Sidebar Results ${open ? "Results--open" : ""}`}>
       <div className="Results__header">
         <h3>Adressen</h3>
         {"sorteren op:"}
@@ -24,7 +24,7 @@ export function Results() {
           })}
           defaultValue={sortProps[0].sortBy}
         />
-        <button onClick={() => setShowResults(false)}>Sluiten</button>
+        <button onClick={() => setShowResults(false)}>Sluit</button>
       </div>
       <Hits hitComponent={HitLine} />
       <Pagination showLast={true} />

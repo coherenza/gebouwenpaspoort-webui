@@ -51,8 +51,14 @@ export function Map() {
     let highLat = center.lat;
     let lowLng = center.lng;
     let highLng = center.lng;
-    items.forEach((item) => {
+    items.forEach((item, i) => {
       const { lat, lng } = item._geoloc;
+      if (i == 0) {
+        lowLat = lat;
+        highLat = lat;
+        lowLng = lng;
+        highLng = lng;
+      }
 
       // For some reason the extend method doesn't work, so we do it manually
       // bounds.extend(item._geoloc);
@@ -73,6 +79,7 @@ export function Map() {
       { lat: highLat, lng: highLng },
       { lat: lowLat, lng: lowLng }
     );
+    console.log('bounds', bounds)
 
     mapRef.current?.fitBounds(bounds, {
       padding: 250,

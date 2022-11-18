@@ -2,7 +2,12 @@ body {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
-
+.Titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
 
 .results-panel {
   padding: 1rem;
@@ -17,6 +22,21 @@ body {
   padding-left: 3px;
 }
 
+.Sidebar {
+  max-width: 100vw;
+  position: fixed;
+  background: white;
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--results-width);
+  box-shadow: var(--box-shadow);
+}
 
 .ais-Menu-link {
   text-decoration: none;

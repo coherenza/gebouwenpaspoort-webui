@@ -39,7 +39,7 @@ export const SearchBox = () => {
 
   return (
     <form noValidate action="" role="search" className="Searchbox">
-      <input type="search" value={searchTerm} placeholder="Zoeken... " onChange={handleSetSearchTerm} autoFocus/>
+      <input type="search" value={searchTerm} placeholder="Zoek op adres, eigenschap, zaakonderwerp... " onChange={handleSetSearchTerm} autoFocus/>
       <button onClick={handleReset}>Reset</button>
     </form>
   );

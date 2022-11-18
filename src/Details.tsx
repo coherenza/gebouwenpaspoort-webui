@@ -1,7 +1,7 @@
-import { HitProps } from "./HitLine";
 import "./Details.css";
-import { useCallback, useContext } from "react";
+import { useContext } from "react";
 import { AppContext } from "./App";
+import { Highlight } from "react-instantsearch-hooks-web";
 
 export function Details() {
   const { current, setCurrent } = useContext(AppContext);
@@ -9,10 +9,10 @@ export function Details() {
     return null;
   }
   return (
-    <div className="details-panel">
+    <div className="Sidebar details-panel">
       {current ? (
         <>
-          <div className="details-panel__header">
+          <div className="Titlebar">
             <h2>{current["bag-num-volledig"]} </h2>
             <button onClick={() => setCurrent(undefined)}>sluit</button>
           </div>
@@ -35,3 +35,31 @@ export function Details() {
     </div>
   );
 }
+
+/** Render all property-value combinations available */
+const HitProps = ({ hit }) => {
+  return (
+    <div className="HitProps">
+      {Object.entries(hit).map(([key, _value]) => {
+        let shown_key = key.replace(
+          /^(bag-aob-|bag-opr-|bag-num-|bwk-num-|squitxo_)/,
+          ""
+        );
+        // if (typeof _value == "object") {
+        //   return null
+        // }
+        return (
+          <>
+            <strong key={`prop-${key}`}>{shown_key}: </strong>
+            <Highlight
+              key={`val-${key}`}
+              attribute={key}
+              hit={hit}
+              tagName="mark"
+            />
+          </>
+        );
+      })}
+    </div>
+  );
+};

@@ -13,7 +13,10 @@ export function Filters({}) {
   }
   return (
     <div className={`filter-panel ${showFilter ? "filter-panel--show" : ""}`}>
-      <h3>Filters</h3>
+      <div className="Titlebar">
+        <h3>Filters</h3>
+        <button onClick={() => setShowFilter(false)}>Sluit</button>
+      </div>
       {/* <CurrentRefinements /> */}
       {filterProps.map((prop) => {
         return <Filter key={prop.label} {...prop} />;
