@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useClearRefinements, useSearchBox } from "react-instantsearch-hooks-web";
+import { useClearRefinements, useSearchBox, useSortBy } from "react-instantsearch-hooks-web";
 import { startBounds } from "./Map";
 import "./Searchbox.css";
 import useDebounce from "./useDebounce";

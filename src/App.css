@@ -5,8 +5,14 @@ body {
 .Titlebar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
+  justify-content: flex-end;
+  padding: 1rem;
+  gap: 1rem;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.Titlebar h3 {
+  margin-right: auto;
 }
 
 .results-panel {

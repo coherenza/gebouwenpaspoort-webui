@@ -8,14 +8,17 @@ export function Details() {
   if (!current) {
     return null;
   }
+
+  const { x, y } = current["bag-aob-geo-EPSG28992"];
   return (
     <div className="Sidebar details-panel">
       {current ? (
         <>
-          <div className="Titlebar">
-            <h2>{current["bag-num-volledig"]} </h2>
+          <div className="Titlebar Titlebar--padded">
+            <h3>{current["bag-num-volledig"]} </h3>
             <button onClick={() => setCurrent(undefined)}>sluit</button>
           </div>
+          <a href={`https://app.slagboomenpeeters.com/c37aae05-9e9a-4210-a1b8-d957367fc978?z=12&mode=oblique&x=${x}&y=${y}`}>luchtfoto</a>
           <HitProps hit={current} />
         </>
       ) : (

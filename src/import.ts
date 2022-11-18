@@ -59,12 +59,12 @@ export async function importData() {
   // await client.deleteIndex(indexName)
   const index = client.index(indexName);
   // createSolrQuery(index);
-  // index.updateFilterableAttributes(filterableProps);
+  index.updateFilterableAttributes(filterableProps);
   index.updateSynonyms({
     "afval": ["vuilnis", "container"],
     "vuilnis": ["afval", "container"],
   })
-  // index.updateSortableAttributes(["bag-num-volledig", "bag-num-huisnummer"]);
+  index.updateSortableAttributes(["bag-num-volledig", "bag-num-huisnummer"]);
 }
 
 // export async function importDataDemo() {

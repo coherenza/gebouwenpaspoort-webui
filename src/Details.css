@@ -1,10 +1,5 @@
 .details-panel {
   left: auto;
-  padding: 1rem;
-}
-
-.details-props {
-
 }
 
 .HitProps {
@@ -12,6 +7,7 @@
   display: grid;
   /* grid-template-columns: 1fr 3fr; */
   height: 100%;
+  padding: 1rem;
 }
 
 .HitProp {

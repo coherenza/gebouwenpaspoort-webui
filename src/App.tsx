@@ -45,7 +45,7 @@ const App = () => {
       <InstantSearch indexName={indexName} searchClient={searchClient}>
         <div className="app">
           <Configure
-            hitsPerPage={100}
+            hitsPerPage={50}
             attributesToSnippet={["description:50"]}
             snippetEllipsisText={"..."}
           />

@@ -1,8 +1,8 @@
-import { Configure } from "react-instantsearch-hooks-web";
+import { Configure, SortBy } from "react-instantsearch-hooks-web";
 import { importData } from "./import";
 import { Filter } from "./Property";
 import "./Filters.css";
-import { filterProps } from "./schema";
+import { filterProps, sortProps } from "./schema";
 import { useContext } from "react";
 import { AppContext } from "./App";
 
@@ -12,16 +12,27 @@ export function Filters({}) {
     return null;
   }
   return (
-    <div className={`filter-panel ${showFilter ? "filter-panel--show" : ""}`}>
+    <div className="Sidebar filter-panel">
       <div className="Titlebar">
         <h3>Filters</h3>
         <button onClick={() => setShowFilter(false)}>Sluit</button>
       </div>
-      {/* <CurrentRefinements /> */}
-      {filterProps.map((prop) => {
-        return <Filter key={prop.label} {...prop} />;
-      })}
-      <button onClick={importData}>run import</button>
+      <div className="filters">
+        {"sorteren op:"}
+        <SortBy
+          items={sortProps.map((item) => {
+            return {
+              value: item.sortBy,
+              label: item.label,
+            };
+          })}
+          defaultValue={sortProps[0].sortBy}
+        />
+        {filterProps.map((prop) => {
+          return <Filter key={prop.label} {...prop} />;
+        })}
+        <button onClick={importData}>run import</button>
+      </div>
     </div>
   );
 }
