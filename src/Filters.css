@@ -1,0 +1,16 @@
+.filter-panel {
+  padding: 1rem;
+  display: flex;
+  flex-basis: 300px;
+  flex-direction: column;
+  overflow-y: auto;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #fff;
+  box-shadow: var(--box-shadow);
+}
+
+.filter-panel--show {
+}

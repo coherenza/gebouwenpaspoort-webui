@@ -1,9 +1,15 @@
 .details-panel {
+  position: fixed;
+  background: white;
   flex: 1;
   overflow: auto;
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--results-width);
 }
 
 .details-panel__header {

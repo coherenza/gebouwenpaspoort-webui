@@ -5,6 +5,9 @@ import { AppContext } from "./App";
 
 export function Details() {
   const { current, setCurrent } = useContext(AppContext);
+  if (!current) {
+    return null;
+  }
   return (
     <div className="details-panel">
       {current ? (

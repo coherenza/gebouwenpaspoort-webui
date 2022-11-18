@@ -1,0 +1,43 @@
+.Results {
+  position: fixed;
+  right: 0%;
+  top: 0;
+  bottom: 0;
+  width: var(--results-width);
+  background-color: #fff;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.Results__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem;
+  gap: 1rem;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.Results__header h3 {
+  margin-right: auto;
+}
+
+.ais-Pagination-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ais-Pagination-item {
+  margin: 0 0.5rem;
+}
+
+.ais-Hits {
+  padding: 1rem;
+  overflow-y: scroll;
+  flex: 1;
+}

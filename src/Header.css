@@ -1,0 +1,30 @@
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.header--buttons {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  gap: 1rem;
+}
+
+.app-header {
+  position: fixed;
+  background: white;
+  top: 1rem;
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  box-shadow: var(--box-shadow);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header .logo {
+  align-self: flex;
+  margin-right: 2rem;
+}

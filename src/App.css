@@ -2,39 +2,7 @@ body {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
-.filter-panel {
-  padding: 1rem;
-  display: flex;
-  flex-basis: 300px;
-  flex-direction: column;
-  padding-right: 2rem;
-  position: relative;
-  left: -300px;
-  transition: left 0.2s;
-  overflow-y: auto;
-}
 
-.header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.header--buttons {
-  display: flex;
-  flex-direction: row;
-  margin-left: auto;
-  gap: 1rem;
-}
-
-.header .logo {
-  align-self: flex;
-}
-
-.filter-panel--show {
-  left: 0;
-}
 
 .results-panel {
   padding: 1rem;
@@ -49,10 +17,6 @@ body {
   padding-left: 3px;
 }
 
-.ais-Hits {
-  overflow-y: scroll;
-  flex: 1;
-}
 
 .ais-Menu-link {
   text-decoration: none;
@@ -96,19 +60,4 @@ body {
   flex-direction: row;
   align-items: center;
   gap: 1rem;
-}
-
-
-
-.ais-Pagination-list {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.ais-Pagination-item {
-  margin: 0 0.5rem;
 }

@@ -75,7 +75,7 @@ export function Map() {
     );
 
     mapRef.current?.fitBounds(bounds, {
-      padding: 50,
+      padding: 250,
     });
   }, [prisine, query]);
 
@@ -120,7 +120,7 @@ export function Map() {
       initialViewState={viewState}
       mapboxAccessToken={mapboxToken}
       onMoveEnd={updateBoundsQuery}
-      style={{ width: "100%", height: "600px", flexBasis: "600px", flex: 1 }}
+      style={{ width: "100%", height: "100%", flexBasis: "600px", flex: 1 }}
       mapStyle="mapbox://styles/mapbox/streets-v9"
       ref={mapRef}
       attributionControl={false}
