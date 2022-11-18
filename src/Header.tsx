@@ -6,7 +6,7 @@ import { SearchBox } from "./Searchbox";
 export function Header() {
   const { setShowFilter, setShowResults, showFilter, showResults } =
     React.useContext(AppContext);
-  const {current, setCurrent} = React.useContext(AppContext);
+  const { current, setCurrent } = React.useContext(AppContext);
 
   function handleAddresses() {
     setShowResults(!showResults);
@@ -20,6 +20,14 @@ export function Header() {
         <div className="header--buttons">
           <button onClick={() => setShowFilter(!showFilter)}>Filters</button>
           <button onClick={handleAddresses}>Adressen</button>
+          <a
+            className="button"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://forms.gle/nxGbtVxoCiYgB83S6"
+          >
+            Feedback
+          </a>
         </div>
       </div>
       <div className="search-bar-wrapper">

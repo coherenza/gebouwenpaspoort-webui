@@ -13,6 +13,8 @@ import { Details } from "./Details";
 import { Results } from "./Results";
 import { Filters } from "./Filters";
 import { Header } from "./Header";
+import { KeyboardHandler } from "./KeyboardHandler";
+import { MapProvider } from "react-map-gl";
 
 interface AppContextI {
   setCurrent: (gebouw: Gebouw) => void;
@@ -42,20 +44,23 @@ const App = () => {
         setShowResults,
       }}
     >
-      <InstantSearch indexName={indexName} searchClient={searchClient}>
-        <div className="app">
-          <Configure
-            hitsPerPage={50}
-            attributesToSnippet={["description:50"]}
-            snippetEllipsisText={"..."}
-          />
-          <Map />
-          <Header />
-          <Filters />
-          <Results/>
-          <Details />
-        </div>
-      </InstantSearch>
+      <MapProvider>
+        <InstantSearch indexName={indexName} searchClient={searchClient}>
+          <div className="app">
+            <Configure
+              hitsPerPage={50}
+              attributesToSnippet={["description:50"]}
+              snippetEllipsisText={"..."}
+            />
+            <Map />
+            <Header />
+            <Filters />
+            <Results />
+            <Details />
+          </div>
+          <KeyboardHandler />
+        </InstantSearch>
+      </MapProvider>
     </AppContext.Provider>
   );
 };

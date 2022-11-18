@@ -40,6 +40,7 @@ body {
   left: 0;
   top: 0;
   bottom: 0;
+  z-index: 2;
   width: var(--results-width);
   box-shadow: var(--box-shadow);
 }
@@ -54,7 +55,7 @@ body {
 .ais-RefinementList-count {
   font-size: 0.8rem;
   background-color: var(--g1);
-  color: var(--g3);
+  color: var(--g4);
   padding: 0.1rem;
   border-radius: var(--border-radius);
   margin-left: 0.3rem;

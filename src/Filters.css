@@ -1,7 +1,13 @@
 .filter-panel {
   max-width: 20rem;
+  display: none;
+}
+
+.filter-panel--open {
+  display: block;
 }
 
 .filters {
   padding: 1rem;
+  overflow-y: auto;
 }

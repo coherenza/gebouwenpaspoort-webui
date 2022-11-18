@@ -8,7 +8,12 @@ import React, {
 } from "react";
 import "./Map.css";
 import { useGeoSearch } from "./useGeoSearch";
-import MapGL, { MapRef, Marker } from "react-map-gl";
+import MapGL, {
+  FullscreenControl,
+  GeolocateControl,
+  MapRef,
+  Marker,
+} from "react-map-gl";
 import { LngLatBounds } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { AppContext } from "./App";
@@ -24,10 +29,15 @@ export const mapStartState = {
   zoom: 11,
 };
 
-export const startBounds: LngLatBounds = {
-  northEast: { lng: 5.213937031523301, lat: 52.15495150795488 },
-  southWest: { lng: 5.0036518447552965, lat: 52.03357469016032 },
+export const startBoundsInstant = {
+  northEast: { lng: 5.2739270893989385, lat: 52.173599476147416 },
+  southWest: { lng: 4.975922939008171, lat: 52.013504913663525 },
 };
+
+export const startBounds = new LngLatBounds(
+  startBoundsInstant.northEast,
+  startBoundsInstant.southWest
+);
 
 export function Map() {
   const { items, refine } = useGeoSearch();
@@ -79,7 +89,7 @@ export function Map() {
       { lat: highLat, lng: highLng },
       { lat: lowLat, lng: lowLng }
     );
-    console.log('bounds', bounds)
+    console.log("bounds", bounds);
 
     mapRef.current?.fitBounds(bounds, {
       padding: 250,
@@ -92,6 +102,7 @@ export function Map() {
       return;
     }
     const bounds = mapRef.current.getMap().getBounds();
+    console.log("bounds", bounds);
     refine({
       northEast: bounds.getNorthEast(),
       southWest: bounds.getSouthWest(),
@@ -114,7 +125,7 @@ export function Map() {
             key={`${item.id} ${isCurrent}`}
             color={isCurrent ? "#000000" : "#FF0000"}
             style={{
-              zIndex: isCurrent ? 100 : 0,
+              zIndex: isCurrent ? 1 : 0,
             }}
           ></Marker>
         );
@@ -124,14 +135,17 @@ export function Map() {
 
   return (
     <MapGL
+      id="mainMap"
       initialViewState={viewState}
       mapboxAccessToken={mapboxToken}
+      // maxBounds={startBounds}
       onMoveEnd={updateBoundsQuery}
       style={{ width: "100%", height: "100%", flexBasis: "600px", flex: 1 }}
       mapStyle="mapbox://styles/mapbox/streets-v9"
       ref={mapRef}
       attributionControl={false}
     >
+      <GeolocateControl position={"bottom-left"} />
       {markers}
     </MapGL>
   );

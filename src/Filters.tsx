@@ -8,11 +8,12 @@ import { AppContext } from "./App";
 
 export function Filters({}) {
   const { showFilter, setShowFilter } = useContext(AppContext);
-  if (!showFilter) {
-    return null;
-  }
   return (
-    <div className="Sidebar filter-panel">
+    <div
+      className={`Sidebar filter-panel ${
+        showFilter ? "filter-panel--open" : ""
+      }`}
+    >
       <div className="Titlebar">
         <h3>Filters</h3>
         <button onClick={() => setShowFilter(false)}>Sluit</button>
@@ -26,7 +27,7 @@ export function Filters({}) {
               label: item.label,
             };
           })}
-          defaultValue={sortProps[0].sortBy}
+          // defaultValue={sortProps[0].sortBy}
         />
         {filterProps.map((prop) => {
           return <Filter key={prop.label} {...prop} />;

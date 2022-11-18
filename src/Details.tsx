@@ -16,9 +16,16 @@ export function Details() {
         <>
           <div className="Titlebar Titlebar--padded">
             <h3>{current["bag-num-volledig"]} </h3>
+            <a
+              className="button"
+              rel="noopener noreferrer"
+              target="_blank"
+              href={`https://app.slagboomenpeeters.com/c37aae05-9e9a-4210-a1b8-d957367fc978?z=12&mode=oblique&x=${x}&y=${y}`}
+            >
+              luchtfoto
+            </a>
             <button onClick={() => setCurrent(undefined)}>sluit</button>
           </div>
-          <a href={`https://app.slagboomenpeeters.com/c37aae05-9e9a-4210-a1b8-d957367fc978?z=12&mode=oblique&x=${x}&y=${y}`}>luchtfoto</a>
           <HitProps hit={current} />
         </>
       ) : (
