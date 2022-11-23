@@ -1,6 +1,5 @@
-import { Index, MeiliSearch } from 'meilisearch'
-import testData from '../testData.json'
-import { indexName, server } from './config';
+import { MeiliSearch } from 'meilisearch'
+import { indexName, meiliKey, server } from './config';
 import { filterProps, GBPObject } from './schema';
 
 function mapLocation(location: any): GBPObject {
@@ -25,25 +24,9 @@ function mapLocation(location: any): GBPObject {
 const filterableProps = filterProps.map((prop) => prop.propKey);
 filterableProps.push("_geo");
 
-export async function importData() {
-  const client = new MeiliSearch({ host: server })
-  // await client.deleteIndex(indexName)
+export async function setIndexes() {
+  const client = new MeiliSearch({ host: server, apiKey: meiliKey })
   const index = client.index(indexName);
-  // createSolrQuery(index);
   index.updateFilterableAttributes(filterableProps);
-  index.updateSynonyms({
-    "afval": ["vuilnis", "container"],
-    "vuilnis": ["afval", "container"],
-  })
   index.updateSortableAttributes(["bag-num-volledig", "bag-num-huisnummer"]);
 }
-
-// export async function importDataDemo() {
-//   const client = new MeiliSearch({ host: server })
-//   await client.deleteIndex(indexName)
-//   const index = client.index(indexName);
-//   index.addDocuments(testData)
-//   index.updateFilterableAttributes(filterProps.map((prop) => prop.propKey))
-//   index.updateSortableAttributes(["bag-num-volledig"])
-//   index.updateSynonyms(synonyns)
-// }
