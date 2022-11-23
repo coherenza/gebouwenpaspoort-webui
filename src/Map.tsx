@@ -17,7 +17,7 @@ import MapGL, {
 import { LngLatBounds } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { AppContext } from "./App";
-import { Gebouw } from "./schema";
+import { GBPObject } from "./schema";
 import { useSearchBox } from "react-instantsearch-hooks-web";
 
 const mapboxToken =
@@ -117,7 +117,7 @@ export function Map() {
         const isCurrent = item.id == current?.id;
         return (
           <Marker
-            onClick={() => setCurrent(item as unknown as Gebouw)}
+            onClick={() => setCurrent(item as unknown as GBPObject)}
             longitude={item._geoloc.lng}
             latitude={item._geoloc.lat}
             anchor="bottom"
