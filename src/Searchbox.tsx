@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   useClearRefinements,
+  useHits,
   useSearchBox,
   useSortBy,
 } from "react-instantsearch-hooks-web";
@@ -14,20 +15,24 @@ export const SearchBox = () => {
   const { refine, clear } = useSearchBox();
   let { refine: clearRefinements } = useClearRefinements();
   let { refine: clearGeo } = useGeoSearch();
-  let {mainMap: map} = useMap();
+  let { mainMap: map } = useMap();
+
 
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 100);
 
-  let handleReset = useCallback((e) => {
-    e.preventDefault();
-    refine("");
-    clear();
-    clearGeo(startBoundsInstant);
-    map?.fitBounds(startBounds);
-    clearRefinements();
-    setSearchTerm("");
-  }, [map]);
+  let handleReset = useCallback(
+    (e) => {
+      e.preventDefault();
+      refine("");
+      clear();
+      clearGeo(startBoundsInstant);
+      map?.fitBounds(startBounds);
+      clearRefinements();
+      setSearchTerm("");
+    },
+    [map]
+  );
 
   let handleSetSearchTerm = useCallback((e) => {
     setSearchTerm(e.target.value);

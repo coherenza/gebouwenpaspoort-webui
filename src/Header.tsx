@@ -2,6 +2,7 @@ import "./Header.css";
 import React from "react";
 import { AppContext } from "./App";
 import { SearchBox } from "./Searchbox";
+import { useHits } from "react-instantsearch-hooks-web";
 
 export function Header() {
   const { setShowFilter, setShowResults, showFilter, showResults } =
@@ -12,6 +13,10 @@ export function Header() {
     setShowResults(!showResults);
     setCurrent(undefined);
   }
+  let {
+    results: { nbHits },
+    hits,
+  } = useHits()
 
   return (
     <div className="app-header">
@@ -31,8 +36,9 @@ export function Header() {
         </div>
       </div>
       <div className="search-bar-wrapper">
-        <SearchBox />
+        <SearchBox/>
       </div>
+      <div className="app-header__results-count">{hits.length} / {nbHits} resultaten zichtbaar</div>
     </div>
   );
 }

@@ -65,6 +65,7 @@ const HitProps = ({ hit }) => {
               key={`val-${key}`}
               attribute={key}
               hit={hit}
+              // @ts-ignore
               tagName="mark"
             />
           </>

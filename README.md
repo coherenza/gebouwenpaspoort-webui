@@ -16,4 +16,9 @@ pnpm dev
 # Search things!
 ```
 
-- If you want maps, add a `.env` file with `VITE_GOOGLE_MAPS_API_KEY={key}`
+Create a `.env` to set some optional vars, which are important to set in production.
+
+```ini
+VITE_MEILI_API_KEY={key}
+VITE_MEILI_SERVER={url}
+```

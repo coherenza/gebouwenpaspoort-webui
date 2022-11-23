@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "deploy": "deploy-gh",
     "import": "tsc && vite build",
     "preview": "vite preview"
   },
@@ -27,6 +28,7 @@
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
     "@vitejs/plugin-react": "^2.2.0",
+    "deploy-gh": "^0.2.1",
     "typescript": "^4.6.4",
     "vite": "^3.2.3"
   }
