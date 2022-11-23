@@ -22,3 +22,16 @@ Create a `.env` to set some optional vars, which are important to set in product
 VITE_MEILI_API_KEY={key}
 VITE_MEILI_SERVER={url}
 ```
+
+## Deploying
+
+- Front on Github pages, just push and the CI action will do the rest. [https://gbp2.pandata.nl]
+- Meilisearch on DigitalOcean at [http://meili.pandata.nl:7700], see command below:
+
+```h
+docker run -it --rm \
+  -p 7700:7700 \
+  -e MEILI_MASTER_KEY='masterkey'\
+  -v $(pwd)/meili_data:/meili_data \
+  getmeili/meilisearch:v0.29
+````
