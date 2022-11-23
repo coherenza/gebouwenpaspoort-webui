@@ -17,8 +17,7 @@ jobs:
             - recursive: true
               args: [--frozen-lockfile, --strict-peer-dependencies]
             - args: [--global, gulp, prettier, typescript]
-      # pnpm install
-      - run: pnpm install --frozen-lockfile --strict-peer-dependencies
+      - run: pnpm build --frozen-lockfile
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
