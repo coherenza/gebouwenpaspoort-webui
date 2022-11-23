@@ -1,10 +1,43 @@
 import { indexName } from "./config";
 
-export interface FilterProp {
-  label: string;
-  propKey: string;
-  type: "single" | "multi" | "geo" | "date" | "range";
-}
+// searchableAttributes determines the attribute ranking order (and also which attributes are searchable).
+export const searchableAttributes = [
+  "bag-wpl-naam",
+  "bwk-num-wijknaam",
+  "bwk-num-subwijknaam",
+  "bwk-num-buurtnaam",
+  "bwk-num-subbuurtnaam",
+  "bag-num-postcode",
+  "bag-num-postcode-neven",
+  "bag-opr-naam",
+  "bag-opr-naam-neven",
+  "bag-num-volledig",
+  "bag-num-volledig-neven",
+  
+  "bag-aob-oppervlakte",
+  "bag-pnd-oorspronkelijk-bouwjaar",
+  "bag-aob-gebruiksdoel",
+  "bwk-num-nadergebruiksdoel",
+
+  "_geo",
+  "bag-aob-geo-EPSG28992",
+  "bwk-num-geo-EPSG28992",
+
+  "id",
+  "pdok-locatie-id",
+  "bag-pnd-id",
+  "bag-aob-id",
+  "bag-num-id",
+  "bag-num-id-neven",
+  "bag-opr-id",
+  "bag-opr-id-neven",
+  "bwk-num-subbuurtid",
+  "bwk-num-buurtid",
+  "bwk-num-subwijkid",
+  "bwk-num-wijkid",
+  "bag-wpl-id",
+  "bag-wpl-id-neven",
+];
 
 export interface SortProp {
   /** {index}:{propKey}:{asc/desc} */
@@ -17,6 +50,12 @@ export const sortProps: SortProp[] = [
   { sortBy: `${indexName}:bag-num-huisnummer:asc`, label: "Huisnummer" },
   { sortBy: `${indexName}:bag-num-volledig:asc`, label: "Adres" },
 ];
+
+export interface FilterProp {
+  label: string;
+  propKey: string;
+  type: "single" | "multi" | "geo" | "date" | "range";
+}
 
 export const filterProps: FilterProp[] = [
   { propKey: "bag-aob-gebruiksdoel", label: "Gebruiksdoel", type: "multi" },

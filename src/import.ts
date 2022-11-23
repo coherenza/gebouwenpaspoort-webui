@@ -1,7 +1,7 @@
 import { Index, MeiliSearch } from 'meilisearch'
 import testData from '../testData.json'
 import { indexName, server } from './config';
-import { filterProps, GBPObject } from './schema';
+import { searchableAttributes, filterProps, GBPObject } from './schema';
 
 async function createSolrQuery(index: Index) {
 
@@ -59,6 +59,8 @@ export async function importData() {
   // await client.deleteIndex(indexName)
   const index = client.index(indexName);
   // createSolrQuery(index);
+  // Eigenlijk moet je de volgende promises awaiten, en dan een response geven?
+  index.updateSearchableAttributes(searchableAttributes);
   index.updateFilterableAttributes(filterableProps);
   index.updateSynonyms({
     "afval": ["vuilnis", "container"],
