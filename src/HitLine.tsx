@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { Gebouw } from "./schema";
+import { GBPObject } from "./schema";
 import "./Hit.css";
 import { AppContext } from "./App";
 
 interface HitProps {
-  hit: Gebouw;
+  hit: GBPObject;
 }
 
 export const HitLine = ({ hit }: HitProps) => {

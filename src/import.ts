@@ -1,7 +1,7 @@
 import { Index, MeiliSearch } from 'meilisearch'
 import testData from '../testData.json'
 import { indexName, server } from './config';
-import { filterProps, Gebouw } from './schema';
+import { filterProps, GBPObject } from './schema';
 
 async function createSolrQuery(index: Index) {
 
@@ -23,16 +23,16 @@ async function createSolrQuery(index: Index) {
 
 }
 
-function parseResponse(response: any): Gebouw[] {
+function parseResponse(response: any): GBPObject[] {
   let gebouwen = [];
     response['response']['docs'].forEach((doc: any) => {
       console.log('doc', doc);
-      gebouwen.push(mapLocation(doc) as Gebouw)
+      gebouwen.push(mapLocation(doc) as GBPObject)
     })
   return gebouwen
 }
 
-function mapLocation(location: any): Gebouw {
+function mapLocation(location: any): GBPObject {
   // e.g. "52.106468,5.090403"
   let str = location["bwk-num-lat-lon"];
   if (!str) {

@@ -6,7 +6,7 @@ import "./global.css";
 import React, { createContext } from "react";
 import { InstantSearch, Configure } from "react-instantsearch-hooks-web";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
-import { Gebouw } from "./schema";
+import { GBPObject } from "./schema";
 import { indexName, server } from "./config";
 import { Map } from "./Map";
 import { Details } from "./Details";
@@ -17,8 +17,8 @@ import { KeyboardHandler } from "./KeyboardHandler";
 import { MapProvider } from "react-map-gl";
 
 interface AppContextI {
-  setCurrent: (gebouw: Gebouw) => void;
-  current: Gebouw | undefined;
+  setCurrent: (gebouw: GBPObject) => void;
+  current: GBPObject | undefined;
   setShowResults: (b: boolean) => void;
   showResults: boolean;
   setShowFilter: (b: boolean) => void;
