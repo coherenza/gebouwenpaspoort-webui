@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect } from "react";
 import { AppContext } from "./App";
 
-export function KeyboardHandler() {
+export function KeyboardHandler({children}) {
   const {
     current,
     setCurrent,
@@ -53,5 +53,5 @@ export function KeyboardHandler() {
     };
   }, [handleUserKeyPress]);
 
-  return <>key</>;
+  return <>{children}</>;
 }
