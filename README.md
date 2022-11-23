@@ -19,5 +19,6 @@ pnpm dev
 Create a `.env` to set some optional vars, which are important to set in production.
 
 ```ini
-MEILI_API_KEY={key}
+VITE_MEILI_API_KEY={key}
+VITE_MEILI_SERVER={url}
 ```
