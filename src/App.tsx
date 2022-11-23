@@ -3,7 +3,7 @@ import "./reset.css";
 import "./App.css";
 import "./global.css";
 
-import React, { createContext, useMemo } from "react";
+import React, { createContext, useEffect, useMemo } from "react";
 import { InstantSearch, Configure } from "react-instantsearch-hooks-web";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import { GBPObject, sortProps } from "./schema";
@@ -34,6 +34,7 @@ const App = () => {
   const [showFilter, setShowFilter] = React.useState(false);
   const [showResults, setShowResults] = React.useState(false);
   const [apiKeyTemp, setApiKeyTemp] = React.useState("");
+  const [validApiKey, setValidApiKey] = React.useState(false);
   const [apiKey, setApiKey] = useLocalStorage("apiKey", meiliKey);
 
   const searchClient = useMemo(() => {
@@ -42,19 +43,25 @@ const App = () => {
 
   async function handleSetApiKey(e) {
     e.preventDefault();
-    // try sending a request to meilisearch with apikey bearer token
-    let resp = await fetch(server + "/indexes",{
+    setApiKey(apiKeyTemp);
+  }
+
+  // try API key, set invalid if not correct
+  useEffect(() => {
+    fetch(server + "/indexes",{
       headers: {
         'Authorization': 'Bearer ' + apiKeyTemp
       }
+    }).then((res) => {
+      if (!res.ok) {
+        setValidApiKey(false)
+        if (apiKey !== undefined) {
+          window.alert("Invalid API key")
+        }
+      }
+      else setValidApiKey(true)
     });
-    if (resp.ok) {
-      setApiKey(apiKeyTemp);
-    }
-    else (
-      window.alert("Invalid API key")
-    )
-  }
+  }, [apiKey]);
 
   return (
     <AppContext.Provider
@@ -78,14 +85,15 @@ const App = () => {
           }}
         >
           <div className="app">
-            {!apiKey && (
+            {!validApiKey && (
               <form onSubmit={handleSetApiKey} className="app__api-key">
                 <input
-                  placeholder="Voer de API sleutel in"
+                  autoFocus
+                  placeholder="Voer de sleutel in"
                   value={apiKeyTemp}
                   onChange={(e) => setApiKeyTemp(e.target.value)}
                 />
-                <button type="submit">set </button>
+                <button type="submit">opslaan</button>
               </form>
             )}
             <Configure
