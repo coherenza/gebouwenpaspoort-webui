@@ -27,7 +27,6 @@ export function Filters({}) {
               label: item.label,
             };
           })}
-          // defaultValue={sortProps[0].sortBy}
         />
         {filterProps.map((prop) => {
           return <Filter key={prop.label} {...prop} />;

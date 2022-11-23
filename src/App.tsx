@@ -6,7 +6,7 @@ import "./global.css";
 import React, { createContext } from "react";
 import { InstantSearch, Configure } from "react-instantsearch-hooks-web";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
-import { GBPObject } from "./schema";
+import { GBPObject, sortProps } from "./schema";
 import { indexName, server } from "./config";
 import { Map } from "./Map";
 import { Details } from "./Details";
@@ -25,8 +25,9 @@ interface AppContextI {
   showFilter: boolean;
 }
 
-const searchClient = instantMeiliSearch(server);
+const searchClient = instantMeiliSearch(server, );
 export const AppContext = createContext<AppContextI>(undefined);
+export const hitCount = 500;
 
 const App = () => {
   const [current, setCurrent] = React.useState(undefined);
@@ -45,10 +46,18 @@ const App = () => {
       }}
     >
       <MapProvider>
-        <InstantSearch indexName={indexName} searchClient={searchClient}>
+        <InstantSearch
+          indexName={indexName}
+          searchClient={searchClient}
+          initialUiState={{
+            gbp: {
+              sortBy: sortProps[0].sortBy,
+            },
+          }}
+        >
           <div className="app">
             <Configure
-              hitsPerPage={50}
+              hitsPerPage={hitCount}
               attributesToSnippet={["description:50"]}
               snippetEllipsisText={"..."}
             />

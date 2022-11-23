@@ -1,6 +1,6 @@
 import "./Header.css";
 import React from "react";
-import { AppContext, hitCount } from "./App";
+import { AppContext } from "./App";
 import { SearchBox } from "./Searchbox";
 import { useHits } from "react-instantsearch-hooks-web";
 
