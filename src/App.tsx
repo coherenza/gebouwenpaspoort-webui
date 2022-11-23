@@ -48,18 +48,17 @@ const App = () => {
 
   // try API key, set invalid if not correct
   useEffect(() => {
-    fetch(server + "/indexes",{
+    console.log("APIKEY: ", apiKey);
+    fetch(server + "/indexes", {
       headers: {
-        'Authorization': 'Bearer ' + apiKeyTemp
-      }
+        Authorization: "Bearer " + apiKey,
+      },
     }).then((res) => {
-      if (!res.ok) {
-        setValidApiKey(false)
-        if (apiKey !== undefined) {
-          window.alert("Invalid API key")
-        }
+      if (res.ok) {
+        setValidApiKey(true);
+      } else {
+        setValidApiKey(false);
       }
-      else setValidApiKey(true)
     });
   }, [apiKey]);
 
@@ -84,29 +83,30 @@ const App = () => {
             },
           }}
         >
-          <div className="app">
-            {!validApiKey && (
-              <form onSubmit={handleSetApiKey} className="app__api-key">
-                <input
-                  autoFocus
-                  placeholder="Voer de sleutel in"
-                  value={apiKeyTemp}
-                  onChange={(e) => setApiKeyTemp(e.target.value)}
-                />
-                <button type="submit">opslaan</button>
-              </form>
-            )}
-            <Configure
-              hitsPerPage={hitCount}
-              attributesToSnippet={["description:50"]}
-              snippetEllipsisText={"..."}
-            />
-            <Map />
-            <Header />
-            <Filters />
-            <Results />
-            <Details />
-          </div>
+          {!validApiKey ? (
+            <form onSubmit={handleSetApiKey} className="app__api-key">
+              <input
+                autoFocus
+                placeholder="Voer de sleutel in"
+                value={apiKeyTemp}
+                onChange={(e) => setApiKeyTemp(e.target.value)}
+              />
+              <button type="submit">opslaan</button>
+            </form>
+          ) : (
+            <div className="app">
+              <Configure
+                hitsPerPage={hitCount}
+                attributesToSnippet={["description:50"]}
+                snippetEllipsisText={"..."}
+              />
+              <Map />
+              <Header />
+              <Filters />
+              <Results />
+              <Details />
+            </div>
+          )}
           <KeyboardHandler />
         </InstantSearch>
       </MapProvider>

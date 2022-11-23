@@ -36,7 +36,7 @@ export function Header() {
         </div>
       </div>
       <div className="search-bar-wrapper">
-        <SearchBox />
+        <SearchBox/>
       </div>
       <div className="app-header__results-count">{hits.length} / {nbHits} resultaten zichtbaar</div>
     </div>
