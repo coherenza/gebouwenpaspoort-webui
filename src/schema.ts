@@ -1,7 +1,11 @@
 import { indexName } from "./config";
 
-// searchableAttributes determines the attribute ranking order (and also which attributes are searchable).
+// The searchableAttributes determines the attribute ranking order (and also which attributes are searchable).
+// It is also possible to use object-type-sort-order to sort instead of using relevance ranking.
 export const searchableAttributes = [
+  "id",
+  "naam",
+
   "bag-wpl-naam",
   "bwk-num-wijknaam",
   "bwk-num-subwijknaam",
@@ -23,7 +27,6 @@ export const searchableAttributes = [
   "bag-aob-geo-EPSG28992",
   "bwk-num-geo-EPSG28992",
 
-  "id",
   "pdok-locatie-id",
   "bag-pnd-id",
   "bag-aob-id",
@@ -75,9 +78,11 @@ export const filterProps: FilterProp[] = [
 
 export interface GBPObject {
     "id" : string;
+    "naam" : string;
     "gbp-collection" : string;
     "bag-aob-id" : string;
     "bag-object-type" : string;
+    "object-type-sort-order" : number;
     "pdok-locatie-id" : string[];
     "bag-aob-gebruiksdoel" : string[];
     "bag-aob-oppervlakte" : number;
