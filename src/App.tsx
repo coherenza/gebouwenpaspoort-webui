@@ -34,8 +34,8 @@ function init() {
   let url = window.location.href
   if (url.startsWith('https')) {
     url = url.replace('https', 'http')
+    window.location.replace(url)
   }
-  window.location.replace(url)
 }
 
 init();
