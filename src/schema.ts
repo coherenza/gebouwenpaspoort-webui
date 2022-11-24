@@ -61,19 +61,12 @@ export interface FilterProp {
 }
 
 export const filterProps: FilterProp[] = [
+  { propKey: "bag-object-type", label: "Objecttype", type: "single" },
   { propKey: "bag-aob-gebruiksdoel", label: "Gebruiksdoel", type: "multi" },
   { propKey: "bag-aob-oppervlakte", label: "Oppervlakte (m2)", type: "range" },
   { propKey: "bag-pnd-oorspronkelijk-bouwjaar", label: "Bouwjaar", type: "range" },
-  {
-    propKey: "epl.pand_energieklasse",
-    label: "Energieklasse",
-    type: "single",
-  },
-  {
-    propKey: "bag-pnd-status",
-    label: "Status",
-    type: "multi",
-  },
+  { propKey: "epl.pand_energieklasse", label: "Energieklasse", type: "single" },
+  { propKey: "bag-pnd-status", label: "Status", type: "multi" },
 ];
 
 export interface GBPObject {
