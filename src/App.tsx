@@ -38,7 +38,7 @@ function init() {
   window.location.replace(url)
 }
 
-init();
+// init();
 
 const App = () => {
   const [current, setCurrent] = React.useState(undefined);
