@@ -43,15 +43,15 @@ export const searchableAttributes = [
 ];
 
 export interface SortProp {
-  /** {index}:{propKey}:{asc/desc} */
-  sortBy: string,
-  label: string,
+  sortBy: string; /** {index}:{propKey}:{asc/desc} */
+  attribute: string;
+  label: string;
 }
 
 export const sortProps: SortProp[] = [
-  { sortBy: `${indexName}:bag-num-huisnummer:asc`, label: "Huisnummer" },
-  { sortBy: `${indexName}`, label: "Relevantie" },
-  { sortBy: `${indexName}:bag-num-volledig:asc`, label: "Adres" },
+  { sortBy: `${indexName}:object-type-sort-order:asc`, attribute: 'object-type-sort-order',  label: "Object type" },
+  { sortBy: `${indexName}`, attribute: '', label: "Relevantie" },
+  { sortBy: `${indexName}:bag-num-volledig:asc`, attribute: 'bag-num-volledig', label: "Adres" },
 ];
 
 export interface FilterProp {
