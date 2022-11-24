@@ -5,6 +5,13 @@
   /* all: unset; */
   padding: .2rem;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+}
+
+.Hit>div {
+  flex: 1 0 auto;
+  width: 50%;
 }
 
 .Hit:hover {

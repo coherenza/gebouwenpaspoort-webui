@@ -12,7 +12,7 @@ export function Results() {
   return (
     <div className={`Sidebar Results ${open ? "Results--open" : ""}`}>
       <div className="Titlebar Titlebar--padded">
-        <h3>Adressen</h3>
+        <h3>Resultaten</h3>
         <button onClick={() => setShowResults(false)}>Sluit</button>
       </div>
       {/* @ts-ignore */}
