@@ -36,3 +36,5 @@ docker run -it \
   -v $(pwd)/meili_data:/meili_data \
   getmeili/meilisearch:v0.29
 ````
+
+<video src="https://user-images.githubusercontent.com/2183313/203753767-f1efe496-2503-4785-ad21-d52223b6975e.mov" />

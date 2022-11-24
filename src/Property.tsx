@@ -10,7 +10,6 @@ import {
 export const Filter = (filter: FilterProp) => {
   return (
     <Panel title={filter.label} id={filter.propKey} startOpen={filter.type != "range"}>
-      {filter.type === "single" && (<Menu attribute={filter.propKey} />)}
       {filter.type === "multi" && (<RefinementList attribute={filter.propKey} operator="and" />)}
       {filter.type === "range" && (<RangeInput attribute={filter.propKey} />)}
     </Panel>

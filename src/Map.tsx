@@ -13,6 +13,7 @@ import MapGL, {
   GeolocateControl,
   MapRef,
   Marker,
+  NavigationControl,
 } from "react-map-gl";
 import { LngLatBounds } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -145,6 +146,7 @@ export function Map() {
       ref={mapRef}
       attributionControl={false}
     >
+      <NavigationControl position={"bottom-right"} />
       <GeolocateControl position={"bottom-left"} />
       {markers}
     </MapGL>
