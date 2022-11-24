@@ -13,6 +13,7 @@ import MapGL, {
   GeolocateControl,
   MapRef,
   Marker,
+  NavigationControl,
 } from "react-map-gl";
 import { LngLatBounds } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -122,7 +123,7 @@ export function Map() {
             latitude={item._geoloc.lat}
             anchor="bottom"
             // We need this key to make sure the content re-renders, for some reason color changes don't trigger an update
-            key={`${item.id} ${isCurrent}`}
+            k={`${item.id} ${isCurrent}`}
             color={isCurrent ? "#000000" : "#FF0000"}
             style={{
               zIndex: isCurrent ? 1 : 0,
@@ -145,6 +146,7 @@ export function Map() {
       ref={mapRef}
       attributionControl={false}
     >
+      <NavigationControl position={"bottom-right"} />
       <GeolocateControl position={"bottom-left"} />
       {markers}
     </MapGL>
