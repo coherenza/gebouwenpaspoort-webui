@@ -29,6 +29,17 @@ interface AppContextI {
 export const AppContext = createContext<AppContextI>(undefined);
 export const hitCount = 500;
 
+function init() {
+  // Remove HTTPS because of CORS
+  let url = window.location.href
+  if (url.startsWith('https')) {
+    url.replace('https', 'http')
+  }
+  window.location.replace(url)
+}
+
+init();
+
 const App = () => {
   const [current, setCurrent] = React.useState(undefined);
   const [showFilter, setShowFilter] = React.useState(false);
