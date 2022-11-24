@@ -1,5 +1,5 @@
 import { Configure, SortBy } from "react-instantsearch-hooks-web";
-import { importData } from "./import";
+import { setIndexes } from "./import";
 import { Filter } from "./Property";
 import "./Filters.css";
 import { filterProps, sortProps } from "./schema";
@@ -31,7 +31,7 @@ export function Filters({}) {
         {filterProps.map((prop) => {
           return <Filter key={prop.label} {...prop} />;
         })}
-        <button onClick={importData}>run import</button>
+        <button onClick={setIndexes}>set indexes</button>
       </div>
     </div>
   );

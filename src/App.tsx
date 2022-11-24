@@ -29,6 +29,17 @@ interface AppContextI {
 export const AppContext = createContext<AppContextI>(undefined);
 export const hitCount = 500;
 
+function init() {
+  // Remove HTTPS because of CORS
+  let url = window.location.href
+  if (url.startsWith('https')) {
+    url = url.replace('https', 'http')
+    window.location.replace(url)
+  }
+}
+
+init();
+
 const App = () => {
   const [current, setCurrent] = React.useState(undefined);
   const [showFilter, setShowFilter] = React.useState(false);
@@ -83,31 +94,32 @@ const App = () => {
             },
           }}
         >
-          {!validApiKey ? (
-            <form onSubmit={handleSetApiKey} className="app__api-key">
-              <input
-                autoFocus
-                placeholder="Voer de sleutel in"
-                value={apiKeyTemp}
-                onChange={(e) => setApiKeyTemp(e.target.value)}
-              />
-              <button type="submit">opslaan</button>
-            </form>
-          ) : (
-            <div className="app">
-              <Configure
-                hitsPerPage={hitCount}
-                attributesToSnippet={["description:50"]}
-                snippetEllipsisText={"..."}
-              />
-              <Map />
-              <Header />
-              <Filters />
-              <Results />
-              <Details />
-            </div>
-          )}
-          <KeyboardHandler />
+          <KeyboardHandler>
+            {!validApiKey ? (
+              <form onSubmit={handleSetApiKey} className="app__api-key">
+                <input
+                  autoFocus
+                  placeholder="Voer de sleutel in"
+                  value={apiKeyTemp}
+                  onChange={(e) => setApiKeyTemp(e.target.value)}
+                />
+                <button type="submit">opslaan</button>
+              </form>
+            ) : (
+              <div className="app">
+                <Configure
+                  hitsPerPage={hitCount}
+                  attributesToSnippet={["description:50"]}
+                  snippetEllipsisText={"..."}
+                />
+                <Map />
+                <Header />
+                <Filters />
+                <Results />
+                <Details />
+              </div>
+            )}
+          </KeyboardHandler>
         </InstantSearch>
       </MapProvider>
     </AppContext.Provider>
