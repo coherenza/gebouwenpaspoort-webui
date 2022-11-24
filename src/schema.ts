@@ -3,7 +3,7 @@ import { indexName } from "./config";
 export interface FilterProp {
   label: string;
   propKey: string;
-  type: "single" | "multi" | "geo" | "date" | "range";
+  type: "multi" | "geo" | "date" | "range";
 }
 
 export interface SortProp {
@@ -25,7 +25,7 @@ export const filterProps: FilterProp[] = [
   {
     propKey: "epl.pand_energieklasse",
     label: "Energieklasse",
-    type: "single",
+    type: "multi",
   },
   {
     propKey: "bag-pnd-status",
