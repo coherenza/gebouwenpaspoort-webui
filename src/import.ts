@@ -27,7 +27,6 @@ filterableProps.push("_geo");
 export async function setIndexes() {
   const client = new MeiliSearch({ host: server, apiKey: meiliKey })
   const index = client.index(indexName);
-  // Eigenlijk moet je de volgende promises awaiten, en dan een response geven?
   index.updateSearchableAttributes(searchableAttributes);
   index.updateFilterableAttributes(filterableProps);
   index.updateSortableAttributes(["bag-num-volledig", "bag-num-huisnummer"]);
