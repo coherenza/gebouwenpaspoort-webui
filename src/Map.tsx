@@ -123,7 +123,7 @@ export function Map() {
             latitude={item._geoloc.lat}
             anchor="bottom"
             // We need this key to make sure the content re-renders, for some reason color changes don't trigger an update
-            k={`${item.id} ${isCurrent}`}
+            key={`${item.id} ${isCurrent}`}
             color={isCurrent ? "#000000" : "#FF0000"}
             style={{
               zIndex: isCurrent ? 1 : 0,
