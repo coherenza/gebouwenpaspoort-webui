@@ -83,7 +83,6 @@ export interface GBPObject {
     "bag-aob-documentdatum" : Date;
     "bag-aob-documentnummer" : string;
     "bag-aob-voorkomen" : number;
-    "bag-aob-geo-EPSG28992" : { "x" : number; "y" : number; "z" : number };
     "bag-num-id" : string;
     "bag-num-volledig" : string;
     "bag-num-postcode" : string;
@@ -121,7 +120,10 @@ export interface GBPObject {
     "bwk-num-status" : string[];
     "bwk-num-adrestype" : string[];
     "_geo" : { "lat" : number; "lng" : number };
+    "bag-aob-geo-EPSG28992" : { "x" : number; "y" : number; "z" : number };
     "bwk-num-geo-EPSG28992" : { "x" : number; "y" : number };
+    "geo_bbox" : { "lat" : number; "lng" : number }[];
+    "geo_polygon" : number[];
     "bwk-num-wijkid" : string;
     "bwk-num-wijkcode" : string;
     "bwk-num-wijknaam" : string;
