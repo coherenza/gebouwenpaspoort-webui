@@ -63,27 +63,40 @@ export function Map() {
     let lowLng = center.lng;
     let highLng = center.lng;
     items.forEach((item, i) => {
-      const { lat, lng } = item._geoloc;
+      let lat0, lat1, lng0, lng1;
+      if (item.geo_bbox) {
+        console.info(`bounds from geo_bbox: ${JSON.stringify(item.geo_bbox)}`);
+        lat0 = Math.min(item.geo_bbox[0].lat, item.geo_bbox[1].lat);
+        lat1 = Math.max(item.geo_bbox[0].lat, item.geo_bbox[1].lat);
+        lng0 = Math.min(item.geo_bbox[0].lng, item.geo_bbox[1].lng);
+        lng1 = Math.max(item.geo_bbox[0].lng, item.geo_bbox[1].lng);
+      } else {
+        const { lat, lng } = item._geoloc;
+        lat0 = lat;
+        lat1 = lat;
+        lng0 = lng;
+        lng1 = lng
+      }
       if (i == 0) {
-        lowLat = lat;
-        highLat = lat;
-        lowLng = lng;
-        highLng = lng;
-      }
-
-      // For some reason the extend method doesn't work, so we do it manually
-      // bounds.extend(item._geoloc);
-      if (lat < lowLat) {
-        lowLat = lat;
-      }
-      if (lat > highLat) {
-        highLat = lat;
-      }
-      if (lng < lowLng) {
-        lowLng = lng;
-      }
-      if (lng > highLng) {
-        highLng = lng;
+        lowLat = lat0;
+        highLat = lat1;
+        lowLng = lng0;
+        highLng = lng1;
+      } else {
+        // For some reason the extend method doesn't work, so we do it manually
+        // bounds.extend(item._geoloc);
+        if (lat0 < lowLat) {
+          lowLat = lat0;
+        }
+        if (lat1 > highLat) {
+          highLat = lat1;
+        }
+        if (lng0 < lowLng) {
+          lowLng = lng0;
+        }
+        if (lng1 > highLng) {
+          highLng = lng1;
+        }
       }
     });
     let bounds = new LngLatBounds(

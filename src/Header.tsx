@@ -24,7 +24,7 @@ export function Header() {
         <h2 className="logo">Gebouwenpaspoort</h2>
         <div className="header--buttons">
           <button onClick={() => setShowFilter(!showFilter)}>Filters</button>
-          <button onClick={handleAddresses}>Adressen</button>
+          <button onClick={handleAddresses}>Resultaten</button>
           <a
             className="button"
             rel="noopener noreferrer"

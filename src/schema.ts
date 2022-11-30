@@ -1,44 +1,81 @@
 import { indexName } from "./config";
 
-export interface FilterProp {
-  label: string;
-  propKey: string;
-  type: "multi" | "geo" | "date" | "range";
-}
+// The searchableAttributes determines the attribute ranking order (and also which attributes are searchable).
+// It is also possible to use object-type-sort-order to sort instead of using relevance ranking.
+export const searchableAttributes = [
+  "id",
+  "naam",
+
+  "bag-wpl-naam",
+  "bwk-num-wijknaam",
+  "bwk-num-subwijknaam",
+  "bwk-num-buurtnaam",
+  "bwk-num-subbuurtnaam",
+  "bag-num-postcode",
+  "bag-num-postcode-neven",
+  "bag-opr-naam",
+  "bag-opr-naam-neven",
+  "bag-num-volledig",
+  "bag-num-volledig-neven",
+  
+  "bag-aob-oppervlakte",
+  "bag-pnd-oorspronkelijk-bouwjaar",
+  "bag-aob-gebruiksdoel",
+  "bwk-num-nadergebruiksdoel",
+
+  "_geo",
+  "bag-aob-geo-EPSG28992",
+  "bwk-num-geo-EPSG28992",
+
+  "pdok-locatie-id",
+  "bag-pnd-id",
+  "bag-aob-id",
+  "bag-num-id",
+  "bag-num-id-neven",
+  "bag-opr-id",
+  "bag-opr-id-neven",
+  "bwk-num-subbuurtid",
+  "bwk-num-buurtid",
+  "bwk-num-subwijkid",
+  "bwk-num-wijkid",
+  "bag-wpl-id",
+  "bag-wpl-id-neven",
+];
 
 export interface SortProp {
-  /** {index}:{propKey}:{asc/desc} */
-  sortBy: string,
-  label: string,
+  sortBy: string; /** {index}:{propKey}:{asc/desc} */
+  attribute: string;
+  label: string;
 }
 
 export const sortProps: SortProp[] = [
-  { sortBy: `${indexName}:bag-num-huisnummer:asc`, label: "Huisnummer" },
-  { sortBy: `${indexName}`, label: "Relevantie" },
-  { sortBy: `${indexName}:bag-num-volledig:asc`, label: "Adres" },
+  { sortBy: `${indexName}:object-type-sort-order:asc`, attribute: 'object-type-sort-order',  label: "Object type" },
+  { sortBy: `${indexName}`, attribute: '', label: "Relevantie" },
+  { sortBy: `${indexName}:bag-num-volledig:asc`, attribute: 'bag-num-volledig', label: "Adres" },
 ];
 
+export interface FilterProp {
+  label: string;
+  propKey: string;
+  type: "single" | "multi" | "geo" | "date" | "range";
+}
+
 export const filterProps: FilterProp[] = [
+  { propKey: "bag-object-type", label: "Objecttype", type: "single" },
   { propKey: "bag-aob-gebruiksdoel", label: "Gebruiksdoel", type: "multi" },
   { propKey: "bag-aob-oppervlakte", label: "Oppervlakte (m2)", type: "range" },
   { propKey: "bag-pnd-oorspronkelijk-bouwjaar", label: "Bouwjaar", type: "range" },
-  {
-    propKey: "epl.pand_energieklasse",
-    label: "Energieklasse",
-    type: "multi",
-  },
-  {
-    propKey: "bag-pnd-status",
-    label: "Status",
-    type: "multi",
-  },
+  { propKey: "epl.pand_energieklasse", label: "Energieklasse", type: "single" },
+  { propKey: "bag-pnd-status", label: "Status", type: "multi" },
 ];
 
 export interface GBPObject {
     "id" : string;
+    "naam" : string;
     "gbp-collection" : string;
     "bag-aob-id" : string;
     "bag-object-type" : string;
+    "object-type-sort-order" : number;
     "pdok-locatie-id" : string[];
     "bag-aob-gebruiksdoel" : string[];
     "bag-aob-oppervlakte" : number;
@@ -46,7 +83,6 @@ export interface GBPObject {
     "bag-aob-documentdatum" : Date;
     "bag-aob-documentnummer" : string;
     "bag-aob-voorkomen" : number;
-    "bag-aob-geo-EPSG28992" : { "x" : number; "y" : number; "z" : number };
     "bag-num-id" : string;
     "bag-num-volledig" : string;
     "bag-num-postcode" : string;
@@ -84,7 +120,10 @@ export interface GBPObject {
     "bwk-num-status" : string[];
     "bwk-num-adrestype" : string[];
     "_geo" : { "lat" : number; "lng" : number };
+    "bag-aob-geo-EPSG28992" : { "x" : number; "y" : number; "z" : number };
     "bwk-num-geo-EPSG28992" : { "x" : number; "y" : number };
+    "geo_bbox" : { "lat" : number; "lng" : number }[];
+    "geo_polygon" : number[];
     "bwk-num-wijkid" : string;
     "bwk-num-wijkcode" : string;
     "bwk-num-wijknaam" : string;
