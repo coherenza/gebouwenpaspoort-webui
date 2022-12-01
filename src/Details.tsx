@@ -3,34 +3,58 @@ import { useContext } from "react";
 import { AppContext } from "./App";
 import { displaySchema as displayAttributes } from "./schema";
 import { AttributeView } from "./Attributes";
+import { getType, types } from "./utils";
 
 export function Details() {
   const { current, setCurrent } = useContext(AppContext);
   if (!current) {
     return null;
   }
-  const { x, y } = current["bag-aob-geo-EPSG28992"];
+
+  const geo = current["bag-aob-geo-EPSG28992"];
+
+  if (getType(current) !== types.verblijfsobject) {
+    return (
+      <div className="Sidebar details-panel">
+        <div className="Titlebar Titlebar--padded">
+          <button onClick={() => setCurrent(undefined)}>sluit</button>
+        </div>
+
+        <p>Weergave voor '{current["bag-object-type"]}' nog niet ondersteund, probeer de zoekbalk!</p>
+      </div>
+    );
+  }
   return (
     <div className="Sidebar details-panel">
       {current ? (
         <>
           <div className="Titlebar Titlebar--padded">
             <h3>{current[displayAttributes[0].id]} </h3>
-            <a
-              className="button"
-              rel="noopener noreferrer"
-              target="_blank"
-              href={`https://app.slagboomenpeeters.com/c37aae05-9e9a-4210-a1b8-d957367fc978?z=12&mode=oblique&x=${x}&y=${y}`}
-            >
-              luchtfoto
-            </a>
+            {geo && (
+              <a
+                className="button"
+                rel="noopener noreferrer"
+                target="_blank"
+                href={`https://app.slagboomenpeeters.com/c37aae05-9e9a-4210-a1b8-d957367fc978?z=12&mode=oblique&x=${geo.x}&y=${geo.y}`}
+              >
+                luchtfoto
+              </a>
+            )}
             <button onClick={() => setCurrent(undefined)}>sluit</button>
           </div>
-          {displayAttributes.map((attribute, i) => {
-            // we use the first attribute to render in the header
-            if (i == 0) return null;
-            return <AttributeView key={attribute.name} attribute={attribute} hit={current} />;
-          })}
+          <div className="Details__attributes">
+            {displayAttributes.map((attribute, i) => {
+              // we use the first attribute to render in the header
+              if (i == 0) return null;
+              return (
+                <AttributeView
+                  key={attribute.name}
+                  attribute={attribute}
+                  hit={current}
+                />
+              );
+            })}
+          </div>
         </>
       ) : (
         <>

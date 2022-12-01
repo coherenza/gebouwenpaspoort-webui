@@ -20,6 +20,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { AppContext } from "./App";
 import { GBPObject } from "./schema";
 import { useSearchBox } from "react-instantsearch-hooks-web";
+import { getType, types } from "./utils";
 
 const mapboxToken =
   "pk.eyJ1Ijoiam9lcGlvIiwiYSI6ImNqbTIzanZ1bjBkanQza211anFxbWNiM3IifQ.2iBrlCLHaXU79_tY9SVpXA";
@@ -126,16 +127,24 @@ export function Map() {
   const markers = useMemo(
     () =>
       items.map((item) => {
+        const isVBO = getType(item) === types.verblijfsobject;
         const isCurrent = item.id == current?.id;
+        const handleClick = () => {
+          if (isVBO) {
+            setCurrent(item as unknown as GBPObject);
+          } else {
+            // set the bounding box
+          }
+        }
         return (
           <Marker
-            onClick={() => setCurrent(item as unknown as GBPObject)}
+            onClick={handleClick}
             longitude={item._geoloc.lng}
             latitude={item._geoloc.lat}
             anchor="bottom"
             // We need this key to make sure the content re-renders, for some reason color changes don't trigger an update
             key={`${item.id} ${isCurrent}`}
-            color={isCurrent ? "#000000" : "#FF0000"}
+            color={isCurrent ? "#000000" : isVBO ? "#FF0000" : "#FFB70B"}
             style={{
               zIndex: isCurrent ? 1 : 0,
             }}

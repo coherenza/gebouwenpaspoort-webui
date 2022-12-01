@@ -112,16 +112,16 @@ export const displaySchema: Attribute[] = [
     id: "stl",
     attributes: [
       {
+        name: "inspectiedatum",
+        id: "inspectiedatum",
+      },
+      {
         name: "Balkon",
         id: "balkon",
       },
       {
         name: "Hekwerk",
         id: "hekwerk",
-      },
-      {
-        name: "inspectiedatum",
-        id: "inspectiedatum",
       },
       {
         name: "stalenliggers",
