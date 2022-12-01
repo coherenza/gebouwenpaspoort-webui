@@ -1,0 +1,28 @@
+.Attribute {
+  padding: 0.5rem;
+}
+
+.Attribute__title {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.Attribute__content {
+  padding: 0.5rem;
+}
+
+.Attribute__propval {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+}
+
+.Attribute__propval__key {
+  font-weight: bold;
+}
+
+.Attribute__propval__value {
+  font-style: italic;
+}

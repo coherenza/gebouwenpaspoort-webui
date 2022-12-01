@@ -1,37 +1,122 @@
 import { indexName } from "./config";
 
-/** Set of properties for one data source. */
-interface Collection {
-  /** e.g. `Stalen Liggers` or `Bekendmakingen` */
-  name: string;
-  /** first part of JSON key, e.g. `bwk` or `bag` */
-  prefix: string;
-  /** List of available Properties */
-  attributes: Attribute[];
-}
-
 /** A single type of Attribute */
-interface Attribute {
+export interface Attribute {
   /** Human readable string, shown in the front-end */
   name: string;
   /** JSON key */
-  id: string;
+  id?: string;
   /** Type of the attribute */
-  type: "string" | "number" | "date";
+  type?: "string";
+  attributes?: Attribute[];
 }
 
 /** The current schema, used for rendering the Details page.
  *  The ordering of the Collections defines how they are shown in the front-end.
  */
-const displaySchema: Collection[] = [
+export const displaySchema: Attribute[] = [
   {
-    name: "Bouwtechnische Kenmerken",
-    prefix: "bwk",
+    name: "Hoofdadres",
+    id: "bag-num-volledig",
+  },
+  {
+    name: "Pand",
     attributes: [
       {
-        name: "Bouwjaar",
-        id: "bouwjaar",
-        type: "number",
+        name: "bouwjaar",
+        id: "bag-pnd-oorspronkelijk-bouwjaar",
+        type: "string",
+      },
+      {
+        name: "nader gebruiksdoel",
+        id: "bwk-num-nadergebruiksdoel",
+        type: "string",
+      },
+    ],
+  },
+  {
+    name: "Verblijfsobject",
+    attributes: [
+      {
+        name: "gebruiksdoel",
+        id: "bag-aob-gebruiksdoel",
+      },
+      {
+        name: "oppervlakte",
+        id: "bag-aob-oppervlakte",
+      },
+      {
+        name: "status",
+        id: "bag-aob-status",
+      },
+    ],
+  },
+  {
+    name: "Energielabel",
+    id: "epl",
+    attributes: [
+      {
+        name: "Energie klasse",
+        id: "pand_energieklasse",
+      },
+      {
+        name: "Gebouwtype",
+        id: "pand_gebouwtype",
+      },
+      {
+        name: "Gebouwklasse",
+        id: "pand_gebouwklasse",
+      },
+      {
+        name: "Datum opname",
+        id: "pand_opnamedatum",
+      },
+    ],
+  },
+  {
+    name: "Stalen liggers",
+    id: "stl",
+    attributes: [
+      {
+        name: "Balkon",
+        id: "balkon",
+      },
+      {
+        name: "Hekwerk",
+        id: "hekwerk",
+      },
+      {
+        name: "inspectiedatum",
+        id: "inspectiedatum",
+      },
+      {
+        name: "stalenliggers",
+        id: "stalenliggers",
+      },
+      {
+        name: "uitkragendebalkons",
+        id: "uitkragendebalkons",
+      },
+    ],
+  },
+
+  {
+    name: "Buurten en wijken",
+    attributes: [
+      {
+        name: "naam wijk",
+        id: "bwk-num-wijknaam",
+        type: "string",
+      },
+      {
+        name: "naam subwijk",
+        id: "bwk-num-subwijknaam",
+        type: "string",
+      },
+      {
+        name: "naam subbuurt",
+        id: "bwk-num-subbuurtnaam",
+        type: "string",
       },
     ],
   },

@@ -1,21 +1,21 @@
 import "./Details.css";
 import { useContext } from "react";
 import { AppContext } from "./App";
-import { Highlight } from "react-instantsearch-hooks-web";
+import { displaySchema as displayAttributes } from "./schema";
+import { AttributeView } from "./Attributes";
 
 export function Details() {
   const { current, setCurrent } = useContext(AppContext);
   if (!current) {
     return null;
   }
-
   const { x, y } = current["bag-aob-geo-EPSG28992"];
   return (
     <div className="Sidebar details-panel">
       {current ? (
         <>
           <div className="Titlebar Titlebar--padded">
-            <h3>{current["bag-num-volledig"]} </h3>
+            <h3>{current[displayAttributes[0].id]} </h3>
             <a
               className="button"
               rel="noopener noreferrer"
@@ -26,7 +26,11 @@ export function Details() {
             </a>
             <button onClick={() => setCurrent(undefined)}>sluit</button>
           </div>
-          <HitProps hit={current} />
+          {displayAttributes.map((attribute, i) => {
+            // we use the first attribute to render in the header
+            if (i == 0) return null;
+            return <AttributeView key={attribute.name} attribute={attribute} hit={current} />;
+          })}
         </>
       ) : (
         <>
@@ -45,32 +49,3 @@ export function Details() {
     </div>
   );
 }
-
-/** Render all property-value combinations available */
-const HitProps = ({ hit }) => {
-  return (
-    <div className="HitProps">
-      {Object.entries(hit).map(([key, _value]) => {
-        let shown_key = key.replace(
-          /^(bag-aob-|bag-opr-|bag-num-|bwk-num-|squitxo_)/,
-          ""
-        );
-        // if (typeof _value == "object") {
-        //   return null
-        // }
-        return (
-          <>
-            <strong key={`prop-${key}`}>{shown_key}: </strong>
-            <Highlight
-              key={`val-${key}`}
-              attribute={key}
-              hit={hit}
-              // @ts-ignore
-              tagName="mark"
-            />
-          </>
-        );
-      })}
-    </div>
-  );
-};

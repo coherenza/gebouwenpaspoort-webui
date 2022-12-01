@@ -103,7 +103,6 @@ export function Map() {
       { lat: highLat, lng: highLng },
       { lat: lowLat, lng: lowLng }
     );
-    console.log("bounds", bounds);
 
     mapRef.current?.fitBounds(bounds, {
       padding: 250,
@@ -116,7 +115,6 @@ export function Map() {
       return;
     }
     const bounds = mapRef.current.getMap().getBounds();
-    console.log("bounds", bounds);
     refine({
       northEast: bounds.getNorthEast(),
       southWest: bounds.getSouthWest(),

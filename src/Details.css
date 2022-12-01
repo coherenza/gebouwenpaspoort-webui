@@ -1,24 +1,3 @@
 .details-panel {
   left: auto;
 }
-
-.HitProps {
-  overflow-y: auto;
-  display: grid;
-  /* grid-template-columns: 1fr 3fr; */
-  height: 100%;
-  padding: 1rem;
-}
-
-.HitProp {
-  display: grid;
-}
-
-.HitProp strong {
-  width: 10rem;
-  /* flex: 0; */
-}
-
-.HitProp span {
-  flex: 1;
-}

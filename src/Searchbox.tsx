@@ -17,7 +17,6 @@ export const SearchBox = () => {
   let { refine: clearGeo } = useGeoSearch();
   let { mainMap: map } = useMap();
 
-
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 100);
 
@@ -50,7 +49,13 @@ export const SearchBox = () => {
   }, [debouncedSearchTerm]);
 
   return (
-    <form noValidate action="" role="search" className="Searchbox">
+    <form
+      noValidate
+      action=""
+      role="search"
+      className="Searchbox"
+      onSubmit={(e) => e.preventDefault()}
+    >
       <input
         // we use id for focus from keyboard
         id="search-box"
@@ -60,7 +65,7 @@ export const SearchBox = () => {
         onChange={handleSetSearchTerm}
         autoFocus
       />
-      <button onClick={handleReset}>Reset</button>
+      <button type="button" onClick={handleReset}>Reset</button>
     </form>
   );
 };
