@@ -9,7 +9,7 @@ interface DetailSectionProps {
 }
 
 /**
- *  Renders a single section in the Details view, for one attribute.
+ * Renders a single section in the Details view, for one attribute.
  */
 export function AttributeView({ attribute, hit }: DetailSectionProps) {
   const [open, setOpen] = useState(true);
@@ -27,7 +27,7 @@ export function AttributeView({ attribute, hit }: DetailSectionProps) {
           ) : attribute.attributes ? (
             // The attribute represents a collection of attributes
             attribute.attributes.map(att => (
-              <PropValHighlights hit={hit} attribute={att} />
+              <PropValHighlights key={`${att.name} ${att.id}`} hit={hit} attribute={att} />
             ))
           ) : (
             // The attribute represents a single property
@@ -45,13 +45,11 @@ function AttributeList({ hit, collection }) {
   return (
     <div className="Attribute__list">
       {items.map((item) => (
-        <>
-          {collection.attributes.map((attribute) => (
-            // We can't use Highlight here, or maybe we can, but I don't know how to pass a path for
-            // a resource that is stored in an array (e.g. `prop[0].subProp`) to the `Highlight` component.
-            <PropVal item={item[attribute.id]} attribute={attribute} />
-          ))}
-        </>
+        collection.attributes.map((attribute) => (
+          // We can't use Highlight here, or maybe we can, but I don't know how to pass a path for
+          // a resource that is stored in an array (e.g. `prop[0].subProp`) to the `Highlight` component.
+          <PropVal key={attribute.name} item={item[attribute.id]} attribute={attribute} />
+        ))
       ))}
     </div>
   );
