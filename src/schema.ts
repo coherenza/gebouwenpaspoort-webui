@@ -52,6 +52,40 @@ export const displaySchema: Attribute[] = [
     ],
   },
   {
+    name: "Squit",
+    id: "squitxo",
+    attributes: [
+      {
+        name: "categorie",
+        id: "categorie",
+      },
+      {
+        name: "fase",
+        id: "fase",
+      },
+      {
+        name: "omschrijving",
+        id: "omschrijving",
+      },
+      {
+        name: "status",
+        id: "status",
+      },
+      {
+        name: "zaak-status",
+        id: "zaak-status",
+      },
+      {
+        name: "zaaknummer",
+        id: "zaaknummer",
+      },
+      {
+        name: "zaaktype-naam",
+        id: "zaaktype-naam",
+      },
+    ],
+  },
+  {
     name: "Energielabel",
     id: "epl",
     attributes: [
@@ -172,8 +206,9 @@ export interface SortProp {
   label: string;
 }
 
+/** Selectable sorts. First is default */
 export const sortProps: SortProp[] = [
-  // { sortBy: `${indexName}:object-type-sort-order:asc`, attribute: 'object-type-sort-order',  label: "Object type" },
+  { sortBy: `${indexName}:object-type-sort-order:asc`, attribute: 'object-type-sort-order',  label: "Object type" },
   { sortBy: `${indexName}`, attribute: "", label: "Relevantie" },
   {
     sortBy: `${indexName}:bag-num-volledig:asc`,
