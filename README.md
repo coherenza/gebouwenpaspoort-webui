@@ -1,5 +1,7 @@
 # Gebouwenpaspoort
 
+Running on http://gbp2.pandata.nl/
+
 ## Get started
 
 ```sh

@@ -59,7 +59,6 @@ const App = () => {
 
   // try API key, set invalid if not correct
   useEffect(() => {
-    console.log("APIKEY: ", apiKey);
     fetch(server + "/indexes", {
       headers: {
         Authorization: "Bearer " + apiKey,
