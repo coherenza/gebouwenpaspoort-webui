@@ -31,7 +31,7 @@ export function Filters({}) {
         {filterProps.map((prop) => {
           return <Filter key={prop.label} {...prop} />;
         })}
-        <button onClick={setIndexes}>set indexes</button>
+        {window.location.href.includes("localhost") && <button onClick={setIndexes}>set indexes</button>}
       </div>
     </div>
   );
