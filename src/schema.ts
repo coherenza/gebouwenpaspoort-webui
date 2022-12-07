@@ -221,17 +221,15 @@ export interface FilterProp {
   label: string;
   propKey: string;
   type: "single" | "multi" | "geo" | "date" | "range";
+  display?: "none"
 }
 
 export const filterProps: FilterProp[] = [
   { propKey: "bag-object-type", label: "Objecttype", type: "single" },
+  { propKey: "pdok-locatie-id", label: "locatie id's", type: "multi", display: "none" },
   { propKey: "bag-aob-gebruiksdoel", label: "Gebruiksdoel", type: "multi" },
   { propKey: "bag-aob-oppervlakte", label: "Oppervlakte (m2)", type: "range" },
-  {
-    propKey: "bag-pnd-oorspronkelijk-bouwjaar",
-    label: "Bouwjaar",
-    type: "range",
-  },
+  { propKey: "bag-pnd-oorspronkelijk-bouwjaar", label: "Bouwjaar", type: "range" },
   { propKey: "epl.pand_energieklasse", label: "Energieklasse", type: "single" },
   { propKey: "bag-pnd-status", label: "Status", type: "multi" },
 ];

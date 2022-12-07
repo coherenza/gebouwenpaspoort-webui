@@ -66,7 +66,7 @@ export function Map() {
     items.forEach((item, i) => {
       let lat0, lat1, lng0, lng1;
       if (item.geo_bbox) {
-        console.info(`bounds from geo_bbox: ${JSON.stringify(item.geo_bbox)}`);
+        console.info(`bounds from geo_bbox for ${JSON.stringify(item['bag-object-type'])} ${JSON.stringify(item.naam)}: ${JSON.stringify(item.geo_bbox)}`);
         lat0 = Math.min(item.geo_bbox[0].lat, item.geo_bbox[1].lat);
         lat1 = Math.max(item.geo_bbox[0].lat, item.geo_bbox[1].lat);
         lng0 = Math.min(item.geo_bbox[0].lng, item.geo_bbox[1].lng);

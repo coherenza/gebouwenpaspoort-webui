@@ -39,5 +39,5 @@ docker run -it \
   -p 7700:7700 \
   -e MEILI_MASTER_KEY='masterkey'\
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v0.29
+  getmeili/meilisearch:v0.30
 ````
