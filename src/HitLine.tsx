@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { GBPObject } from "./schema";
+import { GBPObject, GBPObjectTypes } from "./schema";
 import "./Hit.css";
 import { AppContext } from "./App";
 
@@ -23,13 +23,16 @@ export const HitLine = ({ hit }: HitProps) => {
 
   const active = current?.id === hit.id;
 
+  const isAOB = hit && GBPObjectTypes[""+hit["bag-object-type"]].isAob;
+
   return (
     <div
       className={active ? "Hit Hit--active" : "Hit"}
       onClick={() => setCurrent(hit)}
     >
-      <div class="hit-naam">{hit["naam"]}</div>
-      <div class="hit-type">{hit["bag-object-type"]}</div>
+      {/* Click on area-filter -> set filter on pdok-locatie-id == hit.id */}
+      <div className="hit-naam">{isAOB ? '' : '🔍 '}{hit["naam"]}</div>
+      <div className="hit-type">{hit["bag-object-type"]}</div>
       {/* {prop && <Highlight attribute={prop} hit={hit} tagName="mark" />} */}
     </div>
   );

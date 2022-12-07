@@ -234,6 +234,26 @@ export const filterProps: FilterProp[] = [
   { propKey: "bag-pnd-status", label: "Status", type: "multi" },
 ];
 
+export interface GBPObjectTypeProperties {
+  readonly [index: string] : {
+    color: string;
+    isAob: boolean;
+  }
+}
+
+// https://www.heavy.ai/blog/12-color-palettes-for-telling-better-stories-with-your-data
+export const GBPObjectTypes: GBPObjectTypeProperties = {
+  "woonplaats" : { color: "#ebdc78", isAob: false },
+  "wijk" : { color: "#8be04e", isAob: false },
+  "buurt" : { color: "#5ad45a", isAob: false },
+  "openbareruimte" : { color: "#00b7c7", isAob: false },
+  "postcode" : { color: "#0d88e6", isAob: false },
+  "adres" : { color: "#1a53ff", isAob: false },
+  "verblijfsobject" : { color: "#4421af", isAob: true },
+  "standplaats" : { color: "#7c1158", isAob: true },
+  "ligplaats" : { color: "#b30000", isAob: true },
+};
+
 export interface GBPObject {
   id: string;
   naam: string;

@@ -18,9 +18,8 @@ import MapGL, {
 import { LngLatBounds } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { AppContext } from "./App";
-import { GBPObject } from "./schema";
+import { GBPObject, GBPObjectTypes } from "./schema";
 import { useSearchBox } from "react-instantsearch-hooks-web";
-import { getType, types } from "./utils";
 
 const mapboxToken =
   "pk.eyJ1Ijoiam9lcGlvIiwiYSI6ImNqbTIzanZ1bjBkanQza211anFxbWNiM3IifQ.2iBrlCLHaXU79_tY9SVpXA";
@@ -66,7 +65,7 @@ export function Map() {
     items.forEach((item, i) => {
       let lat0, lat1, lng0, lng1;
       if (item.geo_bbox) {
-        console.info(`bounds from geo_bbox for ${JSON.stringify(item['bag-object-type'])} ${JSON.stringify(item.naam)}: ${JSON.stringify(item.geo_bbox)}`);
+        //console.info(`bounds from geo_bbox for ${JSON.stringify(item['bag-object-type'])} ${JSON.stringify(item.naam)}: ${JSON.stringify(item.geo_bbox)}`);
         lat0 = Math.min(item.geo_bbox[0].lat, item.geo_bbox[1].lat);
         lat1 = Math.max(item.geo_bbox[0].lat, item.geo_bbox[1].lat);
         lng0 = Math.min(item.geo_bbox[0].lng, item.geo_bbox[1].lng);
@@ -127,14 +126,9 @@ export function Map() {
   const markers = useMemo(
     () =>
       items.map((item) => {
-        const isVBO = getType(item) === types.verblijfsobject;
         const isCurrent = item.id == current?.id;
         const handleClick = () => {
-          if (isVBO) {
-            setCurrent(item as unknown as GBPObject);
-          } else {
-            // set the bounding box
-          }
+          setCurrent(item as unknown as GBPObject);
         }
         return (
           <Marker
@@ -144,7 +138,7 @@ export function Map() {
             anchor="bottom"
             // We need this key to make sure the content re-renders, for some reason color changes don't trigger an update
             key={`${item.id} ${isCurrent}`}
-            color={isCurrent ? "#000000" : isVBO ? "#FF0000" : "#FFB70B"}
+            color={isCurrent ? "#000000" : GBPObjectTypes[""+item["bag-object-type"]].color}
             style={{
               zIndex: isCurrent ? 1 : 0,
             }}

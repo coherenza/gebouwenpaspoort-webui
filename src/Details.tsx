@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { AppContext } from "./App";
 import { displaySchema as displayAttributes } from "./schema";
 import { AttributeView } from "./Attributes";
-import { getType, types } from "./utils";
 
 export function Details() {
   const { current, setCurrent } = useContext(AppContext);
@@ -13,7 +12,7 @@ export function Details() {
 
   const geo = current["bag-aob-geo-EPSG28992"];
 
-  if (getType(current) !== types.verblijfsobject) {
+  if (current["bag-object-type"] != "verblijfsobject") {
     return (
       <div className="Sidebar details-panel">
         <div className="Titlebar Titlebar--padded">

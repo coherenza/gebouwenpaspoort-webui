@@ -41,3 +41,6 @@ docker run -it \
   -v $(pwd)/meili_data:/meili_data \
   getmeili/meilisearch:v0.30
 ````
+
+Copy the data (indexes, ...) from a local dev server to the `meili_data/data.ms` directory.
+After copying, restart the docker image (`docker ps`, `docker stop`).
