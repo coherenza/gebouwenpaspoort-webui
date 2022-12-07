@@ -28,8 +28,8 @@ export const HitLine = ({ hit }: HitProps) => {
       className={active ? "Hit Hit--active" : "Hit"}
       onClick={() => setCurrent(hit)}
     >
-      <div>{hit["naam"]}</div>
-      <div>{hit["bag-object-type"]}</div>
+      <div class="hit-naam">{hit["naam"]}</div>
+      <div class="hit-type">{hit["bag-object-type"]}</div>
       {/* {prop && <Highlight attribute={prop} hit={hit} tagName="mark" />} */}
     </div>
   );

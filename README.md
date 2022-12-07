@@ -37,7 +37,7 @@ VITE_MEILI_SERVER={url}
 docker run -it \
   -d --restart unless-stopped \
   -p 7700:7700 \
-  -e MEILI_MASTER_KEY='masterkey'\
+  -e MEILI_MASTER_KEY='hebjepasjepoort'\
   -v $(pwd)/meili_data:/meili_data \
   getmeili/meilisearch:v0.30
 ````
