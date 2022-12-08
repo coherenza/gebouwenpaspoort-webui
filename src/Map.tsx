@@ -114,15 +114,19 @@ export function Map() {
         }
       }
     });
+    // if any is nan, don't do anything
+    if (isNaN(lowLat) || isNaN(highLat) || isNaN(lowLng) || isNaN(highLng)) {
+      console.warn("bounds are NaN, not setting bounds")
+      return;
+    }
     let bounds = new LngLatBounds(
       { lat: highLat, lng: highLng },
       { lat: lowLat, lng: lowLng }
     );
-    console.info(`Set map bounds: ${JSON.stringify(bounds)}`);
     mapRef.current?.fitBounds(bounds, {
       padding: 250,
     });
-  }, [query, locationFilter]);
+  }, [query]);
 
   // If the user moves the map, update the query to filter current area
   const updateBoundsQuery = useCallback((evt) => {
