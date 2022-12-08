@@ -39,6 +39,8 @@
 }
 
 .Attribute__item__title:hover {
+  background: var(--g0);
+  border-radius: var(--border-radius);
   color: var(--primary-color-dark);
 }
 

@@ -241,17 +241,31 @@ export interface GBPObjectTypeProperties {
   }
 }
 
-// https://www.heavy.ai/blog/12-color-palettes-for-telling-better-stories-with-your-data
+// https://huisstijl.utrecht.nl/basiselementen/kleur/
+export const utrechtKleuren = {
+  "rood": "#cc0000",
+  "geel": "#ffcc00",
+  "paars": "#762cd1",
+  "magenta": "#f02198",
+  "oranje": "#ff6e00",
+  "lime": "#99d000",
+  "groen": "#32ab27",
+  "cyaan": "#009ed4",
+  "blauw": "#006dff",
+  "marineblauw": "#1c4181",
+  "bruin": "#ad643b",
+}
+
 export const GBPObjectTypes: GBPObjectTypeProperties = {
-  "woonplaats" : { color: "#ebdc78", isAob: false },
-  "wijk" : { color: "#8be04e", isAob: false },
-  "buurt" : { color: "#5ad45a", isAob: false },
-  "openbareruimte" : { color: "#00b7c7", isAob: false },
-  "postcode" : { color: "#0d88e6", isAob: false },
-  "adres" : { color: "#1a53ff", isAob: false },
-  "verblijfsobject" : { color: "#4421af", isAob: true },
-  "standplaats" : { color: "#7c1158", isAob: true },
-  "ligplaats" : { color: "#b30000", isAob: true },
+  "woonplaats" : { color: utrechtKleuren.blauw, isAob: false },
+  "wijk" : { color: utrechtKleuren.bruin, isAob: false },
+  "buurt" : { color: utrechtKleuren.oranje, isAob: false },
+  "openbareruimte" : { color: utrechtKleuren.rood, isAob: false },
+  "postcode" : { color: utrechtKleuren.magenta, isAob: false },
+  "adres" : { color: utrechtKleuren.oranje, isAob: false },
+  "verblijfsobject" : { color: utrechtKleuren.geel, isAob: true },
+  "standplaats" : { color: utrechtKleuren.cyaan, isAob: true },
+  "ligplaats" : { color: utrechtKleuren.blauw, isAob: true },
 };
 
 export interface GBPObject {
