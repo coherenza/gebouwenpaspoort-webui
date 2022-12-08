@@ -19,15 +19,15 @@ export function Filters({}) {
         <button onClick={() => setShowFilter(false)}>Sluit</button>
       </div>
       <div className="filters">
-        {/* {"sorteren op:"}
-        <SortBy
+        {/* Zonder SortBy widget vindt er geen sortering plaats. */}
+        <SortBy style={{'display': 'none'}}
           items={sortProps.map((item) => {
             return {
               value: item.sortBy,
               label: item.label,
             };
           })}
-        /> */}
+        />
         {filterProps.map((prop) => {
           if (prop.display == 'none') {
             return '';
