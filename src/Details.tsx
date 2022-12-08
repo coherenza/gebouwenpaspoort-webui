@@ -28,7 +28,7 @@ export function Details() {
       {current ? (
         <>
           <div className="Titlebar Titlebar--padded">
-            <h3>{current[displayAttributes[0].id]} </h3>
+            <h3 className="details-panel__title">{current[displayAttributes[0].id]} </h3>
             {geo && (
               <a
                 className="button"

@@ -2,6 +2,7 @@ import "./Attributes.css";
 import { useState } from "react";
 import { Attribute, GBPObject } from "./schema";
 import { Highlight } from "react-instantsearch-hooks-web";
+import { ChevronDownIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
 interface DetailSectionProps {
   attribute: Attribute;
@@ -28,7 +29,7 @@ export function AttributeView({ attribute, hit }: DetailSectionProps) {
   return (
     <div className="Attribute">
       <div className="Attribute__title" onClick={toggleOpen}>
-        {open ? "▼" : "▶"} {attribute.name} {isCollection && `(${count})`}
+        {open ? <ChevronDownIcon /> : <ChevronRightIcon />} {attribute.name} {isCollection && `(${count})`}
       </div>
       {open && (
         <div className={"Attribute__content"}>
@@ -55,25 +56,28 @@ function AttributeCollection({ hit, collection }) {
   if (!items) return null;
   return (
     <div className="Attribute__list">
-      {items.map((item, i) => {
-        const [open, setOpen] = useState(false);
+      {items.map((item, i) => <AttributeItem key={`${item.id}${i}`} hit={hit} attribute={collection} item={item} collection={collection} i={i} />)}
+    </div>
+  );
+}
 
-        const title = item[collection.attributes[0].id]
+function AttributeItem({ hit, attribute, item, collection, i }) {
+  const [open, setOpen] = useState(false);
 
-        return (
-          <div key={`${item.id}${i}`}><h4 onClick={() => setOpen(!open)}>{open ? "▼" : "▶"}{title}</h4>
-            {open && collection.attributes.map((attribute) => (
-              // We can't use Highlight here, or maybe we can, but I don't know how to pass a path for
-              // a resource that is stored in an array (e.g. `prop[0].subProp`) to the `Highlight` component.
-              <PropVal
-                key={attribute.name}
-                item={item[attribute.id]}
-                attribute={attribute}
-              />
-            ))}
-          </div>
-        );
-      })}
+  const title = item[collection.attributes[0].id]
+
+  return (
+    <div className="Attribute__item" key={`${item.id}${i}`}>
+      <h4 className="Attribute__item__title" onClick={() => setOpen(!open)}>{open ? <ChevronDownIcon /> : <ChevronRightIcon />}{title}</h4>
+      {open && collection.attributes.map((attribute) => (
+        // We can't use Highlight here, or maybe we can, but I don't know how to pass a path for
+        // a resource that is stored in an array (e.g. `prop[0].subProp`) to the `Highlight` component.
+        <PropVal
+          key={attribute.name}
+          item={item[attribute.id]}
+          attribute={attribute}
+        />
+      ))}
     </div>
   );
 }

@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   useClearRefinements,
-  useHits,
   useSearchBox,
-  useSortBy,
 } from "react-instantsearch-hooks-web";
 import { useMap } from "react-map-gl";
 import { startBounds, startBoundsInstant } from "./Map";
@@ -35,6 +33,7 @@ export const SearchBox = () => {
 
   let handleSetSearchTerm = useCallback((e) => {
     setSearchTerm(e.target.value);
+    clearGeo(startBoundsInstant);
     if (e.target.value == "") {
       handleReset(e);
     }

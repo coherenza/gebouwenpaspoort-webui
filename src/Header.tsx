@@ -5,14 +5,7 @@ import { SearchBox } from "./Searchbox";
 import { useHits } from "react-instantsearch-hooks-web";
 
 export function Header() {
-  const { setShowFilter, setShowResults, showFilter, showResults } =
-    React.useContext(AppContext);
-  const { current, setCurrent } = React.useContext(AppContext);
 
-  function handleAddresses() {
-    setShowResults(!showResults);
-    setCurrent(undefined);
-  }
   let {
     results: { nbHits },
     hits,
@@ -23,8 +16,7 @@ export function Header() {
       <div className="header">
         <h2 className="logo">Gebouwenpaspoort</h2>
         <div className="header--buttons">
-          <button onClick={() => setShowFilter(!showFilter)}>Filters</button>
-          <button onClick={handleAddresses}>Resultaten</button>
+
           <a
             className="button"
             rel="noopener noreferrer"

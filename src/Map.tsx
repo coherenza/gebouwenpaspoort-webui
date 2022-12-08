@@ -20,6 +20,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { AppContext } from "./App";
 import { GBPObject, GBPObjectTypes } from "./schema";
 import { useSearchBox } from "react-instantsearch-hooks-web";
+import { Header } from "./Header";
 
 const mapboxToken =
   "pk.eyJ1Ijoiam9lcGlvIiwiYSI6ImNqbTIzanZ1bjBkanQza211anFxbWNiM3IifQ.2iBrlCLHaXU79_tY9SVpXA";
@@ -43,10 +44,18 @@ export const startBounds = new LngLatBounds(
 export function Map() {
   const { items, refine } = useGeoSearch();
   const { query } = useSearchBox();
-  const { setCurrent, current } = useContext(AppContext);
+  const { setCurrent, current, showFilter, showResults } = useContext(AppContext);
   const mapRef = useRef<MapRef>();
   const [viewState, setViewState] = React.useState(mapStartState);
   const [prisine, setPristine] = useState(true);
+
+
+  // if the users toggles the sidebars, resize the map
+  useEffect(() => {
+    if (mapRef.current) {
+      mapRef.current.getMap().resize();
+    }
+  }, [current, showFilter, showResults]);
 
   // If user changed the query, move the bounds to the new items
   useEffect(() => {
@@ -75,7 +84,7 @@ export function Map() {
         lat0 = lat;
         lat1 = lat;
         lng0 = lng;
-        lng1 = lng
+        lng1 = lng;
       }
       if (i == 0) {
         lowLat = lat0;
@@ -129,7 +138,7 @@ export function Map() {
         const isCurrent = item.id == current?.id;
         const handleClick = () => {
           setCurrent(item as unknown as GBPObject);
-        }
+        };
         return (
           <Marker
             onClick={handleClick}
@@ -138,11 +147,15 @@ export function Map() {
             anchor="bottom"
             // We need this key to make sure the content re-renders, for some reason color changes don't trigger an update
             key={`${item.id} ${isCurrent}`}
-            color={isCurrent ? "#000000" : GBPObjectTypes[""+item["bag-object-type"]].color}
+            color={
+              isCurrent
+                ? "#000000"
+                : GBPObjectTypes["" + item["bag-object-type"]].color
+            }
             style={{
               zIndex: isCurrent ? 1 : 0,
             }}
-            scale={0.4}
+            scale={isCurrent ? 0.8 : 0.6}
           ></Marker>
         );
       }),
@@ -150,20 +163,24 @@ export function Map() {
   );
 
   return (
-    <MapGL
-      id="mainMap"
-      initialViewState={viewState}
-      mapboxAccessToken={mapboxToken}
-      // maxBounds={startBounds}
-      onMoveEnd={updateBoundsQuery}
-      style={{ width: "100%", height: "100%", flexBasis: "600px", flex: 1 }}
-      mapStyle="mapbox://styles/mapbox/streets-v9"
-      ref={mapRef}
-      attributionControl={false}
-    >
-      <NavigationControl position={"bottom-right"} />
-      <GeolocateControl position={"bottom-left"} />
-      {markers}
-    </MapGL>
+    <div className="Map__wrapper">
+      <Header />
+      <MapGL
+        trackResize={true}
+        id="mainMap"
+        initialViewState={viewState}
+        mapboxAccessToken={mapboxToken}
+        // maxBounds={startBounds}
+        onMoveEnd={updateBoundsQuery}
+        style={{ width: "100%", height: "100%", flexBasis: "600px", flex: 1 }}
+        mapStyle="mapbox://styles/mapbox/streets-v9"
+        ref={mapRef}
+        attributionControl={false}
+      >
+        <NavigationControl position={"bottom-right"} />
+        <GeolocateControl position={"bottom-left"} />
+        {markers}
+      </MapGL>
+    </div>
   );
 }

@@ -7,6 +7,8 @@
   cursor: pointer;
   display: flex;
   flex-direction: row;
+  padding-left: 0.4rem;
+  margin-left: -1rem;
 }
 
 div.hit-naam {

@@ -1,4 +1,4 @@
-import { Configure, SortBy } from "react-instantsearch-hooks-web";
+import { Configure, SortBy, useConnector } from "react-instantsearch-hooks-web";
 import { setIndexes } from "./import";
 import { Filter } from "./Property";
 import "./Filters.css";
@@ -19,7 +19,7 @@ export function Filters({}) {
         <button onClick={() => setShowFilter(false)}>Sluit</button>
       </div>
       <div className="filters">
-        {"sorteren op:"}
+        {/* {"sorteren op:"}
         <SortBy
           items={sortProps.map((item) => {
             return {
@@ -27,7 +27,7 @@ export function Filters({}) {
               label: item.label,
             };
           })}
-        />
+        /> */}
         {filterProps.map((prop) => {
           if (prop.display == 'none') {
             return '';
