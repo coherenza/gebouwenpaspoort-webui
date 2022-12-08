@@ -36,6 +36,9 @@ export function Results() {
           <button onClick={() => setShowResults(false)}>Sluit</button>
         </div>
         <div className="app-header__results-count">{hits.length} / {nbHits == 1000 ? '1000+' : nbHits} resultaten zichtbaar</div>
+        {/* @ts-ignore */}
+        <Hits hitComponent={HitLine} />
+        <Pagination showLast={true} />
       </div>
     </LocationFilterContext.Provider>
   );
