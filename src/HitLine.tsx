@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { GBPObject, GBPObjectTypes } from "./schema";
 import "./Hit.css";
 import { AppContext } from "./App";
-import { LocationFilterContext } from "./Results";
 
 interface HitProps {
   hit: GBPObject;
@@ -10,8 +9,7 @@ interface HitProps {
 
 
 export const HitLine = ({ hit }: HitProps) => {
-  const { current, setCurrent } = useContext(AppContext);
-  const { setLocationFilterId } = useContext(LocationFilterContext)
+  const { current, setCurrent, setLocationFilter } = useContext(AppContext);
 
   // function findHightLightedProp() {
   //   for (const prop of Object.keys(hit._highlightResult)) {
@@ -33,7 +31,7 @@ export const HitLine = ({ hit }: HitProps) => {
   return (
     <div
       className={active ? "Hit Hit--active" : "Hit"}
-      onClick={() => { isAob ? setCurrent(hit) : setLocationFilterId(hit.id) } }
+      onClick={() => { isAob ? setCurrent(hit) : setLocationFilter({id: hit.id, name: hit.naam}) } }
     >
       {/* Click on area-filter -> set filter on pdok-locatie-id == hit.id */}
       <div className="hit-naam">{isAob ? '' : '🔍 '}{hit["naam"]}</div>

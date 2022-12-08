@@ -339,3 +339,8 @@ export interface GBPObject {
   squitxo: undefined | Record<string, any>[];
   bekendmakingen: undefined | Record<string, any>[];
 }
+
+export interface LocationFilter {
+  id : string;
+  name : string;
+}

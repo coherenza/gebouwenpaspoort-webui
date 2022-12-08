@@ -4,9 +4,9 @@ import "./App.css";
 import "./global.css";
 
 import React, { createContext, useEffect, useMemo } from "react";
-import { InstantSearch, Configure } from "react-instantsearch-hooks-web";
+import { InstantSearch, Configure, useRefinementList } from "react-instantsearch-hooks-web";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
-import { GBPObject, sortProps } from "./schema";
+import { GBPObject, LocationFilter, sortProps } from "./schema";
 import { indexName, meiliKey, mode, server } from "./config";
 import { Map } from "./Map";
 import { Details } from "./Details";
@@ -33,8 +33,8 @@ interface AppContextI {
   showResults: boolean;
   setShowFilter: (b: boolean) => void;
   showFilter: boolean;
-  setLocationFilter: (s: string) => void;
-  locationFilter: string;
+  setLocationFilter: (location: LocationFilter | undefined) => void;
+  locationFilter: LocationFilter | undefined;
 }
 
 export const AppContext = createContext<AppContextI>(undefined);
@@ -44,10 +44,16 @@ const App = () => {
   const [current, setCurrent] = React.useState(undefined);
   const [showFilter, setShowFilter] = React.useState(true);
   const [showResults, setShowResults] = React.useState(true);
-  const [locationFilter, setLocationFilter] = React.useState('');
+  const [locationFilter, setLocationFilterInternal] = React.useState(undefined);
   const [apiKeyTemp, setApiKeyTemp] = React.useState("");
   const [validApiKey, setValidApiKey] = React.useState(false);
   const [apiKey, setApiKey] = useLocalStorage("apiKey", meiliKey);
+
+  const setLocationFilter = (locationFilter: LocationFilter) => {
+    const { refine } = useRefinementList({attribute: 'pdok-locatie-id'});
+    setLocationFilterInternal(locationFilter);
+    refine(locationFilter.id);
+  };
 
   const searchClient = useMemo(() => {
     return instantMeiliSearch(server, apiKey);

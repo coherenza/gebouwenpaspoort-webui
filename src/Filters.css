@@ -11,3 +11,17 @@
   padding: 1rem;
   overflow-y: auto;
 }
+
+span.filterValue {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid blue;
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);;
+}
+
+button.clear {
+  background-color: red;
+  color: white;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}

@@ -8,14 +8,7 @@ import { AppContext } from "./App";
 export const LocationFilterContext = createContext(undefined);
 
 export function Results() {
-  const { refine } = useRefinementList({attribute: 'pdok-locatie-id'});
-  const { locationFilter, setLocationFilter } = useContext(AppContext);
-  const setLocationFilterId = (id: string) => {
-    console.info(`location filter = ${id}`);
-    setLocationFilter(id);
-    refine(id);
-  };
-  const { setShowResults, showResults } = useContext(AppContext);
+  const { showResults, setShowResults } = useContext(AppContext);
 
   let {
     results: { nbHits },
@@ -27,9 +20,6 @@ export function Results() {
   }
 
   return (
-    <LocationFilterContext.Provider
-     value={ { setLocationFilterId } }
-    >
       <div className={`Sidebar Results ${open ? "Results--open" : ""}`}>
         <div className="Titlebar Titlebar--padded">
           <h3>Resultaten</h3>
@@ -40,6 +30,5 @@ export function Results() {
         <Hits hitComponent={HitLine} />
         <Pagination showLast={true} />
       </div>
-    </LocationFilterContext.Provider>
   );
 }
