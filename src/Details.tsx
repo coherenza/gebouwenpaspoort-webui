@@ -3,12 +3,15 @@ import { useContext } from "react";
 import { AppContext } from "./App";
 import { displaySchema as displayAttributes, GBPObjectTypes } from "./schema";
 import { AttributeView } from "./Attributes";
+import { useRefinementList } from "react-instantsearch-hooks-web";
 
 export function Details() {
   const { current, setCurrent } = useContext(AppContext);
   if (!current) {
     return null;
   }
+
+  const x = useRefinementList({ attribute: "pdok-locatie-id" });
 
   const geo = current["bag-aob-geo-EPSG28992"];
 
@@ -27,7 +30,9 @@ export function Details() {
       {current ? (
         <>
           <div className="Titlebar Titlebar--padded">
-            <h3 className="details-panel__title">{current[displayAttributes[0].id]} </h3>
+            <h3 className="details-panel__title">
+              {current[displayAttributes[0].id]}{" "}
+            </h3>
             {geo && (
               <a
                 className="button"

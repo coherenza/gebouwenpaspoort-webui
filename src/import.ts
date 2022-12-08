@@ -30,6 +30,17 @@ filterableAttributes.push("_geo");
 
 const sortableAttributes = sortProps.map(prop => prop.attribute);
 
+// https://docs.meilisearch.com/learn/advanced/sorting.html#customize-ranking-rule-order-optional
+const rankingRules = [
+  // Sort in first place to make sure Gebieden are always on top
+  'sort',
+  'words',
+  'typo',
+  'proximity',
+  'attribute',
+  'exactness'
+]
+
 export async function setIndexes() {
   const client = new MeiliSearch({ host: server, apiKey: meiliKey })
   const index = client.index(indexName);
@@ -53,5 +64,12 @@ export async function setIndexes() {
   } else {
     console.info('Updating sortableAttributes');
     index.updateSortableAttributes(sortableAttributes);
+  }
+  const currentRankingRules = await index.getRankingRules();
+  if (equalArrays(currentRankingRules, rankingRules)) {
+    console.info('No update needed for rankingRules');
+  } else {
+    console.info('Updating rankingRules');
+    index.updateRankingRules(rankingRules);
   }
 }

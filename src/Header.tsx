@@ -6,10 +6,6 @@ import { useHits } from "react-instantsearch-hooks-web";
 
 export function Header() {
 
-  let {
-    results: { nbHits },
-    hits,
-  } = useHits()
 
   return (
     <div className="app-header">
@@ -30,7 +26,6 @@ export function Header() {
       <div className="search-bar-wrapper">
         <SearchBox/>
       </div>
-      <div className="app-header__results-count">{hits.length} / {nbHits} resultaten zichtbaar</div>
     </div>
   );
 }

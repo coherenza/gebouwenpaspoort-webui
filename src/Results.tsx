@@ -1,4 +1,4 @@
-import { Hits, Pagination, SortBy, useRefinementList } from "react-instantsearch-hooks-web";
+import { Hits, Pagination, SortBy, useRefinementList, useHits } from "react-instantsearch-hooks-web";
 import { HitLine } from "./HitLine";
 import "./Results.css";
 import { createContext, useContext } from "react";
@@ -19,6 +19,12 @@ export function Results() {
   if (!showResults) {
     return null;
   }
+
+  let {
+    results: { nbHits },
+    hits,
+  } = useHits()
+
   return (
     <LocationFilterContext.Provider
      value={ { setLocationFilterId } }
@@ -28,6 +34,10 @@ export function Results() {
           <h3>Resultaten</h3>
           <button onClick={() => setShowResults(false)}>Sluit</button>
         </div>
+        {/* @ts-ignore */}
+        <Hits hitComponent={HitLine} />
+        <Pagination showLast={true} />
+        <div className="app-header__results-count">{hits.length} / {nbHits == 1000 ? '1000+' : nbHits} resultaten zichtbaar</div>
         {/* @ts-ignore */}
         <Hits hitComponent={HitLine} />
         <Pagination showLast={true} />
