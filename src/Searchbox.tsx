@@ -33,6 +33,7 @@ export const SearchBox = () => {
 
   let handleSetSearchTerm = useCallback((e) => {
     setSearchTerm(e.target.value);
+    clearGeo(startBoundsInstant);
     if (e.target.value == "") {
       handleReset(e);
     }

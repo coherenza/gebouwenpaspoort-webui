@@ -3,3 +3,11 @@
   min-width: 50vh;
   margin-bottom: 1rem;
 }
+
+.Map__wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex: 1;
+}

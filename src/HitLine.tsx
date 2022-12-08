@@ -30,13 +30,13 @@ export const HitLine = ({ hit }: HitProps) => {
   return (
     <div
       className={active ? "Hit Hit--active" : "Hit"}
-      // @ts-ignore
-      style={{'border-color': color || 'initial'}}
       onClick={() => setCurrent(hit)}
     >
       {/* Click on area-filter -> set filter on pdok-locatie-id == hit.id */}
       <div className="hit-naam">{isAOB ? '' : '🔍 '}{hit["naam"]}</div>
-      <div className="hit-type">{hit["bag-object-type"]}</div>
+      <div className="hit-type" style={{
+        color: color || 'initial'
+      }}>{hit["bag-object-type"]}</div>
       {/* {prop && <Highlight attribute={prop} hit={hit} tagName="mark" />} */}
     </div>
   );

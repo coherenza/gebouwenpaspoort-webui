@@ -7,7 +7,6 @@
   cursor: pointer;
   display: flex;
   flex-direction: row;
-  border-left: solid 3px;
   padding-left: 0.4rem;
   margin-left: -1rem;
 }

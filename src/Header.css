@@ -13,6 +13,7 @@
     z-index: 1;
     background: white;
     top: 1rem;
+    box-shadow: var(--box-shadow);
   }
 
   .header--button-left {
@@ -25,7 +26,7 @@
 }
 
 .app-header {
-  position: fixed;
+  position: absolute;
   background: white;
   top: 1rem;
   border-radius: var(--border-radius);
@@ -34,6 +35,7 @@
   left: 50%;
   transform: translateX(-50%);
   max-width: calc(100vw - 2rem);
+  z-index: 1;
 }
 
 .header {

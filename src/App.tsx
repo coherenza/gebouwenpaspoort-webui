@@ -37,11 +37,11 @@ interface AppContextI {
 }
 
 export const AppContext = createContext<AppContextI>(undefined);
-export const hitCount = 500;
+export const hitCount = 150;
 
 const App = () => {
   const [current, setCurrent] = React.useState(undefined);
-  const [showFilter, setShowFilter] = React.useState(false);
+  const [showFilter, setShowFilter] = React.useState(true);
   const [showResults, setShowResults] = React.useState(true);
   const [apiKeyTemp, setApiKeyTemp] = React.useState("");
   const [validApiKey, setValidApiKey] = React.useState(false);
@@ -118,11 +118,12 @@ const App = () => {
                   />
                   <button className="header--button header--button-left" onClick={() => setShowFilter(!showFilter)}>Filters</button>
                   <button className="header--button header--button-right" onClick={handleAddresses}>Resultaten</button>
-                  <Map />
-                  <Header />
-                  <Filters />
-                  <Results />
-                  <Details />
+                  <div className="app__columns">
+                    <Filters />
+                    <Map />
+                    <Results />
+                    <Details />
+                  </div>
                 </div>
               )}
             </KeyboardHandler>
