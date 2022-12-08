@@ -2,18 +2,22 @@
 }
 
 .Hit {
+  /* Sinlge line, ellipsis */
+
   /* all: unset; */
   margin: .2rem;
   cursor: pointer;
   display: flex;
   flex-direction: row;
   padding-left: 0.4rem;
-  margin-left: -1rem;
 }
 
 div.hit-naam {
   flex: 1 0 auto;
   width: 75%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 div.hit-type {
   flex: 1 1 auto;

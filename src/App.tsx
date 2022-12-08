@@ -56,7 +56,6 @@ const App = () => {
     setApiKey(apiKeyTemp);
   }
 
-
   // try API key, set invalid if not correct
   useEffect(() => {
     fetch(server + "/indexes", {

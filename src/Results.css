@@ -38,7 +38,6 @@
 }
 
 .ais-Hits {
-  padding: 1rem;
   overflow-y: scroll;
   flex: 1;
 }

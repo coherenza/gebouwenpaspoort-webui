@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { AppContext } from "./App";
 import { displaySchema as displayAttributes } from "./schema";
 import { AttributeView } from "./Attributes";
+import { useRefinementList } from "react-instantsearch-hooks-web";
 
 export function Details() {
   const { current, setCurrent } = useContext(AppContext);
@@ -10,7 +11,13 @@ export function Details() {
     return null;
   }
 
+  const x = useRefinementList({ attribute: "pdok-locatie-id" });
+
   const geo = current["bag-aob-geo-EPSG28992"];
+
+  function handleSetLocationRefinement() {
+    x.refine(current["pdok-locatie-id"][0]);
+  }
 
   if (current["bag-object-type"] != "verblijfsobject") {
     return (
@@ -18,8 +25,13 @@ export function Details() {
         <div className="Titlebar Titlebar--padded">
           <button onClick={() => setCurrent(undefined)}>sluit</button>
         </div>
-
-        <p>Weergave voor '{current["bag-object-type"]}' nog niet ondersteund, probeer de zoekbalk!</p>
+        <div className="Details__attributes">
+          <button onClick={handleSetLocationRefinement}>set refinement</button>
+          <p>
+            Weergave voor '{current["bag-object-type"]}' nog niet ondersteund,
+            probeer de zoekbalk!
+          </p>
+        </div>
       </div>
     );
   }
@@ -28,7 +40,9 @@ export function Details() {
       {current ? (
         <>
           <div className="Titlebar Titlebar--padded">
-            <h3 className="details-panel__title">{current[displayAttributes[0].id]} </h3>
+            <h3 className="details-panel__title">
+              {current[displayAttributes[0].id]}{" "}
+            </h3>
             {geo && (
               <a
                 className="button"
