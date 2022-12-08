@@ -42,7 +42,7 @@ export const hitCount = 500;
 const App = () => {
   const [current, setCurrent] = React.useState(undefined);
   const [showFilter, setShowFilter] = React.useState(false);
-  const [showResults, setShowResults] = React.useState(false);
+  const [showResults, setShowResults] = React.useState(true);
   const [apiKeyTemp, setApiKeyTemp] = React.useState("");
   const [validApiKey, setValidApiKey] = React.useState(false);
   const [apiKey, setApiKey] = useLocalStorage("apiKey", meiliKey);

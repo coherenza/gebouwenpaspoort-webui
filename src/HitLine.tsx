@@ -30,7 +30,8 @@ export const HitLine = ({ hit }: HitProps) => {
   return (
     <div
       className={active ? "Hit Hit--active" : "Hit"}
-      style={{'border' : `0.5ex solid ${color}`}}
+      // @ts-ignore
+      style={{'border-color': color || 'initial'}}
       onClick={() => setCurrent(hit)}
     >
       {/* Click on area-filter -> set filter on pdok-locatie-id == hit.id */}
