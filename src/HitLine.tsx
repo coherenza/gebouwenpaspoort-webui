@@ -25,9 +25,12 @@ export const HitLine = ({ hit }: HitProps) => {
 
   const isAOB = hit && GBPObjectTypes[""+hit["bag-object-type"]].isAob;
 
+  const color = hit && GBPObjectTypes[""+hit["bag-object-type"]].color;
+
   return (
     <div
       className={active ? "Hit Hit--active" : "Hit"}
+      style={{'border' : `0.5ex solid ${color}`}}
       onClick={() => setCurrent(hit)}
     >
       {/* Click on area-filter -> set filter on pdok-locatie-id == hit.id */}
