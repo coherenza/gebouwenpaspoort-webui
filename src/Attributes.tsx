@@ -67,7 +67,8 @@ function AttributeItem({ hit, attribute, item, collection, i }) {
   const title = item[collection.attributes[0].id]
 
   return (
-    <div key={`${item.id}${i}`}><h4 onClick={() => setOpen(!open)}>{open ? "▼" : "▶"}{title}</h4>
+    <div className="Attribute__item" key={`${item.id}${i}`}>
+      <h4 className="Attribute__item__title" onClick={() => setOpen(!open)}>{open ? <ChevronDownIcon /> : <ChevronRightIcon />}{title}</h4>
       {open && collection.attributes.map((attribute) => (
         // We can't use Highlight here, or maybe we can, but I don't know how to pass a path for
         // a resource that is stored in an array (e.g. `prop[0].subProp`) to the `Highlight` component.

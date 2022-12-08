@@ -4,8 +4,15 @@
 
 .Attribute__title {
   cursor: pointer;
-  font-weight: bold;
+  color: var(--primary-color);
+  /* font-weight: bold; */
   font-size: 1.2rem;
+}
+
+.Attribute__title:hover {
+  background: var(--g0);
+  border-radius: var(--border-radius);
+  color: var(--primary-color-dark);
 }
 
 .Attribute__content {
@@ -25,4 +32,16 @@
 
 .Attribute__propval__value {
   font-style: italic;
+}
+
+.Attribute__item__title {
+  cursor: pointer;
+}
+
+.Attribute__item__title:hover {
+  color: var(--primary-color-dark);
+}
+
+.Attribute__item {
+  padding-left: 0.5rem;
 }
