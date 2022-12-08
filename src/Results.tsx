@@ -15,15 +15,16 @@ export function Results() {
     setLocationFilter(id);
     refine(id);
   };
-    const { setShowResults, showResults } = useContext(AppContext);
-  if (!showResults) {
-    return null;
-  }
+  const { setShowResults, showResults } = useContext(AppContext);
 
   let {
     results: { nbHits },
     hits,
   } = useHits()
+
+  if (!showResults) {
+    return null;
+  }
 
   return (
     <LocationFilterContext.Provider
@@ -34,9 +35,6 @@ export function Results() {
           <h3>Resultaten</h3>
           <button onClick={() => setShowResults(false)}>Sluit</button>
         </div>
-        {/* @ts-ignore */}
-        <Hits hitComponent={HitLine} />
-        <Pagination showLast={true} />
         <div className="app-header__results-count">{hits.length} / {nbHits == 1000 ? '1000+' : nbHits} resultaten zichtbaar</div>
         {/* @ts-ignore */}
         <Hits hitComponent={HitLine} />

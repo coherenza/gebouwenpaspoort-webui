@@ -12,7 +12,6 @@ import { Map } from "./Map";
 import { Details } from "./Details";
 import { Results } from "./Results";
 import { Filters } from "./Filters";
-import { Header } from "./Header";
 import { KeyboardHandler } from "./KeyboardHandler";
 import { MapProvider } from "react-map-gl";
 import { useLocalStorage } from "./useLocalStorage";
