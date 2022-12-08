@@ -48,6 +48,8 @@ export function Map() {
     current,
     showFilter,
     showResults,
+    locationFilter,
+    setLocationFilter,
     setShowFilter,
     setShowResults,
   } = useContext(AppContext);
@@ -116,11 +118,11 @@ export function Map() {
       { lat: highLat, lng: highLng },
       { lat: lowLat, lng: lowLng }
     );
-
+    console.info(`Set map bounds: ${JSON.stringify(bounds)}`);
     mapRef.current?.fitBounds(bounds, {
       padding: 250,
     });
-  }, [query]);
+  }, [query, locationFilter]);
 
   // If the user moves the map, update the query to filter current area
   const updateBoundsQuery = useCallback((evt) => {

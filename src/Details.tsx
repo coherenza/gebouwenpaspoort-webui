@@ -1,7 +1,7 @@
 import "./Details.css";
 import { useContext } from "react";
 import { AppContext } from "./App";
-import { displaySchema as displayAttributes } from "./schema";
+import { displaySchema as displayAttributes, GBPObjectTypes } from "./schema";
 import { AttributeView } from "./Attributes";
 
 export function Details() {
@@ -12,13 +12,12 @@ export function Details() {
 
   const geo = current["bag-aob-geo-EPSG28992"];
 
-  if (current["bag-object-type"] != "verblijfsobject") {
+  if (!GBPObjectTypes[""+current["bag-object-type"]].isAob) {
     return (
       <div className="Sidebar details-panel">
         <div className="Titlebar Titlebar--padded">
           <button onClick={() => setCurrent(undefined)}>sluit</button>
         </div>
-
         <p>Weergave voor '{current["bag-object-type"]}' nog niet ondersteund, probeer de zoekbalk!</p>
       </div>
     );

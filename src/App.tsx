@@ -34,6 +34,8 @@ interface AppContextI {
   showResults: boolean;
   setShowFilter: (b: boolean) => void;
   showFilter: boolean;
+  setLocationFilter: (s: string) => void;
+  locationFilter: string;
 }
 
 export const AppContext = createContext<AppContextI>(undefined);
@@ -43,6 +45,7 @@ const App = () => {
   const [current, setCurrent] = React.useState(undefined);
   const [showFilter, setShowFilter] = React.useState(true);
   const [showResults, setShowResults] = React.useState(true);
+  const [locationFilter, setLocationFilter] = React.useState('');
   const [apiKeyTemp, setApiKeyTemp] = React.useState("");
   const [validApiKey, setValidApiKey] = React.useState(false);
   const [apiKey, setApiKey] = useLocalStorage("apiKey", meiliKey);
@@ -81,6 +84,8 @@ const App = () => {
         setShowFilter,
         showResults,
         setShowResults,
+        setLocationFilter,
+        locationFilter,
       }}
     >
       <MapProvider>
