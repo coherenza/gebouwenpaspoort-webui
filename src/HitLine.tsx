@@ -33,7 +33,6 @@ export const HitLine = ({ hit }: HitProps) => {
   return (
     <div
       className={active ? "Hit Hit--active" : "Hit"}
-      style={{'border' : `0.5ex solid ${color}`}}
       onClick={() => { isAob ? setCurrent(hit) : setLocationFilterId(hit.id) } }
     >
       {/* Click on area-filter -> set filter on pdok-locatie-id == hit.id */}
