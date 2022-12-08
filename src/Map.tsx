@@ -142,6 +142,7 @@ export function Map() {
             style={{
               zIndex: isCurrent ? 1 : 0,
             }}
+            scale={0.4}
           ></Marker>
         );
       }),
