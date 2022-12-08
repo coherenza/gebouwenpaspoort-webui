@@ -56,6 +56,11 @@ const App = () => {
     setApiKey(apiKeyTemp);
   }
 
+  function handleAddresses() {
+    setShowResults(!showResults);
+    setCurrent(undefined);
+  }
+
   // try API key, set invalid if not correct
   useEffect(() => {
     fetch(server + "/indexes", {
@@ -111,6 +116,8 @@ const App = () => {
                     attributesToSnippet={["description:50"]}
                     snippetEllipsisText={"..."}
                   />
+                  <button className="header--button header--button-left" onClick={() => setShowFilter(!showFilter)}>Filters</button>
+                  <button className="header--button header--button-right" onClick={handleAddresses}>Resultaten</button>
                   <Map />
                   <Header />
                   <Filters />
