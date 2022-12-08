@@ -29,7 +29,11 @@ export function Filters({}) {
           })}
         />
         {filterProps.map((prop) => {
-          return <Filter key={prop.label} {...prop} />;
+          if (prop.display == 'none') {
+            return '';
+          } else {
+            return <Filter key={prop.label} {...prop} />;
+          }
         })}
         {window.location.href.includes("localhost") && <button onClick={setIndexes}>set indexes</button>}
       </div>

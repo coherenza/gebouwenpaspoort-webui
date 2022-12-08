@@ -221,20 +221,38 @@ export interface FilterProp {
   label: string;
   propKey: string;
   type: "single" | "multi" | "geo" | "date" | "range";
+  display?: "none"
 }
 
 export const filterProps: FilterProp[] = [
   { propKey: "bag-object-type", label: "Objecttype", type: "single" },
+  { propKey: "pdok-locatie-id", label: "locatie id's", type: "multi", display: "none" },
   { propKey: "bag-aob-gebruiksdoel", label: "Gebruiksdoel", type: "multi" },
   { propKey: "bag-aob-oppervlakte", label: "Oppervlakte (m2)", type: "range" },
-  {
-    propKey: "bag-pnd-oorspronkelijk-bouwjaar",
-    label: "Bouwjaar",
-    type: "range",
-  },
+  { propKey: "bag-pnd-oorspronkelijk-bouwjaar", label: "Bouwjaar", type: "range" },
   { propKey: "epl.pand_energieklasse", label: "Energieklasse", type: "single" },
   { propKey: "bag-pnd-status", label: "Status", type: "multi" },
 ];
+
+export interface GBPObjectTypeProperties {
+  readonly [index: string] : {
+    color: string;
+    isAob: boolean;
+  }
+}
+
+// https://www.heavy.ai/blog/12-color-palettes-for-telling-better-stories-with-your-data
+export const GBPObjectTypes: GBPObjectTypeProperties = {
+  "woonplaats" : { color: "#ebdc78", isAob: false },
+  "wijk" : { color: "#8be04e", isAob: false },
+  "buurt" : { color: "#5ad45a", isAob: false },
+  "openbareruimte" : { color: "#00b7c7", isAob: false },
+  "postcode" : { color: "#0d88e6", isAob: false },
+  "adres" : { color: "#1a53ff", isAob: false },
+  "verblijfsobject" : { color: "#4421af", isAob: true },
+  "standplaats" : { color: "#7c1158", isAob: true },
+  "ligplaats" : { color: "#b30000", isAob: true },
+};
 
 export interface GBPObject {
   id: string;

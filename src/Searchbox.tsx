@@ -61,7 +61,7 @@ export const SearchBox = () => {
         id="search-box"
         type="search"
         value={searchTerm}
-        placeholder="Zoek op adres, eigenschap, zaakonderwerp... "
+        placeholder="Zoek op locatie"
         onChange={handleSetSearchTerm}
         autoFocus
       />
