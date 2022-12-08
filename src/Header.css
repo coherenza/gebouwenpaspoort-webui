@@ -9,7 +9,7 @@
 @media (min-width: 768px) {
 
   .header--button {
-    position: fixed;
+    position: absolute;
     z-index: 1;
     background: white;
     top: 1rem;

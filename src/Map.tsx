@@ -9,7 +9,6 @@ import React, {
 import "./Map.css";
 import { useGeoSearch } from "./useGeoSearch";
 import MapGL, {
-  FullscreenControl,
   GeolocateControl,
   MapRef,
   Marker,
@@ -44,11 +43,16 @@ export const startBounds = new LngLatBounds(
 export function Map() {
   const { items, refine } = useGeoSearch();
   const { query } = useSearchBox();
-  const { setCurrent, current, showFilter, showResults } = useContext(AppContext);
+  const {
+    setCurrent,
+    current,
+    showFilter,
+    showResults,
+    setShowFilter,
+    setShowResults,
+  } = useContext(AppContext);
   const mapRef = useRef<MapRef>();
   const [viewState, setViewState] = React.useState(mapStartState);
-  const [prisine, setPristine] = useState(true);
-
 
   // if the users toggles the sidebars, resize the map
   useEffect(() => {
@@ -59,7 +63,7 @@ export function Map() {
 
   // If user changed the query, move the bounds to the new items
   useEffect(() => {
-    if (!prisine || !mapRef.current) {
+    if (!mapRef.current) {
       return;
     }
     // Don't set the bounds if there are no items
@@ -116,7 +120,7 @@ export function Map() {
     mapRef.current?.fitBounds(bounds, {
       padding: 250,
     });
-  }, [prisine, query]);
+  }, [query]);
 
   // If the user moves the map, update the query to filter current area
   const updateBoundsQuery = useCallback((evt) => {
@@ -164,6 +168,22 @@ export function Map() {
 
   return (
     <div className="Map__wrapper">
+      {!showFilter && (
+        <button
+          className="header--button header--button-left"
+          onClick={() => setShowFilter(!showFilter)}
+        >
+          Filters
+        </button>
+      )}
+      {!showResults && (
+        <button
+          className="header--button header--button-right"
+          onClick={() => setShowResults(!showResults)}
+        >
+          Resultaten
+        </button>
+      )}
       <Header />
       <MapGL
         trackResize={true}
