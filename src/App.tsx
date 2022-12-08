@@ -7,7 +7,7 @@ import React, { createContext, useEffect, useMemo } from "react";
 import { InstantSearch, Configure } from "react-instantsearch-hooks-web";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import { GBPObject, sortProps } from "./schema";
-import { indexName, meiliKey, server } from "./config";
+import { indexName, meiliKey, mode, server } from "./config";
 import { Map } from "./Map";
 import { Details } from "./Details";
 import { Results } from "./Results";
@@ -16,6 +16,16 @@ import { Header } from "./Header";
 import { KeyboardHandler } from "./KeyboardHandler";
 import { MapProvider } from "react-map-gl";
 import { useLocalStorage } from "./useLocalStorage";
+import Bugsnag from "@bugsnag/js";
+import BugsnagPluginReact from "@bugsnag/plugin-react";
+
+Bugsnag.start({
+  apiKey: "78d53614b677831a5615d29728624fe0",
+  plugins: [new BugsnagPluginReact()],
+  releaseStage: mode,
+  enabledReleaseStages: ["production", "staging"],
+});
+const ErrorBoundary = Bugsnag.getPlugin("react").createErrorBoundary(React);
 
 interface AppContextI {
   setCurrent: (gebouw: GBPObject) => void;
@@ -73,42 +83,44 @@ const App = () => {
       }}
     >
       <MapProvider>
-        <InstantSearch
-          indexName={indexName}
-          searchClient={searchClient}
-          initialUiState={{
-            gbp: {
-              sortBy: sortProps[0].sortBy,
-            },
-          }}
-        >
-          <KeyboardHandler>
-            {!validApiKey ? (
-              <form onSubmit={handleSetApiKey} className="app__api-key">
-                <input
-                  autoFocus
-                  placeholder="Voer de sleutel in"
-                  value={apiKeyTemp}
-                  onChange={(e) => setApiKeyTemp(e.target.value)}
-                />
-                <button type="submit">opslaan</button>
-              </form>
-            ) : (
-              <div className="app">
-                <Configure
-                  hitsPerPage={hitCount}
-                  attributesToSnippet={["description:50"]}
-                  snippetEllipsisText={"..."}
-                />
-                <Map />
-                <Header />
-                <Filters />
-                <Results />
-                <Details />
-              </div>
-            )}
-          </KeyboardHandler>
-        </InstantSearch>
+        <ErrorBoundary>
+          <InstantSearch
+            indexName={indexName}
+            searchClient={searchClient}
+            initialUiState={{
+              gbp: {
+                sortBy: sortProps[0].sortBy,
+              },
+            }}
+          >
+            <KeyboardHandler>
+              {!validApiKey ? (
+                <form onSubmit={handleSetApiKey} className="app__api-key">
+                  <input
+                    autoFocus
+                    placeholder="Voer de sleutel in"
+                    value={apiKeyTemp}
+                    onChange={(e) => setApiKeyTemp(e.target.value)}
+                  />
+                  <button type="submit">opslaan</button>
+                </form>
+              ) : (
+                <div className="app">
+                  <Configure
+                    hitsPerPage={hitCount}
+                    attributesToSnippet={["description:50"]}
+                    snippetEllipsisText={"..."}
+                  />
+                  <Map />
+                  <Header />
+                  <Filters />
+                  <Results />
+                  <Details />
+                </div>
+              )}
+            </KeyboardHandler>
+          </InstantSearch>
+        </ErrorBoundary>
       </MapProvider>
     </AppContext.Provider>
   );
