@@ -40,24 +40,41 @@ interface AppContextI {
 export const AppContext = createContext<AppContextI>(undefined);
 export const hitCount = 150;
 
-const App = () => {
+const AppProvider = () => {
+  const [apiKey, setApiKey] = useLocalStorage("apiKey", meiliKey);
+
+  const searchClient = useMemo(() => {
+    return instantMeiliSearch(server, apiKey);
+  }, [apiKey]);
+
+  return (
+    <InstantSearch
+    indexName={indexName}
+    searchClient={searchClient}
+    initialUiState={{
+      gbp: {
+        sortBy: sortProps[0].sortBy,
+      },
+    }}
+  >
+    <App setApiKey={setApiKey} apiKey={apiKey}/>
+    </InstantSearch>
+  )
+}
+
+const App = ({setApiKey, apiKey}) => {
   const [current, setCurrent] = React.useState(undefined);
   const [showFilter, setShowFilter] = React.useState(true);
   const [showResults, setShowResults] = React.useState(true);
   const [locationFilter, setLocationFilterInternal] = React.useState(undefined);
   const [apiKeyTemp, setApiKeyTemp] = React.useState("");
   const [validApiKey, setValidApiKey] = React.useState(false);
-  const [apiKey, setApiKey] = useLocalStorage("apiKey", meiliKey);
 
+  const { refine } = useRefinementList({attribute: 'pdok-locatie-id'});
   const setLocationFilter = (locationFilter: LocationFilter) => {
-    const { refine } = useRefinementList({attribute: 'pdok-locatie-id'});
     setLocationFilterInternal(locationFilter);
     refine(locationFilter.id);
   };
-
-  const searchClient = useMemo(() => {
-    return instantMeiliSearch(server, apiKey);
-  }, [apiKey]);
 
   async function handleSetApiKey(e) {
     e.preventDefault();
@@ -80,6 +97,7 @@ const App = () => {
   }, [apiKey]);
 
   return (
+
     <AppContext.Provider
       value={{
         setCurrent,
@@ -94,15 +112,6 @@ const App = () => {
     >
       <MapProvider>
         <ErrorBoundary>
-          <InstantSearch
-            indexName={indexName}
-            searchClient={searchClient}
-            initialUiState={{
-              gbp: {
-                sortBy: sortProps[0].sortBy,
-              },
-            }}
-          >
             <KeyboardHandler>
               {!validApiKey ? (
                 <form onSubmit={handleSetApiKey} className="app__api-key">
@@ -131,11 +140,10 @@ const App = () => {
                 </div>
               )}
             </KeyboardHandler>
-          </InstantSearch>
         </ErrorBoundary>
       </MapProvider>
     </AppContext.Provider>
   );
 };
 
-export default App;
+export default AppProvider;
