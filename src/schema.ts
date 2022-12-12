@@ -208,6 +208,7 @@ export interface SortProp {
 
 /** Selectable sorts. First is default */
 export const sortProps: SortProp[] = [
+  { sortBy: `${indexName}:location-sort-value:asc`, attribute: 'location-sort-value',  label: "Initial sort order" },
   { sortBy: `${indexName}:object-type-sort-order:asc`, attribute: 'object-type-sort-order',  label: "Object type" },
   { sortBy: `${indexName}:naam:asc`, attribute: "naam", label: "Naam" },
   { sortBy: `${indexName}:bag-opr-naam:asc`, attribute: "bag-opr-naam", label: "Straat" },
@@ -275,6 +276,7 @@ export interface GBPObject {
   "bag-aob-id": string;
   "bag-object-type": string;
   "object-type-sort-order": number;
+  "location-sort-value": string;
   "pdok-locatie-id": string[];
   "bag-aob-gebruiksdoel": string[];
   "bag-aob-oppervlakte": number;
