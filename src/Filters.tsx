@@ -46,8 +46,7 @@ export function Filters({}) {
           return (
             <AttributeCollapsible attribute={attribute}>
               {attribute.attributes?.map((att) => {
-                console.log("att", att);
-                return <Filter key={att?.id} {...att} />;
+                return <Filter key={att?.name} {...att} />;
               })}
             </AttributeCollapsible>
           );

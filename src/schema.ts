@@ -32,11 +32,9 @@ const Attributes = {
   "pand_status": {
     name: "pand status",
     id: "bag-pnd-status",
-    filterType: "select",
   },
   "nadergebruiksdoel": {
     name: "nader gebruiksdoel",
-    filterType: "select",
   },
   "gebruiksdoel": {
     name: "gebruiksdoel",
@@ -50,17 +48,14 @@ const Attributes = {
   "bag_status": {
     name: "bag status",
     id: "bag-aob-status",
-    filterType: "select",
   },
   "object_type": {
     name: "object-type",
     id: "bag-object-type",
-    filterType: "select",
   },
   "pand_energieklasse": {
     name: "Energie klasse",
     id: "epl.pand_energieklasse",
-    filterType: "select",
   },
 };
 
@@ -77,7 +72,6 @@ export const displaySchema: Attribute[] = [
     name: "Pand",
     attributes: [
       Attributes.bouwjaar,
-      Attributes.gebruiksdoel,
     ],
   },
   {
@@ -197,15 +191,16 @@ export const FilterSchema: Attribute[] = [
   {
     name: "BAG / CBS Algemeen",
     attributes: [
-      Attributes.bouwjaar,
-      Attributes.gebruiksdoel,
-      Attributes.oppervlakte,
-      Attributes.bag_status,
       Attributes.pand_status,
+      Attributes.gebruiksdoel,
     ],
   },
   {
     name: "Bouwtechnisch",
+    attributes: [
+      Attributes.bouwjaar,
+      Attributes.oppervlakte,
+    ]
   },
   {
     name: "Energie",

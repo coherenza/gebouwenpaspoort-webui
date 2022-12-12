@@ -63,7 +63,7 @@ export function AttributeCollapsible({
   count,
   children,
 }: AttributeTitleProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   if (!children) return null;
   return (
     <div className="Attribute">
