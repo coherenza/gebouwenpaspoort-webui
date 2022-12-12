@@ -2,12 +2,14 @@ import { Configure, SortBy, useConnector } from "react-instantsearch-hooks-web";
 import { setIndexes } from "./import";
 import { Filter } from "./Property";
 import "./Filters.css";
-import { filterProps, sortProps } from "./schema";
+import { filterProps, FilterSchema, sortProps } from "./schema";
 import { useContext } from "react";
 import { AppContext } from "./App";
+import { AttributeCollapsible } from "./Attributes";
 
 export function Filters({}) {
-  const { showFilter, setShowFilter, locationFilter, setLocationFilter } = useContext(AppContext);
+  const { showFilter, setShowFilter, locationFilter, setLocationFilter } =
+    useContext(AppContext);
   const clearLocationFilter = () => setLocationFilter(undefined);
   return (
     <div
@@ -20,10 +22,15 @@ export function Filters({}) {
         <button onClick={() => setShowFilter(false)}>Sluit</button>
       </div>
       <div className="filters">
-
-        { locationFilter &&
-            <div>Zoek binnen <span className="filterValue">{locationFilter.name}</span><button className="clear" onClick={clearLocationFilter}>x</button></div>
-        }
+        {locationFilter && (
+          <div>
+            Zoek binnen{" "}
+            <span className="filterValue">{locationFilter.name}</span>
+            <button className="clear" onClick={clearLocationFilter}>
+              x
+            </button>
+          </div>
+        )}
 
         {/* {"sorteren op:"}
         <SortBy
@@ -35,16 +42,20 @@ export function Filters({}) {
           })}
         /> */}
 
-        {filterProps.map((prop) => {
-          if (prop.display == 'none') {
-            return '';
-          } else {
-            return <Filter key={prop.label} {...prop} />;
-          }
+        {FilterSchema.map((attribute) => {
+          return (
+            <AttributeCollapsible attribute={attribute}>
+              {attribute.attributes?.map((att) => {
+                console.log("att", att);
+                return <Filter key={att?.id} {...att} />;
+              })}
+            </AttributeCollapsible>
+          );
         })}
 
-        {window.location.href.includes("localhost") && <button onClick={setIndexes}>set indexes</button>}
-
+        {window.location.href.includes("localhost") && (
+          <button onClick={setIndexes}>set indexes</button>
+        )}
       </div>
     </div>
   );

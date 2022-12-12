@@ -1,5 +1,4 @@
-import { Panel } from "./Panel";
-import { FilterProp } from "./schema";
+import { Attribute, FilterProp } from "./schema";
 import React from "react";
 import {
   RefinementList,
@@ -7,11 +6,12 @@ import {
   Menu,
 } from "react-instantsearch-hooks-web";
 
-export const Filter = (filter: FilterProp) => {
+export const Filter = (filter: Attribute) => {
   return (
-    <Panel title={filter.label} id={filter.propKey} startOpen={filter.type != "range"}>
-      {filter.type === "multi" && (<RefinementList attribute={filter.propKey} operator="and" />)}
-      {filter.type === "range" && (<RangeInput attribute={filter.propKey} />)}
-    </Panel>
+    <>
+      <h4>{filter.name}</h4>
+      {filter.filterType === "select" && (<RefinementList attribute={filter.id} operator="and" />)}
+      {filter.filterType === "range" && (<RangeInput attribute={filter.id} />)}
+    </>
   );
 };

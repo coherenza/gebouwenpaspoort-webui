@@ -17,9 +17,8 @@ export function KeyboardHandler({children}) {
 
       if (event.target.tagName === 'INPUT') { return; }
 
-      // Escape
+      // Escape closes windows
       if (keyCode === 27) {
-        console.log("Escape", showResults, !!current);
         if (current) {
           setCurrent(undefined);
         } else {
@@ -31,8 +30,8 @@ export function KeyboardHandler({children}) {
       if (keyCode === 70) {
         setShowFilter(!showFilter);
       }
-      // Toggle results on `a`
-      if (keyCode === 65) {
+      // Toggle results on `r`
+      if (keyCode === 82) {
         setShowResults(!showResults);
       }
 
