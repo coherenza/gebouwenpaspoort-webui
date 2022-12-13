@@ -43,7 +43,7 @@ export function Results() {
         {hits.length} / {nbHits == 1000 ? "1000+" : nbHits} resultaten zichtbaar
       </div>
       {/* @ts-ignore */}
-      <Hits hitComponent={HitLine} />
+      <Hits hitComponent={HitLine} escapeHTML={false} />
       <Pagination showLast={true} />
     </div>
   );
