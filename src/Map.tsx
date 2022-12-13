@@ -10,9 +10,12 @@ import "./Map.css";
 import { useGeoSearch } from "./useGeoSearch";
 import MapGL, {
   GeolocateControl,
+  Layer,
   MapRef,
   Marker,
   NavigationControl,
+  Source,
+  SymbolLayer,
 } from "react-map-gl";
 import { LngLatBounds } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -24,6 +27,9 @@ import { LayerSource } from "./Layers";
 import useDebounce from "./useDebounce";
 import { mapboxToken } from "./config";
 import { HoverInfo } from "./Tooltip";
+import Mapbox from "react-map-gl/dist/esm/mapbox/mapbox";
+import marker from "./assets/marker.svg";
+import CustomIcons from "./Icons";
 
 export const mapStartState = {
   latitude: 52.0907,
@@ -151,6 +157,18 @@ export function Map() {
     moveMapToItemBounds();
   }, [debouncedLocationFilter]);
 
+  // initialize map
+  // Load marker icon
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (map) {
+      CustomIcons.forEach((icon) => {
+        const customIcon = new Image(24, 24);
+        customIcon.onload = () => map.addImage(icon.name, customIcon)
+        customIcon.src = icon.src;
+      });
+    }
+  }, [mapRef.current]);
   // If the user moves the map, update the query to filter current area
   const updateBoundsQuery = useCallback((evt) => {
     if (!evt.originalEvent) {
@@ -245,6 +263,46 @@ export function Map() {
     [items, current]
   );
 
+  const data: GeoJSON.FeatureCollection<GeoJSON.Geometry> = useMemo(() => {
+    return {
+      type: "FeatureCollection",
+      features: items.map((item) => {
+        const isCurrent = item.id == current?.id;
+        const handleClick = () => {
+          setCurrent(item as unknown as GBPObject);
+        };
+
+        return {
+          type: "Feature",
+          onClick: { handleClick },
+          geometry: {
+            type: "Point",
+            coordinates: [item._geoloc.lng, item._geoloc.lat],
+          },
+          properties: {
+            id: item.id,
+            type: item["bag-object-type"],
+            color: isCurrent
+              ? "#000000"
+              : GBPObjectTypes["" + item["bag-object-type"]].color,
+            title: item["naam"],
+          },
+        };
+      }),
+    };
+  }, [items]);
+
+  const handleMapClick = useCallback(
+    (evt: mapboxgl.MapLayerMouseEvent) => {
+      if (evt.features) {
+        console.log("features", evt.features[0]);
+      } else {
+        console.log("no feautres", evt);
+      }
+    },
+    [items]
+  );
+
   return (
     <div className="Map__wrapper">
       <div className="Map__buttons Map__buttons--left">
@@ -276,6 +334,7 @@ export function Map() {
         // maxBounds={startBounds}
         onMouseMove={handleHover}
         onMouseOut={() => setHoverInfo(null)}
+        onClick={handleMapClick}
         onMoveEnd={updateBoundsQuery}
         style={{ width: "100%", height: "100%", flexBasis: "600px", flex: 1 }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
@@ -288,13 +347,34 @@ export function Map() {
         {hoverInfo && <HoverInfo {...hoverInfo} />}
         <NavigationControl position={"bottom-right"} />
         <GeolocateControl position={"bottom-left"} />
-        {markers}
         {layers
           .filter((layer) => layer.visible)
           .map((layer) => (
             <LayerSource layer={layer} key={layer.id} />
           ))}
+        <Source type="geojson" data={data}>
+          <Layer {...dataLayer} />
+        </Source>
+        {/* {markers} */}
       </MapGL>
     </div>
   );
 }
+
+// For more information on data-driven styles, see https://www.mapbox.com/help/gl-dds-ref/
+export const dataLayer: SymbolLayer = {
+  id: "points",
+  type: "symbol",
+  source: "points",
+  layout: {
+    // get the title name and icon from the source's properties
+    "icon-image": ["get", "type"],
+    "text-field": ["get", "title"],
+    // "text-color": ["get", "color"],
+    "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+    // "text-offset": [0, 1.25],
+    "text-anchor": "top",
+    "icon-padding": 1,
+    "icon-size": 0.5,
+  },
+};
