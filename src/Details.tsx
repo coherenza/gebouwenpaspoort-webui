@@ -1,7 +1,7 @@
 import "./Details.css";
 import { useContext } from "react";
 import { AppContext } from "./App";
-import { displaySchema as displayAttributes, GBPObjectTypes } from "./schema";
+import { displayAttributes as displayAttributes, GBPObjectTypes } from "./schema";
 import { AttributeView } from "./Attributes";
 import { useRefinementList } from "react-instantsearch-hooks-web";
 

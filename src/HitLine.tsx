@@ -27,7 +27,6 @@ export const HitLine = ({ hit }: HitProps) => {
   const isAob = hit && GBPObjectTypes[""+hit["bag-object-type"]].isAob;
 
   const color = hit && GBPObjectTypes[""+hit["bag-object-type"]].color;
-
   return (
     <div
       className={active ? "Hit Hit--active" : "Hit"}

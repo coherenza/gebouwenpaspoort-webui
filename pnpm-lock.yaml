@@ -17,7 +17,7 @@ specifiers:
   meilisearch: ^0.29.1
   react: ^18.2.0
   react-dom: ^18.2.0
-  react-instantsearch-hooks-web: ^6.36.0
+  react-instantsearch-hooks-web: ^6.38.0
   react-map-gl: ^7.0.19
   typescript: ^4.6.4
   vite: ^3.2.3
@@ -35,7 +35,7 @@ dependencies:
   meilisearch: 0.29.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  react-instantsearch-hooks-web: 6.38.0_fzyfqr3mixyxftdbf7mmfo2jb4
+  react-instantsearch-hooks-web: 6.38.1_fzyfqr3mixyxftdbf7mmfo2jb4
   react-map-gl: 7.0.19_wncmjf7gwcz6cg7gkzeel3s2iq
 
 devDependencies:
@@ -1567,8 +1567,8 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-instantsearch-hooks-web/6.38.0_fzyfqr3mixyxftdbf7mmfo2jb4:
-    resolution: {integrity: sha512-gNMv+Ep4q5DL/TDP+nWZrCRRDnamme5rdLuNjK1w0eZkzXBjoD7ngsEzJoFKs7SmmBFpOXNCgUNvAucbNLOM9w==}
+  /react-instantsearch-hooks-web/6.38.1_fzyfqr3mixyxftdbf7mmfo2jb4:
+    resolution: {integrity: sha512-CSaHleVFVDz9mCos+eJMxagM9a6H9NO8nvkAqCwx2MOzqJFS1aE5htx8nnlTZt7nqpclPwu3VZUzMFrreA9D6g==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 5'
       react: '>= 16.8.0 < 19'
@@ -1579,11 +1579,11 @@ packages:
       instantsearch.js: 4.49.1_algoliasearch@4.14.2
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-instantsearch-hooks: 6.38.0_jz5z4e34rsiperspnjrg6onci4
+      react-instantsearch-hooks: 6.38.1_jz5z4e34rsiperspnjrg6onci4
     dev: false
 
-  /react-instantsearch-hooks/6.38.0_jz5z4e34rsiperspnjrg6onci4:
-    resolution: {integrity: sha512-P/SX99udPeaL4up4U4aKaBsiYS7kgOJo5UxG/oTqJXnGpKPqnxZAqIDG3vs8qhXeRAv3PU2H3WMj4og54L5tAg==}
+  /react-instantsearch-hooks/6.38.1_jz5z4e34rsiperspnjrg6onci4:
+    resolution: {integrity: sha512-y3Y2w3mnaZWJb2GKVddX2ht4hYy5zd+Hxs+YdACgJeM9Ta1qA6xeH+DxEv3ECY6OgeBekccCTeJhC/CZ1v+VrQ==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 5'
       react: '>= 16.8.0 < 19'

@@ -1,11 +1,13 @@
-import { Configure, SortBy, useConnector } from "react-instantsearch-hooks-web";
+import {
+  HitsPerPage,
+} from "react-instantsearch-hooks-web";
 import { setIndexes } from "./import";
-import { Filter } from "./Property";
+import { Filter } from "./Filter";
 import "./Filters.css";
-import { filterProps, FilterSchema, sortProps } from "./schema";
 import { useContext } from "react";
 import { AppContext } from "./App";
 import { AttributeCollapsible } from "./Attributes";
+import { filterAttributes } from "./schema";
 
 export function Filters({}) {
   const { showFilter, setShowFilter, locationFilter, setLocationFilter } =
@@ -41,8 +43,7 @@ export function Filters({}) {
             };
           })}
         /> */}
-
-        {FilterSchema.map((attribute) => {
+        {filterAttributes.map((attribute) => {
           return (
             <AttributeCollapsible attribute={attribute}>
               {attribute.attributes?.map((att) => {
@@ -51,7 +52,6 @@ export function Filters({}) {
             </AttributeCollapsible>
           );
         })}
-
         {window.location.href.includes("localhost") && (
           <button onClick={setIndexes}>set indexes</button>
         )}

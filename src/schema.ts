@@ -12,18 +12,8 @@ export interface Attribute {
   filterType?: "select" | "range";
 }
 
-export const filterProps: FilterProp[] = [
-  { propKey: "bag-object-type", label: "Objecttype", type: "single" },
-  { propKey: "pdok-locatie-id", label: "locatie id's", type: "multi", display: "none" },
-  { propKey: "bag-aob-gebruiksdoel", label: "Gebruiksdoel", type: "multi" },
-  { propKey: "bag-aob-oppervlakte", label: "Oppervlakte (m2)", type: "range" },
-  { propKey: "bag-pnd-oorspronkelijk-bouwjaar", label: "Bouwjaar", type: "range" },
-  { propKey: "epl.pand_energieklasse", label: "Energieklasse", type: "single" },
-  { propKey: "bag-pnd-status", label: "Status", type: "multi" },
-];
-
 /** All attributes should be here */
-const Attributes = {
+export const Attributes = {
   "bouwjaar": {
     name: "bouwjaar",
     id: "bag-pnd-oorspronkelijk-bouwjaar",
@@ -33,15 +23,12 @@ const Attributes = {
     name: "pand status",
     id: "bag-pnd-status",
   },
-  "nadergebruiksdoel": {
-    name: "nader gebruiksdoel",
-  },
   "gebruiksdoel": {
     name: "gebruiksdoel",
     id: "bag-aob-gebruiksdoel",
   },
   "oppervlakte": {
-    name: "oppervlakte",
+    name: "Oppervlakte (m2)",
     id: "bag-aob-oppervlakte",
     filterType: "range",
   },
@@ -63,7 +50,7 @@ const Attributes = {
 /** The current schema, used for rendering the Details page.
  *  The ordering of the Collections defines how they are shown in the front-end.
  */
-export const displaySchema: Attribute[] = [
+export const displayAttributes: Attribute[] = [
   {
     name: "Hoofdadres",
     id: "bag-num-volledig",
@@ -187,7 +174,7 @@ export const displaySchema: Attribute[] = [
   },
 ];
 
-export const FilterSchema: Attribute[] = [
+export const filterAttributes: Attribute[] = [
   {
     name: "BAG / CBS Algemeen",
     attributes: [
