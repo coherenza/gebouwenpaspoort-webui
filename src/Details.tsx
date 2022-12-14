@@ -7,11 +7,11 @@ import { useRefinementList } from "react-instantsearch-hooks-web";
 
 export function Details() {
   const { current, setCurrent } = useContext(AppContext);
+  const x = useRefinementList({ attribute: "pdok-locatie-id" });
+
   if (!current) {
     return null;
   }
-
-  const x = useRefinementList({ attribute: "pdok-locatie-id" });
 
   const geo = current["bag-aob-geo-EPSG28992"];
 
