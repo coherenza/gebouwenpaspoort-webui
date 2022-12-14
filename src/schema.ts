@@ -252,13 +252,14 @@ export interface SortProp {
 
 /** Selectable sorts. First is default */
 export const sortProps: SortProp[] = [
+  { sortBy: `${indexName}:location-sort-value:asc`, attribute: 'location-sort-value',  label: "Initial sort order" },
   { sortBy: `${indexName}:object-type-sort-order:asc`, attribute: 'object-type-sort-order',  label: "Object type" },
-  { sortBy: `${indexName}`, attribute: "", label: "Relevantie" },
-  {
-    sortBy: `${indexName}:bag-num-volledig:asc`,
-    attribute: "bag-num-volledig",
-    label: "Adres",
-  },
+  { sortBy: `${indexName}:naam:asc`, attribute: "naam", label: "Naam" },
+  { sortBy: `${indexName}:bag-opr-naam:asc`, attribute: "bag-opr-naam", label: "Straat" },
+  { sortBy: `${indexName}:bag-num-huisnummer:asc`, attribute: "bag-num-huisnummer", label: "Huisnummer" },
+  { sortBy: `${indexName}:bag-num-huisletter:asc`, attribute: "bag-num-huisletter", label: "Huisletter" },
+  { sortBy: `${indexName}:bag-num-huisnummertoevoeging:asc`, attribute: "bag-num-huisnummertoevoeging", label: "Huisnummertoevoeging" },
+  //{ sortBy: `${indexName}`, attribute: "", label: "Relevantie" },
 ];
 
 export interface FilterProp {
@@ -309,6 +310,7 @@ export interface GBPObject {
   "bag-aob-id": string;
   "bag-object-type": string;
   "object-type-sort-order": number;
+  "location-sort-value": string;
   "pdok-locatie-id": string[];
   "bag-aob-gebruiksdoel": string[];
   "bag-aob-oppervlakte": number;
