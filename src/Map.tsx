@@ -100,6 +100,10 @@ function moveBounds(mapRef, items) {
     { lat: highLat, lng: highLng },
     { lat: lowLat, lng: lowLng }
   );
+  if (isNaN(bounds[0]) || isNaN(bounds[1])) {
+    console.warn("bounds are NaN, not setting bounds");
+    return;
+  }
   mapRef.current?.fitBounds(bounds, {
     padding: 250,
   });
