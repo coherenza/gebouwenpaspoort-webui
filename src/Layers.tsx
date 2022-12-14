@@ -56,8 +56,8 @@ export function LayerSelector() {
       </div>
       <div className="layers-checkboxes">
         {layers.map((layer) => (
-          <div>
-            <label key={layer.id}>
+          <div key={layer.id}>
+            <label>
               <input
                 type="checkbox"
                 checked={layer.visible}
