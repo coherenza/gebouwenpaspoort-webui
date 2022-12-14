@@ -21,6 +21,12 @@ export const layersDefault: LayerI[] = [
     visible: false,
     url: "https://service.pdok.nl/cbs/wijkenbuurten/2021/wms/v1_0",
   },
+  {
+    name: "Funderingsproblematiek",
+    id: "indgebfunderingsproblematiek",
+    visible: false,
+    url: "https://service.pdok.nl/rvo/indgebfunderingsproblematiek/wms/v1_0",
+  },
 ];
 
 export function LayerSelector() {
@@ -58,6 +64,14 @@ export function LayerSelector() {
                 onChange={() => toggleLayer(layer)}
               ></input>
               {layer.name}
+              {" "}
+              <a
+                href={`${layer.url}?request=getcapabilities&service=wms`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                (bron)
+              </a>
             </label>
           </div>
         ))}
