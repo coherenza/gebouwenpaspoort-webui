@@ -77,7 +77,7 @@ const App = ({ setApiKey, apiKey }) => {
   const { refine } = useRefinementList({ attribute: "pdok-locatie-id" });
   const setLocationFilter = (locationFilter: LocationFilter) => {
     setLocationFilterInternal(locationFilter);
-    refine(locationFilter.id);
+    refine(locationFilter?.id || "");
   };
 
   async function handleSetApiKey(e) {
