@@ -15,10 +15,15 @@ export interface Attribute {
 /** All attributes should be here */
 export const Attributes = {
   "aob_id" : {name: "BAG id", id: "bag-aob-id"},
+  "object_type" : {name: "type", id: "bag-object-type"},
   "bouwjaar": {
     name: "bouwjaar",
     id: "bag-pnd-oorspronkelijk-bouwjaar",
     // filterType: "range",
+  },
+  "bouwjaar_interval": {
+    name: "bouwjaar",
+    id: "bag-pnd-oorspronkelijk-bouwjaar-interval",
   },
   "pand_id": {
     name: "BAG id",
@@ -37,13 +42,13 @@ export const Attributes = {
     id: "bag-aob-oppervlakte",
     // filterType: "range",
   },
+  "oppervlakte_interval": {
+    name: "Oppervlakte (m2)",
+    id: "bag-aob-oppervlakte-interval",
+  },
   "bag_status": {
     name: "bag status",
     id: "bag-aob-status",
-  },
-  "object_type": {
-    name: "object-type",
-    id: "bag-object-type",
   },
   "pand_energieklasse": {
     name: "Energie klasse",
@@ -60,21 +65,20 @@ export const displayAttributes: Attribute[] = [
     name: "Hoofdadres",
     id: "bag-num-volledig",
   },
-  { name: "BAG", 
-    attributes: [Attributes.aob_id]
+  {
+    name: "Adresseerbaar object",
+    attributes: [
+      Attributes.aob_id,
+      Attributes.object_type,
+      Attributes.gebruiksdoel,
+      Attributes.oppervlakte_interval,
+    ],
   },
   {
     name: "Pand",
     attributes: [
       Attributes.pand_id,
-      Attributes.bouwjaar,
-    ],
-  },
-  {
-    name: "Verblijfsobject",
-    attributes: [
-      Attributes.gebruiksdoel,
-      Attributes.oppervlakte,
+      Attributes.bouwjaar_interval,
       Attributes.pand_status,
     ],
   },
@@ -143,11 +147,11 @@ export const displayAttributes: Attribute[] = [
         id: "inspectiedatum",
       },
       {
-        name: "Balkon",
+        name: "balkon",
         id: "balkon",
       },
       {
-        name: "Hekwerk",
+        name: "hekwerk",
         id: "hekwerk",
       },
       {
@@ -160,7 +164,45 @@ export const displayAttributes: Attribute[] = [
       },
     ],
   },
-
+  {
+    name: "Zon Op Dak", id: "zod",
+    attributes: [
+      { name: "gemeentelijk vastgoed", id: "gemeentelijk_vastgoed" },
+      { name: "zonnepanelen 2017", id: "zonnepanelen_2017" },
+      { name: "zonnepanelen 2018", id: "zonnepanelen_2018" },
+      { name: "zonnepanelen 2019", id: "zonnepanelen_2019" },
+      { name: "zonnepanelen 2020", id: "zonnepanelen_2020" },
+      { name: "zonnepanelen 2021", id: "zonnepanelen_2021" },
+      { name: "zonnepanelen 2022", id: "zonnepanelen_2022" },
+      { name: "plat dak oppervlakte", id: "plat_dak_oppervlakte"},
+      { name: "zonnepaneel oppervlakte", id: "zonnepaneel_oppervlakte" },
+    ]
+  },
+  {
+    name: "Bouwtechnische kenmerken", id: "vocbtk",
+    attributes: [
+      { name: "Balkon", id: "balkon" },
+      { name: "Dak", id: "dak" },
+      { name: "Dakkapel", id: "dakkapel" },
+      { name: "Dakrand", id: "dakrand" },
+      { name: "Raam/Deur", id: "raam/deur" },
+      { name: "Galerij", id: "galerij" },
+      { name: "Gevel", id: "gevel" },
+      { name: "Goot", id: "goot" },
+      { name: "Hekwerk", id: "hekwerk" },
+      { name: "Kozijn", id: "kozijn" },
+      { name: "Schoorsteen", id: "schoorsteen" },
+      { name: "Erker", id: "erker" },
+      { name: "Tuin", id: "tuin" },
+    ]
+  },
+  {
+    name: "Overige kenmerken", id: "vocovk",
+    attributes: [
+      { name: "Asbest", id: "asbest" },
+      { name: "Fundering", id: "fundering" },
+    ]
+  },
   {
     name: "Buurten en wijken",
     attributes: [
@@ -172,6 +214,11 @@ export const displayAttributes: Attribute[] = [
       {
         name: "naam subwijk",
         id: "bwk-num-subwijknaam",
+        type: "string",
+      },
+      {
+        name: "buurt",
+        id: "bwk-num-buurtnaam",
         type: "string",
       },
       {
