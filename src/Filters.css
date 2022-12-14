@@ -12,6 +12,7 @@
 }
 
 span.filterValue {
+  white-space: nowrap;
   padding: 0.3rem 0.8rem;
   border: 1px solid blue;
   border-top-left-radius: var(--border-radius);

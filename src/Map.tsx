@@ -20,6 +20,7 @@ import { GBPObject, GBPObjectTypes } from "./schema";
 import { useSearchBox } from "react-instantsearch-hooks-web";
 import { Header } from "./Header";
 import { LayerSource } from "./Layers";
+import useDebounce from "./useDebounce";
 
 const mapboxToken =
   "pk.eyJ1Ijoiam9lcGlvIiwiYSI6ImNqbTIzanZ1bjBkanQza211anFxbWNiM3IifQ.2iBrlCLHaXU79_tY9SVpXA";
@@ -40,6 +41,70 @@ export const startBounds = new LngLatBounds(
   startBoundsInstant.southWest
 );
 
+function moveBounds(mapRef, items) {
+  if (!mapRef.current) {
+    return;
+  }
+  // Don't set the bounds if there are no items
+  if (items.length == 0) {
+    return;
+  }
+  const center = mapRef.current.getMap().getBounds().getCenter();
+  let lowLat = center.lat;
+  let highLat = center.lat;
+  let lowLng = center.lng;
+  let highLng = center.lng;
+  items.forEach((item, i) => {
+    let lat0, lat1, lng0, lng1;
+    if (item.geo_bbox) {
+      //console.info(`bounds from geo_bbox for ${JSON.stringify(item['bag-object-type'])} ${JSON.stringify(item.naam)}: ${JSON.stringify(item.geo_bbox)}`);
+      lat0 = Math.min(item.geo_bbox[0].lat, item.geo_bbox[1].lat);
+      lat1 = Math.max(item.geo_bbox[0].lat, item.geo_bbox[1].lat);
+      lng0 = Math.min(item.geo_bbox[0].lng, item.geo_bbox[1].lng);
+      lng1 = Math.max(item.geo_bbox[0].lng, item.geo_bbox[1].lng);
+    } else {
+      const { lat, lng } = item._geoloc;
+      lat0 = lat;
+      lat1 = lat;
+      lng0 = lng;
+      lng1 = lng;
+    }
+    if (i == 0) {
+      lowLat = lat0;
+      highLat = lat1;
+      lowLng = lng0;
+      highLng = lng1;
+    } else {
+      // For some reason the extend method doesn't work, so we do it manually
+      // bounds.extend(item._geoloc);
+      if (lat0 < lowLat) {
+        lowLat = lat0;
+      }
+      if (lat1 > highLat) {
+        highLat = lat1;
+      }
+      if (lng0 < lowLng) {
+        lowLng = lng0;
+      }
+      if (lng1 > highLng) {
+        highLng = lng1;
+      }
+    }
+  });
+  // if any is nan, don't do anything
+  if (isNaN(lowLat) || isNaN(highLat) || isNaN(lowLng) || isNaN(highLng)) {
+    console.warn("bounds are NaN, not setting bounds");
+    return;
+  }
+  let bounds = new LngLatBounds(
+    { lat: highLat, lng: highLng },
+    { lat: lowLat, lng: lowLng }
+  );
+  mapRef.current?.fitBounds(bounds, {
+    padding: 250,
+  });
+}
+
 export function Map() {
   const { items, refine } = useGeoSearch();
   const { query } = useSearchBox();
@@ -52,10 +117,14 @@ export function Map() {
     setShowResults,
     setShowLayerSelector,
     showLayerSelector,
+    locationFilter,
     layers,
   } = useContext(AppContext);
   const mapRef = useRef<MapRef>();
   const [viewState, setViewState] = React.useState(mapStartState);
+
+  // We need to wait for new items to load after setting the location filter
+  let debouncedLocationFilter = useDebounce(locationFilter, 1000);
 
   // if the users toggles the sidebars, resize the map
   useEffect(() => {
@@ -66,68 +135,8 @@ export function Map() {
 
   // If user changed the query, move the bounds to the new items
   useEffect(() => {
-    if (!mapRef.current) {
-      return;
-    }
-    // Don't set the bounds if there are no items
-    if (items.length == 0) {
-      return;
-    }
-    const center = mapRef.current.getMap().getBounds().getCenter();
-    let lowLat = center.lat;
-    let highLat = center.lat;
-    let lowLng = center.lng;
-    let highLng = center.lng;
-    items.forEach((item, i) => {
-      let lat0, lat1, lng0, lng1;
-      if (item.geo_bbox) {
-        //console.info(`bounds from geo_bbox for ${JSON.stringify(item['bag-object-type'])} ${JSON.stringify(item.naam)}: ${JSON.stringify(item.geo_bbox)}`);
-        lat0 = Math.min(item.geo_bbox[0].lat, item.geo_bbox[1].lat);
-        lat1 = Math.max(item.geo_bbox[0].lat, item.geo_bbox[1].lat);
-        lng0 = Math.min(item.geo_bbox[0].lng, item.geo_bbox[1].lng);
-        lng1 = Math.max(item.geo_bbox[0].lng, item.geo_bbox[1].lng);
-      } else {
-        const { lat, lng } = item._geoloc;
-        lat0 = lat;
-        lat1 = lat;
-        lng0 = lng;
-        lng1 = lng;
-      }
-      if (i == 0) {
-        lowLat = lat0;
-        highLat = lat1;
-        lowLng = lng0;
-        highLng = lng1;
-      } else {
-        // For some reason the extend method doesn't work, so we do it manually
-        // bounds.extend(item._geoloc);
-        if (lat0 < lowLat) {
-          lowLat = lat0;
-        }
-        if (lat1 > highLat) {
-          highLat = lat1;
-        }
-        if (lng0 < lowLng) {
-          lowLng = lng0;
-        }
-        if (lng1 > highLng) {
-          highLng = lng1;
-        }
-      }
-    });
-    // if any is nan, don't do anything
-    if (isNaN(lowLat) || isNaN(highLat) || isNaN(lowLng) || isNaN(highLng)) {
-      console.warn("bounds are NaN, not setting bounds");
-      return;
-    }
-    let bounds = new LngLatBounds(
-      { lat: highLat, lng: highLng },
-      { lat: lowLat, lng: lowLng }
-    );
-    mapRef.current?.fitBounds(bounds, {
-      padding: 250,
-    });
-  }, [query]);
+    moveBounds(mapRef, items);
+  }, [query, debouncedLocationFilter]);
 
   // If the user moves the map, update the query to filter current area
   const updateBoundsQuery = useCallback((evt) => {

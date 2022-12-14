@@ -8,9 +8,8 @@ import { AttributeCollapsible } from "./Attributes";
 import { filterAttributes, sortProps } from "./schema";
 
 export function Filters({}) {
-  const { showFilter, setShowFilter, locationFilter, setLocationFilter } =
+  const { showFilter, setShowFilter } =
     useContext(AppContext);
-  const clearLocationFilter = () => setLocationFilter(undefined);
   return (
     <div
       className={`Sidebar filter-panel ${
@@ -22,15 +21,7 @@ export function Filters({}) {
         <button onClick={() => setShowFilter(false)}>Sluit</button>
       </div>
       <div className="filters">
-        {locationFilter && (
-          <div>
-            Zoek binnen{" "}
-            <span className="filterValue">{locationFilter.name}</span>
-            <button className="clear" onClick={clearLocationFilter}>
-              x
-            </button>
-          </div>
-        )}
+
         {/* Zonder SortBy widget vindt er geen sortering plaats. */}
         <SortBy
           style={{ display: "none" }}

@@ -1,18 +1,17 @@
 import "./Header.css";
-import React from "react";
+import React, { useContext } from "react";
 import { AppContext } from "./App";
 import { SearchBox } from "./Searchbox";
-import { useHits } from "react-instantsearch-hooks-web";
 
 export function Header() {
-
+  const { locationFilter, setLocationFilter } = useContext(AppContext);
+  const clearLocationFilter = () => setLocationFilter(undefined);
 
   return (
     <div className="app-header">
       <div className="header">
         <h2 className="logo">Gebouwenpaspoort</h2>
         <div className="header--buttons">
-
           <a
             className="button"
             rel="noopener noreferrer"
@@ -24,8 +23,16 @@ export function Header() {
         </div>
       </div>
       <div className="search-bar-wrapper">
-        <SearchBox/>
+        <SearchBox />
       </div>
+      {locationFilter && (
+        <div>
+          Zoek binnen <span className="filterValue">{locationFilter.name}</span>
+          <button className="clear" onClick={clearLocationFilter}>
+            x
+          </button>
+        </div>
+      )}
     </div>
   );
 }
