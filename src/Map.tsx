@@ -112,7 +112,8 @@ function moveBounds(mapRef, items) {
 }
 
 export function Map() {
-  const { refine } = useGeoSearch();
+  const { _items, refine } = useGeoSearch();
+  const {hits: items } = useInfiniteHits();
   const { query } = useSearchBox();
   const { hits: items } = useInfiniteHits();
   const {
