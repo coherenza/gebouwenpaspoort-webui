@@ -4,7 +4,6 @@ Running on http://gbp2.pandata.nl/
 
 <video src="https://user-images.githubusercontent.com/2183313/203753767-f1efe496-2503-4785-ad21-d52223b6975e.mov"></video>
 
-
 ## Get started
 
 ```sh
@@ -17,8 +16,6 @@ pnpm i
 # Run server locally
 pnpm dev
 # Visit http://localhost:3030
-# Press `import`
-# Search things!
 ```
 
 Create a `.env` to set some optional vars, which are important to set in production.
@@ -30,8 +27,8 @@ VITE_MEILI_SERVER={url}
 
 ## Deploying
 
-- Front on Github pages, just push and the CI action will do the rest. [https://gbp2.pandata.nl]
-- Meilisearch on DigitalOcean at [http://meili.pandata.nl:7700], see command below:
+- The front-end is currently hosted on Github pages, on [https://gbp2.pandata.nl]. A new version is built and deployed upon pushing to master. See the [.github/deploy.yml]
+- Meilisearch is hosted on DigitalOcean at [http://meili.pandata.nl:7700]. To run it, see command below:
 
 ```h
 docker run -it \
@@ -40,7 +37,13 @@ docker run -it \
   -e MEILI_MASTER_KEY='.......................'\
   -v $(pwd)/meili_data:/meili_data \
   getmeili/meilisearch:v0.30
-````
+```
 
 Copy the data (indexes, ...) from a local dev server to the `meili_data/data.ms` directory.
 After copying, restart the docker image (`docker ps`, `docker stop`).
+
+## Build
+
+If you need to compile the JS files, run `pnpm build` to `/dist`.
+You can now host this folder on your favorite HTML server.
+See [vite guide](https://vitejs.dev/guide/build.html) for more build options.
