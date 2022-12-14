@@ -1,13 +1,18 @@
-import { Configure, SortBy, useConnector } from "react-instantsearch-hooks-web";
+import {
+  HitsPerPage,
+} from "react-instantsearch-hooks-web";
 import { setIndexes } from "./import";
-import { Filter } from "./Property";
+import { Filter } from "./Filter";
 import "./Filters.css";
-import { filterProps, sortProps } from "./schema";
 import { useContext } from "react";
 import { AppContext } from "./App";
+import { AttributeCollapsible } from "./Attributes";
+import { filterAttributes } from "./schema";
 
 export function Filters({}) {
-  const { showFilter, setShowFilter } = useContext(AppContext);
+  const { showFilter, setShowFilter, locationFilter, setLocationFilter } =
+    useContext(AppContext);
+  const clearLocationFilter = () => setLocationFilter(undefined);
   return (
     <div
       className={`Sidebar filter-panel ${
@@ -18,7 +23,16 @@ export function Filters({}) {
         <h3>Filters</h3>
         <button onClick={() => setShowFilter(false)}>Sluit</button>
       </div>
-      <div className="filters">
+      <div className="filters">       
+      {locationFilter && (
+          <div>
+            Zoek binnen{" "}
+            <span className="filterValue">{locationFilter.name}</span>
+            <button className="clear" onClick={clearLocationFilter}>
+              x
+            </button>
+          </div>
+        )}
         {/* Zonder SortBy widget vindt er geen sortering plaats. */}
         <SortBy style={{'display': 'none'}}
           items={sortProps.map((item) => {
@@ -27,15 +41,19 @@ export function Filters({}) {
               label: item.label,
             };
           })}
-        />
-        {filterProps.map((prop) => {
-          if (prop.display == 'none') {
-            return '';
-          } else {
-            return <Filter key={prop.label} {...prop} />;
-          }
+        /> */}
+        {filterAttributes.map((attribute) => {
+          return (
+            <AttributeCollapsible attribute={attribute}>
+              {attribute.attributes?.map((att) => {
+                return <Filter key={att?.name} {...att} />;
+              })}
+            </AttributeCollapsible>
+          );
         })}
-        {window.location.href.includes("localhost") && <button onClick={setIndexes}>set indexes</button>}
+        {window.location.href.includes("localhost") && (
+          <button onClick={setIndexes}>set indexes</button>
+        )}
       </div>
     </div>
   );

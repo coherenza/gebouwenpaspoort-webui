@@ -4,9 +4,13 @@ import "./App.css";
 import "./global.css";
 
 import React, { createContext, useEffect, useMemo } from "react";
-import { InstantSearch, Configure } from "react-instantsearch-hooks-web";
+import {
+  InstantSearch,
+  Configure,
+  useRefinementList,
+} from "react-instantsearch-hooks-web";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
-import { GBPObject, sortProps } from "./schema";
+import { GBPObject, LocationFilter, sortProps } from "./schema";
 import { indexName, meiliKey, mode, server } from "./config";
 import { Map } from "./Map";
 import { Details } from "./Details";
@@ -33,25 +37,48 @@ interface AppContextI {
   showResults: boolean;
   setShowFilter: (b: boolean) => void;
   showFilter: boolean;
-  setLocationFilter: (s: string) => void;
-  locationFilter: string;
+  setLocationFilter: (location: LocationFilter | undefined) => void;
+  locationFilter: LocationFilter | undefined;
 }
 
 export const AppContext = createContext<AppContextI>(undefined);
 export const hitCount = 150;
 
-const App = () => {
-  const [current, setCurrent] = React.useState(undefined);
-  const [showFilter, setShowFilter] = React.useState(true);
-  const [showResults, setShowResults] = React.useState(true);
-  const [locationFilter, setLocationFilter] = React.useState('');
-  const [apiKeyTemp, setApiKeyTemp] = React.useState("");
-  const [validApiKey, setValidApiKey] = React.useState(false);
+const AppProvider = () => {
   const [apiKey, setApiKey] = useLocalStorage("apiKey", meiliKey);
 
   const searchClient = useMemo(() => {
     return instantMeiliSearch(server, apiKey);
   }, [apiKey]);
+
+  return (
+    <InstantSearch
+      indexName={indexName}
+      searchClient={searchClient}
+      initialUiState={{
+        gbp: {
+          sortBy: sortProps[0].sortBy,
+        },
+      }}
+    >
+      <App setApiKey={setApiKey} apiKey={apiKey} />
+    </InstantSearch>
+  );
+};
+
+const App = ({ setApiKey, apiKey }) => {
+  const [current, setCurrent] = React.useState(undefined);
+  const [showFilter, setShowFilter] = React.useState(true);
+  const [showResults, setShowResults] = React.useState(true);
+  const [locationFilter, setLocationFilterInternal] = React.useState(undefined);
+  const [apiKeyTemp, setApiKeyTemp] = React.useState("");
+  const [validApiKey, setValidApiKey] = React.useState(false);
+
+  const { refine } = useRefinementList({ attribute: "pdok-locatie-id" });
+  const setLocationFilter = (locationFilter: LocationFilter) => {
+    setLocationFilterInternal(locationFilter);
+    refine(locationFilter.id);
+  };
 
   async function handleSetApiKey(e) {
     e.preventDefault();
@@ -88,48 +115,38 @@ const App = () => {
     >
       <MapProvider>
         <ErrorBoundary>
-          <InstantSearch
-            indexName={indexName}
-            searchClient={searchClient}
-            initialUiState={{
-              gbp: {
-                sortBy: sortProps[0].sortBy,
-              },
-            }}
-          >
-            <KeyboardHandler>
-              {!validApiKey ? (
-                <form onSubmit={handleSetApiKey} className="app__api-key">
-                  <input
-                    autoFocus
-                    placeholder="Voer de sleutel in"
-                    value={apiKeyTemp}
-                    onChange={(e) => setApiKeyTemp(e.target.value)}
-                  />
-                  <button type="submit">opslaan</button>
-                </form>
-              ) : (
-                <div className="app">
-                  <Configure
-                    hitsPerPage={hitCount}
-                    attributesToSnippet={["description:50"]}
-                    snippetEllipsisText={"..."}
-                  />
+          <KeyboardHandler>
+            {!validApiKey ? (
+              <form onSubmit={handleSetApiKey} className="app__api-key">
+                <input
+                  autoFocus
+                  placeholder="Voer de sleutel in"
+                  value={apiKeyTemp}
+                  onChange={(e) => setApiKeyTemp(e.target.value)}
+                />
+                <button type="submit">opslaan</button>
+              </form>
+            ) : (
+              <div className="app">
+                <Configure
+                  hitsPerPage={hitCount}
+                  attributesToSnippet={["description:50"]}
+                  snippetEllipsisText={"..."}
+                />
 
-                  <div className="app__columns">
-                    <Filters />
-                    <Map />
-                    <Results />
-                    <Details />
-                  </div>
+                <div className="app__columns">
+                  <Filters />
+                  <Map />
+                  <Results />
+                  <Details />
                 </div>
-              )}
-            </KeyboardHandler>
-          </InstantSearch>
+              </div>
+            )}
+          </KeyboardHandler>
         </ErrorBoundary>
       </MapProvider>
     </AppContext.Provider>
   );
 };
 
-export default App;
+export default AppProvider;

@@ -10,9 +10,6 @@ export const Panel = ({ title, children, id, startOpen }) => {
 
   return (
     <div id={id} className="panel">
-      <button onClick={toggleOpen} className="panel-label">
-        <i className="fa fa-chevron-right" /> {title} {isOpen ? "▼" : "►"}
-      </button>
       {isOpen && children}
     </div>
   );

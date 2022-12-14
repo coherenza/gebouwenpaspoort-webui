@@ -9,12 +9,48 @@ export interface Attribute {
   /** Type of the attribute */
   type?: "string";
   attributes?: Attribute[];
+  filterType?: "select" | "range";
 }
+
+/** All attributes should be here */
+export const Attributes = {
+  "bouwjaar": {
+    name: "bouwjaar",
+    id: "bag-pnd-oorspronkelijk-bouwjaar",
+    filterType: "range",
+  },
+  "pand_status": {
+    name: "pand status",
+    id: "bag-pnd-status",
+  },
+  "gebruiksdoel": {
+    name: "gebruiksdoel",
+    id: "bag-aob-gebruiksdoel",
+  },
+  "oppervlakte": {
+    name: "Oppervlakte (m2)",
+    id: "bag-aob-oppervlakte",
+    filterType: "range",
+  },
+  "bag_status": {
+    name: "bag status",
+    id: "bag-aob-status",
+  },
+  "object_type": {
+    name: "object-type",
+    id: "bag-object-type",
+  },
+  "pand_energieklasse": {
+    name: "Energie klasse",
+    id: "epl.pand_energieklasse",
+  },
+};
+
 
 /** The current schema, used for rendering the Details page.
  *  The ordering of the Collections defines how they are shown in the front-end.
  */
-export const displaySchema: Attribute[] = [
+export const displayAttributes: Attribute[] = [
   {
     name: "Hoofdadres",
     id: "bag-num-volledig",
@@ -22,33 +58,15 @@ export const displaySchema: Attribute[] = [
   {
     name: "Pand",
     attributes: [
-      {
-        name: "bouwjaar",
-        id: "bag-pnd-oorspronkelijk-bouwjaar",
-        type: "string",
-      },
-      {
-        name: "nader gebruiksdoel",
-        id: "bwk-num-nadergebruiksdoel",
-        type: "string",
-      },
+      Attributes.bouwjaar,
     ],
   },
   {
     name: "Verblijfsobject",
     attributes: [
-      {
-        name: "gebruiksdoel",
-        id: "bag-aob-gebruiksdoel",
-      },
-      {
-        name: "oppervlakte",
-        id: "bag-aob-oppervlakte",
-      },
-      {
-        name: "status",
-        id: "bag-aob-status",
-      },
+      Attributes.gebruiksdoel,
+      Attributes.oppervlakte,
+      Attributes.pand_status,
     ],
   },
   {
@@ -128,7 +146,7 @@ export const displaySchema: Attribute[] = [
         id: "stalenliggers",
       },
       {
-        name: "uitkragendebalkons",
+        name: "uitkragende balkons",
         id: "uitkragendebalkons",
       },
     ],
@@ -154,6 +172,32 @@ export const displaySchema: Attribute[] = [
       },
     ],
   },
+];
+
+export const filterAttributes: Attribute[] = [
+  {
+    name: "BAG / CBS Algemeen",
+    attributes: [
+      Attributes.pand_status,
+      Attributes.gebruiksdoel,
+    ],
+  },
+  {
+    name: "Bouwtechnisch",
+    attributes: [
+      Attributes.bouwjaar,
+      Attributes.oppervlakte,
+    ]
+  },
+  {
+    name: "Energie",
+    attributes: [
+      Attributes.pand_energieklasse,
+    ]
+  },
+  {
+    name: "Milieu",
+  }
 ];
 
 /**
@@ -224,16 +268,6 @@ export interface FilterProp {
   type: "single" | "multi" | "geo" | "date" | "range";
   display?: "none"
 }
-
-export const filterProps: FilterProp[] = [
-  { propKey: "bag-object-type", label: "Objecttype", type: "single" },
-  { propKey: "pdok-locatie-id", label: "locatie id's", type: "multi", display: "none" },
-  { propKey: "bag-aob-gebruiksdoel", label: "Gebruiksdoel", type: "multi" },
-  { propKey: "bag-aob-oppervlakte", label: "Oppervlakte (m2)", type: "range" },
-  { propKey: "bag-pnd-oorspronkelijk-bouwjaar", label: "Bouwjaar", type: "range" },
-  { propKey: "epl.pand_energieklasse", label: "Energieklasse", type: "single" },
-  { propKey: "bag-pnd-status", label: "Status", type: "multi" },
-];
 
 export interface GBPObjectTypeProperties {
   readonly [index: string] : {
@@ -340,4 +374,9 @@ export interface GBPObject {
   stl: undefined | Record<string, any>[];
   squitxo: undefined | Record<string, any>[];
   bekendmakingen: undefined | Record<string, any>[];
+}
+
+export interface LocationFilter {
+  id : string;
+  name : string;
 }
