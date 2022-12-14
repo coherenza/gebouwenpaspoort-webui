@@ -1,6 +1,4 @@
-import {
-  HitsPerPage, SortBy,
-} from "react-instantsearch-hooks-web";
+import { SortBy } from "react-instantsearch-hooks-web";
 import { setIndexes } from "./import";
 import { Filter } from "./Filter";
 import "./Filters.css";
@@ -24,7 +22,7 @@ export function Filters({}) {
         <button onClick={() => setShowFilter(false)}>Sluit</button>
       </div>
       <div className="filters">
-      {locationFilter && (
+        {locationFilter && (
           <div>
             Zoek binnen{" "}
             <span className="filterValue">{locationFilter.name}</span>
@@ -34,17 +32,18 @@ export function Filters({}) {
           </div>
         )}
         {/* Zonder SortBy widget vindt er geen sortering plaats. */}
-        <SortBy style={{'display': 'none'}}
+        <SortBy
+          style={{ display: "none" }}
           items={sortProps.map((item) => {
             return {
               value: item.sortBy,
               label: item.label,
             };
           })}
-          ></SortBy>
+        ></SortBy>
         {filterAttributes.map((attribute) => {
           return (
-            <AttributeCollapsible attribute={attribute}>
+            <AttributeCollapsible attribute={attribute} key={attribute.name || attribute.id}>
               {attribute.attributes?.map((att) => {
                 return <Filter key={att?.name} {...att} />;
               })}

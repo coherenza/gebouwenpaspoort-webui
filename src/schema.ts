@@ -17,7 +17,7 @@ export const Attributes = {
   "bouwjaar": {
     name: "bouwjaar",
     id: "bag-pnd-oorspronkelijk-bouwjaar",
-    filterType: "range",
+    // filterType: "range",
   },
   "pand_status": {
     name: "pand status",
@@ -30,7 +30,7 @@ export const Attributes = {
   "oppervlakte": {
     name: "Oppervlakte (m2)",
     id: "bag-aob-oppervlakte",
-    filterType: "range",
+    // filterType: "range",
   },
   "bag_status": {
     name: "bag status",
