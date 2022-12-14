@@ -23,10 +23,10 @@ export const Filter = (filter: Attribute) => {
   return (
     <div className="Filter">
       <h4>{filter.name}</h4>
-      {filterType === "select" && (<RefinementList attribute={filter.id} />)}
-      {/* {filterType === "range" && (<RangeSlider attribute={filter.id} />)} */}
-      {filterType === "range" && (<RangeInput attribute={filter.id} />)}
-      {filterType === "intervals" && (<RefinementList attribute={filter.id} sortBy={sortIntervals} />)}
+      {filterType === "select" && (<RefinementList attribute={filter.id} operator="or"/>)}
+      {/* {filterType === "range" && (<RangeSlider attribute={filter.id}/>)} */}
+      {filterType === "range" && (<RangeInput attribute={filter.id}/>)}
+      {filterType === "intervals" && (<RefinementList attribute={filter.id} sortBy={sortIntervals} operator="or"/>)}
     </div>
   );
 };
