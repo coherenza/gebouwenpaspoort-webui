@@ -1,5 +1,5 @@
 import {
-  HitsPerPage,
+  HitsPerPage, SortBy,
 } from "react-instantsearch-hooks-web";
 import { setIndexes } from "./import";
 import { Filter } from "./Filter";
@@ -7,7 +7,7 @@ import "./Filters.css";
 import { useContext } from "react";
 import { AppContext } from "./App";
 import { AttributeCollapsible } from "./Attributes";
-import { filterAttributes } from "./schema";
+import { filterAttributes, sortProps } from "./schema";
 
 export function Filters({}) {
   const { showFilter, setShowFilter, locationFilter, setLocationFilter } =
@@ -23,7 +23,7 @@ export function Filters({}) {
         <h3>Filters</h3>
         <button onClick={() => setShowFilter(false)}>Sluit</button>
       </div>
-      <div className="filters">       
+      <div className="filters">
       {locationFilter && (
           <div>
             Zoek binnen{" "}
@@ -41,7 +41,7 @@ export function Filters({}) {
               label: item.label,
             };
           })}
-        /> */}
+          ></SortBy>
         {filterAttributes.map((attribute) => {
           return (
             <AttributeCollapsible attribute={attribute}>
