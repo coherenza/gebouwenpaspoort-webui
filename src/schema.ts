@@ -14,10 +14,15 @@ export interface Attribute {
 
 /** All attributes should be here */
 export const Attributes = {
+  "aob_id" : {name: "BAG id", id: "bag-aob-id"},
   "bouwjaar": {
     name: "bouwjaar",
     id: "bag-pnd-oorspronkelijk-bouwjaar",
     // filterType: "range",
+  },
+  "pand_id": {
+    name: "BAG id",
+    id: "bag-pnd-id",
   },
   "pand_status": {
     name: "pand status",
@@ -55,9 +60,13 @@ export const displayAttributes: Attribute[] = [
     name: "Hoofdadres",
     id: "bag-num-volledig",
   },
+  { name: "BAG", 
+    attributes: [Attributes.aob_id]
+  },
   {
     name: "Pand",
     attributes: [
+      Attributes.pand_id,
       Attributes.bouwjaar,
     ],
   },
