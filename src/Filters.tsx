@@ -50,9 +50,9 @@ export function Filters({}) {
             </AttributeCollapsible>
           );
         })}
-        {window.location.href.includes("localhost") && (
-          <button onClick={setIndexes}>set indexes</button>
-        )}
+        { ["localhost", "127.0.0.1"].includes(window.location.hostname) &&
+           <div style={{'marginTop':'2em'}}><button onClick={setIndexes}>set index properties</button></div>
+        }
       </div>
     </div>
   );
