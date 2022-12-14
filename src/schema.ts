@@ -16,44 +16,28 @@ export interface Attribute {
 export const Attributes = {
   "aob_id" : {name: "BAG id", id: "bag-aob-id"},
   "object_type" : {name: "type", id: "bag-object-type"},
-  "bouwjaar": {
-    name: "bouwjaar",
-    id: "bag-pnd-oorspronkelijk-bouwjaar",
-    // filterType: "range",
-  },
-  "bouwjaar_interval": {
-    name: "bouwjaar",
-    id: "bag-pnd-oorspronkelijk-bouwjaar-interval",
-  },
-  "pand_id": {
-    name: "BAG id",
-    id: "bag-pnd-id",
-  },
-  "pand_status": {
-    name: "pand status",
-    id: "bag-pnd-status",
-  },
-  "gebruiksdoel": {
-    name: "gebruiksdoel",
-    id: "bag-aob-gebruiksdoel",
-  },
-  "oppervlakte": {
-    name: "Oppervlakte (m2)",
-    id: "bag-aob-oppervlakte",
-    // filterType: "range",
-  },
-  "oppervlakte_interval": {
-    name: "Oppervlakte (m2)",
-    id: "bag-aob-oppervlakte-interval",
-  },
-  "bag_status": {
-    name: "bag status",
-    id: "bag-aob-status",
-  },
-  "pand_energieklasse": {
-    name: "Energie klasse",
-    id: "epl.pand_energieklasse",
-  },
+  "bouwjaar": { name: "bouwjaar", id: "bag-pnd-oorspronkelijk-bouwjaar", filterType: "range", },
+  "bouwjaar_interval": { name: "bouwjaar", id: "bag-pnd-oorspronkelijk-bouwjaar-interval", },
+  "pand_id": { name: "BAG id", id: "bag-pnd-id", },
+  "pand_status": { name: "pand status", id: "bag-pnd-status", },
+  "gebruiksdoel": { name: "gebruiksdoel", id: "bag-aob-gebruiksdoel", },
+  "oppervlakte": { name: "Oppervlakte (m2)", id: "bag-aob-oppervlakte", filterType: "range", },
+  "oppervlakte_interval": { name: "Oppervlakte (m2)", id: "bag-aob-oppervlakte-interval", },
+  "bag_status": { name: "bag status", id: "bag-aob-status", },
+  "pand_energieklasse": { name: "Energie klasse", id: "epl.pand_energieklasse", },
+  "balkon": { name: "Balkon", id: "balkon" },
+  "dak": { name: "Dak", id: "dak" },
+  "dakkapel": { name: "Dakkapel", id: "dakkapel" },
+  "dakrand": { name: "Dakrand", id: "dakrand" },
+  "raam_deur": { name: "Raam/Deur", id: "raam/deur" },
+  "galerij": { name: "Galerij", id: "galerij" },
+  "gevel": { name: "Gevel", id: "gevel" },
+  "goot": { name: "Goot", id: "goot" },
+  "hekwerk": { name: "Hekwerk", id: "hekwerk" },
+  "kozijn": { name: "Kozijn", id: "kozijn" },
+  "schoorsteen": { name: "Schoorsteen", id: "schoorsteen" },
+  "erker": { name: "Erker", id: "erker" },
+  "tuin": { name: "Tuin", id: "tuin" },
 };
 
 
@@ -243,6 +227,19 @@ export const filterAttributes: Attribute[] = [
   {
     name: "Bouwtechnisch",
     attributes: [
+      Attributes.balkon,
+      Attributes.dak,
+      Attributes.dakkapel,
+      Attributes.dakrand,
+      Attributes.raam_deur,
+      Attributes.galerij,
+      Attributes.gevel,
+      Attributes.goot,
+      Attributes.hekwerk,
+      Attributes.kozijn,
+      Attributes.schoorsteen,
+      Attributes.erker,
+      Attributes.tuin,
     ]
   },
   {
