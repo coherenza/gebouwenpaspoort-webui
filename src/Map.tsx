@@ -62,7 +62,7 @@ export function Map() {
     if (mapRef.current) {
       mapRef.current.getMap().resize();
     }
-  }, [current, showFilter, showResults]);
+  }, [current, showFilter, showResults, showLayerSelector]);
 
   // If user changed the query, move the bounds to the new items
   useEffect(() => {

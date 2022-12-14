@@ -4,14 +4,22 @@ import { AppContext } from "./App";
 
 export const layersDefault: LayerI[] = [
   {
+    name: "Luchtfoto",
+    id: "2022_orthoHR",
+    visible: false,
+    url: "https://service.pdok.nl/hwh/luchtfotocir/wms/v1_0",
+  },
+  {
     name: "CBS Buurten 2021",
     id: "cbs_buurten_2021",
     visible: false,
+    url: "https://service.pdok.nl/cbs/wijkenbuurten/2021/wms/v1_0",
   },
   {
     name: "CBS Wijken 2021",
     id: "cbs_wijken_2021",
     visible: false,
+    url: "https://service.pdok.nl/cbs/wijkenbuurten/2021/wms/v1_0",
   },
 ];
 
@@ -86,8 +94,10 @@ export interface LayerI {
   /** PDOK ID, e.g. cbs_buurten_2021 */
   id: string;
   visible: boolean;
+  /** Optionally overwrite URL */
+  url?: string;
 }
 
 export function makeLayerURL(layer: LayerI) {
-  return `https://service.pdok.nl/cbs/wijkenbuurten/2021/wms/v1_0?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&layers=${layer.id}&DPI=113&MAP_RESOLUTION=113&CRS=EPSG%3A3857&STYLES=&FORMAT_OPTIONS=dpi%3A113&WIDTH=1000&HEIGHT=1000&BBOX={bbox-epsg-3857}`;
+  return `${layer.url}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&layers=${layer.id}&DPI=113&MAP_RESOLUTION=113&CRS=EPSG%3A3857&STYLES=&FORMAT_OPTIONS=dpi%3A113&WIDTH=1000&HEIGHT=1000&BBOX={bbox-epsg-3857}`;
 }
