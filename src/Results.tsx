@@ -31,8 +31,8 @@ export function Results() {
         <h3>Resultaten</h3>
         <HitsPerPage
           items={[
-            { label: "50 per pagina", value: 50, default: true },
-            { label: "200 per pagina", value: 200 },
+            { label: "50 per pagina", value: 50 },
+            { label: "200 per pagina", value: 200, default: true},
             // Seems to be hard-capped at 200
             // { label: "1.000 hits per page", value: 1000 },
           ]}
