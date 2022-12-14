@@ -71,14 +71,14 @@ export const displayAttributes: Attribute[] = [
       Attributes.aob_id,
       Attributes.object_type,
       Attributes.gebruiksdoel,
-      Attributes.oppervlakte_interval,
+      Attributes.oppervlakte,
     ],
   },
   {
     name: "Pand",
     attributes: [
       Attributes.pand_id,
-      Attributes.bouwjaar_interval,
+      Attributes.bouwjaar,
       Attributes.pand_status,
     ],
   },
@@ -232,17 +232,17 @@ export const displayAttributes: Attribute[] = [
 
 export const filterAttributes: Attribute[] = [
   {
-    name: "BAG / CBS Algemeen",
+    name: "Algemeen",
     attributes: [
       Attributes.pand_status,
       Attributes.gebruiksdoel,
+      Attributes.bouwjaar_interval,
+      Attributes.oppervlakte_interval,
     ],
   },
   {
     name: "Bouwtechnisch",
     attributes: [
-      Attributes.bouwjaar,
-      Attributes.oppervlakte,
     ]
   },
   {
