@@ -1,34 +1,4 @@
-.header--buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-}
 
-
-/* only large screens */
-@media (min-width: 768px) {
-
-  .header--button {
-    position: absolute;
-    z-index: 1;
-    background: white;
-    top: 1rem;
-    box-shadow: var(--box-shadow);
-  }
-
-  .header--button-left {
-    left: 1rem;
-  }
-
-  .header--button-left-2 {
-    left: 1rem;
-    top: 3rem;
-  }
-
-  .header--button-right {
-    right: 1rem;
-  }
-}
 
 .app-header {
   position: absolute;

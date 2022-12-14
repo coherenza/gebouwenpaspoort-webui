@@ -175,30 +175,31 @@ export function Map() {
 
   return (
     <div className="Map__wrapper">
-      {!showFilter && (
-        <button
-          className="header--button header--button-left"
-          onClick={() => setShowFilter(!showFilter)}
-        >
-          Filters
-        </button>
-      )}
-      {!showLayerSelector && (
-        <button
-          className="header--button header--button-left-2"
-          onClick={() => setShowLayerSelector(!showLayerSelector)}
-        >
-          Kaartlagen
-        </button>
-      )}
-      {!showResults && (
-        <button
-          className="header--button header--button-right"
-          onClick={() => setShowResults(!showResults)}
-        >
-          Resultaten
-        </button>
-      )}
+      <div className="Map__buttons Map__buttons--left">
+        {!showFilter && (
+          <button
+            onClick={() => setShowFilter(!showFilter)}
+          >
+            Filters
+          </button>
+        )}
+        {!showLayerSelector && (
+          <button
+            onClick={() => setShowLayerSelector(!showLayerSelector)}
+          >
+            Kaartlagen
+          </button>
+        )}
+      </div>
+      <div className="Map__buttons Map__buttons--right">
+        {!showResults && (
+          <button
+            onClick={() => setShowResults(!showResults)}
+          >
+            Resultaten
+          </button>
+        )}
+      </div>
       <Header />
       <MapGL
         trackResize={true}
@@ -215,9 +216,11 @@ export function Map() {
         <NavigationControl position={"bottom-right"} />
         <GeolocateControl position={"bottom-left"} />
         {markers}
-        {layers.filter(layer => layer.visible).map((layer) => (
-          <LayerSource layer={layer} key={layer.id} />
-        ))}
+        {layers
+          .filter((layer) => layer.visible)
+          .map((layer) => (
+            <LayerSource layer={layer} key={layer.id} />
+          ))}
       </MapGL>
     </div>
   );

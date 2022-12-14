@@ -11,3 +11,32 @@
   display: flex;
   flex: 1;
 }
+
+.Map__buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+/* only large screens */
+@media (min-width: 768px) {
+  .Map__buttons {
+    position: absolute;
+    z-index: 1;
+    top: 1rem;
+  }
+
+  .Map__buttons button {
+    box-shadow: var(--box-shadow);
+    background: white;
+    position: relative;
+  }
+
+  .Map__buttons--left {
+    left: 1rem;
+  }
+
+  .Map__buttons--right {
+    right: 1rem;
+  }
+}
