@@ -1,11 +1,22 @@
 import "./Header.css";
-import React, { useContext } from "react";
-import { AppContext } from "./App";
+import React, { useState } from "react";
 import { SearchBox } from "./Searchbox";
+import { InfoPage } from "./InfoPage";
+import { Cross1Icon } from "@radix-ui/react-icons";
 
 export function Header() {
-  const { locationFilter, setLocationFilter } = useContext(AppContext);
-  const clearLocationFilter = () => setLocationFilter(undefined);
+  const [showInfoPage, setShowInfoPage] = useState(false);
+
+  if (showInfoPage) {
+    return (
+      <div className="infopage">
+        <button className="infopage__close" onClick={() => setShowInfoPage(false)}>
+          <Cross1Icon />
+        </button>
+        <InfoPage />
+      </div>
+    );
+  }
 
   return (
     <div className="app-header">
@@ -20,19 +31,17 @@ export function Header() {
           >
             Feedback
           </a>
+          <button
+            className="button"
+            onClick={() => setShowInfoPage(!showInfoPage)}
+          >
+            Info
+          </button>
         </div>
       </div>
       <div className="search-bar-wrapper">
         <SearchBox />
       </div>
-      {locationFilter && (
-        <div>
-          Zoek binnen <span className="filterValue">{locationFilter.name}</span>
-          <button className="clear" onClick={clearLocationFilter}>
-            x
-          </button>
-        </div>
-      )}
     </div>
   );
 }

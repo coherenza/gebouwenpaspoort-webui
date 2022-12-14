@@ -13,7 +13,7 @@ export const Filter = (filter: Attribute) => {
   return (
     <div className="Filter">
       <h4>{filter.name}</h4>
-      {filterType === "select" && (<RefinementList attribute={filter.id} operator="and" />)}
+      {filterType === "select" && (<RefinementList attribute={filter.id} />)}
       {/* {filterType === "range" && (<RangeSlider attribute={filter.id} />)} */}
       {filterType === "range" && (<RangeInput attribute={filter.id} />)}
     </div>

@@ -1,5 +1,4 @@
 
-
 .app-header {
   position: absolute;
   background: white;
@@ -30,4 +29,31 @@
   margin-top: .5rem;
   color: var(--g4);
   font-size: .8rem;
+}
+
+.header--buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: .5rem;
+}
+
+.infopage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.infopage__close {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 11;
 }

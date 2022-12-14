@@ -10,6 +10,7 @@ import { HitLine } from "./HitLine";
 import "./Results.css";
 import { createContext, useContext } from "react";
 import { AppContext } from "./App";
+import { CurrentRefinements } from "./CurrentRefinements";
 
 export const LocationFilterContext = createContext(undefined);
 
@@ -42,6 +43,7 @@ export function Results() {
       <div className="app-header__results-count">
         {hits.length} / {nbHits == 1000 ? "1000+" : nbHits} resultaten zichtbaar
       </div>
+      <CurrentRefinements />
       {/* @ts-ignore */}
       <Hits hitComponent={HitLine} escapeHTML={false} />
       <Pagination showLast={true} />
