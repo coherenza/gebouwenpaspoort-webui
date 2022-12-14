@@ -21,6 +21,7 @@ import { MapProvider } from "react-map-gl";
 import { useLocalStorage } from "./useLocalStorage";
 import Bugsnag from "@bugsnag/js";
 import BugsnagPluginReact from "@bugsnag/plugin-react";
+import { LayerI, layersDefault, LayerSelector } from "./Layers";
 
 Bugsnag.start({
   apiKey: "78d53614b677831a5615d29728624fe0",
@@ -36,6 +37,10 @@ interface AppContextI {
   setShowResults: (b: boolean) => void;
   showResults: boolean;
   setShowFilter: (b: boolean) => void;
+  layers: LayerI[];
+  setLayers: React.Dispatch<React.SetStateAction<LayerI[]>>;
+  showLayerSelector: boolean;
+  setShowLayerSelector: (b: boolean) => void;
   showFilter: boolean;
   setLocationFilter: (location: LocationFilter | undefined) => void;
   locationFilter: LocationFilter | undefined;
@@ -70,6 +75,8 @@ const App = ({ setApiKey, apiKey }) => {
   const [current, setCurrent] = React.useState(undefined);
   const [showFilter, setShowFilter] = React.useState(true);
   const [showResults, setShowResults] = React.useState(true);
+  const [showLayers, setShowLayers] = React.useState(false);
+  const [layers, setLayers] = React.useState<LayerI[]>(layersDefault);
   const [locationFilter, setLocationFilterInternal] = React.useState(undefined);
   const [apiKeyTemp, setApiKeyTemp] = React.useState("");
   const [validApiKey, setValidApiKey] = React.useState(false);
@@ -103,11 +110,15 @@ const App = ({ setApiKey, apiKey }) => {
   return (
     <AppContext.Provider
       value={{
+        layers,
+        setLayers,
         setCurrent,
         current,
         showFilter,
         setShowFilter,
         showResults,
+        setShowLayerSelector: setShowLayers,
+        showLayerSelector: showLayers,
         setShowResults,
         setLocationFilter,
         locationFilter,
@@ -136,6 +147,7 @@ const App = ({ setApiKey, apiKey }) => {
 
                 <div className="app__columns">
                   <Filters />
+                  <LayerSelector />
                   <Map />
                   <Results />
                   <Details />

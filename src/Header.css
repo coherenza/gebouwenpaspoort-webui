@@ -20,6 +20,11 @@
     left: 1rem;
   }
 
+  .header--button-left-2 {
+    left: 1rem;
+    top: 3rem;
+  }
+
   .header--button-right {
     right: 1rem;
   }

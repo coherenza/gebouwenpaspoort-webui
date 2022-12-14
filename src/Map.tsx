@@ -1,5 +1,4 @@
 import React, {
-  useState,
   useEffect,
   useRef,
   useCallback,
@@ -20,6 +19,7 @@ import { AppContext } from "./App";
 import { GBPObject, GBPObjectTypes } from "./schema";
 import { useSearchBox } from "react-instantsearch-hooks-web";
 import { Header } from "./Header";
+import { LayerSource } from "./Layers";
 
 const mapboxToken =
   "pk.eyJ1Ijoiam9lcGlvIiwiYSI6ImNqbTIzanZ1bjBkanQza211anFxbWNiM3IifQ.2iBrlCLHaXU79_tY9SVpXA";
@@ -48,10 +48,11 @@ export function Map() {
     current,
     showFilter,
     showResults,
-    locationFilter,
-    setLocationFilter,
     setShowFilter,
     setShowResults,
+    setShowLayerSelector,
+    showLayerSelector,
+    layers,
   } = useContext(AppContext);
   const mapRef = useRef<MapRef>();
   const [viewState, setViewState] = React.useState(mapStartState);
@@ -116,7 +117,7 @@ export function Map() {
     });
     // if any is nan, don't do anything
     if (isNaN(lowLat) || isNaN(highLat) || isNaN(lowLng) || isNaN(highLng)) {
-      console.warn("bounds are NaN, not setting bounds")
+      console.warn("bounds are NaN, not setting bounds");
       return;
     }
     let bounds = new LngLatBounds(
@@ -182,6 +183,14 @@ export function Map() {
           Filters
         </button>
       )}
+      {!showLayerSelector && (
+        <button
+          className="header--button header--button-left-2"
+          onClick={() => setShowLayerSelector(!showLayerSelector)}
+        >
+          Kaartlagen
+        </button>
+      )}
       {!showResults && (
         <button
           className="header--button header--button-right"
@@ -206,6 +215,9 @@ export function Map() {
         <NavigationControl position={"bottom-right"} />
         <GeolocateControl position={"bottom-left"} />
         {markers}
+        {layers.filter(layer => layer.visible).map((layer) => (
+          <LayerSource layer={layer} key={layer.id} />
+        ))}
       </MapGL>
     </div>
   );
