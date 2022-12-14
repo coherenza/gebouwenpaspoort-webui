@@ -91,22 +91,17 @@ function moveBounds(mapRef, items) {
       }
     }
   });
-  // if any is nan, don't do anything
-  if (isNaN(lowLat) || isNaN(highLat) || isNaN(lowLng) || isNaN(highLng)) {
-    console.warn("bounds are NaN, not setting bounds");
-    return;
+  try {
+    let bounds = new LngLatBounds(
+      { lat: highLat, lng: highLng },
+      { lat: lowLat, lng: lowLng }
+    );
+    mapRef.current?.fitBounds(bounds, {
+      padding: 250,
+    });
+  } catch (e) {
+    console.error("Error moving bounds", e, "items:", items);
   }
-  let bounds = new LngLatBounds(
-    { lat: highLat, lng: highLng },
-    { lat: lowLat, lng: lowLng }
-  );
-  if (isNaN(bounds[0]) || isNaN(bounds[1])) {
-    console.warn("bounds are NaN, not setting bounds");
-    return;
-  }
-  mapRef.current?.fitBounds(bounds, {
-    padding: 250,
-  });
 }
 
 export function Map() {
@@ -120,6 +115,7 @@ export function Map() {
     setShowFilter,
     setShowResults,
     setShowLayerSelector,
+    setLocationFilter,
     showLayerSelector,
     locationFilter,
     layers,
@@ -137,10 +133,19 @@ export function Map() {
     }
   }, [current, showFilter, showResults, showLayerSelector]);
 
+  let moveMapToItemBounds = useCallback(() => {
+    moveBounds(mapRef, items);
+  }, [mapRef, items]);
+
   // If user changed the query, move the bounds to the new items
   useEffect(() => {
-    moveBounds(mapRef, items);
-  }, [query, debouncedLocationFilter]);
+    moveMapToItemBounds();
+  }, [query]);
+
+  // If user changed the locationfilter, move the bounds to the new items
+  useEffect(() => {
+    moveMapToItemBounds();
+  }, [debouncedLocationFilter]);
 
   // If the user moves the map, update the query to filter current area
   const updateBoundsQuery = useCallback((evt) => {
@@ -161,7 +166,13 @@ export function Map() {
       items.map((item) => {
         const isCurrent = item.id == current?.id;
         const handleClick = () => {
-          setCurrent(item as unknown as GBPObject);
+          // Move the map if it's not a GBPO
+          if (GBPObjectTypes["" + item["bag-object-type"]].isAob) {
+            setCurrent(item as unknown as GBPObject);
+          } else {
+            console.log('item', item);
+            setLocationFilter({ id: item.id as string, name: item.naam as string });
+          }
         };
         return (
           <Marker
@@ -190,25 +201,17 @@ export function Map() {
     <div className="Map__wrapper">
       <div className="Map__buttons Map__buttons--left">
         {!showFilter && (
-          <button
-            onClick={() => setShowFilter(!showFilter)}
-          >
-            Filters
-          </button>
+          <button onClick={() => setShowFilter(!showFilter)}>Filters</button>
         )}
         {!showLayerSelector && (
-          <button
-            onClick={() => setShowLayerSelector(!showLayerSelector)}
-          >
+          <button onClick={() => setShowLayerSelector(!showLayerSelector)}>
             Kaartlagen
           </button>
         )}
       </div>
       <div className="Map__buttons Map__buttons--right">
         {!showResults && (
-          <button
-            onClick={() => setShowResults(!showResults)}
-          >
+          <button onClick={() => setShowResults(!showResults)}>
             Resultaten
           </button>
         )}
