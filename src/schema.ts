@@ -9,7 +9,7 @@ export interface Attribute {
   /** Type of the attribute */
   type?: "string";
   attributes?: Attribute[];
-  filterType?: "select" | "range";
+  filterType?: "select" | "range" | "intervals";
 }
 
 /** All attributes should be here */
@@ -17,12 +17,12 @@ export const Attributes = {
   "aob_id" : {name: "BAG id", id: "bag-aob-id"},
   "object_type" : {name: "type", id: "bag-object-type"},
   "bouwjaar": { name: "bouwjaar", id: "bag-pnd-oorspronkelijk-bouwjaar", filterType: "range", },
-  "bouwjaar_interval": { name: "bouwjaar", id: "bag-pnd-oorspronkelijk-bouwjaar-interval", },
+  "bouwjaar_interval": { name: "bouwjaar", id: "bag-pnd-oorspronkelijk-bouwjaar-interval", filterType: "intervals", },
   "pand_id": { name: "BAG id", id: "bag-pnd-id", },
   "pand_status": { name: "pand status", id: "bag-pnd-status", },
   "gebruiksdoel": { name: "gebruiksdoel", id: "bag-aob-gebruiksdoel", },
   "oppervlakte": { name: "Oppervlakte (m2)", id: "bag-aob-oppervlakte", filterType: "range", },
-  "oppervlakte_interval": { name: "Oppervlakte (m2)", id: "bag-aob-oppervlakte-interval", },
+  "oppervlakte_interval": { name: "Oppervlakte (m2)", id: "bag-aob-oppervlakte-interval", filterType: "intervals", },
   "bag_status": { name: "bag status", id: "bag-aob-status", },
   "pand_energieklasse": { name: "Energie klasse", id: "epl.pand_energieklasse", },
   "balkon": { name: "Balkon", id: "balkon" },
