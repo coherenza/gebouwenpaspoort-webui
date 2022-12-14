@@ -248,9 +248,6 @@ export const filterAttributes: Attribute[] = [
       Attributes.pand_energieklasse,
     ]
   },
-  {
-    name: "Milieu",
-  }
 ];
 
 /**

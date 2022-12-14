@@ -16,7 +16,7 @@ function equalArrays(xs: any[], ys: any[]) {
 export const filterableAttributes = filterAttributes.map((prop) =>
   prop?.attributes?.map((attr) => attr.id)
 ).flat();
-filterableAttributes.push("_geo");
+filterableAttributes.push("_geo", "pdok-locatie-id");
 
 const sortableAttributes = sortProps.map((prop) => prop.attribute);
 
