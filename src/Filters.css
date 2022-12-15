@@ -4,13 +4,14 @@
 }
 
 .filter-panel--open {
-  display: block;
+  display: flex;
 }
 
 .filters {
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   flex: 1;
-  height: 100%;
 }
 
 span.filterValue {
