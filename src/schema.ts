@@ -44,6 +44,7 @@ export const Attributes = {
   },
   bag_status: { name: "BAG status", id: "bag-aob-status" },
   pand_energieklasse: { name: "energie klasse", id: "epl.epl-pand_energieklasse" },
+  zonnepanelen: { name: "zon op dak", id: "zod.zod-zonnepanelen"},
   balkon: { name: "balkon", id: "vocbtk.vocbtk-balkon" },
   dak: { name: "dak", id: "vocbtk.vocbtk-dak" },
   dakkapel: { name: "dakkapel", id: "vocbtk.vocbtk-dakkapel" },
@@ -279,7 +280,7 @@ export const filterAttributes: Attribute[] = [
     name: "Energie",
     attributes: [
       Attributes.pand_energieklasse,
-      { name: "zon op dak", id: "zod-zonnepanelen"},
+      Attributes.zonnepanelen,
     ]
   },
 ];
