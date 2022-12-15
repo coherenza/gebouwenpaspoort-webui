@@ -49,13 +49,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 4px solid var(--accent-color);
+  /* border: 4px solid var(--accent-color); */
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
 }
 
 .infopage__close {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 1rem;
+  right: 1rem;
   z-index: 11;
   background-color: var(--accent-color);
 }

@@ -9,7 +9,7 @@ export function InfoPage() {
         <h2>Introductie</h2>
 
         <p>Het Gebouwenpaspoort is een webapplicatie waarmee eindgebruikers kunnen zoeken in adressen in de gemeente Utrecht en 
-          hieraan gerelateerde beschrijvende gegevens (zoals bouwtechnische milieu en energie-kenmerken) die over adressen en gebouwen 
+          hieraan gerelateerde beschrijvende gegevens (zoals bouw, milieu en energie-kenmerken) die over adressen en gebouwen 
           bekend zijn in diverse interne en externe bronsystemen.</p>
 
         <p>Deze beschrijvende kenmerken worden ingelezen in het Gebouwenpaspoort en gerelateerd aan adresseerbare objecten of andere 
@@ -20,8 +20,8 @@ export function InfoPage() {
           gebouwelementen</a>.</p>
 
         <p>Het Gebouwenpaspoort bevat alleen de noodzakelijke gegevens om zoekopdrachten van eindgebruikers te kunnen beantwoorden. 
-          Het is de bedoeling dat eindgebruikers via een hyperlink kunnen doorspringen naar het bronsysteem, waarin zij vervolgens
-          alle beschikbare informatie kunnen raadplegen.</p>
+          Het is de bedoeling dat eindgebruikers via een hyperlink kunnen doorspringen naar het desbetreffende bronsysteem, waarin 
+          zij vervolgens alle beschikbare informatie kunnen raadplegen.</p>
 
         <h2>Gegevens</h2>
         <p>De volgende gegevens zijn opgenomen in deze versie van het Gebouwenpaspoort.</p>
