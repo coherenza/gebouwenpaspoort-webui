@@ -57,3 +57,29 @@
   right: 1rem;
   z-index: 11;
 }
+
+.infopage article {
+  width: 45rem;
+  background-color: #f3f3f3;
+  padding: 1rem;
+  height: 80%;
+  overflow-y: auto;
+}
+
+.infopage article h2 {
+  font-size: 110%;
+}
+
+.infopage article p {
+  margin-bottom: .5rem;
+}
+
+.infopage article ul li {
+  list-style-type: disc;
+}
+
+.infopage article ul, .infopage article ol {
+  padding-left: 1.5rem;
+  margin: 1rem;
+}
+
