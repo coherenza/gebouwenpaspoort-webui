@@ -8,16 +8,18 @@ export function InfoPage() {
 
         <h2>Introductie</h2>
 
-        <p>Het Gebouwenpaspoort is een webapplicatie waarmee eindgebruikers kunnen zoeken in adressen in de gemeente Utrecht en 
-          hieraan gerelateerde beschrijvende gegevens (zoals bouw, milieu en energie-kenmerken) die over adressen en gebouwen 
-          bekend zijn in diverse interne en externe bronsystemen.</p>
+        <p>Het Gebouwenpaspoort is een webapplicatie voor eindgebruikers die informatie zoeken over gebouwen in de gemeente Utrecht.
+          Deze informatie bestaat uit beschrijvende kenmerken over onderwerpen zoals bouw, milieu en energie die beschikbaar zijn in
+          interne en externe bronsystemen. Een voorbeeld van een zoekopdracht is: Welke panden, met een bouwjaar tussen 1950 en 1960 
+          hebben zonnepanelen?
+        </p>
 
         <p>Deze beschrijvende kenmerken worden ingelezen in het Gebouwenpaspoort en gerelateerd aan adresseerbare objecten of andere 
           objecten uit de Basisregistratie Adressen en Gebouwen (BAG), zoals panden en openbare ruimten (straten). Het streven is 
-          erop gericht om hierbij zoveel als mogelijk gebruik te maken van gestandaardiseerde termen, zoals NL/SfB van Ketenstandaard 
-          bouw en techniek. Dit verhoogt het begrip en de uitwisselbaarheid van gegevens. Zie <a 
-          href="https://gbp2.pandata.nl/sfb-bouwtechnische-kenmerken.html" target="_blank">NL/SfB Tabel-1: Functionele 
-          gebouwelementen</a>.</p>
+          erop gericht om de gebruikte terminologie te standaardiseren. Dat doen we door aan te sluiten bij gestandaardiseerde 
+          begrippenkaders, zoals NL/SfB van Ketenstandaard bouw en techniek. Dit verhoogt de herkenbaarheid en de uitwisselbaarheid van 
+          gegevens. Zie <a href="https://gbp2.pandata.nl/sfb-bouwtechnische-kenmerken.html" target="_blank">NL/SfB Tabel-1: Functionele 
+          gebouwelementen</a> voor een voorbeeld van een begrippenkader.</p>
 
         <p>Het Gebouwenpaspoort bevat alleen de noodzakelijke gegevens om zoekopdrachten van eindgebruikers te kunnen beantwoorden. 
           Het is de bedoeling dat eindgebruikers via een hyperlink kunnen doorspringen naar het desbetreffende bronsysteem, waarin 
