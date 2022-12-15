@@ -33,30 +33,30 @@ export const Attributes = {
   pand_status: { name: "pand status", id: "bag-pnd-status" },
   gebruiksdoel: { name: "gebruiksdoel", id: "bag-aob-gebruiksdoel" },
   oppervlakte: {
-    name: "Oppervlakte (m2)",
+    name: "oppervlakte (m2)",
     id: "bag-aob-oppervlakte",
     filterType: "range",
   },
   oppervlakte_interval: {
-    name: "Oppervlakte (m2)",
+    name: "oppervlakte (m2)",
     id: "bag-aob-oppervlakte-interval",
     filterType: "intervals",
   },
-  bag_status: { name: "bag status", id: "bag-aob-status" },
-  pand_energieklasse: { name: "Energie klasse", id: "epl.epl-pand_energieklasse" },
-  balkon: { name: "Balkon", id: "vocbtk.vocbtk-balkon" },
-  dak: { name: "Dak", id: "vocbtk.vocbtk-dak" },
-  dakkapel: { name: "Dakkapel", id: "vocbtk.vocbtk-dakkapel" },
-  dakrand: { name: "Dakrand", id: "vocbtk.vocbtk-dakrand" },
-  raam_deur: { name: "Raam/Deur", id: "vocbtk.vocbtk-raam_deur" },
-  galerij: { name: "Galerij", id: "vocbtk.vocbtk-galerij" },
-  gevel: { name: "Gevel", id: "vocbtk.vocbtk-gevel" },
-  goot: { name: "Goot", id: "vocbtk.vocbtk-goot" },
-  hekwerk: { name: "Hekwerk", id: "vocbtk.vocbtk-hekwerk" },
-  kozijn: { name: "Kozijn", id: "vocbtk.vocbtk-kozijn" },
-  schoorsteen: { name: "Schoorsteen", id: "vocbtk.vocbtk-schoorsteen" },
-  erker: { name: "Erker", id: "vocbtk.vocbtk-erker" },
-  tuin: { name: "Tuin", id: "vocbtk.vocbtk-tuin" },
+  bag_status: { name: "BAG status", id: "bag-aob-status" },
+  pand_energieklasse: { name: "energie klasse", id: "epl.epl-pand_energieklasse" },
+  balkon: { name: "balkon", id: "vocbtk.vocbtk-balkon" },
+  dak: { name: "dak", id: "vocbtk.vocbtk-dak" },
+  dakkapel: { name: "dakkapel", id: "vocbtk.vocbtk-dakkapel" },
+  dakrand: { name: "dakrand", id: "vocbtk.vocbtk-dakrand" },
+  raam_deur: { name: "raam/deur", id: "vocbtk.vocbtk-raam_deur" },
+  galerij: { name: "galerij", id: "vocbtk.vocbtk-galerij" },
+  gevel: { name: "gevel", id: "vocbtk.vocbtk-gevel" },
+  goot: { name: "goot", id: "vocbtk.vocbtk-goot" },
+  hekwerk: { name: "hekwerk", id: "vocbtk.vocbtk-hekwerk" },
+  kozijn: { name: "kozijn", id: "vocbtk.vocbtk-kozijn" },
+  schoorsteen: { name: "schoorsteen", id: "vocbtk.vocbtk-schoorsteen" },
+  erker: { name: "erker", id: "vocbtk.vocbtk-erker" },
+  tuin: { name: "tuin", id: "vocbtk.vocbtk-tuin" },
 };
 
 /**
@@ -73,6 +73,10 @@ export const displayAttributes: Attribute[] = [
   {
     name: "Adresseerbaar object",
     attributes: [
+      {
+        name: "Nevenadres",
+        id: "bag-num-volledig-neven",
+      },
       Attributes.aob_id,
       Attributes.object_type,
       Attributes.gebruiksdoel,
@@ -173,6 +177,7 @@ export const displayAttributes: Attribute[] = [
     name: "Zon Op Dak",
     id: "zod",
     attributes: [
+      { name: "zonnepanelen", id: "zod-zonnepanelen" },
       { name: "gemeentelijk vastgoed", id: "zod-gemeentelijk_vastgoed" },
       { name: "zonnepanelen 2017", id: "zod-zonnepanelen_2017" },
       { name: "zonnepanelen 2018", id: "zod-zonnepanelen_2018" },
@@ -272,7 +277,10 @@ export const filterAttributes: Attribute[] = [
   },
   {
     name: "Energie",
-    attributes: [Attributes.pand_energieklasse],
+    attributes: [
+      Attributes.pand_energieklasse,
+      { name: "zon op dak", id: "zod-zonnepanelen"},
+    ]
   },
 ];
 
