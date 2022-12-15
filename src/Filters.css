@@ -9,6 +9,8 @@
 
 .filters {
   overflow-y: auto;
+  flex: 1;
+  height: 100%;
 }
 
 span.filterValue {

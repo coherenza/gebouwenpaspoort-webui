@@ -1,14 +1,5 @@
 .Results {
   left: auto;
-  /* position: fixed;
-  right: 0%;
-  top: 0;
-  bottom: 0;
-  width: var(--results-width);
-  background-color: #fff;
-  box-shadow: var(--box-shadow);
-  display: flex;
-  flex-direction: column; */
 }
 
 .Results__header {
