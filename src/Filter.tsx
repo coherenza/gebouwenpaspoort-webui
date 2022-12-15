@@ -23,7 +23,7 @@ export const Filter = (filter: Attribute) => {
     <div className="Filter">
       <h4>{filter.name}</h4>
       {filterType === "select" && (
-        <RefinementList attribute={filter.id} limit={10} />
+        <RefinementList attribute={filter.id} limit={16} />
       )}
       {filterType === "range" && <RangeInput attribute={filter.id} />}
       {filterType === "intervals" && (
