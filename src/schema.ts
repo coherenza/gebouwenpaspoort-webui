@@ -1,6 +1,10 @@
 import { indexName } from "./config";
 
-/** A single type of Attribute */
+/**
+ * Attributes represent properties that, together, describe the schema of the data.
+ * These are used to render both the list of Filter options and the Details page.
+ * Attributes are recursive, so that they can be used to describe nested objects.
+ */
 export interface Attribute {
   /** Human readable string, shown in the front-end */
   name: string;
@@ -12,37 +16,54 @@ export interface Attribute {
   filterType?: "select" | "range" | "intervals";
 }
 
-/** All attributes should be here */
 export const Attributes = {
-  "aob_id" : {name: "BAG id", id: "bag-aob-id"},
-  "object_type" : {name: "type", id: "bag-object-type"},
-  "bouwjaar": { name: "bouwjaar", id: "bag-pnd-oorspronkelijk-bouwjaar", filterType: "range", },
-  "bouwjaar_interval": { name: "bouwjaar", id: "bag-pnd-oorspronkelijk-bouwjaar-interval", filterType: "intervals", },
-  "pand_id": { name: "BAG id", id: "bag-pnd-id", },
-  "pand_status": { name: "pand status", id: "bag-pnd-status", },
-  "gebruiksdoel": { name: "gebruiksdoel", id: "bag-aob-gebruiksdoel", },
-  "oppervlakte": { name: "Oppervlakte (m2)", id: "bag-aob-oppervlakte", filterType: "range", },
-  "oppervlakte_interval": { name: "Oppervlakte (m2)", id: "bag-aob-oppervlakte-interval", filterType: "intervals", },
-  "bag_status": { name: "bag status", id: "bag-aob-status", },
-  "pand_energieklasse": { name: "Energie klasse", id: "epl.pand_energieklasse", },
-  "balkon": { name: "Balkon", id: "balkon" },
-  "dak": { name: "Dak", id: "dak" },
-  "dakkapel": { name: "Dakkapel", id: "dakkapel" },
-  "dakrand": { name: "Dakrand", id: "dakrand" },
-  "raam_deur": { name: "Raam/Deur", id: "raam/deur" },
-  "galerij": { name: "Galerij", id: "galerij" },
-  "gevel": { name: "Gevel", id: "gevel" },
-  "goot": { name: "Goot", id: "goot" },
-  "hekwerk": { name: "Hekwerk", id: "hekwerk" },
-  "kozijn": { name: "Kozijn", id: "kozijn" },
-  "schoorsteen": { name: "Schoorsteen", id: "schoorsteen" },
-  "erker": { name: "Erker", id: "erker" },
-  "tuin": { name: "Tuin", id: "tuin" },
+  aob_id: { name: "BAG id", id: "bag-aob-id" },
+  object_type: { name: "type", id: "bag-object-type" },
+  bouwjaar: {
+    name: "bouwjaar",
+    id: "bag-pnd-oorspronkelijk-bouwjaar",
+    filterType: "range",
+  },
+  bouwjaar_interval: {
+    name: "bouwjaar",
+    id: "bag-pnd-oorspronkelijk-bouwjaar-interval",
+    filterType: "intervals",
+  },
+  pand_id: { name: "BAG id", id: "bag-pnd-id" },
+  pand_status: { name: "pand status", id: "bag-pnd-status" },
+  gebruiksdoel: { name: "gebruiksdoel", id: "bag-aob-gebruiksdoel" },
+  oppervlakte: {
+    name: "Oppervlakte (m2)",
+    id: "bag-aob-oppervlakte",
+    filterType: "range",
+  },
+  oppervlakte_interval: {
+    name: "Oppervlakte (m2)",
+    id: "bag-aob-oppervlakte-interval",
+    filterType: "intervals",
+  },
+  bag_status: { name: "bag status", id: "bag-aob-status" },
+  pand_energieklasse: { name: "Energie klasse", id: "epl.pand_energieklasse" },
+  balkon: { name: "Balkon", id: "balkon" },
+  dak: { name: "Dak", id: "dak" },
+  dakkapel: { name: "Dakkapel", id: "dakkapel" },
+  dakrand: { name: "Dakrand", id: "dakrand" },
+  raam_deur: { name: "Raam/Deur", id: "raam/deur" },
+  galerij: { name: "Galerij", id: "galerij" },
+  gevel: { name: "Gevel", id: "gevel" },
+  goot: { name: "Goot", id: "goot" },
+  hekwerk: { name: "Hekwerk", id: "hekwerk" },
+  kozijn: { name: "Kozijn", id: "kozijn" },
+  schoorsteen: { name: "Schoorsteen", id: "schoorsteen" },
+  erker: { name: "Erker", id: "erker" },
+  tuin: { name: "Tuin", id: "tuin" },
 };
 
-
-/** The current schema, used for rendering the Details page.
- *  The ordering of the Collections defines how they are shown in the front-end.
+/**
+ * The current schema, used for rendering the Details page.
+ * The ordering of the Collections defines how they are shown in the front-end.
+ * The first Attribute of the entire array is used as the title of the Details page.
+ * For each sub-attribute, the first Attribute is used as the title of the sub-section.
  */
 export const displayAttributes: Attribute[] = [
   {
@@ -149,7 +170,8 @@ export const displayAttributes: Attribute[] = [
     ],
   },
   {
-    name: "Zon Op Dak", id: "zod",
+    name: "Zon Op Dak",
+    id: "zod",
     attributes: [
       { name: "gemeentelijk vastgoed", id: "gemeentelijk_vastgoed" },
       { name: "zonnepanelen 2017", id: "zonnepanelen_2017" },
@@ -158,12 +180,13 @@ export const displayAttributes: Attribute[] = [
       { name: "zonnepanelen 2020", id: "zonnepanelen_2020" },
       { name: "zonnepanelen 2021", id: "zonnepanelen_2021" },
       { name: "zonnepanelen 2022", id: "zonnepanelen_2022" },
-      { name: "plat dak oppervlakte", id: "plat_dak_oppervlakte"},
+      { name: "plat dak oppervlakte", id: "plat_dak_oppervlakte" },
       { name: "zonnepaneel oppervlakte", id: "zonnepaneel_oppervlakte" },
-    ]
+    ],
   },
   {
-    name: "Bouwtechnische kenmerken", id: "vocbtk",
+    name: "Bouwtechnische kenmerken",
+    id: "vocbtk",
     attributes: [
       { name: "Balkon", id: "balkon" },
       { name: "Dak", id: "dak" },
@@ -178,14 +201,15 @@ export const displayAttributes: Attribute[] = [
       { name: "Schoorsteen", id: "schoorsteen" },
       { name: "Erker", id: "erker" },
       { name: "Tuin", id: "tuin" },
-    ]
+    ],
   },
   {
-    name: "Overige kenmerken", id: "vocovk",
+    name: "Overige kenmerken",
+    id: "vocovk",
     attributes: [
       { name: "Asbest", id: "asbest" },
       { name: "Fundering", id: "fundering" },
-    ]
+    ],
   },
   {
     name: "Buurten en wijken",
@@ -214,6 +238,9 @@ export const displayAttributes: Attribute[] = [
   },
 ];
 
+/**
+ * At the root level, we only allow Attributes _without an id_, but _with attributes_.
+ */
 export const filterAttributes: Attribute[] = [
   {
     name: "Algemeen",
@@ -240,13 +267,11 @@ export const filterAttributes: Attribute[] = [
       Attributes.schoorsteen,
       Attributes.erker,
       Attributes.tuin,
-    ]
+    ],
   },
   {
     name: "Energie",
-    attributes: [
-      Attributes.pand_energieklasse,
-    ]
+    attributes: [Attributes.pand_energieklasse],
   },
 ];
 
@@ -302,55 +327,73 @@ export interface SortProp {
 
 /** Selectable sorts. First is default */
 export const sortProps: SortProp[] = [
-  { sortBy: `${indexName}:location-sort-value:asc`, attribute: 'location-sort-value',  label: "Initial sort order" },
-  { sortBy: `${indexName}:object-type-sort-order:asc`, attribute: 'object-type-sort-order',  label: "Object type" },
+  {
+    sortBy: `${indexName}:location-sort-value:asc`,
+    attribute: "location-sort-value",
+    label: "Initial sort order",
+  },
+  {
+    sortBy: `${indexName}:object-type-sort-order:asc`,
+    attribute: "object-type-sort-order",
+    label: "Object type",
+  },
   { sortBy: `${indexName}:naam:asc`, attribute: "naam", label: "Naam" },
-  { sortBy: `${indexName}:bag-opr-naam:asc`, attribute: "bag-opr-naam", label: "Straat" },
-  { sortBy: `${indexName}:bag-num-huisnummer:asc`, attribute: "bag-num-huisnummer", label: "Huisnummer" },
-  { sortBy: `${indexName}:bag-num-huisletter:asc`, attribute: "bag-num-huisletter", label: "Huisletter" },
-  { sortBy: `${indexName}:bag-num-huisnummertoevoeging:asc`, attribute: "bag-num-huisnummertoevoeging", label: "Huisnummertoevoeging" },
+  {
+    sortBy: `${indexName}:bag-opr-naam:asc`,
+    attribute: "bag-opr-naam",
+    label: "Straat",
+  },
+  {
+    sortBy: `${indexName}:bag-num-huisnummer:asc`,
+    attribute: "bag-num-huisnummer",
+    label: "Huisnummer",
+  },
+  {
+    sortBy: `${indexName}:bag-num-huisletter:asc`,
+    attribute: "bag-num-huisletter",
+    label: "Huisletter",
+  },
+  {
+    sortBy: `${indexName}:bag-num-huisnummertoevoeging:asc`,
+    attribute: "bag-num-huisnummertoevoeging",
+    label: "Huisnummertoevoeging",
+  },
   //{ sortBy: `${indexName}`, attribute: "", label: "Relevantie" },
 ];
 
-export interface FilterProp {
-  label: string;
-  propKey: string;
-  type: "single" | "multi" | "geo" | "date" | "range";
-  display?: "none"
-}
-
 export interface GBPObjectTypeProperties {
-  readonly [index: string] : {
+  readonly [index: string]: {
     color: string;
     isAob: boolean;
-  }
+  };
 }
 
 // https://huisstijl.utrecht.nl/basiselementen/kleur/
 export const utrechtKleuren = {
-  "rood": "#cc0000",
-  "geel": "#ffcc00",
-  "paars": "#762cd1",
-  "magenta": "#f02198",
-  "oranje": "#ff6e00",
-  "lime": "#99d000",
-  "groen": "#32ab27",
-  "cyaan": "#009ed4",
-  "blauw": "#006dff",
-  "marineblauw": "#1c4181",
-  "bruin": "#ad643b",
-}
+  rood: "#cc0000",
+  geel: "#ffcc00",
+  paars: "#762cd1",
+  magenta: "#f02198",
+  oranje: "#ff6e00",
+  lime: "#99d000",
+  groen: "#32ab27",
+  cyaan: "#009ed4",
+  blauw: "#006dff",
+  marineblauw: "#1c4181",
+  bruin: "#ad643b",
+};
 
+/** These represent the various types or classes that the index contains. */
 export const GBPObjectTypes: GBPObjectTypeProperties = {
-  "woonplaats" : { color: utrechtKleuren.blauw, isAob: false },
-  "wijk" : { color: utrechtKleuren.bruin, isAob: false },
-  "buurt" : { color: utrechtKleuren.oranje, isAob: false },
-  "openbareruimte" : { color: utrechtKleuren.rood, isAob: false },
-  "postcode" : { color: utrechtKleuren.magenta, isAob: false },
-  "adres" : { color: utrechtKleuren.oranje, isAob: false },
-  "verblijfsobject" : { color: utrechtKleuren.geel, isAob: true },
-  "standplaats" : { color: utrechtKleuren.cyaan, isAob: true },
-  "ligplaats" : { color: utrechtKleuren.blauw, isAob: true },
+  woonplaats: { color: utrechtKleuren.blauw, isAob: false },
+  wijk: { color: utrechtKleuren.bruin, isAob: false },
+  buurt: { color: utrechtKleuren.oranje, isAob: false },
+  openbareruimte: { color: utrechtKleuren.rood, isAob: false },
+  postcode: { color: utrechtKleuren.magenta, isAob: false },
+  adres: { color: utrechtKleuren.oranje, isAob: false },
+  verblijfsobject: { color: utrechtKleuren.geel, isAob: true },
+  standplaats: { color: utrechtKleuren.cyaan, isAob: true },
+  ligplaats: { color: utrechtKleuren.blauw, isAob: true },
 };
 
 export interface GBPObject {
@@ -427,6 +470,6 @@ export interface GBPObject {
 }
 
 export interface LocationFilter {
-  id : string;
-  name : string;
+  id: string;
+  name: string;
 }
