@@ -1,0 +1,8 @@
+.RefinementList__count {
+  font-size: .8rem;
+  font-weight: 400;
+  background-color: var(--g1);
+  padding: .2rem;
+  border-radius: var(--border-radius);
+  margin-left: .4rem;
+}
