@@ -41,8 +41,8 @@ export function Filters({}) {
             </AttributeCollapsible>
           );
         })}
-        { ["localhost", "127.0.0.1"].includes(window.location.hostname) &&
-           <div style={{'marginTop':'2em'}}><button onClick={setIndexes}>set index properties</button></div>
+        { (["localhost", "127.0.0.1"].includes(window.location.hostname) || location.search === "?iamadeveloper") &&
+          <div style={{'marginTop':'2em'}}><button onClick={setIndexes}>set index properties</button></div>
         }
       </div>
     </div>
