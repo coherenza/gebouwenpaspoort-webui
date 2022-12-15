@@ -69,8 +69,15 @@
   overflow-y: auto;
 }
 
+.infopage article h1 {
+  color: var(--primary-color);
+  border-left: 4px solid var(--accent-color);
+  padding-left: 0.4rem;
+}
+
 .infopage article h2 {
   font-size: 110%;
+  color: var(--primary-color);
 }
 
 .infopage article p {
