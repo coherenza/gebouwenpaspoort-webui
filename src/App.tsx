@@ -53,7 +53,7 @@ const AppProvider = () => {
   const [apiKey, setApiKey] = useLocalStorage("apiKey", meiliKey);
 
   const searchClient = useMemo(() => {
-    return instantMeiliSearch(server, apiKey);
+    return instantMeiliSearch(server, apiKey, {primaryKey: 'id', paginationTotalHits: 1000, keepZeroFacets: true});
   }, [apiKey]);
 
   return (

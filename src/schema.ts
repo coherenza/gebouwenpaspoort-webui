@@ -74,12 +74,12 @@ export const displayAttributes: Attribute[] = [
   {
     name: "Adresseerbaar object",
     attributes: [
+      Attributes.object_type,
       {
         name: "Nevenadres",
         id: "bag-num-volledig-neven",
       },
       Attributes.aob_id,
-      Attributes.object_type,
       Attributes.gebruiksdoel,
       Attributes.oppervlakte,
     ],

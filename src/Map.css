@@ -12,6 +12,10 @@
   flex: 1;
 }
 
+.mapboxgl-marker {
+  cursor: pointer;
+}
+
 /* only large screens */
 @media (min-width: 768px) {
   .Map__buttons {

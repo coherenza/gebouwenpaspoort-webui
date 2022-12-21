@@ -1,5 +1,5 @@
 import {
-  Hits,
+  Hits, InfiniteHits,
   Pagination,
   SortBy,
   useRefinementList,
@@ -34,7 +34,7 @@ export function Results() {
           items={[
             { label: "50 per pagina", value: 50 },
             { label: "200 per pagina", value: 200, default: true},
-            // Seems to be hard-capped at 200
+            // Seems to be hard-capped at 200, but is not, see App.tsx, instantMeiliSearch(server, apiKey, {primaryKey: 'id', paginationTotalHits: 1000, keepZeroFacets: true})
             // { label: "1.000 hits per page", value: 1000 },
           ]}
         />
@@ -45,8 +45,9 @@ export function Results() {
       </div>
       <CurrentRefinements />
       {/* @ts-ignore */}
-      <Hits hitComponent={HitLine} escapeHTML={false} />
-      <Pagination showLast={true} />
+      {/* <Hits hitComponent={HitLine} escapeHTML={false} /> */}
+      <InfiniteHits hitComponent={HitLine} escapeHTML={false} showPrevious={false} />
+      {/* <Pagination showLast={true} /> */}
     </div>
   );
 }

@@ -57,6 +57,20 @@ interface AttributeTitleProps {
   children?: React.ReactNode;
 }
 
+function nothingToSee(value) {
+  const nTS =
+    ( value == undefined ||
+      value == null ||
+      value == "" ||
+      typeof(value) == 'symbol' ||
+      typeof(value) == 'function' ||
+      Array.isArray(value) && value.length == 0 ||
+      typeof (value) == 'object' && Object.entries(value).length == 0 ||
+      typeof (value) == 'object' && Object.keys(value).every(k => nothingToSee(value[k]))
+    );
+  return nTS;
+}
+
 export function AttributeCollapsible({
   attribute,
   showCount,
@@ -64,7 +78,7 @@ export function AttributeCollapsible({
   children,
 }: AttributeTitleProps) {
   const [open, setOpen] = useState(true);
-  if (!children) return null;
+  if (nothingToSee(children)) return null; // does not work
   return (
     <div className="Attribute">
       <div className="Attribute__title" onClick={() => setOpen(!open)}>
@@ -122,6 +136,7 @@ function AttributeItem({ hit, attribute, item, collection, i }) {
 
 /** A single highlighted prop-val */
 function PropValHighlights({ hit, attribute }) {
+  if (!hit || nothingToSee(hit[attribute.id])) return null;
   return (
     <div className="Attribute__propval">
       <div className="Attribute__propval__key">{attribute.name}</div>

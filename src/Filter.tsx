@@ -1,8 +1,8 @@
 import { Attribute } from "./schema";
 import React from "react";
-import { RangeInput, RefinementListProps } from "react-instantsearch-hooks-web";
+import { RangeInput, RefinementListProps, RefinementList } from "react-instantsearch-hooks-web";
 import "./Filter.css";
-import { RefinementList } from "./RefinementList";
+//import { RefinementList } from "./RefinementList"; // niet nodig met keepZeroFacets: true
 
 // Sort strings that we use to indicate numeric intervals.
 const intervalSortValue = function (x: string) {
