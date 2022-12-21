@@ -6,3 +6,12 @@
   border-radius: var(--border-radius);
   margin-left: .4rem;
 }
+
+.RefinementList li > label {
+  display: block;
+  margin-left: 1.5em;
+}
+
+.RefinementList li > input[type=checkbox] {
+  float: left;
+}

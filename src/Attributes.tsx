@@ -71,7 +71,7 @@ export function AttributeCollapsible({
         {open ? <ChevronDownIcon /> : <ChevronRightIcon />} {attribute.name}{" "}
         {showCount && `(${count})`}
       </div>
-      {open && <div className={"Attribute__content"}>{children}</div>}
+      {<div className={"Attribute__content__"+(open ? "open" : "closed")}>{children}</div>}
     </div>
   );
 }

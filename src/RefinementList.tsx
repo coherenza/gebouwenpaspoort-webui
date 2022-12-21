@@ -51,12 +51,12 @@ export function RefinementList({ attribute, sortBy, limit = 10 }: RefinementList
       <ul>
         {limitedSavedItems.map((item) => (
           <li key={item.label}>
+            <input
+              type="checkbox"
+              checked={item.isRefined}
+              onChange={(_event) => refine(item.value)}
+            />
             <label>
-              <input
-                type="checkbox"
-                checked={item.isRefined}
-                onChange={(_event) => refine(item.value)}
-              />
               <span>{item.label}</span>
               <span className="RefinementList__count">{item.count}</span>
             </label>

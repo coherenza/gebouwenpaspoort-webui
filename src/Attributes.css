@@ -15,8 +15,12 @@
   color: var(--primary-color-dark);
 }
 
-.Attribute__content {
+.Attribute__content__open {
   padding: 0.5rem;
+}
+
+.Attribute__content__closed {
+  display: none;
 }
 
 .Attribute__propval {
