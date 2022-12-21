@@ -1,4 +1,4 @@
-.RefinementList__count {
+.RefinementList__count, .ais-RefinementList__count {
   font-size: .8rem;
   font-weight: 400;
   background-color: var(--g1);
@@ -7,11 +7,11 @@
   margin-left: .4rem;
 }
 
-.RefinementList li > label {
+.RefinementList li > label, .ais-RefinementList li > label {
   display: block;
   margin-left: 1.5em;
 }
 
-.RefinementList li > input[type=checkbox] {
+.RefinementList li > input[type=checkbox], .aisRefinementList li > input[type=checkbox] {
   float: left;
 }
