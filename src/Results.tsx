@@ -44,8 +44,8 @@ export function Results() {
         {hits.length} / {nbHits == 1000 ? "1000+" : nbHits} resultaten zichtbaar
       </div>
       <CurrentRefinements />
-      {/* @ts-ignore */}
       {/* <Hits hitComponent={HitLine} escapeHTML={false} /> */}
+      {/* @ts-ignore */}
       <InfiniteHits hitComponent={HitLine} escapeHTML={false} showPrevious={false} />
       {/* <Pagination showLast={true} /> */}
     </div>
