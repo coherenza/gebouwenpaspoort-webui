@@ -12,9 +12,9 @@ export function CurrentRefinements() {
   }
   return (
     <div className="CurrentRefinements">
-      {items.map((item) => {
+      {items.map((item, index) => {
         return item.refinements.map((refinement) => (
-          <Refinement item={refinement} refine={refine} parent={item}/>
+          <Refinement item={refinement} refine={refine} parent={item} key={index.toString()}/>
         ));
       })}
     </div>
