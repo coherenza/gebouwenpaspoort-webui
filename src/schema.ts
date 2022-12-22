@@ -45,6 +45,7 @@ export const Attributes = {
   bag_status: { name: "BAG status", id: "bag-aob-status" },
   pand_energieklasse: { name: "energie klasse", id: "epl.epl-pand_energieklasse" },
   zonnepanelen: { name: "zon op dak", id: "zod.zod-zonnepanelen"},
+  monument: {name : "monument", id: "mon.mon-monument"},
   balkon: { name: "balkon", id: "vocbtk.vocbtk-balkon" },
   dak: { name: "dak", id: "vocbtk.vocbtk-dak" },
   dakkapel: { name: "dakkapel", id: "vocbtk.vocbtk-dakkapel" },
@@ -191,6 +192,14 @@ export const displayAttributes: Attribute[] = [
     ],
   },
   {
+    name: "Monumenten",
+    id : "mon",
+    attributes: [
+      {name: "monument", id: "mon-monument"},
+      {name: "monumentnummer", id: "mon-monumentnummer"},
+    ]
+  },
+  {
     name: "Bouwtechnische kenmerken",
     id: "vocbtk",
     attributes: [
@@ -256,6 +265,7 @@ export const filterAttributes: Attribute[] = [
       Attributes.gebruiksdoel,
       Attributes.bouwjaar_interval,
       Attributes.oppervlakte_interval,
+      Attributes.monument,
     ],
   },
   {
