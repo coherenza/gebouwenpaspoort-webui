@@ -47,3 +47,46 @@ After copying, restart the docker image (`docker ps`, `docker stop`).
 If you need to compile the JS files, run `pnpm build` to `/dist`.
 You can now host this folder on your favorite HTML server.
 See [vite guide](https://vitejs.dev/guide/build.html) for more build options.
+
+# Changing the Meilisearch index on the Digital Ocean server (meili-droplet)
+
+Open a terminal window on the droplet.
+Go into the `meili_data` directory.
+
+```
+cd meili_data
+```
+
+Use `ls -al` to verify that the contents looks like this:
+
+```
+lrwxrwxrwx 1 root root   16 Dec 22 15:18 data.ms -> data_20221215.ms
+drwxr-xr-x 6 root root 4096 Dec 15 16:30 data_20221215.ms
+drwxr-xr-x 6 root root 4096 Dec 22 15:14 data_20221222.ms
+```
+
+The directory `data_20221222.ms` contains the new data.
+Change where the `data.ms` symbolic link points to by doing (using the correct directory names):
+
+```
+root@meili-droplet:~/meili_data# rm data.ms && ln -s data_20221222.ms data.ms
+```
+
+Verify the new target of the symbolic link:
+
+```
+root@meili-droplet:~/meili_data# ls -al
+total 20
+drwxr-xr-x 5 root root 4096 Dec 22 15:28 .
+drwx------ 7 root root 4096 Dec  1 08:44 ..
+lrwxrwxrwx 1 root root   16 Dec 22 15:28 data.ms -> data_20221222.ms
+drwxr-xr-x 6 root root 4096 Dec 15 16:30 data_20221215.ms
+drwxr-xr-x 6 root root 4096 Dec 22 15:14 data_20221222.ms
+```
+
+Before you restart the server by restarting the docker container, see above,
+go back to the home directory.
+
+```
+cd ..
+```
