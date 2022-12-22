@@ -1,7 +1,8 @@
 import { Attribute } from "./schema";
-import React from "react";
+import { React, useState } from "react";
 import { RangeInput, RefinementListProps, RefinementList } from "react-instantsearch-hooks-web";
 import "./Filter.css";
+import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 //import { RefinementList } from "./RefinementList"; // niet nodig met keepZeroFacets: true
 
 // Sort strings that we use to indicate numeric intervals.
@@ -19,20 +20,25 @@ const sortIntervals: RefinementListProps["sortBy"] = (a, b) => {
 
 export const Filter = (filter: Attribute) => {
   const filterType = filter.filterType || "select";
+  const [open, setOpen] = useState(false);
   return (
     <div className="Filter">
-      <h4>{filter.name}</h4>
-      {filterType === "select" && (
-        <RefinementList attribute={filter.id} limit={16} />
-      )}
-      {filterType === "range" && <RangeInput attribute={filter.id} />}
-      {filterType === "intervals" && (
-        <RefinementList
-          attribute={filter.id}
-          sortBy={sortIntervals}
-          limit={16}
-        />
-      )}
+      <h4 onClick={() => setOpen(!open)}>{open ? <ChevronDownIcon /> : <ChevronRightIcon />}{filter.name}</h4>
+      <div className={"Attribute__content__"+(open ? "open" : "closed")}>
+        {filterType === "select" && (
+          <RefinementList attribute={filter.id} limit={16} />
+        )}
+        {filterType === "range" && (
+          <RangeInput attribute={filter.id} />
+        )}
+        {filterType === "intervals" && (
+          <RefinementList
+            attribute={filter.id}
+            sortBy={sortIntervals}
+            limit={16}
+          />
+        )}
+      </div>
     </div>
   );
 };

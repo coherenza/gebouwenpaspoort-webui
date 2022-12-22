@@ -32,6 +32,7 @@ export function Filters({}) {
             };
           })}
         ></SortBy>
+
         {filterAttributes.map((attribute) => {
           return (
             <AttributeCollapsible attribute={attribute} key={attribute.name || attribute.id}>
@@ -41,9 +42,11 @@ export function Filters({}) {
             </AttributeCollapsible>
           );
         })}
+
         { (["localhost", "127.0.0.1"].includes(window.location.hostname) || location.search === "?iamadeveloper") &&
           <div style={{'marginTop':'2em'}}><button onClick={setIndexes}>set index properties</button></div>
         }
+        
       </div>
     </div>
   );

@@ -78,7 +78,7 @@ export function AttributeCollapsible({
   children,
 }: AttributeTitleProps) {
   const [open, setOpen] = useState(true);
-  if (nothingToSee(children)) return null; // does not work
+  if (nothingToSee(children)) return null; // does not work to hide all empty attributes
   return (
     <div className="Attribute">
       <div className="Attribute__title" onClick={() => setOpen(!open)}>
