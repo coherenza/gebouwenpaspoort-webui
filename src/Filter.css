@@ -1,3 +1,14 @@
 .Filter {
   margin-bottom: 1rem;
 }
+
+
+.RefinementList li > label, label.ais-RefinementList-label {
+  display: block;
+  margin-left: 1.5em;
+}
+
+.RefinementList li > input[type=checkbox], label.ais-RefinementList-label > input[type=checkbox] {
+  float:left;
+  margin-left: -1.5em;
+}
