@@ -9,6 +9,20 @@ interface DetailSectionProps {
   hit: GBPObject;
 }
 
+function nothingToSee(value) {
+  const nTS =
+    ( value == undefined ||
+      value == null ||
+      value == "" ||
+      typeof(value) == 'symbol' ||
+      typeof(value) == 'function' ||
+      Array.isArray(value) && value.length == 0 ||
+      typeof (value) == 'object' && Object.entries(value).length == 0 ||
+      typeof (value) == 'object' && Object.keys(value).every(k => nothingToSee(value[k]))
+    );
+  return nTS;
+}
+
 /**
  * Renders a single section in the Details view, for one attribute.
  */
@@ -22,6 +36,8 @@ export function AttributeView({ attribute, hit }: DetailSectionProps) {
   const count = isCollection && hit[attribute?.id]?.length | 0;
 
   if (isCollection && count == 0) return null;
+  // Do not show attribute sets when all attributes are empty.
+  if (!isCollection && attribute.attributes.every(a => nothingToSee(hit[a.id]))) return null;
 
   return (
     <AttributeCollapsible
@@ -57,20 +73,6 @@ interface AttributeTitleProps {
   children?: React.ReactNode;
 }
 
-function nothingToSee(value) {
-  const nTS =
-    ( value == undefined ||
-      value == null ||
-      value == "" ||
-      typeof(value) == 'symbol' ||
-      typeof(value) == 'function' ||
-      Array.isArray(value) && value.length == 0 ||
-      typeof (value) == 'object' && Object.entries(value).length == 0 ||
-      typeof (value) == 'object' && Object.keys(value).every(k => nothingToSee(value[k]))
-    );
-  return nTS;
-}
-
 export function AttributeCollapsible({
   attribute,
   showCount,
@@ -78,7 +80,6 @@ export function AttributeCollapsible({
   children,
 }: AttributeTitleProps) {
   const [open, setOpen] = useState(true);
-  if (nothingToSee(children)) return null; // does not work to hide all empty attributes
   return (
     <div className="Attribute">
       <div className="Attribute__title" onClick={() => setOpen(!open)}>

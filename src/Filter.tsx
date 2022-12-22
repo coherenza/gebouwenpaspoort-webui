@@ -1,5 +1,5 @@
 import { Attribute } from "./schema";
-import { React, useState } from "react";
+import { useState } from "react";
 import { RangeInput, RefinementListProps, RefinementList } from "react-instantsearch-hooks-web";
 import "./Filter.css";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
