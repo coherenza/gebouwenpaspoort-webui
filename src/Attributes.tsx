@@ -163,7 +163,12 @@ function PropVal({ item, attribute }) {
   return (
     <div className="Attribute__propval">
       <div className="Attribute__propval__key">{attribute.name}</div>
-      <div className="Attribute__propval__value">{item.toString()}</div>
+      <div className="Attribute__propval__value">
+        { (attribute.type == "URL")
+        ? (<a href={item.toString()} target="_blank">&#x2B77;</a>)
+        : item.toString()
+        }
+      </div>
     </div>
   );
 }

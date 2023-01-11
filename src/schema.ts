@@ -48,7 +48,7 @@ export const Attributes = {
   href_utrechtsarchief: {name: "Utrechts Archief", id: "href-utrechtsarchief", type: 'URL'},
   pand_energieklasse: { name: "energie klasse", id: "epl.epl-pand_energieklasse" },
   zonnepanelen: { name: "zon op dak", id: "zod.zod-zonnepanelen"},
-  monument: {name : "monument", id: "mon.mon-monument"},
+  monument: {name: "type monument", id: "mon.mon-type_monument"},
   balkon: { name: "balkon", id: "vocbtk.vocbtk-balkon" },
   dak: { name: "dak", id: "vocbtk.vocbtk-dak" },
   dakkapel: { name: "dakkapel", id: "vocbtk.vocbtk-dakkapel" },
@@ -201,9 +201,9 @@ export const displayAttributes: Attribute[] = [
     name: "Monumenten",
     id : "mon",
     attributes: [
-      {name: "monument", id: "mon-monument"},
+      {name: "type monument", id: "mon-type_monument"},
       {name: "monumentnummer", id: "mon-monumentnummer"},
-      {name: "type monument", id: "mon-type_monument"}
+      {name: "monumentenregister", id: "mon-href_monumentenregister", type: "URL"}
     ]
   },
   {
