@@ -33,16 +33,6 @@ export function Details() {
             <h3 className="details-panel__title">
               {current[displayAttributes[0].id]}{" "}
             </h3>
-            {geo && (
-              <a
-                className="button"
-                rel="noopener noreferrer"
-                target="_blank"
-                href={`https://app.slagboomenpeeters.com/c37aae05-9e9a-4210-a1b8-d957367fc978?z=12&mode=oblique&x=${geo.x}&y=${geo.y}`}
-              >
-                luchtfoto
-              </a>
-            )}
             <button onClick={() => setCurrent(undefined)}>sluit</button>
           </div>
           <div className="Details__attributes">

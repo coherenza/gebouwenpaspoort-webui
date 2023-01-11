@@ -11,7 +11,7 @@ export interface Attribute {
   /** JSON key */
   id?: string;
   /** Type of the attribute */
-  type?: "string";
+  type?: "string" | "URL";
   attributes?: Attribute[];
   filterType?: "select" | "range" | "intervals";
 }
@@ -43,6 +43,9 @@ export const Attributes = {
     filterType: "intervals",
   },
   bag_status: { name: "BAG status", id: "bag-aob-status" },
+  href_luchtfoto: {name: "Luchtfoto", id: "href-luchtfoto", type: 'URL'},
+  href_streetview: {name: "Google Maps/Streetview", id: "href-streetview", type: 'URL'},
+  href_utrechtsarchief: {name: "Utrechts Archief", id: "href-utrechtsarchief", type: 'URL'},
   pand_energieklasse: { name: "energie klasse", id: "epl.epl-pand_energieklasse" },
   zonnepanelen: { name: "zon op dak", id: "zod.zod-zonnepanelen"},
   monument: {name : "monument", id: "mon.mon-monument"},
@@ -83,6 +86,9 @@ export const displayAttributes: Attribute[] = [
       Attributes.aob_id,
       Attributes.gebruiksdoel,
       Attributes.oppervlakte,
+      Attributes.href_luchtfoto,
+      Attributes.href_streetview,
+      Attributes.href_utrechtsarchief,
     ],
   },
   {
@@ -197,6 +203,7 @@ export const displayAttributes: Attribute[] = [
     attributes: [
       {name: "monument", id: "mon-monument"},
       {name: "monumentnummer", id: "mon-monumentnummer"},
+      {name: "type monument", id: "mon-type_monument"}
     ]
   },
   {

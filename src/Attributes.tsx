@@ -142,14 +142,17 @@ function PropValHighlights({ hit, attribute }) {
     <div className="Attribute__propval">
       <div className="Attribute__propval__key">{attribute.name}</div>
       <div className="Attribute__propval__value">
-        <Highlight
-          key={`val-${attribute.id}`}
-          attribute={attribute.id}
-          // @ts-ignore
-          hit={hit}
-          // @ts-ignore
-          tagname="mark"
-        />
+        { (attribute.type == "URL")
+        ? (<a href={hit[attribute.id]} target="_blank">&#x2B77;</a>)
+        : <Highlight
+            key={`val-${attribute.id}`}
+            attribute={attribute.id}
+            // @ts-ignore
+            hit={hit}
+            // @ts-ignore
+            tagname="mark"
+          />
+        }
       </div>
     </div>
   );
