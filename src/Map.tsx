@@ -100,7 +100,8 @@ function moveBounds(mapRef, items) {
       padding: 250,
     });
   } catch (e) {
-    console.error("Error moving bounds", e, "items:", items);
+    console.error("Error moving bounds", e, "items:", items, "center:", center);
+    debugger;
   }
 }
 

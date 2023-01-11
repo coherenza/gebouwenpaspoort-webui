@@ -3,6 +3,7 @@ import "./CurrentRefinements.css";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { useContext } from "react";
 import { AppContext } from "./App";
+import { Attributes } from "./schema";
 
 export function CurrentRefinements() {
   const { items, refine } = useCurrentRefinements();
@@ -24,7 +25,8 @@ export function CurrentRefinements() {
 function Refinement({ item, refine, parent }) {
   const { locationFilter } = useContext(AppContext);
 
-  let label = item.attribute + ':' + item.label;
+  let attribute = Object.values(Attributes).find(a => a.id == item.attribute);
+  let label = (attribute ? attribute.name + ': ' : '') + item.label;
 
   if (parent.label == "pdok-locatie-id") {
     label = locationFilter.name;
@@ -33,7 +35,7 @@ function Refinement({ item, refine, parent }) {
   return (
     <button
       className="CurrentRefinements__button"
-      key={item.label}
+      key={label}
       onClick={() => refine(item)}
     >
       <div className="label">{label}</div>
