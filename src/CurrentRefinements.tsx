@@ -15,7 +15,7 @@ export function CurrentRefinements() {
     <div className="CurrentRefinements">
       {items.map((item, index) => {
         return item.refinements.map((refinement) => (
-          <Refinement item={refinement} refine={refine} parent={item} key={index.toString()}/>
+          <Refinement item={refinement} refine={refine} parent={item} key={`refinement-${item.label} ${index.toString()}`}/>
         ));
       })}
     </div>
