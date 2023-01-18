@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import { GBPObject, GBPObjectTypes } from "./schema";
+import { Attributes, GBPObject, GBPObjectTypes } from "./schema";
 import "./Hit.css";
 import { AppContext } from "./App";
+import { Cross2Icon, TrashIcon } from "@radix-ui/react-icons";
 
 interface HitProps {
   hit: GBPObject;
@@ -22,11 +23,14 @@ export const HitLine = ({ hit }: HitProps) => {
 
   // let prop = findHightLightedProp();
 
+
+  if (!hit) return null;
+
   const active = current?.id === hit.id;
+  const isAob = GBPObjectTypes[""+hit["bag-object-type"]].isAob;
+  const color = GBPObjectTypes[""+hit["bag-object-type"]].color;
+  const gesloopt = hit[Attributes.pand_status.id]?.includes("Pand gesloopt");
 
-  const isAob = hit && GBPObjectTypes[""+hit["bag-object-type"]].isAob;
-
-  const color = hit && GBPObjectTypes[""+hit["bag-object-type"]].color;
   return (
     <div
       className={active ? "Hit Hit--active" : "Hit"}
@@ -34,6 +38,7 @@ export const HitLine = ({ hit }: HitProps) => {
     >
       {/* Click on area-filter -> set filter on pdok-locatie-id == hit.id */}
       <div className="hit-naam">{isAob ? '' : '🔍 '}{hit["naam"]}</div>
+      {gesloopt && <TrashIcon/>}
       <div className="hit-type" style={{
         color: color || 'initial'
       }}>{hit["bag-object-type"]}</div>
