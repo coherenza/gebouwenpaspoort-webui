@@ -17,7 +17,7 @@ import { LngLatBounds } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { AppContext } from "./App";
 import { GBPObject, GBPObjectTypes } from "./schema";
-import { useSearchBox } from "react-instantsearch-hooks-web";
+import { useInfiniteHits, useSearchBox } from "react-instantsearch-hooks-web";
 import { Header } from "./Header";
 import { LayerSource } from "./Layers";
 import useDebounce from "./useDebounce";
@@ -103,8 +103,9 @@ function moveBounds(mapRef, items) {
 }
 
 export function Map() {
-  const { items, refine } = useGeoSearch();
+  const { refine } = useGeoSearch();
   const { query } = useSearchBox();
+  const { hits: items } = useInfiniteHits();
   const {
     setCurrent,
     current,
