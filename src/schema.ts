@@ -46,9 +46,11 @@ export const Attributes = {
   href_luchtfoto: {name: "Luchtfoto", id: "href-luchtfoto", type: 'URL'},
   href_streetview: {name: "Google Maps/Streetview", id: "href-streetview", type: 'URL'},
   href_utrechtsarchief: {name: "Utrechts Archief", id: "href-utrechtsarchief", type: 'URL'},
+  href_topotijdreis: {name: "Topo tijdreis", id: "href-topotijdreis", type: 'URL'},
   pand_energieklasse: { name: "energie klasse", id: "epl.epl-pand_energieklasse" },
   zonnepanelen: { name: "zon op dak", id: "zod.zod-zonnepanelen"},
-  monument: {name: "type monument", id: "mon.mon-type_monument"},
+  monument: {name: "monument", id: "mon.mon-monument"},
+  type_monument: {name: "type monument", id: "mon.mon-type_monument"},
   balkon: { name: "balkon", id: "vocbtk.vocbtk-balkon" },
   dak: { name: "dak", id: "vocbtk.vocbtk-dak" },
   dakkapel: { name: "dakkapel", id: "vocbtk.vocbtk-dakkapel" },
@@ -89,6 +91,7 @@ export const displayAttributes: Attribute[] = [
       Attributes.href_luchtfoto,
       Attributes.href_streetview,
       Attributes.href_utrechtsarchief,
+      Attributes.href_topotijdreis,
     ],
   },
   {
@@ -273,6 +276,7 @@ export const filterAttributes: Attribute[] = [
       Attributes.bouwjaar_interval,
       Attributes.oppervlakte_interval,
       Attributes.monument,
+      Attributes.type_monument,
     ],
   },
   {

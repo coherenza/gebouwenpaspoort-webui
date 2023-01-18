@@ -62,4 +62,21 @@ export async function setIndexes() {
     console.info("Updating rankingRules");
     index.updateRankingRules(rankingRules);
   }
+
+  const reportSetIndexesProgress = function() {
+    const progressElement = document.getElementById('set-indexes-progress');
+    fetch('http://localhost:7700/tasks/').then((response) => {
+      if (response.ok) {
+        response.json().then(json => {
+          const lines = json.results.
+            filter((r) => (r.type == 'settingsUpdate' && r.status != 'succeeded')).
+            map((r) => `<div>${Object.keys(r.details)}: ${r.status}</div>`);
+            console.log(`report set-index progress, ${lines.length} processes`);
+          progressElement.innerHTML = lines.join('');
+          if (lines.length > 0) setTimeout(reportSetIndexesProgress, 2000);
+        });
+      }
+    });
+  };
+  reportSetIndexesProgress();
 }
