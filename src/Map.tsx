@@ -21,9 +21,7 @@ import { useSearchBox } from "react-instantsearch-hooks-web";
 import { Header } from "./Header";
 import { LayerSource } from "./Layers";
 import useDebounce from "./useDebounce";
-
-const mapboxToken =
-  "pk.eyJ1Ijoiam9lcGlvIiwiYSI6ImNqbTIzanZ1bjBkanQza211anFxbWNiM3IifQ.2iBrlCLHaXU79_tY9SVpXA";
+import { mapboxToken } from "./config";
 
 export const mapStartState = {
   latitude: 52.0907,
@@ -101,7 +99,6 @@ function moveBounds(mapRef, items) {
     });
   } catch (e) {
     console.error("Error moving bounds", e, "items:", items, "center:", center);
-    debugger;
   }
 }
 
@@ -154,9 +151,27 @@ export function Map() {
       return;
     }
     const bounds = mapRef.current.getMap().getBounds();
+
+    // Ratio to make the circle smaller
+    const p = 0.5;
+
+    let [x1, y1] = [bounds.getNorthEast().lng, bounds.getNorthEast().lat];
+    let [x2, y2] = [bounds.getSouthWest().lng, bounds.getSouthWest().lat];
+
+    let [[xn1, yn1], [xn2, yn2]] = [
+      [
+        ((1 + p) / 2) * x1 + ((1 - p) / 2) * x2,
+        ((1 + p) / 2) * y1 + ((1 - p) / 2) * y2,
+      ],
+      [
+        ((1 + p) / 2) * x2 + ((1 - p) / 2) * x1,
+        ((1 + p) / 2) * y2 + ((1 - p) / 2) * y1,
+      ],
+    ];
+
     refine({
-      northEast: bounds.getNorthEast(),
-      southWest: bounds.getSouthWest(),
+      northEast: { lng: xn1, lat: yn1 },
+      southWest: { lng: xn2, lat: yn2 },
     });
     setViewState(evt.viewState);
   }, []);
@@ -171,8 +186,10 @@ export function Map() {
           if (GBPObjectTypes["" + item["bag-object-type"]].isAob) {
             setCurrent(item as unknown as GBPObject);
           } else {
-            console.log('item', item);
-            setLocationFilter({ id: item.id as string, name: item.naam as string });
+            setLocationFilter({
+              id: item.id as string,
+              name: item.naam as string,
+            });
           }
         };
         return (

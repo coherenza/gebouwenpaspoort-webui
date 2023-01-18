@@ -11,7 +11,7 @@ import {
 } from "react-instantsearch-hooks-web";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import { GBPObject, LocationFilter, sortProps } from "./schema";
-import { indexName, meiliKey, mode, server } from "./config";
+import { bugsnagKey, indexName, meiliKey, mode, server } from "./config";
 import { Map } from "./Map";
 import { Details } from "./Details";
 import { Results } from "./Results";
@@ -24,7 +24,7 @@ import BugsnagPluginReact from "@bugsnag/plugin-react";
 import { LayerI, layersDefault, LayerSelector } from "./Layers";
 
 Bugsnag.start({
-  apiKey: "78d53614b677831a5615d29728624fe0",
+  apiKey: bugsnagKey,
   plugins: [new BugsnagPluginReact()],
   releaseStage: mode,
   enabledReleaseStages: ["production", "staging"],
@@ -53,7 +53,12 @@ const AppProvider = () => {
   const [apiKey, setApiKey] = useLocalStorage("apiKey", meiliKey);
 
   const searchClient = useMemo(() => {
-    return instantMeiliSearch(server, apiKey, {primaryKey: 'id', paginationTotalHits: 1000, keepZeroFacets: true});
+    let client = instantMeiliSearch(server, apiKey, {
+      primaryKey: "id",
+      paginationTotalHits: 1000,
+      keepZeroFacets: true,
+    });
+    return client;
   }, [apiKey]);
 
   return (
@@ -86,7 +91,7 @@ const App = ({ setApiKey, apiKey }) => {
   const setLocationFilter = (locationFilter: LocationFilter) => {
     setLocationFilterInternal(locationFilter);
     // TODO: Reset is not properly working
-    refine(locationFilter?.id || "")
+    refine(locationFilter?.id || "");
   };
 
   async function handleSetApiKey(e) {
