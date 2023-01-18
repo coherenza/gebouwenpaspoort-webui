@@ -16,7 +16,7 @@
 }
 
 .Attribute__content__open {
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
 }
 
 .Attribute__content__closed {
@@ -48,5 +48,5 @@
 }
 
 .Attribute__item {
-  padding-left: 0.5rem;
+
 }
