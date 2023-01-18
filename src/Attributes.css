@@ -25,8 +25,7 @@
 
 .Attribute__propval {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
   margin: 0.5rem 0;
 }
 

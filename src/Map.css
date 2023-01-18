@@ -17,29 +17,27 @@
 }
 
 /* only large screens */
-@media (min-width: 768px) {
-  .Map__buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    position: absolute;
-    z-index: 1;
-    top: 1rem;
-  }
+.Map__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: absolute;
+  z-index: 1;
+  top: 1rem;
+}
 
-  .Map__buttons button {
-    box-shadow: var(--box-shadow);
-    background: white;
-    position: relative;
-    /* Don't grow the button */
-    margin-right: auto;
-  }
+.Map__buttons button {
+  box-shadow: var(--box-shadow);
+  background: white;
+  position: relative;
+  /* Don't grow the button */
+  margin-right: auto;
+}
 
-  .Map__buttons--left {
-    left: 1rem;
-  }
+.Map__buttons--left {
+  left: 1rem;
+}
 
-  .Map__buttons--right {
-    right: 1rem;
-  }
+.Map__buttons--right {
+  right: 1rem;
 }
