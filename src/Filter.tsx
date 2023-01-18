@@ -4,6 +4,7 @@ import { RangeInput, RefinementListProps, RefinementList } from "react-instantse
 import "./Filter.css";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 //import { RefinementList } from "./RefinementList"; // niet nodig met keepZeroFacets: true
+import "./RefinementList.css"
 
 // Sort strings that we use to indicate numeric intervals.
 const intervalSortValue = function (x: string) {

@@ -1,7 +1,6 @@
 import { RefinementListItem } from "instantsearch.js/es/connectors/refinement-list/connectRefinementList";
 import { useEffect, useState } from "react";
 import { useRefinementList } from "react-instantsearch-hooks-web";
-import "./RefinementList.css";
 
 interface RefinementListProps {
   attribute: string;
