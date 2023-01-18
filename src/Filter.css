@@ -1,7 +1,13 @@
 .Filter {
   margin-bottom: 1rem;
+  cursor: pointer;
 }
 
+.Filter:hover {
+  background: var(--g0);
+  border-radius: var(--border-radius);
+  color: var(--primary-color-dark);
+}
 
 .RefinementList li > label, label.ais-RefinementList-label {
   display: block;
