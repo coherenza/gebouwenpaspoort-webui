@@ -1,3 +1,4 @@
+import { Cross1Icon } from "@radix-ui/react-icons";
 import { useContext } from "react";
 import { Layer, RasterLayer, Source } from "react-map-gl";
 import { AppContext } from "./App";
@@ -52,7 +53,7 @@ export function LayerSelector() {
     >
       <div className="Titlebar">
         <h3>Lagen</h3>
-        <button onClick={() => setShowLayerSelector(false)}>Sluit</button>
+        <button title="Lagen sluiten" onClick={() => setShowLayerSelector(false)}><Cross1Icon /></button>
       </div>
       <div className="layers-checkboxes">
         {layers.map((layer) => (

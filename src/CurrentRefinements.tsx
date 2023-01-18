@@ -36,6 +36,7 @@ function Refinement({ item, refine, parent }) {
     <button
       className="CurrentRefinements__button"
       key={label}
+      title="Filter verwijderen"
       onClick={() => refine(item)}
     >
       <div className="label">{label}</div>

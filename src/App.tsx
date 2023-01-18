@@ -60,6 +60,7 @@ const AppProvider = () => {
     <InstantSearch
       indexName={indexName}
       searchClient={searchClient}
+      routing={true}
       initialUiState={{
         gbp: {
           sortBy: sortProps[0].sortBy,

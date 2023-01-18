@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { AppContext } from "./App";
 import { AttributeCollapsible } from "./Attributes";
 import { filterAttributes, sortProps } from "./schema";
+import { Cross1Icon } from "@radix-ui/react-icons";
 
 export function Filters({}) {
   const { showFilter, setShowFilter } =
@@ -18,7 +19,7 @@ export function Filters({}) {
     >
       <div className="Titlebar">
         <h3>Filters</h3>
-        <button onClick={() => setShowFilter(false)}>Sluit</button>
+        <button title="Filters sluiten" onClick={() => setShowFilter(false)}><Cross1Icon /></button>
       </div>
       <div className="filters">
 
@@ -49,7 +50,7 @@ export function Filters({}) {
             <div id="set-indexes-progress"></div>
           </div>
         }
-        
+
       </div>
     </div>
   );

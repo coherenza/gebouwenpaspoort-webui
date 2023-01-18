@@ -8,14 +8,16 @@ import {
 } from "react-instantsearch-hooks-web";
 import { HitLine } from "./HitLine";
 import "./Results.css";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { AppContext } from "./App";
 import { CurrentRefinements } from "./CurrentRefinements";
+import { Cross1Icon } from "@radix-ui/react-icons";
 
 export const LocationFilterContext = createContext(undefined);
 
 export function Results() {
   const { showResults, setShowResults } = useContext(AppContext);
+  const [isCopied, setIsCopied] = useState(false);
 
   let {
     results: { nbHits },
@@ -24,8 +26,18 @@ export function Results() {
     escapeHTML: false,
   });
 
+  useEffect(() => {
+    setIsCopied(false);
+  }, [nbHits]);
+
   if (!showResults) {
     return null;
+  }
+
+  function handleLinkShare() {
+    const url = new URL(window.location.href);
+    navigator.clipboard.writeText(url.toString());
+    setIsCopied(true);
   }
 
   return (
@@ -39,7 +51,8 @@ export function Results() {
             { label: "1.000 hits per page", value: 1000 },
           ]}
         />
-        <button onClick={() => setShowResults(false)}>Sluit</button>
+        <button onClick={handleLinkShare}>{isCopied ? 'Link gekopieerd!' : 'Delen'}</button>
+        <button title="Resultaten sluiten" onClick={() => setShowResults(false)}><Cross1Icon/></button>
       </div>
       <div className="app-header__results-count">
         {hits.length} / {nbHits == 1000 ? "1000+" : nbHits} resultaten zichtbaar

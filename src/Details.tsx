@@ -4,6 +4,7 @@ import { AppContext } from "./App";
 import { displayAttributes as displayAttributes, GBPObjectTypes } from "./schema";
 import { AttributeView } from "./Attributes";
 import { useRefinementList } from "react-instantsearch-hooks-web";
+import { Cross1Icon } from "@radix-ui/react-icons";
 
 export function Details() {
   const { current, setCurrent } = useContext(AppContext);
@@ -19,7 +20,7 @@ export function Details() {
     return (
       <div className="Sidebar details-panel">
         <div className="Titlebar Titlebar--padded">
-          <button onClick={() => setCurrent(undefined)}>sluit</button>
+          <button onClick={() => setCurrent(undefined)}><Cross1Icon /></button>
         </div>
         <p>Weergave voor '{current["bag-object-type"]}' nog niet ondersteund, probeer de zoekbalk!</p>
       </div>
@@ -33,7 +34,7 @@ export function Details() {
             <h3 className="details-panel__title">
               {current[displayAttributes[0].id]}{" "}
             </h3>
-            <button onClick={() => setCurrent(undefined)}>sluit</button>
+            <button onClick={() => setCurrent(undefined)}><Cross1Icon /></button>
           </div>
           <div className="Details__attributes">
             {displayAttributes.map((attribute, i) => {

@@ -40,6 +40,7 @@ button, .button {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
+  min-height: 1.7rem;
 }
 
 button:hover, .button:hover {

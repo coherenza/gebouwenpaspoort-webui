@@ -10,7 +10,7 @@ export function Header() {
   if (showInfoPage) {
     return (
       <div className="infopage">
-        <button className="infopage__close" onClick={() => setShowInfoPage(false)}>
+        <button title="Sluiten" className="infopage__close" onClick={() => setShowInfoPage(false)}>
           <Cross1Icon />
         </button>
         <InfoPage />
