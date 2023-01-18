@@ -3,7 +3,8 @@ lockfileVersion: 5.4
 specifiers:
   '@bugsnag/js': ^7.18.0
   '@bugsnag/plugin-react': ^7.18.0
-  '@meilisearch/instant-meilisearch': ^0.9.0
+  '@json2csv/plainjs': ^6.1.2
+  '@meilisearch/instant-meilisearch': ^0.10.1
   '@radix-ui/react-dialog': ^1.0.2
   '@radix-ui/react-icons': ^1.1.1
   '@types/react': ^18.0.24
@@ -25,7 +26,8 @@ specifiers:
 dependencies:
   '@bugsnag/js': 7.18.0
   '@bugsnag/plugin-react': 7.18.0
-  '@meilisearch/instant-meilisearch': 0.9.0
+  '@json2csv/plainjs': 6.1.2
+  '@meilisearch/instant-meilisearch': 0.10.1
   '@radix-ui/react-dialog': 1.0.2_2zx2umvpluuhvlq44va5bta2da
   '@radix-ui/react-icons': 1.1.1_react@18.2.0
   algoliasearch: 4.14.2
@@ -534,6 +536,18 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
+  /@json2csv/formatters/6.1.2:
+    resolution: {integrity: sha512-l8i5EdQvHZHrtSgRFEXMkRnIn8CBopT/ecZSIyPKuee9+pm/Sxcb/r/N2jQWARnOQc7uyqQWAtpPpxU7HhZ2tg==}
+    dev: false
+
+  /@json2csv/plainjs/6.1.2:
+    resolution: {integrity: sha512-XNcBd6W4G5mlP6ZL13idEx21diQAM5AJgIe78RxRfZctWRppaZrtpiGTzhc/sNv7UM1FpfO/aa5wel4+aQW7MQ==}
+    dependencies:
+      '@json2csv/formatters': 6.1.2
+      '@streamparser/json': 0.0.10
+      lodash.get: 4.4.2
+    dev: false
+
   /@mapbox/geojson-rewind/0.5.2:
     resolution: {integrity: sha512-tJaT+RbYGJYStt7wI3cq4Nl4SXxG8W7JDG5DMJu97V25RnbNg3QtQtf+KD+VLjNpWKYsRvXDNmNrBgEETr1ifA==}
     hasBin: true
@@ -574,10 +588,10 @@ packages:
     engines: {node: '>=6.0.0'}
     dev: false
 
-  /@meilisearch/instant-meilisearch/0.9.0:
-    resolution: {integrity: sha512-XEQQGpQFra1T/9s2Sm9nwS9n19BBtlmobp1MMfj/y9OtRb8vG38kFtfICpDb3DqGcyecn56rUh4urUk6ErIxRQ==}
+  /@meilisearch/instant-meilisearch/0.10.1:
+    resolution: {integrity: sha512-uEw1P5zTRNtZvXrFqs2I2O1RNRZMXH2n6d3WEV7IWjKMO9drRLnI69YZALvG50238/9qWam4h07zXsq8ElXPBA==}
     dependencies:
-      meilisearch: 0.28.0
+      meilisearch: 0.30.0
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -773,6 +787,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.20.1
       react: 18.2.0
+    dev: false
+
+  /@streamparser/json/0.0.10:
+    resolution: {integrity: sha512-juqNFdqqmY/nvsODq1Vba7PWIaqr01VcqICIrxbws97QKSQhQUMml8FqdHLmevwVpqH39H5mVXKFWiWCi1ke0w==}
     dev: false
 
   /@types/geojson/7946.0.10:
@@ -1386,6 +1404,10 @@ packages:
     resolution: {integrity: sha512-hRkd6/XW4HTsA9vjVpY9tuXJYLSlelnkTmVFu4M9/7MIYQtFcHpbugAU7UbOfjOiVSVYl2fqgBuJ32JUmRo5Ew==}
     dev: false
 
+  /lodash.get/4.4.2:
+    resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    dev: false
+
   /loose-envify/1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
@@ -1426,16 +1448,16 @@ packages:
       vt-pbf: 3.1.3
     dev: false
 
-  /meilisearch/0.28.0:
-    resolution: {integrity: sha512-zC50xLyPWBtfAIZiFTSJyYJp/a5bO+dSSigBKUEoShFkuv9+/KC4J3T3ZejNVHXG2DU0ohOMf8TZ3HAHXNd3EA==}
+  /meilisearch/0.29.1:
+    resolution: {integrity: sha512-SXaCtOvQV7i6kVcxJc3cWQgUKCAc0+tAg+IiuWI0OY64eyaLhSwFkjDrU4chccmiiv526y4h4lbAUt99h9+Y1A==}
     dependencies:
       cross-fetch: 3.1.5
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /meilisearch/0.29.1:
-    resolution: {integrity: sha512-SXaCtOvQV7i6kVcxJc3cWQgUKCAc0+tAg+IiuWI0OY64eyaLhSwFkjDrU4chccmiiv526y4h4lbAUt99h9+Y1A==}
+  /meilisearch/0.30.0:
+    resolution: {integrity: sha512-3y1hALOwTDpquYar+gDREqRasFPWKxkWAhk6h+RF+nKObPVf9N77wcTNvukGwOKbxRyJnKge0OPgAB1BkB9VVw==}
     dependencies:
       cross-fetch: 3.1.5
     transitivePeerDependencies:

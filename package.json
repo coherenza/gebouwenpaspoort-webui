@@ -13,7 +13,8 @@
   "dependencies": {
     "@bugsnag/js": "^7.18.0",
     "@bugsnag/plugin-react": "^7.18.0",
-    "@meilisearch/instant-meilisearch": "^0.9.0",
+    "@json2csv/plainjs": "^6.1.2",
+    "@meilisearch/instant-meilisearch": "^0.10.1",
     "@radix-ui/react-dialog": "^1.0.2",
     "@radix-ui/react-icons": "^1.1.1",
     "algoliasearch": "^4.14.2",
