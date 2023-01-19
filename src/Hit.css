@@ -19,26 +19,9 @@ div.hit-naam {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-div.hit-ball {
-  border-radius: 9999px;
-  width: 14px;
-  height: 14px;
-}
-
-.hit-type-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-}
-
 div.hit-type {
   flex: 1 1 auto;
-  display: flex-inline;
-  font-size: 0.8rem;
-  padding: .1rem .4rem;
-  border-radius: 9999px;
+  width: 25%;
 }
 
 .Hit:hover {

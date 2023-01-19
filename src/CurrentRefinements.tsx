@@ -15,7 +15,7 @@ export function CurrentRefinements() {
     <div className="CurrentRefinements">
       {items.map((item, index) => {
         return item.refinements.map((refinement) => (
-          <Refinement item={refinement} refine={refine} parent={item} key={`refinement-${item.label} ${index.toString()}`}/>
+          <Refinement item={refinement} refine={refine} parent={item} key={index.toString()}/>
         ));
       })}
     </div>
@@ -29,7 +29,7 @@ function Refinement({ item, refine, parent }) {
   let label = (attribute ? attribute.name + ': ' : '') + item.label;
 
   if (parent.label == "pdok-locatie-id") {
-    label = locationFilter?.name || 'no name';
+    label = locationFilter.name;
   }
 
   return (

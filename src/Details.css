@@ -1,6 +1,5 @@
 .details-panel {
   left: auto;
-  max-width: var(--details-width);
 }
 
 .details-panel__title {

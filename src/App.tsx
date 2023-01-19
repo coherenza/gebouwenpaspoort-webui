@@ -11,7 +11,7 @@ import {
 } from "react-instantsearch-hooks-web";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import { GBPObject, LocationFilter, sortProps } from "./schema";
-import { bugsnagKey, indexName, meiliKey, mode, server } from "./config";
+import { indexName, meiliKey, mode, server } from "./config";
 import { Map } from "./Map";
 import { Details } from "./Details";
 import { Results } from "./Results";
@@ -24,7 +24,7 @@ import BugsnagPluginReact from "@bugsnag/plugin-react";
 import { LayerI, layersDefault, LayerSelector } from "./Layers";
 
 Bugsnag.start({
-  apiKey: bugsnagKey,
+  apiKey: "78d53614b677831a5615d29728624fe0",
   plugins: [new BugsnagPluginReact()],
   releaseStage: mode,
   enabledReleaseStages: ["production", "staging"],
@@ -53,12 +53,11 @@ const AppProvider = () => {
   const [apiKey, setApiKey] = useLocalStorage("apiKey", meiliKey);
 
   const searchClient = useMemo(() => {
-    let client = instantMeiliSearch(server, apiKey, {
+    return instantMeiliSearch(server, apiKey, {
       primaryKey: "id",
-      paginationTotalHits: 1000,
+      // paginationTotalHits: 1000,
       keepZeroFacets: true,
     });
-    return client;
   }, [apiKey]);
 
   return (
