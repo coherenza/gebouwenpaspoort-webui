@@ -29,7 +29,7 @@ function Refinement({ item, refine, parent }) {
   let label = (attribute ? attribute.name + ': ' : '') + item.label;
 
   if (parent.label == "pdok-locatie-id") {
-    label = locationFilter.name;
+    label = locationFilter?.name || 'locatie filter';
   }
 
   return (
