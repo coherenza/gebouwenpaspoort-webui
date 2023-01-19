@@ -91,16 +91,16 @@ function moveBounds(mapRef, items) {
       }
     }
   });
+  let bounds = undefined;
   try {
-    let bounds = new LngLatBounds(
+    bounds = new LngLatBounds(
       { lat: highLat, lng: highLng },
       { lat: lowLat, lng: lowLng }
     );
     mapRef.current?.fitBounds(bounds, {
-      padding: 250,
+      padding: 25,
     });
   } catch (e) {
-    console.error("Error moving bounds", e, "items:", items, "center:", center);
     debugger;
   }
 }
