@@ -2,7 +2,7 @@ import "./Attributes.css";
 import { useState } from "react";
 import { Attribute, GBPObject } from "./schema";
 import { Highlight } from "react-instantsearch-hooks-web";
-import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon, ChevronRightIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
 
 interface DetailSectionProps {
   attribute: Attribute;
@@ -143,7 +143,7 @@ function PropValHighlights({ hit, attribute }) {
       <div className="Attribute__propval__key">{attribute.name}</div>
       <div className="Attribute__propval__value">
         { (attribute.type == "URL")
-        ? (<a href={hit[attribute.id]} target="_blank">&#x2B77;</a>)
+        ? (<a href={hit[attribute.id]} target="_blank"><ExternalLinkIcon/></a>)
         : <Highlight
             key={`val-${attribute.id}`}
             attribute={attribute.id}
