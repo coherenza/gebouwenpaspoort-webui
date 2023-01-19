@@ -55,7 +55,7 @@ const AppProvider = () => {
   const searchClient = useMemo(() => {
     let client = instantMeiliSearch(server, apiKey, {
       primaryKey: "id",
-      paginationTotalHits: 1000,
+      // paginationTotalHits: 1000,
       keepZeroFacets: true,
     });
     return client;

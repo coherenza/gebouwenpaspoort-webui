@@ -157,8 +157,15 @@ export function Map() {
     // Ratio to make the circle smaller
     const p = 0.5;
 
-    let [x1, y1] = [bounds.getNorthEast().lng, bounds.getNorthEast().lat];
-    let [x2, y2] = [bounds.getSouthWest().lng, bounds.getSouthWest().lat];
+    const neBounds = bounds.getNorthEast();
+    const swBounds = bounds.getSouthWest();
+
+    if (!neBounds || !swBounds) {
+      return;
+    }
+
+    let [x1, y1] = [neBounds.lng, neBounds.lat];
+    let [x2, y2] = [swBounds.lng, swBounds.lat];
 
     let [[xn1, yn1], [xn2, yn2]] = [
       [
