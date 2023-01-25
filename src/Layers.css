@@ -1,0 +1,7 @@
+.Layer__info-button {
+  cursor: pointer;
+}
+
+.Layer__info-button:hover {
+  color: var(--primary-color);
+}

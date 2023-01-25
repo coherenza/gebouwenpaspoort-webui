@@ -1,9 +1,5 @@
 import {
-  Hits,
   InfiniteHits,
-  Pagination,
-  SortBy,
-  useRefinementList,
   useHits,
   HitsPerPage,
 } from "react-instantsearch-hooks-web";
@@ -28,11 +24,14 @@ import { Parser } from "@json2csv/plainjs";
 
 export const LocationFilterContext = createContext(undefined);
 
+// Is for Excel default for NL locale
 const CSV_DELIMITER = ";";
 
 function jsonToCSV2(items) {
   try {
-    const parser = new Parser();
+    const parser = new Parser({
+      delimiter: CSV_DELIMITER,
+    });
     const csv = parser.parse(items);
     return csv;
   } catch (err) {
