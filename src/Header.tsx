@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { SearchBox } from "./Searchbox";
 import { InfoPage } from "./InfoPage";
 import { Cross1Icon } from "@radix-ui/react-icons";
+import { useTour } from "@reactour/tour";
 
 export function Header() {
   const [showInfoPage, setShowInfoPage] = useState(false);
+  const { setIsOpen }  = useTour();
 
   if (showInfoPage) {
     return (
@@ -27,6 +29,7 @@ export function Header() {
             className="button"
             rel="noopener noreferrer"
             target="_blank"
+            id="feedback-button"
             href="https://forms.gle/nxGbtVxoCiYgB83S6"
           >
             Feedback
@@ -36,6 +39,11 @@ export function Header() {
             onClick={() => setShowInfoPage(!showInfoPage)}
           >
             Info
+          </button>
+          <button
+            onClick={() => setIsOpen(true)}
+          >
+            Help
           </button>
         </div>
       </div>

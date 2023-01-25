@@ -115,10 +115,11 @@ export function Results() {
         <button title={"Download resultaten"} onClick={download}>
           <DownloadIcon />
         </button>
-        <button title={"Kopieer link"} onClick={handleLinkShare}>
+        <button id="copy-results" title={"Kopieer link"} onClick={handleLinkShare}>
           {isCopied ? <CheckIcon /> : <CopyIcon />}
         </button>
         <button
+          id="close-results"
           title="Resultaten sluiten"
           onClick={() => setShowResults(false)}
         >

@@ -231,7 +231,7 @@ export function Map() {
           <button onClick={() => setShowFilter(!showFilter)}>Filters</button>
         )}
         {!showLayerSelector && (
-          <button onClick={() => setShowLayerSelector(!showLayerSelector)}>
+          <button id="toggle-layers-view" onClick={() => setShowLayerSelector(!showLayerSelector)}>
             Kaartlagen
           </button>
         )}

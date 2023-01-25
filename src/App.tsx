@@ -9,6 +9,7 @@ import {
   Configure,
   useRefinementList,
 } from "react-instantsearch-hooks-web";
+import { TourProvider, useTour } from "@reactour/tour";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import { GBPObject, LocationFilter, sortProps } from "./schema";
 import { bugsnagKey, indexName, meiliKey, mode, server } from "./config";
@@ -22,6 +23,7 @@ import { useLocalStorage } from "./useLocalStorage";
 import Bugsnag from "@bugsnag/js";
 import BugsnagPluginReact from "@bugsnag/plugin-react";
 import { LayerI, layersDefault, LayerSelector } from "./Layers";
+import { tourSteps as steps } from "./Tour";
 
 Bugsnag.start({
   apiKey: bugsnagKey,
@@ -51,6 +53,10 @@ export const hitCount = 150;
 
 const AppProvider = () => {
   const [apiKey, setApiKey] = useLocalStorage("apiKey", meiliKey);
+  const [hasCompletedTour, setHasCompletedTour] = useLocalStorage(
+    "completedTour",
+    false
+  );
 
   const searchClient = useMemo(() => {
     let client = instantMeiliSearch(server, apiKey, {
@@ -61,23 +67,37 @@ const AppProvider = () => {
     return client;
   }, [apiKey]);
 
+  const stepsModified = useMemo(() => {
+    // modify last steps, add callback  setHasCompletedTour to set tour as completed
+    const stepsCopy = [...steps];
+    const lastStep = stepsCopy[stepsCopy.length - 1];
+    lastStep.action = () => setHasCompletedTour(true);
+    return stepsCopy;
+  }, []);
+
   return (
-    <InstantSearch
-      indexName={indexName}
-      searchClient={searchClient}
-      routing={true}
-      initialUiState={{
-        gbp: {
-          sortBy: sortProps[0].sortBy,
-        },
-      }}
-    >
-      <App setApiKey={setApiKey} apiKey={apiKey} />
-    </InstantSearch>
+    <TourProvider steps={stepsModified}>
+      <InstantSearch
+        indexName={indexName}
+        searchClient={searchClient}
+        routing={true}
+        initialUiState={{
+          gbp: {
+            sortBy: sortProps[0].sortBy,
+          },
+        }}
+      >
+        <App
+          setApiKey={setApiKey}
+          apiKey={apiKey}
+          hasCompletedTour={hasCompletedTour}
+        />
+      </InstantSearch>
+    </TourProvider>
   );
 };
 
-const App = ({ setApiKey, apiKey }) => {
+const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   const [current, setCurrent] = React.useState(undefined);
   const [showFilter, setShowFilter] = React.useState(true);
   const [showResults, setShowResults] = React.useState(true);
@@ -86,6 +106,7 @@ const App = ({ setApiKey, apiKey }) => {
   const [locationFilter, setLocationFilterInternal] = React.useState(undefined);
   const [apiKeyTemp, setApiKeyTemp] = React.useState("");
   const [validApiKey, setValidApiKey] = React.useState(false);
+  const { setIsOpen } = useTour();
 
   const { refine } = useRefinementList({ attribute: "pdok-locatie-id" });
   const setLocationFilter = (locationFilter: LocationFilter) => {
@@ -98,6 +119,15 @@ const App = ({ setApiKey, apiKey }) => {
     e.preventDefault();
     setApiKey(apiKeyTemp);
   }
+
+  useEffect(() => {
+    console.log("hasCompletedTour", hasCompletedTour);
+    console.log("validApiKey", validApiKey);
+    if (validApiKey && !hasCompletedTour) {
+      // start the tour
+      setIsOpen(true);
+    }
+  }, [validApiKey, hasCompletedTour]);
 
   // try API key, set invalid if not correct
   useEffect(() => {

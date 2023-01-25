@@ -7,6 +7,7 @@ specifiers:
   '@meilisearch/instant-meilisearch': ^0.10.1
   '@radix-ui/react-dialog': ^1.0.2
   '@radix-ui/react-icons': ^1.1.1
+  '@reactour/tour': ^3.1.10
   '@types/react': ^18.0.24
   '@types/react-dom': ^18.0.8
   '@vitejs/plugin-react': ^2.2.0
@@ -30,6 +31,7 @@ dependencies:
   '@meilisearch/instant-meilisearch': 0.10.1
   '@radix-ui/react-dialog': 1.0.2_2zx2umvpluuhvlq44va5bta2da
   '@radix-ui/react-icons': 1.1.1_react@18.2.0
+  '@reactour/tour': 3.1.10_react@18.2.0
   algoliasearch: 4.14.2
   instantsearch.css: 7.4.2
   instantsearch.js: 4.49.1_algoliasearch@4.14.2
@@ -786,6 +788,53 @@ packages:
       react: ^16.8 || ^17.0 || ^18.0
     dependencies:
       '@babel/runtime': 7.20.1
+      react: 18.2.0
+    dev: false
+
+  /@reactour/mask/1.0.4_react@18.2.0:
+    resolution: {integrity: sha512-znMRiDB5GjXlAUFOcmtFlmwy3w2w4xb10pSZofYdvNSl9VHinuAXqJURDIBfpKTB72vx1Tv6FiX5TPN9Wtedzw==}
+    peerDependencies:
+      react: 16.x || 17.x || 18.x
+    dependencies:
+      '@reactour/utils': 0.4.7_react@18.2.0
+      react: 18.2.0
+    dev: false
+
+  /@reactour/popover/1.0.5_react@18.2.0:
+    resolution: {integrity: sha512-d6BMcyXGj3RdSc2huiU6v/wG2XG1ad+lAFmjyFerlZNS1ccp/49HvLUnqxE0Td+86e7RPrdEzpZb5PKtBybPrA==}
+    peerDependencies:
+      react: 16.x || 17.x || 18.x
+    dependencies:
+      '@reactour/utils': 0.4.7_react@18.2.0
+      react: 18.2.0
+    dev: false
+
+  /@reactour/tour/3.1.10_react@18.2.0:
+    resolution: {integrity: sha512-Qzez9Kyt63QYa1dwJ37CkvfW8QYXzJ0opJWcQ2R3TO2vZ+Z0n5JGT++nXvwVJvJZ5GycSehqos6Ki42wj8w71A==}
+    peerDependencies:
+      react: 16.x || 17.x || 18.x
+    dependencies:
+      '@reactour/mask': 1.0.4_react@18.2.0
+      '@reactour/popover': 1.0.5_react@18.2.0
+      '@reactour/utils': 0.4.7_react@18.2.0
+      react: 18.2.0
+    dev: false
+
+  /@reactour/utils/0.4.7_react@18.2.0:
+    resolution: {integrity: sha512-d+/Xhi2nKCc6OrDEFGg15iN8ZyWDTdOrwIKkndJXrnWiN6b+nqoS2Tb7hZvt79rqCyUsQxekUndPFPQyIW81EA==}
+    peerDependencies:
+      react: 16.x || 17.x || 18.x
+    dependencies:
+      '@rooks/use-mutation-observer': 4.11.2_react@18.2.0
+      react: 18.2.0
+      resize-observer-polyfill: 1.5.1
+    dev: false
+
+  /@rooks/use-mutation-observer/4.11.2_react@18.2.0:
+    resolution: {integrity: sha512-vpsdrZdr6TkB1zZJcHx+fR1YC/pHs2BaqcuYiEGjBVbwY5xcC49+h0hAUtQKHth3oJqXfIX/Ng8S7s5HFHdM/A==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
       react: 18.2.0
     dev: false
 
@@ -1723,6 +1772,10 @@ packages:
 
   /regenerator-runtime/0.13.10:
     resolution: {integrity: sha512-KepLsg4dU12hryUO7bp/axHAKvwGOCV0sGloQtpagJ12ai+ojVDqkeGSiRX1zlq+kjIMZ1t7gpze+26QqtdGqw==}
+    dev: false
+
+  /resize-observer-polyfill/1.5.1:
+    resolution: {integrity: sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==}
     dev: false
 
   /resolve-protobuf-schema/2.1.0:

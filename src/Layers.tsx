@@ -116,7 +116,7 @@ function LayerCheckbox({ layer }) {
       >
         <InfoCircledIcon />
       </span>
-      {showDescription && <p>{description}</p>}
+      {showDescription && <p className="Layer__description">{description}</p>}
     </div>
   );
 }
