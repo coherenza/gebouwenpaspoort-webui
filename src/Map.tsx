@@ -133,6 +133,7 @@ export function Map() {
     }
   }, [current, showFilter, showResults, showLayerSelector]);
 
+  // When the returned items change (e.g. after a fulltext query), we move the bounds of the map
   let moveMapToItemBounds = useCallback(() => {
     moveBounds(mapRef, items);
   }, [mapRef, items]);

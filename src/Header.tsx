@@ -10,29 +10,30 @@ import { AppContext } from "./App";
 
 export function Header() {
   const [showInfoPage, setShowInfoPage] = useState(false);
-  const { setIsOpen, setCurrentStep }  = useTour();
-  const {
-    setShowFilter,
-    setShowResults,
-  } = useContext(AppContext);
+  const { setIsOpen, setCurrentStep } = useTour();
+  const { setShowFilter, setShowResults } = useContext(AppContext);
+
+  const startTour = useCallback(() => {
+    setCurrentStep(0);
+    setIsOpen(true);
+    setShowResults(true);
+    setShowFilter(true);
+  }, []);
 
   if (showInfoPage) {
     return (
       <div className="infopage">
-        <button title="Sluiten" className="infopage__close" onClick={() => setShowInfoPage(false)}>
+        <button
+          title="Sluiten"
+          className="infopage__close"
+          onClick={() => setShowInfoPage(false)}
+        >
           <Cross1Icon />
         </button>
         <InfoPage />
       </div>
     );
   }
-
-  const startTour = useCallback(( ) => {
-    setCurrentStep(0);
-    setIsOpen(true);
-    setShowResults(true);
-    setShowFilter(true);
-  }, [])
 
   return (
     <div className="app-header">
@@ -54,11 +55,7 @@ export function Header() {
           >
             Info
           </button>
-          <button
-            onClick={startTour}
-          >
-            Help
-          </button>
+          <button onClick={startTour}>Help</button>
         </div>
       </div>
       <div className="search-bar-wrapper">
