@@ -1,8 +1,15 @@
 import "./Attributes.css";
 import { useState } from "react";
 import { Attribute, GBPObject } from "./schema";
-import { Highlight } from "react-instantsearch-hooks-web";
-import { ChevronDownIcon, ChevronRightIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
+import {
+  Highlight,
+  useCurrentRefinements,
+} from "react-instantsearch-hooks-web";
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  ExternalLinkIcon,
+} from "@radix-ui/react-icons";
 
 interface DetailSectionProps {
   attribute: Attribute;
@@ -11,24 +18,30 @@ interface DetailSectionProps {
 
 function nothingToSee(value) {
   const nTS =
-    ( value == undefined ||
-      value == null ||
-      value == "" ||
-      typeof(value) == 'symbol' ||
-      typeof(value) == 'function' ||
-      Array.isArray(value) && value.length == 0 ||
-      typeof (value) == 'object' && Object.entries(value).length == 0 ||
-      typeof (value) == 'object' && Object.keys(value).every(k => nothingToSee(value[k]))
-    );
+    value == undefined ||
+    value == null ||
+    value == "" ||
+    typeof value == "symbol" ||
+    typeof value == "function" ||
+    (Array.isArray(value) && value.length == 0);
+    // typeof (value) == 'object' && Object.entries(value).length == 0 ||
+    // typeof (value) == 'object' && Object.keys(value).every(k => nothingToSee(value[k]))
   return nTS;
 }
 
 /**
  * Renders a single section in the Details view, for one attribute.
  */
-export function AttributeView({ attribute, hit }: DetailSectionProps) {
+export function AttributeView({ attribute, hit, selectedAttributes }) {
   if (!attribute.id && !attribute.attributes) {
-    return <PropValHighlights hit={hit} attribute={attribute} />;
+    return (
+      <PropValHighlights
+        hit={hit}
+        attribute={attribute}
+        useHighlight
+        selectedAttributes={selectedAttributes}
+      />
+    );
   }
 
   const isCollection = attribute.id && !!attribute.attributes;
@@ -37,7 +50,11 @@ export function AttributeView({ attribute, hit }: DetailSectionProps) {
 
   if (isCollection && count == 0) return null;
   // Do not show attribute sets when all attributes are empty.
-  if (!isCollection && attribute.attributes.every(a => nothingToSee(hit[a.id]))) return null;
+  if (
+    !isCollection &&
+    attribute.attributes.every((a) => nothingToSee(hit[a.id]))
+  )
+    return null;
 
   return (
     <AttributeCollapsible
@@ -55,9 +72,11 @@ export function AttributeView({ attribute, hit }: DetailSectionProps) {
             att.name &&
             att.id && (
               <PropValHighlights
+                selectedAttributes={selectedAttributes}
                 key={`${att.name} ${att.id}`}
                 hit={hit}
                 attribute={att}
+                useHighlight={true}
               />
             )
         )
@@ -80,13 +99,19 @@ export function AttributeCollapsible({
   children,
 }: AttributeTitleProps) {
   const [open, setOpen] = useState(true);
+  const { items: selectedAttributes } = useCurrentRefinements();
+
   return (
     <div className="Attribute">
       <div className="Attribute__title" onClick={() => setOpen(!open)}>
         {open ? <ChevronDownIcon /> : <ChevronRightIcon />} {attribute.name}{" "}
         {showCount && `(${count})`}
       </div>
-      {<div className={"Attribute__content__"+(open ? "open" : "closed")}>{children}</div>}
+      {
+        <div className={"Attribute__content__" + (open ? "open" : "closed")}>
+          {children}
+        </div>
+      }
     </div>
   );
 }
@@ -125,9 +150,9 @@ function AttributeItem({ hit, attribute, item, collection, i }) {
         collection.attributes.map((attribute) => (
           // We can't use Highlight here, or maybe we can, but I don't know how to pass a path for
           // a resource that is stored in an array (e.g. `prop[0].subProp`) to the `Highlight` component.
-          <PropVal
+          <PropValHighlights
             key={attribute.name}
-            item={item[attribute.id]}
+            hit={item[attribute.id]}
             attribute={attribute}
           />
         ))}
@@ -136,15 +161,33 @@ function AttributeItem({ hit, attribute, item, collection, i }) {
 }
 
 /** A single highlighted prop-val */
-function PropValHighlights({ hit, attribute }) {
-  if (!hit || nothingToSee(hit[attribute.id])) return null;
+function PropValHighlights({
+  hit,
+  attribute,
+  useHighlight = false,
+  selectedAttributes = [],
+}) {
+  if (!hit || nothingToSee(hit)) return null;
+
+  let selected = false;
+  selectedAttributes.forEach((a) => {
+    if (a.attribute === attribute.id) selected = true;
+  });
+
   return (
-    <div className="Attribute__propval">
+    <div
+      className={`Attribute__propval ${
+        selected ? "Attribute__propval--selected" : ""
+      }`}
+    >
       <div className="Attribute__propval__key">{attribute.name}</div>
       <div className="Attribute__propval__value">
-        { (attribute.type == "URL")
-        ? (<a href={hit[attribute.id]} target="_blank"><ExternalLinkIcon/></a>)
-        : <Highlight
+        {attribute.type == "URL" ? (
+          <a href={hit[attribute.id]} target="_blank">
+            <ExternalLinkIcon />
+          </a>
+        ) : useHighlight ? (
+          <Highlight
             key={`val-${attribute.id}`}
             attribute={attribute.id}
             // @ts-ignore
@@ -152,22 +195,9 @@ function PropValHighlights({ hit, attribute }) {
             // @ts-ignore
             tagname="mark"
           />
-        }
-      </div>
-    </div>
-  );
-}
-
-function PropVal({ item, attribute }) {
-  if (!item) return null;
-  return (
-    <div className="Attribute__propval">
-      <div className="Attribute__propval__key">{attribute.name}</div>
-      <div className="Attribute__propval__value">
-        { (attribute.type == "URL")
-        ? (<a href={item.toString()} target="_blank">&#x2B77;</a>)
-        : item.toString()
-        }
+        ) : (
+          hit?.toString()
+        )}
       </div>
     </div>
   );

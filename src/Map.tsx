@@ -202,6 +202,11 @@ export function Map() {
             });
           }
         };
+
+        if (!item._geoloc) {
+          return null
+        }
+
         return (
           <Marker
             onClick={handleClick}

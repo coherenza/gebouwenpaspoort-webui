@@ -28,6 +28,10 @@ export const tourSteps: StepType[] = [
     content: "Je kunt extra lagen toevoegen, zoals satelietfoto's",
   },
   {
+    selector: "#reset",
+    content: "Terug naar start? Verwijder je zoekopdracht en filters met Reset.",
+  },
+  {
     selector: "#feedback-button",
     content: "Klachten of wensen? Geef hier feedback.",
   },

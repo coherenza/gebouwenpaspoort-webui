@@ -61,7 +61,7 @@ export const SearchBox = () => {
         onChange={handleSetSearchTerm}
         autoFocus
       />
-      <button type="button" onClick={handleReset}>Reset</button>
+      <button id="reset" type="button" onClick={handleReset}>Reset</button>
     </form>
   );
 };

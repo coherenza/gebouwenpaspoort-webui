@@ -1,5 +1,6 @@
 :root {
   --overlay: rgba(0, 0, 0, 0.5);
+  --primary-color-subtle: rgba(204,0,0, .05);
   --primary-color: rgb(204,0,0);
   --primary-color-dark: rgb(100,0,0);
   --accent-color: rgb(255,183,11);

@@ -210,7 +210,7 @@ export const displayAttributes: Attribute[] = [
     ]
   },
   {
-    name: "Bouwtechnische kenmerken",
+    name: "Bouwtechnisch",
     id: "vocbtk",
     attributes: [
       { name: "Bouwtechnische kenmerken" , id: "vocbtk-bouwtechnische_kenmerken" },

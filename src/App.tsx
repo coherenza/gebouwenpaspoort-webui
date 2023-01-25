@@ -120,8 +120,6 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   }
 
   useEffect(() => {
-    console.log("hasCompletedTour", hasCompletedTour);
-    console.log("validApiKey", validApiKey);
     if (validApiKey && !hasCompletedTour) {
       // start the tour
       setIsOpen(true);

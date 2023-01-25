@@ -3,18 +3,17 @@ import { useContext } from "react";
 import { AppContext } from "./App";
 import { displayAttributes as displayAttributes, GBPObjectTypes } from "./schema";
 import { AttributeView } from "./Attributes";
-import { useRefinementList } from "react-instantsearch-hooks-web";
+import { useCurrentRefinements, useRefinementList } from "react-instantsearch-hooks-web";
 import { Cross1Icon } from "@radix-ui/react-icons";
 
 export function Details() {
   const { current, setCurrent } = useContext(AppContext);
   const x = useRefinementList({ attribute: "pdok-locatie-id" });
+  // The `useCurrentRefinements` hook is quite expensive, so we call it once over here
+  //  and pass the props all the way down.
+  const { items: selectedAttributes } = useCurrentRefinements();
 
-  if (!current) {
-    return null;
-  }
-
-  const geo = current["bag-aob-geo-EPSG28992"];
+  if (!current) return null;
 
   if (!GBPObjectTypes[""+current["bag-object-type"]].isAob) {
     return (
@@ -26,6 +25,7 @@ export function Details() {
       </div>
     );
   }
+
   return (
     <div className="Sidebar details-panel">
       {current ? (
@@ -40,8 +40,10 @@ export function Details() {
             {displayAttributes.map((attribute, i) => {
               // we use the first attribute to render in the header
               if (i == 0) return null;
+
               return (
                 <AttributeView
+                  selectedAttributes={selectedAttributes}
                   key={attribute.name}
                   attribute={attribute}
                   hit={current}

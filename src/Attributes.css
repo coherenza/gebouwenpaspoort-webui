@@ -37,6 +37,11 @@
   font-style: italic;
 }
 
+.Attribute__propval--selected {
+  border: 1px solid var(--primary-color);
+  background: var(--primary-color-subtle);
+}
+
 .Attribute__item__title {
   cursor: pointer;
 }
