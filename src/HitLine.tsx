@@ -8,6 +8,23 @@ interface HitProps {
   hit: GBPObject;
 }
 
+const nonExistingBuildingStatuses = [
+  "Pand gesloopt",
+  "Niet gerealiseerd pand",
+  "Pand ten onrechte opgevoerd",
+]
+
+function isNonExisting(hit: GBPObject) {
+  let statuses = hit[Attributes.pand_status.id];
+  let isIt = false;
+  statuses?.forEach((status: string) => {
+    if (nonExistingBuildingStatuses.includes(status)) {
+      isIt = true;
+    }
+  })
+  return isIt;
+}
+
 export const HitLine = ({ hit }: HitProps) => {
   const { current, setCurrent, setLocationFilter } = useContext(AppContext);
 
@@ -27,7 +44,6 @@ export const HitLine = ({ hit }: HitProps) => {
   const active = current?.id === hit.id;
   const isAob = GBPObjectTypes["" + hit["bag-object-type"]].isAob;
   const color = GBPObjectTypes["" + hit["bag-object-type"]].color;
-  const gesloopt = hit[Attributes.pand_status.id]?.includes("Pand gesloopt");
 
   return (
     <div
@@ -43,8 +59,8 @@ export const HitLine = ({ hit }: HitProps) => {
         {isAob ? "" : "🔍 "}
         {hit["naam"]}
       </div>
-      {gesloopt && <TrashIcon />}
       <div className="hit-type-wrapper">
+        {isNonExisting(hit) && <TrashIcon />}
         <div className="hit-type">{hit["bag-object-type"]}</div>
         <div
           className="hit-ball"
