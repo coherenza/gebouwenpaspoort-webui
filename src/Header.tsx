@@ -5,10 +5,16 @@ import { InfoPage } from "./InfoPage";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { useTour } from "@reactour/tour";
 import { useCallback } from "react";
+import { useContext } from "react";
+import { AppContext } from "./App";
 
 export function Header() {
   const [showInfoPage, setShowInfoPage] = useState(false);
   const { setIsOpen, setCurrentStep }  = useTour();
+  const {
+    setShowFilter,
+    setShowResults,
+  } = useContext(AppContext);
 
   if (showInfoPage) {
     return (
@@ -24,6 +30,8 @@ export function Header() {
   const startTour = useCallback(( ) => {
     setCurrentStep(0);
     setIsOpen(true);
+    setShowResults(true);
+    setShowFilter(true);
   }, [])
 
   return (

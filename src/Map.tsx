@@ -155,7 +155,7 @@ export function Map() {
     const bounds = mapRef.current.getMap().getBounds();
 
     // Ratio to make the circle smaller
-    const p = 0.5;
+    const p = 0.7;
 
     const neBounds = bounds.getNorthEast();
     const swBounds = bounds.getSouthWest();
