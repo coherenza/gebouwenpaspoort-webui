@@ -70,8 +70,8 @@ const AppProvider = () => {
   const stepsModified = useMemo(() => {
     // modify last steps, add callback  setHasCompletedTour to set tour as completed
     const stepsCopy = [...steps];
-    const lastStep = stepsCopy[stepsCopy.length - 1];
-    lastStep.action = () => setHasCompletedTour(true);
+    const firstStep = stepsCopy[0];
+    firstStep.action = () => setHasCompletedTour(true);
     return stepsCopy;
   }, []);
 
