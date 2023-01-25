@@ -4,10 +4,11 @@ import { SearchBox } from "./Searchbox";
 import { InfoPage } from "./InfoPage";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { useTour } from "@reactour/tour";
+import { useCallback } from "react";
 
 export function Header() {
   const [showInfoPage, setShowInfoPage] = useState(false);
-  const { setIsOpen }  = useTour();
+  const { setIsOpen, setCurrentStep }  = useTour();
 
   if (showInfoPage) {
     return (
@@ -19,6 +20,11 @@ export function Header() {
       </div>
     );
   }
+
+  const startTour = useCallback(( ) => {
+    setCurrentStep(0);
+    setIsOpen(true);
+  }, [])
 
   return (
     <div className="app-header">
@@ -41,7 +47,7 @@ export function Header() {
             Info
           </button>
           <button
-            onClick={() => setIsOpen(true)}
+            onClick={startTour}
           >
             Help
           </button>

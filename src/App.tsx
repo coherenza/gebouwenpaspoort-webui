@@ -68,7 +68,6 @@ const AppProvider = () => {
   }, [apiKey]);
 
   const stepsModified = useMemo(() => {
-    // modify last steps, add callback  setHasCompletedTour to set tour as completed
     const stepsCopy = [...steps];
     const firstStep = stepsCopy[0];
     firstStep.action = () => setHasCompletedTour(true);
