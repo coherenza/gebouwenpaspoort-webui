@@ -146,15 +146,17 @@ export function Results() {
         />
         {hits.length} / {nbHits == 1000 ? "1000+" : nbHits} resultaten
       </div>
-      <CurrentRefinements />
-      {/* <Hits hitComponent={HitLine} escapeHTML={false} /> */}
-      <InfiniteHits
-        // @ts-ignore
-        hitComponent={HitLine}
-        escapeHTML={false}
-        showPrevious={false}
-      />
-      {/* <Pagination showLast={true} /> */}
+      <div className="Sidebar__scroller">
+        <CurrentRefinements />
+        {/* <Hits hitComponent={HitLine} escapeHTML={false} /> */}
+        <InfiniteHits
+          // @ts-ignore
+          hitComponent={HitLine}
+          escapeHTML={false}
+          showPrevious={false}
+        />
+        {/* <Pagination showLast={true} /> */}
+      </div>
     </div>
   );
 }

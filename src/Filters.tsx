@@ -21,7 +21,7 @@ export function Filters({}) {
         <h3>Filters</h3>
         <button title="Filters sluiten" onClick={() => setShowFilter(false)}><Cross1Icon /></button>
       </div>
-      <div className="filters">
+      <div className="filters Sidebar__scroller">
 
         {/* Zonder SortBy widget vindt er geen sortering plaats. */}
         <SortBy

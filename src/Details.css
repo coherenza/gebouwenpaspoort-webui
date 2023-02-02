@@ -7,11 +7,6 @@
   color: var(--primary-color);
 }
 
-.Details__attributes {
-  overflow-y: auto;
-  height: 100%;
-}
-
 .ais-Pagination {
   margin-bottom: 1rem;
 }

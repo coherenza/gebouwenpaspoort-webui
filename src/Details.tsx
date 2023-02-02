@@ -36,7 +36,7 @@ export function Details() {
             </h3>
             <button onClick={() => setCurrent(undefined)}><Cross1Icon /></button>
           </div>
-          <div className="Details__attributes">
+          <div className="Sidebar__scroller">
             {displayAttributes.map((attribute, i) => {
               // we use the first attribute to render in the header
               if (i == 0) return null;

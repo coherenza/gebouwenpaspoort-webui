@@ -58,6 +58,11 @@ body {
   box-shadow: var(--box-shadow);
 }
 
+.Sidebar__scroller {
+  overflow-y: auto;
+  height: 100%;
+}
+
 .ais-Menu-link {
   text-decoration: none;
   display: flex;
