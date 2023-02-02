@@ -1,9 +1,10 @@
 import { MeiliSearch } from "meilisearch";
 import { indexName, meiliKey, server } from "./config";
 import {
-  searchableAttributes,
   sortProps,
   filterAttributes,
+  searchableAttributes,
+  Attributes,
 } from "./schema";
 
 function equalArrays(xs: any[], ys: any[]) {
@@ -16,7 +17,7 @@ function equalArrays(xs: any[], ys: any[]) {
 export const filterableAttributes = filterAttributes.map((prop) =>
   prop?.attributes?.map((attr) => attr.id)
 ).flat();
-filterableAttributes.push("_geo", "pdok-locatie-id");
+filterableAttributes.push("_geo", "pdok-locatie-id", Attributes.pand_status.id);
 
 const sortableAttributes = sortProps.map((prop) => prop.attribute);
 
@@ -65,7 +66,7 @@ export async function setIndexes() {
 
   const reportSetIndexesProgress = function() {
     const progressElement = document.getElementById('set-indexes-progress');
-    fetch('http://localhost:7700/tasks/').then((response) => {
+    fetch(`${server}tasks/`).then((response) => {
       if (response.ok) {
         response.json().then(json => {
           const lines = json.results.

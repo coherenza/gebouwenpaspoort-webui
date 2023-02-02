@@ -277,6 +277,7 @@ export const filterAttributes: Attribute[] = [
   {
     name: "Algemeen",
     attributes: [
+      Attributes.bag_status,
       Attributes.pand_status,
       Attributes.gebruiksdoel,
       Attributes.bouwjaar_interval,

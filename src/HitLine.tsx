@@ -8,21 +8,26 @@ interface HitProps {
   hit: GBPObject;
 }
 
-const nonExistingBuildingStatuses = [
-  "Pand gesloopt",
-  "Niet gerealiseerd pand",
-  "Pand ten onrechte opgevoerd",
-]
+// maps bag statuses to
+const statusMapping = {
+  "Verblijfsobject in gebruik": null,
+  "Verblijfsobject in gebruik (niet ingemeten)": null,
+  "Plaats aangewezen": <TrashIcon />,
+  "Plaats ingetrokken": <TrashIcon />,
+  "Verblijfsobject ingetrokken": <TrashIcon />,
+  "Verbouwing verblijfsobject": <TrashIcon />,
+  "Verblijfsobject gevormd": <TrashIcon />,
+  "Niet gerealiseerd verblijfsobject": <TrashIcon />,
+  "Verblijfsobject buiten gebruik": <TrashIcon />,
+  "Verblijfsobject ten onrechte opgevoerd": <TrashIcon />,
+}
 
-function isNonExisting(hit: GBPObject) {
-  let statuses = hit[Attributes.pand_status.id];
-  let isIt = false;
-  statuses?.forEach((status: string) => {
-    if (nonExistingBuildingStatuses.includes(status)) {
-      isIt = true;
-    }
-  })
-  return isIt;
+function getStatusIcon(status: string) {
+  return statusMapping[status];
+}
+
+function shouldShowStatus(status: string) {
+  return !!statusMapping[status];
 }
 
 export const HitLine = ({ hit }: HitProps) => {
@@ -45,6 +50,8 @@ export const HitLine = ({ hit }: HitProps) => {
   const isAob = GBPObjectTypes["" + hit["bag-object-type"]].isAob;
   const color = GBPObjectTypes["" + hit["bag-object-type"]].color;
 
+  const status = hit[Attributes.bag_status.id];
+
   return (
     <div
       className={active ? "Hit Hit--active" : "Hit"}
@@ -60,7 +67,7 @@ export const HitLine = ({ hit }: HitProps) => {
         {hit["naam"]}
       </div>
       <div className="hit-type-wrapper">
-        {isNonExisting(hit) && <TrashIcon />}
+        {status && shouldShowStatus(status) && <span title={status}>{getStatusIcon(status)}</span>}
         <div className="hit-type">{hit["bag-object-type"]}</div>
         <div
           className="hit-ball"
