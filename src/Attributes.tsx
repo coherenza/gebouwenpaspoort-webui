@@ -176,10 +176,6 @@ function PropValHighlights({
 
   const isLink = attribute.type == "URL";
 
-  if (isLink) {
-    console.log(attribute.id, hit[attribute.id]);
-  }
-
   return (
     <div
       className={`Attribute__propval ${
@@ -190,7 +186,7 @@ function PropValHighlights({
       {isLink ? (
         <a
           className="Attribute__link"
-          href={hit[attribute.id]}
+          href={hit[attribute.id] || hit}
           target="_blank"
         >
           {attribute.name}
