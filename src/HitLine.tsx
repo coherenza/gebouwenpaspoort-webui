@@ -52,7 +52,7 @@ export const HitLine = ({ hit }: HitProps) => {
 
   const status = hit[Attributes.bag_status.id];
 
-  const adres = `${hit[Attributes.straatnaam.id]} ${hit[Attributes.huisnummer.id]} ${hit[Attributes.huisletter.id] || ""}`;
+  const adres = `${hit[Attributes.straatnaam.id]} ${hit[Attributes.huisnummerLetter.id]}`;
 
   return (
     <div

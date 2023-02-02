@@ -82,6 +82,7 @@ export const Attributes = {
   tuin: { name: "tuin", id: "vocbtk.vocbtk-tuin" },
   straatnaam: { name: "straatnaam", id: "bag-opr-naam" },
   huisnummer: { name: "huisnummer", id: "bag-num-huisnummer" },
+  huisnummerLetter: { name: "huisnummer-letter", id: "bag-num-huisnummer-letter-aanduiding" },
 };
 
 /**
