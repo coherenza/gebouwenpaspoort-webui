@@ -24,8 +24,8 @@ function nothingToSee(value) {
     typeof value == "symbol" ||
     typeof value == "function" ||
     (Array.isArray(value) && value.length == 0);
-    // typeof (value) == 'object' && Object.entries(value).length == 0 ||
-    // typeof (value) == 'object' && Object.keys(value).every(k => nothingToSee(value[k]))
+  // typeof (value) == 'object' && Object.entries(value).length == 0 ||
+  // typeof (value) == 'object' && Object.keys(value).every(k => nothingToSee(value[k]))
   return nTS;
 }
 
@@ -33,7 +33,9 @@ function nothingToSee(value) {
  * Renders a single section in the Details view, for one attribute.
  */
 export function AttributeView({ attribute, hit, selectedAttributes }) {
-  if (!attribute.id && !attribute.attributes) {
+  const isCollection = attribute.id && !!attribute.attributes;
+
+  if (!attribute.attributes) {
     return (
       <PropValHighlights
         hit={hit}
@@ -43,8 +45,6 @@ export function AttributeView({ attribute, hit, selectedAttributes }) {
       />
     );
   }
-
-  const isCollection = attribute.id && !!attribute.attributes;
 
   const count = isCollection && hit[attribute?.id]?.length | 0;
 
@@ -98,7 +98,7 @@ export function AttributeCollapsible({
   count,
   children,
 }: AttributeTitleProps) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const { items: selectedAttributes } = useCurrentRefinements();
 
   return (
@@ -174,31 +174,47 @@ function PropValHighlights({
     if (a.attribute === attribute.id) selected = true;
   });
 
+  const isLink = attribute.type == "URL";
+
+  if (isLink) {
+    console.log(attribute.id, hit[attribute.id]);
+  }
+
   return (
     <div
       className={`Attribute__propval ${
         selected ? "Attribute__propval--selected" : ""
       }`}
     >
-      <div className="Attribute__propval__key">{attribute.name}</div>
-      <div className="Attribute__propval__value">
-        {attribute.type == "URL" ? (
-          <a href={hit[attribute.id]} target="_blank">
-            <ExternalLinkIcon />
-          </a>
-        ) : useHighlight ? (
-          <Highlight
-            key={`val-${attribute.id}`}
-            attribute={attribute.id}
-            // @ts-ignore
-            hit={hit}
-            // @ts-ignore
-            tagname="mark"
-          />
-        ) : (
-          hit?.toString()
-        )}
-      </div>
+      {" "}
+      {isLink ? (
+        <a
+          className="Attribute__link"
+          href={hit[attribute.id]}
+          target="_blank"
+        >
+          {attribute.name}
+          <ExternalLinkIcon />
+        </a>
+      ) : (
+        <>
+          <div className="Attribute__propval__key">{attribute.name}</div>
+          <div className="Attribute__propval__value">
+            {useHighlight ? (
+              <Highlight
+                key={`val-${attribute.id}`}
+                attribute={attribute.id}
+                // @ts-ignore
+                hit={hit}
+                // @ts-ignore
+                tagname="mark"
+              />
+            ) : (
+              hit?.toString()
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

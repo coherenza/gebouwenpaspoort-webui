@@ -52,6 +52,21 @@
   color: var(--primary-color-dark);
 }
 
+.Attribute__link {
+  margin: 0 .5rem;
+  background: var(--g0);
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  color: var(--g4);
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+}
+
+.Attribute__link:hover {
+  background: var(--g1);
+}
+
 .Attribute__item {
 
 }

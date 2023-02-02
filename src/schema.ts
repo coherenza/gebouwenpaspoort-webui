@@ -16,7 +16,7 @@ export interface Attribute {
   filterType?: "select" | "range" | "intervals";
 }
 
-export const Attributes = {
+export const Attributes: Record<string, Attribute > = {
   aob_id: { name: "BAG id", id: "bag-aob-id" },
   object_type: { name: "type", id: "bag-object-type" },
   bouwjaar: {
@@ -78,6 +78,15 @@ export const displayAttributes: Attribute[] = [
     id: "bag-num-volledig",
   },
   {
+    name: "Externe links",
+    attributes: [
+      Attributes.href_luchtfoto,
+      Attributes.href_streetview,
+      Attributes.href_utrechtsarchief,
+      Attributes.href_topotijdreis,
+    ],
+  },
+  {
     name: "Adresseerbaar object",
     attributes: [
       Attributes.object_type,
@@ -88,10 +97,7 @@ export const displayAttributes: Attribute[] = [
       Attributes.aob_id,
       Attributes.gebruiksdoel,
       Attributes.oppervlakte,
-      Attributes.href_luchtfoto,
-      Attributes.href_streetview,
-      Attributes.href_utrechtsarchief,
-      Attributes.href_topotijdreis,
+
     ],
   },
   {
