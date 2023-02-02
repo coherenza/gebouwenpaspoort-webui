@@ -21,6 +21,7 @@ import {
   DownloadIcon,
 } from "@radix-ui/react-icons";
 import { Parser } from "@json2csv/plainjs";
+import { Attributes } from "./schema";
 
 export const LocationFilterContext = createContext(undefined);
 
@@ -31,6 +32,18 @@ function jsonToCSV2(items) {
   try {
     const parser = new Parser({
       delimiter: CSV_DELIMITER,
+      transforms: [(item) => ({
+        'zoekopdracht': window.location.href,
+        ...item
+      })],
+      fields: [
+        Attributes.aob_id.id,
+        Attributes.postcode.id,
+        Attributes.straatnaam.id,
+        Attributes.huisnummerLetter.id,
+        Attributes.bouwjaar.id,
+        'zoekopdracht',
+      ],
     });
     const csv = parser.parse(items);
     return csv;
@@ -108,7 +121,11 @@ export function Results() {
         <button title={"Download resultaten"} onClick={download}>
           <DownloadIcon />
         </button>
-        <button id="copy-results" title={"Kopieer link"} onClick={handleLinkShare}>
+        <button
+          id="copy-results"
+          title={"Kopieer link"}
+          onClick={handleLinkShare}
+        >
           {isCopied ? <CheckIcon /> : <CopyIcon />}
         </button>
         <button

@@ -83,6 +83,7 @@ export const Attributes = {
   straatnaam: { name: "straatnaam", id: "bag-opr-naam" },
   huisnummer: { name: "huisnummer", id: "bag-num-huisnummer" },
   huisnummerLetter: { name: "huisnummer-letter", id: "bag-num-huisnummer-letter-aanduiding" },
+  postcode: { name: "postcode", id: "bag-num-postcode" },
 };
 
 /**

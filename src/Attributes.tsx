@@ -128,6 +128,7 @@ function AttributeCollection({ hit, collection }) {
           attribute={collection}
           item={item}
           collection={collection}
+          startOpen={items.length == 1}
           i={i}
         />
       ))}
@@ -135,8 +136,8 @@ function AttributeCollection({ hit, collection }) {
   );
 }
 
-function AttributeItem({ hit, attribute, item, collection, i }) {
-  const [open, setOpen] = useState(false);
+function AttributeItem({ hit, attribute, item, collection, i, startOpen = false }) {
+  const [open, setOpen] = useState(startOpen);
 
   const title = item[collection.attributes[0].id];
 
