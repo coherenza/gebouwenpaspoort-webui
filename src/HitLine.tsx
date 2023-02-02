@@ -52,6 +52,8 @@ export const HitLine = ({ hit }: HitProps) => {
 
   const status = hit[Attributes.bag_status.id];
 
+  const adres = `${hit[Attributes.straatnaam.id]} ${hit[Attributes.huisnummer.id]} ${hit[Attributes.huisletter.id] || ""}`;
+
   return (
     <div
       className={active ? "Hit Hit--active" : "Hit"}
@@ -64,13 +66,14 @@ export const HitLine = ({ hit }: HitProps) => {
       {/* Click on area-filter -> set filter on pdok-locatie-id == hit.id */}
       <div className="hit-naam">
         {isAob ? "" : "🔍 "}
-        {hit["naam"]}
+        {isAob ? adres : hit["naam"]}
       </div>
       <div className="hit-type-wrapper">
         {status && shouldShowStatus(status) && <span title={status}>{getStatusIcon(status)}</span>}
-        <div className="hit-type">{hit["bag-object-type"]}</div>
+        {/* <div className="hit-type">{hit["bag-object-type"]}</div> */}
         <div
           className="hit-ball"
+          title={hit["bag-object-type"]}
           style={{
             backgroundColor: color || "initial",
           }}

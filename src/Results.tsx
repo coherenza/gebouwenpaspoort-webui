@@ -105,13 +105,6 @@ export function Results() {
     <div className={`Sidebar Results ${open ? "Results--open" : ""}`}>
       <div className="Titlebar Titlebar--padded">
         <h3>Resultaten</h3>
-        <HitsPerPage
-          items={[
-            { label: "50 per pagina", value: 50 },
-            { label: "200 per pagina", value: 200, default: true },
-            { label: "1.000 hits per page", value: 1000 },
-          ]}
-        />
         <button title={"Download resultaten"} onClick={download}>
           <DownloadIcon />
         </button>
@@ -127,7 +120,14 @@ export function Results() {
         </button>
       </div>
       <div className="app-header__results-count">
-        {hits.length} / {nbHits == 1000 ? "1000+" : nbHits} resultaten zichtbaar
+        <HitsPerPage
+          items={[
+            { label: "50 per pagina", value: 50 },
+            { label: "200 per pagina", value: 200, default: true },
+            { label: "1.000 hits per page", value: 1000 },
+          ]}
+        />
+        {hits.length} / {nbHits == 1000 ? "1000+" : nbHits} resultaten
       </div>
       <CurrentRefinements />
       {/* <Hits hitComponent={HitLine} escapeHTML={false} /> */}

@@ -16,7 +16,7 @@ export interface Attribute {
   filterType?: "select" | "range" | "intervals";
 }
 
-export const Attributes: Record<string, Attribute > = {
+export const Attributes = {
   aob_id: { name: "BAG id", id: "bag-aob-id" },
   object_type: { name: "type", id: "bag-object-type" },
   bouwjaar: {
@@ -43,14 +43,30 @@ export const Attributes: Record<string, Attribute > = {
     filterType: "intervals",
   },
   bag_status: { name: "BAG status", id: "bag-aob-status" },
-  href_luchtfoto: {name: "Luchtfoto", id: "href-luchtfoto", type: 'URL'},
-  href_streetview: {name: "Google Maps/Streetview", id: "href-streetview", type: 'URL'},
-  href_utrechtsarchief: {name: "Utrechts Archief", id: "href-utrechtsarchief", type: 'URL'},
-  href_topotijdreis: {name: "Topo tijdreis", id: "href-topotijdreis", type: 'URL'},
-  pand_energieklasse: { name: "energie klasse", id: "epl.epl-pand_energieklasse" },
-  zonnepanelen: { name: "zon op dak", id: "zod.zod-zonnepanelen"},
-  monument: {name: "monument", id: "mon.mon-monument"},
-  type_monument: {name: "type monument", id: "mon.mon-type_monument"},
+  huisletter: { name: "huisletter", id: "bag-num-huisletter" },
+  href_luchtfoto: { name: "Luchtfoto", id: "href-luchtfoto", type: "URL" },
+  href_streetview: {
+    name: "Google Maps/Streetview",
+    id: "href-streetview",
+    type: "URL",
+  },
+  href_utrechtsarchief: {
+    name: "Utrechts Archief",
+    id: "href-utrechtsarchief",
+    type: "URL",
+  },
+  href_topotijdreis: {
+    name: "Topo tijdreis",
+    id: "href-topotijdreis",
+    type: "URL",
+  },
+  pand_energieklasse: {
+    name: "energie klasse",
+    id: "epl.epl-pand_energieklasse",
+  },
+  zonnepanelen: { name: "zon op dak", id: "zod.zod-zonnepanelen" },
+  monument: { name: "monument", id: "mon.mon-monument" },
+  type_monument: { name: "type monument", id: "mon.mon-type_monument" },
   balkon: { name: "balkon", id: "vocbtk.vocbtk-balkon" },
   dak: { name: "dak", id: "vocbtk.vocbtk-dak" },
   dakkapel: { name: "dakkapel", id: "vocbtk.vocbtk-dakkapel" },
@@ -64,6 +80,8 @@ export const Attributes: Record<string, Attribute > = {
   schoorsteen: { name: "schoorsteen", id: "vocbtk.vocbtk-schoorsteen" },
   erker: { name: "erker", id: "vocbtk.vocbtk-erker" },
   tuin: { name: "tuin", id: "vocbtk.vocbtk-tuin" },
+  straatnaam: { name: "straatnaam", id: "bag-opr-naam" },
+  huisnummer: { name: "huisnummer", id: "bag-num-huisnummer" },
 };
 
 /**
@@ -97,7 +115,6 @@ export const displayAttributes: Attribute[] = [
       Attributes.aob_id,
       Attributes.gebruiksdoel,
       Attributes.oppervlakte,
-
     ],
   },
   {
@@ -208,18 +225,25 @@ export const displayAttributes: Attribute[] = [
   },
   {
     name: "Monumenten",
-    id : "mon",
+    id: "mon",
     attributes: [
-      {name: "type monument", id: "mon-type_monument"},
-      {name: "monumentnummer", id: "mon-monumentnummer"},
-      {name: "monumentenregister", id: "mon-href_monumentenregister", type: "URL"}
-    ]
+      { name: "type monument", id: "mon-type_monument" },
+      { name: "monumentnummer", id: "mon-monumentnummer" },
+      {
+        name: "monumentenregister",
+        id: "mon-href_monumentenregister",
+        type: "URL",
+      },
+    ],
   },
   {
     name: "Bouwtechnisch",
     id: "vocbtk",
     attributes: [
-      { name: "Bouwtechnische kenmerken" , id: "vocbtk-bouwtechnische_kenmerken" },
+      {
+        name: "Bouwtechnische kenmerken",
+        id: "vocbtk-bouwtechnische_kenmerken",
+      },
       { name: "Balkon", id: "vocbtk-balkon" },
       { name: "Dak", id: "vocbtk-dak" },
       { name: "Dakkapel", id: "vocbtk-dakkapel" },
@@ -306,10 +330,7 @@ export const filterAttributes: Attribute[] = [
   },
   {
     name: "Energie",
-    attributes: [
-      Attributes.pand_energieklasse,
-      Attributes.zonnepanelen,
-    ]
+    attributes: [Attributes.pand_energieklasse, Attributes.zonnepanelen],
   },
 ];
 
