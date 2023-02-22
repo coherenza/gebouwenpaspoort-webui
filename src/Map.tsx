@@ -231,10 +231,10 @@ export function Map() {
     return {
       type: "FeatureCollection",
       features: items.map((item) => {
-        const isCurrent = item.id == current?.id;
+        const isCurrent =
+          item.id == current?.id || locationFilter?.id == item.id;
 
         const { color, icon, isAob } = getObjectType(item);
-        console.log("color", color, "icon", icon);
 
         return {
           type: "Feature",
@@ -248,6 +248,7 @@ export function Map() {
             // These are used to style the point.
             // Add the keys to `hiddenProps` in `Tooltip.tsx` to hide them from the tooltip.
             id: item.id,
+            size: isCurrent ? 1.4 : 1,
             type: item["bag-object-type"],
             color: isCurrent ? "#000000" : color,
             title: item[Attributes.huisnummerLetter.id] || item["naam"],
@@ -355,7 +356,7 @@ export const dataLayer: SymbolLayer = {
     "text-field": ["get", "title"],
     // Show icon depending on type
     "icon-image": ["get", "icon"],
-    "icon-size": 1,
+    "icon-size": ["get", "size"],
     "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
     "text-offset": [0, 1.25],
     "text-anchor": "top",
