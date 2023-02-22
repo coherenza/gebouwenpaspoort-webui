@@ -19,7 +19,7 @@ import MapGL, {
 import { LngLatBounds } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { AppContext } from "./App";
-import { Attributes, GBPObject, GBPObjectTypes, getObjectType } from "./schema";
+import { Attributes, GBPObject, getObjectType } from "./schema";
 import { useInfiniteHits, useSearchBox } from "react-instantsearch-hooks-web";
 import { Header } from "./Header";
 import { LayerSource } from "./Layers";
@@ -233,6 +233,9 @@ export function Map() {
       features: items.map((item) => {
         const isCurrent = item.id == current?.id;
 
+        const { color, icon, isAob } = getObjectType(item);
+        console.log("color", color, "icon", icon);
+
         return {
           type: "Feature",
           geometry: {
@@ -244,8 +247,9 @@ export function Map() {
             // Add the keys to `hiddenProps` in `Tooltip.tsx` to hide them from the tooltip.
             id: item.id,
             type: item["bag-object-type"],
-            color: isCurrent ? "#000000" : getObjectType(item).color,
+            color: isCurrent ? "#000000" : color,
             title: item[Attributes.huisnummerLetter.id] || item["naam"],
+            icon: isAob ? "my-marker" : "houses",
             // These are be displayed in the popup
             naam: item.naam,
           },
@@ -349,7 +353,8 @@ export const dataLayer: SymbolLayer = {
   layout: {
     // get the title name and icon from the source's properties
     "text-field": ["get", "title"],
-    "icon-image": "my-marker",
+    // Show icon depending on type
+    "icon-image": ["get", "icon"],
     "icon-size": 1,
     "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
     "text-offset": [0, 1.25],

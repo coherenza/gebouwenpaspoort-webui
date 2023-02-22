@@ -441,6 +441,7 @@ export interface GBPObjectType {
   color: string;
   isAob: boolean;
   id: string;
+  icon?: string;
 }
 
 // https://huisstijl.utrecht.nl/basiselementen/kleur/
@@ -462,18 +463,38 @@ export /** These represent the various types or classes that the index contains.
 const GBPObjectTypes: {
   readonly [index: string]: GBPObjectType;
 } = {
-  woonplaats: { color: utrechtKleuren.blauw, isAob: false, id: "woonplaats" },
-  wijk: { color: utrechtKleuren.bruin, isAob: false, id: "wijk" },
-  buurt: { color: utrechtKleuren.oranje, isAob: false, id: "buurt" },
+  woonplaats: {
+    color: utrechtKleuren.blauw,
+    isAob: false,
+    id: "woonplaats",
+    icon: "houses",
+  },
+  wijk: {
+    color: utrechtKleuren.geel,
+    isAob: false,
+    id: "wijk",
+    icon: "houses",
+  },
+  buurt: {
+    color: utrechtKleuren.oranje,
+    isAob: false,
+    id: "buurt",
+    icon: "houses",
+  },
   openbareruimte: {
-    color: utrechtKleuren.rood,
+    color: utrechtKleuren.oranje,
     isAob: false,
     id: "openbareruimte",
   },
   postcode: { color: utrechtKleuren.magenta, isAob: false, id: "postcode" },
-  adres: { color: utrechtKleuren.oranje, isAob: false, id: "adres" },
+  adres: {
+    color: utrechtKleuren.oranje,
+    isAob: false,
+    id: "adres",
+    icon: "my-marker",
+  },
   verblijfsobject: {
-    color: utrechtKleuren.geel,
+    color: utrechtKleuren.rood,
     isAob: true,
     id: "verblijfsobject",
   },

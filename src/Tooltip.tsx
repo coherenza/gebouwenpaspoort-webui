@@ -1,6 +1,6 @@
 import "./Tooltip.css";
 
-const hiddenProps = ["id", "geometry", "type", "title", "color"];
+const hiddenProps = ["id", "geometry", "title", "color"];
 
 export function ToolTip({ feature, x, y }) {
   return (

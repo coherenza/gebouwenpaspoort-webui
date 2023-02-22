@@ -47,7 +47,7 @@ export const HitLine = ({ hit }: HitProps) => {
   if (!hit) return null;
 
   const active = current?.id === hit.id;
-  const { isAob, color } = getObjectType(current);
+  const { isAob, color } = getObjectType(hit);
 
   const status = hit[Attributes.bag_status.id];
 
