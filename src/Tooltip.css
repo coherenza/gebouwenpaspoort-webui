@@ -1,0 +1,16 @@
+.tooltip {
+  position: relative;
+  display: inline-block;
+  background: white;
+  max-width: 300px;
+  border-bottom: 1px dotted black;
+  padding: 0.5rem;
+  pointer-events: none;
+}
+
+.tooltip__key {
+  font-weight: bold;
+}
+.tooltip__val {
+  font-weight: normal;
+}

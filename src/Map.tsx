@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useContext,
   useMemo,
+  useState,
 } from "react";
 import "./Map.css";
 import { useGeoSearch } from "./useGeoSearch";
@@ -22,6 +23,7 @@ import { Header } from "./Header";
 import { LayerSource } from "./Layers";
 import useDebounce from "./useDebounce";
 import { mapboxToken } from "./config";
+import { HoverInfo } from "./Tooltip";
 
 export const mapStartState = {
   latitude: 52.0907,
@@ -121,7 +123,8 @@ export function Map() {
     layers,
   } = useContext(AppContext);
   const mapRef = useRef<MapRef>();
-  const [viewState, setViewState] = React.useState(mapStartState);
+  const [viewState, setViewState] = useState(mapStartState);
+  const [hoverInfo, setHoverInfo] = useState(null);
 
   // We need to wait for new items to load after setting the location filter
   let debouncedLocationFilter = useDebounce(locationFilter, 1000);
@@ -186,6 +189,18 @@ export function Map() {
     setViewState(evt.viewState);
   }, []);
 
+  const handleHover = useCallback(
+    (event) => {
+      const {
+        features,
+        point: { x, y },
+      } = event;
+      const hoveredFeature = features && features[0];
+      setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
+    },
+    [layers]
+  );
+
   // Memoize markers to prevent rerendering
   const markers = useMemo(
     () =>
@@ -204,7 +219,7 @@ export function Map() {
         };
 
         if (!item._geoloc) {
-          return null
+          return null;
         }
 
         return (
@@ -237,7 +252,10 @@ export function Map() {
           <button onClick={() => setShowFilter(!showFilter)}>Filters</button>
         )}
         {!showLayerSelector && (
-          <button id="toggle-layers-view" onClick={() => setShowLayerSelector(!showLayerSelector)}>
+          <button
+            id="toggle-layers-view"
+            onClick={() => setShowLayerSelector(!showLayerSelector)}
+          >
             Kaartlagen
           </button>
         )}
@@ -256,12 +274,17 @@ export function Map() {
         initialViewState={viewState}
         mapboxAccessToken={mapboxToken}
         // maxBounds={startBounds}
+        onMouseMove={handleHover}
         onMoveEnd={updateBoundsQuery}
         style={{ width: "100%", height: "100%", flexBasis: "600px", flex: 1 }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         ref={mapRef}
         attributionControl={false}
+        interactiveLayerIds={layers
+          .filter((l) => l.visible)
+          .map((layer) => layer.id)}
       >
+        {hoverInfo && <HoverInfo {...hoverInfo} />}
         <NavigationControl position={"bottom-right"} />
         <GeolocateControl position={"bottom-left"} />
         {markers}
