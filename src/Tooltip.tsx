@@ -8,6 +8,7 @@ const hiddenProps = [
   "icon",
   "size",
   "sort-key",
+  "text-size",
 ];
 
 export function ToolTip({ feature, x, y }) {
