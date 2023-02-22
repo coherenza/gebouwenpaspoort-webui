@@ -249,6 +249,8 @@ export function Map() {
             // Add the keys to `hiddenProps` in `Tooltip.tsx` to hide them from the tooltip.
             id: item.id,
             size: isCurrent ? 1.4 : 1,
+            // Lower = shown on top
+            "sort-key": isCurrent ? 0 : 1,
             type: item["bag-object-type"],
             color: isCurrent ? "#000000" : color,
             title: item[Attributes.huisnummerLetter.id] || item["naam"],
@@ -360,6 +362,7 @@ export const dataLayer: SymbolLayer = {
     "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
     "text-offset": [0, 1.25],
     "text-anchor": "top",
+    "symbol-sort-key": ["get", "sort-key"],
     "text-size": 12,
     "icon-padding": 1,
   },
