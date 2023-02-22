@@ -6,7 +6,7 @@ import {
 import { useMap } from "react-map-gl";
 import { startBounds, startBoundsInstant } from "./Map";
 import "./Searchbox.css";
-import useDebounce from "./useDebounce";
+import { useThrottle } from "./useDebounce";
 import { useGeoSearch } from "./useGeoSearch";
 
 export const SearchBox = () => {
@@ -16,7 +16,7 @@ export const SearchBox = () => {
   let { mainMap: map } = useMap();
 
   const [searchTerm, setSearchTerm] = useState("");
-  const debouncedSearchTerm = useDebounce(searchTerm, 100);
+  const debouncedSearchTerm = useThrottle(searchTerm, 500);
 
   let handleReset = useCallback(
     (e) => {
@@ -61,7 +61,9 @@ export const SearchBox = () => {
         onChange={handleSetSearchTerm}
         autoFocus
       />
-      <button id="reset" type="button" onClick={handleReset}>Reset</button>
+      <button id="reset" type="button" onClick={handleReset}>
+        Reset
+      </button>
     </form>
   );
 };

@@ -75,7 +75,7 @@ const AppProvider = () => {
   }, []);
 
   return (
-    <TourProvider steps={stepsModified}>
+    <TourProvider showBadge={false} steps={stepsModified}>
       <InstantSearch
         indexName={indexName}
         searchClient={searchClient}
