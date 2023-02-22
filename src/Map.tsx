@@ -275,6 +275,7 @@ export function Map() {
         mapboxAccessToken={mapboxToken}
         // maxBounds={startBounds}
         onMouseMove={handleHover}
+        onMouseOut={() => setHoverInfo(null)}
         onMoveEnd={updateBoundsQuery}
         style={{ width: "100%", height: "100%", flexBasis: "600px", flex: 1 }}
         mapStyle="mapbox://styles/mapbox/streets-v9"
