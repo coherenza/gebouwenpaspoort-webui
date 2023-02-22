@@ -243,6 +243,8 @@ export function Map() {
             coordinates: [item._geoloc.lng, item._geoloc.lat],
           },
           properties: {
+            // These are be displayed in the popup
+            naam: item.naam,
             // These are used to style the point.
             // Add the keys to `hiddenProps` in `Tooltip.tsx` to hide them from the tooltip.
             id: item.id,
@@ -250,8 +252,6 @@ export function Map() {
             color: isCurrent ? "#000000" : color,
             title: item[Attributes.huisnummerLetter.id] || item["naam"],
             icon: isAob ? "my-marker" : "houses",
-            // These are be displayed in the popup
-            naam: item.naam,
           },
         };
       }),

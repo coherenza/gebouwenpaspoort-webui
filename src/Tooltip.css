@@ -14,3 +14,10 @@
 .tooltip__val {
   font-weight: normal;
 }
+
+/* hide on touch devices */
+@media (hover: none) {
+  .tooltip {
+    display: none;
+  }
+}
