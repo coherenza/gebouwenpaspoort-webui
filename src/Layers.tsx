@@ -32,7 +32,7 @@ export const layersDefault: LayerI[] = [
   {
     name: "Monumenten Gemeente",
     id: "UtrechtOpen:MONUMENTEN_OPEN_GM",
-    visible: true,
+    visible: false,
     type: "features",
     url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wfs",
   },
