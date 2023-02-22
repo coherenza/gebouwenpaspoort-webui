@@ -30,9 +30,16 @@ export const layersDefault: LayerI[] = [
     url: "https://service.pdok.nl/rvo/indgebfunderingsproblematiek/wms/v1_0",
   },
   {
-    name: "Monument Adressen",
+    name: "Monumenten Gemeente",
     id: "UtrechtOpen:MONUMENTEN_OPEN_GM",
-    visible: true,
+    visible: false,
+    type: "features",
+    url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wfs",
+  },
+  {
+    name: "Monument Rijk",
+    id: "UtrechtOpen:MONUMENTEN_OPEN_RM",
+    visible: false,
     type: "features",
     url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wfs",
   },
@@ -157,8 +164,8 @@ const makeFillLayer = (layer: LayerI): FillLayer => ({
   type: "fill",
   // "source-layer": layer.id,
   paint: {
-    "fill-color": "red",
-    "fill-opacity": 0.5,
+    "fill-color": stringToColor(layer.id),
+    "fill-opacity": 0.8,
   },
 });
 
@@ -182,34 +189,58 @@ export interface LayerI {
   type?: "raster" | "features";
 }
 
+// Convert object to searchParams
+function objectToSearchParams(obj: { [key: string]: string }) {
+  const params = new URLSearchParams();
+  Object.keys(obj).forEach((key) => {
+    params.set(key, obj[key]);
+  });
+  return params;
+}
+
 export function makeWfsUrl(layer: LayerI) {
   let url = new URL(layer.url);
-  url.searchParams.set("SERVICE", "WFS");
-  url.searchParams.set("VERSION", "1.3.0");
-  url.searchParams.set("REQUEST", "GetFeature");
-  // url.searchParams.set("REQUEST", "GetCapabilities");
-  url.searchParams.set("outputFormat", "application/json");
-  url.searchParams.set("acceptsFormat", "application/json");
-  url.searchParams.set("typeNames", layer.id);
-  url.searchParams.set("srsName", "EPSG:4326");
-
+  let params = {
+    SERVICE: "WFS",
+    VERSION: "1.3.0",
+    REQUEST: "GetFeature",
+    outputFormat: "application/json",
+    acceptsFormat: "application/json",
+    typeNames: layer.id,
+    srsName: "EPSG:4326",
+  };
+  url.search = objectToSearchParams(params).toString();
   return url.toString();
 }
 export function makeWmsUrl(layer: LayerI) {
   let url = new URL(layer.url);
-  url.searchParams.set("SERVICE", "WMS");
-  url.searchParams.set("VERSION", "1.3.0");
-  url.searchParams.set("REQUEST", "GetMap");
-  url.searchParams.set("FORMAT", "image/png");
-  url.searchParams.set("TRANSPARENT", "true");
-  url.searchParams.set("layers", layer.id);
-  url.searchParams.set("DPI", "113");
-  url.searchParams.set("CRS", "EPSG:3857");
-  url.searchParams.set("FORMAT_OPTIONS", "dpi:113");
-  url.searchParams.set("WIDTH", "1000");
-  url.searchParams.set("HEIGHT", "1000");
-  url.searchParams.set("STYLES", "");
+  let params = {
+    SERVICE: "WMS",
+    VERSION: "1.3.0",
+    REQUEST: "GetMap",
+    FORMAT: "image/png",
+    TRANSPARENT: "true",
+    layers: layer.id,
+    DPI: "113",
+    CRS: "EPSG:3857",
+    FORMAT_OPTIONS: "dpi:113",
+    WIDTH: "1000",
+    HEIGHT: "1000",
+    STYLES: "",
+  };
+  url.search = objectToSearchParams(params).toString();
+
   // The BBOX values are set by MapBoxGL, and it parses this URL to replace the bbox part. So we can't use the URLSearchParams here.
   const generated = `${url.toString()}&BBOX={bbox-epsg-3857}`;
   return generated;
+}
+
+// unique color from hash of string
+function stringToColor(str: string) {
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  var h = hash % 256;
+  return "hsl(" + h + ", 90%, 50%)";
 }
