@@ -98,9 +98,9 @@ const AppProvider = () => {
 
 const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   const [current, setCurrent] = React.useState(undefined);
-  const [showFilter, setShowFilter] = React.useState(true);
-  const [showResults, setShowResults] = React.useState(true);
-  const [showLayers, setShowLayers] = React.useState(false);
+  const [showFilter, setShowFilter] = useLocalStorage("showFilter", true);
+  const [showResults, setShowResults] = useLocalStorage("showResults", true);
+  const [showLayers, setShowLayers] = useLocalStorage("showLayers", false);
   const [layers, setLayers] = React.useState<LayerI[]>(layersDefault);
   const [locationFilter, setLocationFilterInternal] = React.useState(undefined);
   const [apiKeyTemp, setApiKeyTemp] = React.useState("");
