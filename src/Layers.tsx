@@ -1,6 +1,6 @@
 import { Cross1Icon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Layer, RasterLayer, Source } from "react-map-gl";
+import { Layer, RasterLayer, FillLayer, Source } from "react-map-gl";
 import { AppContext } from "./App";
 import "./Layers.css";
 
@@ -31,9 +31,10 @@ export const layersDefault: LayerI[] = [
   },
   {
     name: "Monument Adressen",
-    id: "MONUMENTEN_ADRESSEN_OPEN",
-    visible: false,
-    url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wms/v1_0",
+    id: "UtrechtOpen:MONUMENTEN_OPEN_GM",
+    visible: true,
+    type: "features",
+    url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wfs",
   },
 ];
 
@@ -126,19 +127,40 @@ function LayerCheckbox({ layer }) {
   );
 }
 
-export function LayerSource({ layer }) {
+/** This should describe Utrecht bounds */
+const boundsDefault = [3.21, 50.73, 7.25, 53.58];
+
+export function LayerSource({ layer }: { layer: LayerI }) {
+  if (layer.type == "features") {
+    return (
+      <Source id={layer.id} type="geojson" data={makeWfsUrl(layer)}>
+        <Layer {...makeFillLayer(layer)} key={layer.id} />
+      </Source>
+    );
+  }
+
   return (
     <Source
       type="raster"
       tileSize={1000}
-      bounds={[3.21, 50.73, 7.25, 53.58]}
-      tiles={[makeLayerURL(layer)]}
+      bounds={boundsDefault}
+      tiles={[makeWmsUrl(layer)]}
       scheme="xyz"
     >
       <Layer {...makeRasterLayer(layer)} />
     </Source>
   );
 }
+
+const makeFillLayer = (layer: LayerI): FillLayer => ({
+  id: layer.id,
+  type: "fill",
+  // "source-layer": layer.id,
+  paint: {
+    "fill-color": "red",
+    "fill-opacity": 0.5,
+  },
+});
 
 const makeRasterLayer = (layer: LayerI): RasterLayer => ({
   id: layer.id,
@@ -156,8 +178,38 @@ export interface LayerI {
   visible: boolean;
   /** Optionally overwrite URL */
   url?: string;
+  /** Optionally overwrite type, defaults to raster */
+  type?: "raster" | "features";
 }
 
-export function makeLayerURL(layer: LayerI) {
-  return `${layer.url}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&layers=${layer.id}&DPI=113&MAP_RESOLUTION=113&CRS=EPSG%3A3857&STYLES=&FORMAT_OPTIONS=dpi%3A113&WIDTH=1000&HEIGHT=1000&BBOX={bbox-epsg-3857}`;
+export function makeWfsUrl(layer: LayerI) {
+  let url = new URL(layer.url);
+  url.searchParams.set("SERVICE", "WFS");
+  url.searchParams.set("VERSION", "1.3.0");
+  url.searchParams.set("REQUEST", "GetFeature");
+  // url.searchParams.set("REQUEST", "GetCapabilities");
+  url.searchParams.set("outputFormat", "application/json");
+  url.searchParams.set("acceptsFormat", "application/json");
+  url.searchParams.set("typeNames", layer.id);
+  url.searchParams.set("srsName", "EPSG:4326");
+
+  return url.toString();
+}
+export function makeWmsUrl(layer: LayerI) {
+  let url = new URL(layer.url);
+  url.searchParams.set("SERVICE", "WMS");
+  url.searchParams.set("VERSION", "1.3.0");
+  url.searchParams.set("REQUEST", "GetMap");
+  url.searchParams.set("FORMAT", "image/png");
+  url.searchParams.set("TRANSPARENT", "true");
+  url.searchParams.set("layers", layer.id);
+  url.searchParams.set("DPI", "113");
+  url.searchParams.set("CRS", "EPSG:3857");
+  url.searchParams.set("FORMAT_OPTIONS", "dpi:113");
+  url.searchParams.set("WIDTH", "1000");
+  url.searchParams.set("HEIGHT", "1000");
+  url.searchParams.set("STYLES", "");
+  // The BBOX values are set by MapBoxGL, and it parses this URL to replace the bbox part. So we can't use the URLSearchParams here.
+  const generated = `${url.toString()}&BBOX={bbox-epsg-3857}`;
+  return generated;
 }
