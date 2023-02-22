@@ -82,7 +82,10 @@ export const Attributes = {
   tuin: { name: "tuin", id: "vocbtk.vocbtk-tuin" },
   straatnaam: { name: "straatnaam", id: "bag-opr-naam" },
   huisnummer: { name: "huisnummer", id: "bag-num-huisnummer" },
-  huisnummerLetter: { name: "huisnummer-letter", id: "bag-num-huisnummer-letter-aanduiding" },
+  huisnummerLetter: {
+    name: "huisnummer-letter",
+    id: "bag-num-huisnummer-letter-aanduiding",
+  },
   postcode: { name: "postcode", id: "bag-num-postcode" },
 };
 
@@ -422,11 +425,22 @@ export const sortProps: SortProp[] = [
   //{ sortBy: `${indexName}`, attribute: "", label: "Relevantie" },
 ];
 
-export interface GBPObjectTypeProperties {
-  readonly [index: string]: {
-    color: string;
-    isAob: boolean;
-  };
+export function getObjectType(object: any): GBPObjectType {
+  // get 'bag-object-type' or set to 'unknown'
+
+  if (!object) {
+    return GBPObjectTypes.unknown;
+  }
+  let typestring = object["bag-object-type"] || "unknown";
+  let found = GBPObjectTypes[typestring];
+
+  return found;
+}
+
+export interface GBPObjectType {
+  color: string;
+  isAob: boolean;
+  id: string;
 }
 
 // https://huisstijl.utrecht.nl/basiselementen/kleur/
@@ -444,17 +458,28 @@ export const utrechtKleuren = {
   bruin: "#ad643b",
 };
 
-/** These represent the various types or classes that the index contains. */
-export const GBPObjectTypes: GBPObjectTypeProperties = {
-  woonplaats: { color: utrechtKleuren.blauw, isAob: false },
-  wijk: { color: utrechtKleuren.bruin, isAob: false },
-  buurt: { color: utrechtKleuren.oranje, isAob: false },
-  openbareruimte: { color: utrechtKleuren.rood, isAob: false },
-  postcode: { color: utrechtKleuren.magenta, isAob: false },
-  adres: { color: utrechtKleuren.oranje, isAob: false },
-  verblijfsobject: { color: utrechtKleuren.geel, isAob: true },
-  standplaats: { color: utrechtKleuren.cyaan, isAob: true },
-  ligplaats: { color: utrechtKleuren.blauw, isAob: true },
+export /** These represent the various types or classes that the index contains. */
+const GBPObjectTypes: {
+  readonly [index: string]: GBPObjectType;
+} = {
+  woonplaats: { color: utrechtKleuren.blauw, isAob: false, id: "woonplaats" },
+  wijk: { color: utrechtKleuren.bruin, isAob: false, id: "wijk" },
+  buurt: { color: utrechtKleuren.oranje, isAob: false, id: "buurt" },
+  openbareruimte: {
+    color: utrechtKleuren.rood,
+    isAob: false,
+    id: "openbareruimte",
+  },
+  postcode: { color: utrechtKleuren.magenta, isAob: false, id: "postcode" },
+  adres: { color: utrechtKleuren.oranje, isAob: false, id: "adres" },
+  verblijfsobject: {
+    color: utrechtKleuren.geel,
+    isAob: true,
+    id: "verblijfsobject",
+  },
+  standplaats: { color: utrechtKleuren.cyaan, isAob: true, id: "standplaats" },
+  ligplaats: { color: utrechtKleuren.blauw, isAob: true, id: "ligplaats" },
+  unknown: { color: utrechtKleuren.rood, isAob: false, id: "unknown" },
 };
 
 export interface GBPObject {

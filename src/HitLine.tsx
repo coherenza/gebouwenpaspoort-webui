@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Attributes, GBPObject, GBPObjectTypes } from "./schema";
+import { Attributes, GBPObject, GBPObjectTypes, getObjectType } from "./schema";
 import "./Hit.css";
 import { AppContext } from "./App";
 import { TrashIcon } from "@radix-ui/react-icons";
@@ -20,7 +20,7 @@ const statusMapping = {
   "Niet gerealiseerd verblijfsobject": <TrashIcon />,
   "Verblijfsobject buiten gebruik": <TrashIcon />,
   "Verblijfsobject ten onrechte opgevoerd": <TrashIcon />,
-}
+};
 
 function getStatusIcon(status: string) {
   return statusMapping[status];
@@ -47,12 +47,13 @@ export const HitLine = ({ hit }: HitProps) => {
   if (!hit) return null;
 
   const active = current?.id === hit.id;
-  const isAob = GBPObjectTypes["" + hit["bag-object-type"]].isAob;
-  const color = GBPObjectTypes["" + hit["bag-object-type"]].color;
+  const { isAob, color } = getObjectType(current);
 
   const status = hit[Attributes.bag_status.id];
 
-  const adres = `${hit[Attributes.straatnaam.id]} ${hit[Attributes.huisnummerLetter.id]}`;
+  const adres = `${hit[Attributes.straatnaam.id]} ${
+    hit[Attributes.huisnummerLetter.id]
+  }`;
 
   return (
     <div
@@ -69,7 +70,9 @@ export const HitLine = ({ hit }: HitProps) => {
         {isAob ? adres : hit["naam"]}
       </div>
       <div className="hit-type-wrapper">
-        {status && shouldShowStatus(status) && <span title={status}>{getStatusIcon(status)}</span>}
+        {status && shouldShowStatus(status) && (
+          <span title={status}>{getStatusIcon(status)}</span>
+        )}
         {/* <div className="hit-type">{hit["bag-object-type"]}</div> */}
         <div
           className="hit-ball"

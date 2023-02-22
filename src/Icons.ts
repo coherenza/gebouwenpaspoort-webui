@@ -1,13 +1,9 @@
-import Marker from './assets/marker.svg';
+import MarkerPng from "./assets/map-marker.png";
 const CustomIcons = [
-    {
-        src: Marker,
-        name: 'marker'
-    },
-    {
-        src: Marker,
-        name: 'woonplaats'
-    },
+  {
+    src: MarkerPng,
+    name: "my-marker",
+  },
 ];
 
 export default CustomIcons;

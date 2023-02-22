@@ -1,9 +1,16 @@
 import "./Details.css";
 import { useContext } from "react";
 import { AppContext } from "./App";
-import { displayAttributes as displayAttributes, GBPObjectTypes } from "./schema";
+import {
+  displayAttributes as displayAttributes,
+  GBPObjectTypes,
+  getObjectType,
+} from "./schema";
 import { AttributeView } from "./Attributes";
-import { useCurrentRefinements, useRefinementList } from "react-instantsearch-hooks-web";
+import {
+  useCurrentRefinements,
+  useRefinementList,
+} from "react-instantsearch-hooks-web";
 import { Cross1Icon } from "@radix-ui/react-icons";
 
 export function Details() {
@@ -15,13 +22,18 @@ export function Details() {
 
   if (!current) return null;
 
-  if (!GBPObjectTypes[""+current["bag-object-type"]].isAob) {
+  if (!getObjectType(current).isAob) {
     return (
       <div className="Sidebar details-panel">
         <div className="Titlebar Titlebar--padded">
-          <button onClick={() => setCurrent(undefined)}><Cross1Icon /></button>
+          <button onClick={() => setCurrent(undefined)}>
+            <Cross1Icon />
+          </button>
         </div>
-        <p>Weergave voor '{current["bag-object-type"]}' nog niet ondersteund, probeer de zoekbalk!</p>
+        <p>
+          Weergave voor '{current["bag-object-type"]}' nog niet ondersteund,
+          probeer de zoekbalk!
+        </p>
       </div>
     );
   }
@@ -34,7 +46,9 @@ export function Details() {
             <h3 className="details-panel__title">
               {current[displayAttributes[0].id]}{" "}
             </h3>
-            <button onClick={() => setCurrent(undefined)}><Cross1Icon /></button>
+            <button onClick={() => setCurrent(undefined)}>
+              <Cross1Icon />
+            </button>
           </div>
           <div className="Sidebar__scroller">
             {displayAttributes.map((attribute, i) => {

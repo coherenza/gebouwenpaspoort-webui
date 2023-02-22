@@ -12,7 +12,6 @@ import MapGL, {
   GeolocateControl,
   Layer,
   MapRef,
-  Marker,
   NavigationControl,
   Source,
   SymbolLayer,
@@ -20,15 +19,13 @@ import MapGL, {
 import { LngLatBounds } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { AppContext } from "./App";
-import { GBPObject, GBPObjectTypes } from "./schema";
+import { Attributes, GBPObject, GBPObjectTypes, getObjectType } from "./schema";
 import { useInfiniteHits, useSearchBox } from "react-instantsearch-hooks-web";
 import { Header } from "./Header";
 import { LayerSource } from "./Layers";
 import useDebounce from "./useDebounce";
 import { mapboxToken } from "./config";
-import { HoverInfo } from "./Tooltip";
-import Mapbox from "react-map-gl/dist/esm/mapbox/mapbox";
-import marker from "./assets/marker.svg";
+import { ToolTip } from "./Tooltip";
 import CustomIcons from "./Icons";
 
 export const mapStartState = {
@@ -111,11 +108,42 @@ function moveBounds(mapRef, items) {
   }
 }
 
+/** Reads some bounds, creates some smaller bounds */
+function smallerCirlceBounds(bounds) {
+  // Ratio to make the circle smaller
+  const p = 0.7;
+
+  const neBounds = bounds.getNorthEast();
+  const swBounds = bounds.getSouthWest();
+
+  if (!neBounds || !swBounds) {
+    return;
+  }
+
+  let [x1, y1] = [neBounds.lng, neBounds.lat];
+  let [x2, y2] = [swBounds.lng, swBounds.lat];
+
+  let [[xn1, yn1], [xn2, yn2]] = [
+    [
+      ((1 + p) / 2) * x1 + ((1 - p) / 2) * x2,
+      ((1 + p) / 2) * y1 + ((1 - p) / 2) * y2,
+    ],
+    [
+      ((1 + p) / 2) * x2 + ((1 - p) / 2) * x1,
+      ((1 + p) / 2) * y2 + ((1 - p) / 2) * y1,
+    ],
+  ];
+
+  return {
+    northEast: { lng: xn1, lat: yn1 },
+    southWest: { lng: xn2, lat: yn2 },
+  };
+}
+
 export function Map() {
-  const { _items, refine } = useGeoSearch();
-  const {hits: items } = useInfiniteHits();
-  const { query } = useSearchBox();
+  const { refine } = useGeoSearch();
   const { hits: items } = useInfiniteHits();
+  const { query } = useSearchBox();
   const {
     setCurrent,
     current,
@@ -165,46 +193,20 @@ export function Map() {
     if (map) {
       CustomIcons.forEach((icon) => {
         const customIcon = new Image(24, 24);
-        customIcon.onload = () => map.addImage(icon.name, customIcon)
         customIcon.src = icon.src;
+        let opts = { sdf: true };
+        customIcon.onload = () => map.addImage(icon.name, customIcon, opts);
       });
     }
   }, [mapRef.current]);
+
   // If the user moves the map, update the query to filter current area
   const updateBoundsQuery = useCallback((evt) => {
     if (!evt.originalEvent) {
       return;
     }
     const bounds = mapRef.current.getMap().getBounds();
-
-    // Ratio to make the circle smaller
-    const p = 0.7;
-
-    const neBounds = bounds.getNorthEast();
-    const swBounds = bounds.getSouthWest();
-
-    if (!neBounds || !swBounds) {
-      return;
-    }
-
-    let [x1, y1] = [neBounds.lng, neBounds.lat];
-    let [x2, y2] = [swBounds.lng, swBounds.lat];
-
-    let [[xn1, yn1], [xn2, yn2]] = [
-      [
-        ((1 + p) / 2) * x1 + ((1 - p) / 2) * x2,
-        ((1 + p) / 2) * y1 + ((1 - p) / 2) * y2,
-      ],
-      [
-        ((1 + p) / 2) * x2 + ((1 - p) / 2) * x1,
-        ((1 + p) / 2) * y2 + ((1 - p) / 2) * y1,
-      ],
-    ];
-
-    refine({
-      northEast: { lng: xn1, lat: yn1 },
-      southWest: { lng: xn2, lat: yn2 },
-    });
+    refine(smallerCirlceBounds(bounds));
     setViewState(evt.viewState);
   }, []);
 
@@ -215,53 +217,14 @@ export function Map() {
         point: { x, y },
       } = event;
       const hoveredFeature = features && features[0];
+      if (hoveredFeature) {
+        mapRef.current.getCanvas().style.cursor = "pointer";
+      } else {
+        mapRef.current.getCanvas().style.cursor = "";
+      }
       setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
     },
     [layers]
-  );
-
-  // Memoize markers to prevent rerendering
-  const markers = useMemo(
-    () =>
-      items.map((item) => {
-        const isCurrent = item.id == current?.id;
-        const handleClick = () => {
-          // Move the map if it's not a GBPO
-          if (GBPObjectTypes["" + item["bag-object-type"]].isAob) {
-            setCurrent(item as unknown as GBPObject);
-          } else {
-            setLocationFilter({
-              id: item.id as string,
-              name: item.naam as string,
-            });
-          }
-        };
-
-        if (!item._geoloc) {
-          return null;
-        }
-
-        return (
-          <Marker
-            onClick={handleClick}
-            longitude={item._geoloc.lng}
-            latitude={item._geoloc.lat}
-            anchor="bottom"
-            // We need this key to make sure the content re-renders, for some reason color changes don't trigger an update
-            key={`${item.id} ${isCurrent}`}
-            color={
-              isCurrent
-                ? "#000000"
-                : GBPObjectTypes["" + item["bag-object-type"]].color
-            }
-            style={{
-              zIndex: isCurrent ? 1 : 0,
-            }}
-            scale={isCurrent ? 0.8 : 0.6}
-          ></Marker>
-        );
-      }),
-    [items, current]
   );
 
   const data: GeoJSON.FeatureCollection<GeoJSON.Geometry> = useMemo(() => {
@@ -269,36 +232,54 @@ export function Map() {
       type: "FeatureCollection",
       features: items.map((item) => {
         const isCurrent = item.id == current?.id;
-        const handleClick = () => {
-          setCurrent(item as unknown as GBPObject);
-        };
 
         return {
           type: "Feature",
-          onClick: { handleClick },
           geometry: {
             type: "Point",
             coordinates: [item._geoloc.lng, item._geoloc.lat],
           },
           properties: {
+            // These are used to style the point.
+            // Add the keys to `hiddenProps` in `Tooltip.tsx` to hide them from the tooltip.
             id: item.id,
             type: item["bag-object-type"],
-            color: isCurrent
-              ? "#000000"
-              : GBPObjectTypes["" + item["bag-object-type"]].color,
-            title: item["naam"],
+            color: isCurrent ? "#000000" : getObjectType(item).color,
+            title: item[Attributes.huisnummerLetter.id] || item["naam"],
+            // These are be displayed in the popup
+            naam: item.naam,
           },
         };
       }),
     };
-  }, [items]);
+  }, [items, current]);
+
+  const interactiveLayers = useMemo(() => {
+    let l = layers.filter((l) => l.visible).map((layer) => layer.id);
+    l.push("points");
+    return l;
+  }, [layers]);
 
   const handleMapClick = useCallback(
     (evt: mapboxgl.MapLayerMouseEvent) => {
       if (evt.features) {
-        console.log("features", evt.features[0]);
+        const feature = evt.features[0];
+        // find item with same bag ID in results, show that
+        const item = items.find((i) => i.id == feature.properties?.id);
+
+        const type = getObjectType(item);
+
+        if (type.isAob) {
+          setCurrent(item as unknown as GBPObject);
+          return;
+        } else {
+          setLocationFilter({
+            id: item.id as string,
+            name: item.naam as string,
+          });
+        }
       } else {
-        console.log("no feautres", evt);
+        console.warn("no features on this point", evt);
       }
     },
     [items]
@@ -338,24 +319,22 @@ export function Map() {
         onClick={handleMapClick}
         onMoveEnd={updateBoundsQuery}
         style={{ width: "100%", height: "100%", flexBasis: "600px", flex: 1 }}
-        mapStyle="mapbox://styles/mapbox/streets-v9"
+        mapStyle="mapbox://styles/joepio/clefv1fk2001x01msvlmxl79g"
         ref={mapRef}
         attributionControl={false}
-        interactiveLayerIds={layers
-          .filter((l) => l.visible)
-          .map((layer) => layer.id)}
+        interactiveLayerIds={interactiveLayers}
       >
-        {hoverInfo && <HoverInfo {...hoverInfo} />}
+        {hoverInfo && <ToolTip {...hoverInfo} />}
         <NavigationControl position={"bottom-right"} />
         <GeolocateControl position={"bottom-left"} />
+        <Source type="geojson" data={data}>
+          <Layer {...dataLayer} />
+        </Source>
         {layers
           .filter((layer) => layer.visible)
           .map((layer) => (
             <LayerSource layer={layer} key={layer.id} />
           ))}
-        <Source type="geojson" data={data}>
-          <Layer {...dataLayer} />
-        </Source>
         {/* {markers} */}
       </MapGL>
     </div>
@@ -369,13 +348,18 @@ export const dataLayer: SymbolLayer = {
   source: "points",
   layout: {
     // get the title name and icon from the source's properties
-    "icon-image": ["get", "type"],
     "text-field": ["get", "title"],
-    // "text-color": ["get", "color"],
+    "icon-image": "my-marker",
+    "icon-size": 1,
     "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-    // "text-offset": [0, 1.25],
+    "text-offset": [0, 1.25],
     "text-anchor": "top",
+    "text-size": 12,
     "icon-padding": 1,
-    "icon-size": 0.5,
+  },
+  paint: {
+    "text-halo-color": "rgba(255,255,255,0.75)",
+    "text-halo-width": 1,
+    "icon-color": ["get", "color"],
   },
 };
