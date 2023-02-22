@@ -29,6 +29,12 @@ export const layersDefault: LayerI[] = [
     visible: false,
     url: "https://service.pdok.nl/rvo/indgebfunderingsproblematiek/wms/v1_0",
   },
+  {
+    name: "Monument Adressen",
+    id: "MONUMENTEN_ADRESSEN_OPEN",
+    visible: false,
+    url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wms/v1_0",
+  },
 ];
 
 /** Get XML metadata description from PDOK */
@@ -83,7 +89,6 @@ function LayerCheckbox({ layer }) {
   useEffect(() => {
     getDescription(layer).then((desc) => setDescription(desc));
   }, [layer]);
-
 
   // When clicking on a layers, toggle the visibility
   const toggleLayer = useCallback(
