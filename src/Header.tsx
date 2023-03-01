@@ -45,11 +45,13 @@ export function Header() {
             target="_blank"
             id="feedback-button"
             href="https://forms.gle/nxGbtVxoCiYgB83S6"
+            title="Geef feedback over deze app."
           >
             Feedback
           </a>
           <button
             className="button"
+            title="Toon informatie over deze app."
             onClick={() => setShowInfoPage(!showInfoPage)}
           >
             Info

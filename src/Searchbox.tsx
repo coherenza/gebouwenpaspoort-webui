@@ -125,9 +125,12 @@ export const SearchBox = () => {
       <button
         title="Toon alleen resultaten die exact overeenkomen met de zoekopdracht."
         type="button"
+        style={{
+          fontWeight: exact ? "bold" : "normal",
+        }}
         onClick={handleToggleExact}
       >
-        {exact ? <CheckboxIcon /> : <BoxIcon />}
+        {/* {exact ? <CheckboxIcon /> : <BoxIcon />} */}
         Exact
       </button>
       <button
