@@ -1,15 +1,16 @@
 :root {
   --overlay: rgba(0, 0, 0, 0.5);
-  --primary-color-subtle: rgba(204,0,0, .05);
-  --primary-color: rgb(204,0,0);
-  --primary-color-dark: rgb(100,0,0);
-  --accent-color: rgb(255,183,11);
+  --primary-color-subtle: rgba(204, 0, 0, 0.05);
+  --primary-color: rgb(204, 0, 0);
+  --primary-color-dark: rgb(100, 0, 0);
+  --accent-color: rgb(255, 183, 11);
+  --accent-color-dark: rgb(235, 163, 11);
   --border-radius: 6px;
-  --g0: rgb(246,246,246);
-  --g1: rgb(240,240,240);
-  --g2: rgb(220,220,220);
-  --g3: rgb(200,200,200);
-  --g4: rgb(50,50,50);
+  --g0: rgb(246, 246, 246);
+  --g1: rgb(240, 240, 240);
+  --g2: rgb(220, 220, 220);
+  --g3: rgb(200, 200, 200);
+  --g4: rgb(50, 50, 50);
   --box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
   --results-width: 20rem;
   --details-width: 20rem;
@@ -19,7 +20,8 @@ li {
   list-style-type: none;
 }
 
-ul, ol{
+ul,
+ol {
   padding-left: 0;
   margin: 0;
 }
@@ -32,7 +34,8 @@ a:hover {
   color: var(--primary-color-dark);
 }
 
-button, .button {
+button,
+.button {
   border-radius: var(--border-radius);
   border: none;
   background-color: var(--g1);
@@ -45,11 +48,13 @@ button, .button {
   min-height: 1.7rem;
 }
 
-button:hover, .button:hover {
+button:hover,
+.button:hover {
   background-color: var(--g2);
   color: black;
 }
-button:active, .button:active {
+button:active,
+.button:active {
   background-color: var(--g3);
   color: black;
 }

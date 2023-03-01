@@ -23,13 +23,12 @@ export function Header() {
   if (showInfoPage) {
     return (
       <div className="infopage">
-        <button
-          title="Sluiten"
-          className="infopage__close"
-          onClick={() => setShowInfoPage(false)}
-        >
-          <Cross1Icon />
-        </button>
+        <div className="infopage__buttons">
+          <button onClick={startTour}>Start Tour</button>
+          <button title="Sluiten" onClick={() => setShowInfoPage(false)}>
+            <Cross1Icon />
+          </button>
+        </div>
         <InfoPage />
       </div>
     );
@@ -55,7 +54,6 @@ export function Header() {
           >
             Info
           </button>
-          <button onClick={startTour}>Help</button>
         </div>
       </div>
       <div className="search-bar-wrapper">

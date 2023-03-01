@@ -1,4 +1,3 @@
-
 .app-header {
   position: absolute;
   background: white;
@@ -16,7 +15,7 @@
   margin-bottom: 1rem;
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .header .logo {
@@ -27,70 +26,15 @@
 .app-header__results-count {
   display: flex;
   justify-content: space-between;
-  padding: .5rem;
-  margin-top: .5rem;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
   color: var(--g4);
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 .header--buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
-  margin-top: .5rem;
-}
-
-.infopage {
-  position: fixed;
-  top: 5%;
-  left: 25%;
-  width: 50%;
-  height: 90%;
-  background-color: #f3f3f3;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* border: 4px solid var(--accent-color); */
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-}
-
-.infopage__close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 11;
-  background-color: var(--accent-color);
-}
-
-.infopage article {
-  margin-top: auto;
-  padding: 1rem;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.infopage article h1 {
-  color: var(--primary-color);
-  border-left: 4px solid var(--accent-color);
-  padding-left: 0.4rem;
-}
-
-.infopage article h2 {
-  font-size: 110%;
-  color: var(--primary-color);
-}
-
-.infopage article p {
-  margin-bottom: .5rem;
-}
-
-.infopage article ul li {
-  list-style-type: disc;
-}
-
-.infopage article ul, .infopage article ol {
-  padding-left: 1.5rem;
-  margin: 1rem;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 }
