@@ -154,6 +154,8 @@ export function Map() {
     setShowFilter,
     setShowResults,
     setShowLayerSelector,
+    lastInteractionOrigin,
+    setLastInteractionOrigin,
     setLocationFilter,
     showLayerSelector,
     locationFilter,
@@ -209,6 +211,7 @@ export function Map() {
     }
     const bounds = mapRef.current.getMap().getBounds();
     refine(smallerCirlceBounds(bounds));
+    setLastInteractionOrigin("map");
     setViewState(evt.viewState);
   }, []);
 
@@ -245,8 +248,13 @@ export function Map() {
 
         const { color, isAob } = getObjectType(item);
 
-        // If the first item is also an address, we open it on the map
-        if (index == 0 && isAob) {
+        // We need to find a way to identify if the new list of items is a result of a
+        // user query, or if it's an auto update because of a map move.
+        const textQueryChanged = lastInteractionOrigin == "text";
+
+        // If the first item is also an address, we open it on the map.
+        if (index == 0 && isAob && textQueryChanged) {
+          console.log("CURRENT, CENTER", item);
           // @ts-ignore
           setCurrent(item);
           setCenter(item._geoloc);
@@ -276,7 +284,7 @@ export function Map() {
         };
       }),
     };
-  }, [items, current]);
+  }, [items, current, lastInteractionOrigin]);
 
   const interactiveLayers = useMemo(() => {
     let l = layers.filter((l) => l.visible).map((layer) => layer.id);
@@ -286,6 +294,7 @@ export function Map() {
 
   const handleMapClick = useCallback(
     (evt: mapboxgl.MapLayerMouseEvent) => {
+      setLastInteractionOrigin("map");
       if (evt.features) {
         const feature = evt.features[0];
         // find item with same bag ID in results, show that

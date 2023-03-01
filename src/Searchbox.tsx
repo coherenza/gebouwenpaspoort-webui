@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import {
   useClearRefinements,
   useSearchBox,
   useSortBy,
 } from "react-instantsearch-hooks-web";
 import { useMap } from "react-map-gl";
+import { AppContext } from "./App";
 import { indexName } from "./config";
 import { startBounds, startBoundsInstant } from "./Map";
 import { sortProps } from "./schema";
@@ -29,6 +30,7 @@ export const SearchBox = () => {
     useSortBy(sortOptions);
   let [sortByQuick, setSortByQuick] = useState(defaultSort);
   let [exact, setExact] = useState(false);
+  let { setLastInteractionOrigin } = useContext(AppContext);
 
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 200);
@@ -36,6 +38,7 @@ export const SearchBox = () => {
   // We keep track of the `sortBy` in a more efficient way to prevent unnecessary searches
   let setSort = useCallback((sort: string) => {
     setSortBySlow(sort);
+    setLastInteractionOrigin("text");
     setSortByQuick(sort);
   }, []);
 
@@ -43,6 +46,7 @@ export const SearchBox = () => {
     (e) => {
       e.preventDefault();
       refine("");
+      setLastInteractionOrigin("text");
       clear();
       clearGeo(startBoundsInstant);
       map?.fitBounds(startBounds);
@@ -79,9 +83,11 @@ export const SearchBox = () => {
       if (query) {
         const modifiedQuery = exactOnly ? `"${query}"` : query;
         refine(modifiedQuery);
+        setLastInteractionOrigin("text");
         clearGeo(startBoundsInstant);
       } else {
         refine("");
+        setLastInteractionOrigin("text");
       }
     },
     [sortByQuick, sortBySlow]

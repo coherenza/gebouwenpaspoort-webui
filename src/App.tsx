@@ -33,6 +33,8 @@ Bugsnag.start({
 });
 const ErrorBoundary = Bugsnag.getPlugin("react").createErrorBoundary(React);
 
+type InteractionOrigin = "map" | "text" | undefined;
+
 interface AppContextI {
   setCurrent: (gebouw: GBPObject) => void;
   current: GBPObject | undefined;
@@ -46,6 +48,8 @@ interface AppContextI {
   showFilter: boolean;
   setLocationFilter: (location: LocationFilter | undefined) => void;
   locationFilter: LocationFilter | undefined;
+  lastInteractionOrigin: InteractionOrigin;
+  setLastInteractionOrigin: (origin: InteractionOrigin) => void;
 }
 
 export const AppContext = createContext<AppContextI>(undefined);
@@ -98,6 +102,8 @@ const AppProvider = () => {
 
 const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   const [current, setCurrent] = React.useState(undefined);
+  const [lastInteractionOrigin, setLastInteractionOrigin] =
+    React.useState(undefined);
   const [showFilter, setShowFilter] = useLocalStorage("showFilter", true);
   const [showResults, setShowResults] = useLocalStorage("showResults", true);
   const [showLayers, setShowLayers] = useLocalStorage("showLayers", false);
@@ -151,6 +157,8 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
         showFilter,
         setShowFilter,
         showResults,
+        lastInteractionOrigin,
+        setLastInteractionOrigin,
         setShowLayerSelector: setShowLayers,
         showLayerSelector: showLayers,
         setShowResults,
