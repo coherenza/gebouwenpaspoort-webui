@@ -2,21 +2,41 @@ import { useCallback, useEffect, useState } from "react";
 import {
   useClearRefinements,
   useSearchBox,
+  useSortBy,
 } from "react-instantsearch-hooks-web";
 import { useMap } from "react-map-gl";
+import { indexName } from "./config";
 import { startBounds, startBoundsInstant } from "./Map";
+import { sortProps } from "./schema";
 import "./Searchbox.css";
-import { useThrottle } from "./useDebounce";
+import useDebounce from "./useDebounce";
 import { useGeoSearch } from "./useGeoSearch";
+
+const sortOptions = {
+  items: sortProps.map((s) => {
+    return { value: s.sortBy, label: s.label };
+  }),
+};
+
+const defaultSort = sortProps[0].sortBy;
 
 export const SearchBox = () => {
   const { refine, clear } = useSearchBox();
   let { refine: clearRefinements } = useClearRefinements();
   let { refine: clearGeo } = useGeoSearch();
   let { mainMap: map } = useMap();
+  let { refine: setSortBySlow, currentRefinement: sortBySlow } =
+    useSortBy(sortOptions);
+  let [sortByQuick, setSortByQuick] = useState(defaultSort);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const debouncedSearchTerm = useThrottle(searchTerm, 500);
+  const debouncedSearchTerm = useDebounce(searchTerm, 200);
+
+  // We keep track of the `sortBy` in a more efficient way to prevent unnecessary searches
+  let handleSetSort = useCallback((sort: string) => {
+    setSortBySlow(sort);
+    setSortByQuick(sort);
+  }, []);
 
   let handleReset = useCallback(
     (e) => {
@@ -31,17 +51,49 @@ export const SearchBox = () => {
     [map]
   );
 
-  let handleSetSearchTerm = useCallback((e) => {
-    setSearchTerm(e.target.value);
+  let handleSetSearchTerm = useCallback(
+    (e) => {
+      // when there are numerical values in the search term,
+      // we want to sort by relevance instead of sorting by RankType.
+      // But we should not call `setSortBy` too often, as it will trigger a search.
+      const hasNumber = /\d/.test(e.target.value);
+      if (sortByQuick == defaultSort) {
+        if (hasNumber) {
+          // Sorting by indexName = sorting by relevance
+          handleSetSort(indexName);
+        }
+      } else {
+        if (!hasNumber) {
+          // Use the default sort
+          handleSetSort(defaultSort);
+        }
+      }
+      setSearchTerm(e.target.value);
+    },
+    [searchTerm, sortByQuick, sortByQuick]
+  );
+
+  let handleSearch = useCallback(
+    (q) => {
+      if (debouncedSearchTerm) {
+        refine(searchTerm);
+        clearGeo(startBoundsInstant);
+      } else {
+        refine("");
+      }
+    },
+    [debouncedSearchTerm]
+  );
+
+  // On enter, we want to search
+  let handleSubmit = useCallback((e) => {
+    e.preventDefault();
+    handleSearch(searchTerm);
   }, []);
 
+  // When the debounced search term changes, we want to search
   useEffect(() => {
-    if (debouncedSearchTerm) {
-      clearGeo(startBoundsInstant);
-      refine(searchTerm);
-    } else {
-      refine("");
-    }
+    handleSearch(debouncedSearchTerm);
   }, [debouncedSearchTerm]);
 
   return (
@@ -50,7 +102,7 @@ export const SearchBox = () => {
       action=""
       role="search"
       className="Searchbox"
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={handleSubmit}
     >
       <input
         // we use id for focus from keyboard

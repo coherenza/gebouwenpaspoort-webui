@@ -422,7 +422,7 @@ export const sortProps: SortProp[] = [
   //   attribute: "bag-num-huisnummertoevoeging",
   //   label: "Huisnummertoevoeging",
   // },
-  //{ sortBy: `${indexName}`, attribute: "", label: "Relevantie" },
+  // { sortBy: `${indexName}`, attribute: "", label: "Relevantie" },
 ];
 
 export function getObjectType(object: any): GBPObjectType {

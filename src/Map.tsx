@@ -234,7 +234,7 @@ export function Map() {
         const isCurrent =
           item.id == current?.id || locationFilter?.id == item.id;
 
-        const { color, icon, isAob } = getObjectType(item);
+        const { color, isAob } = getObjectType(item);
 
         return {
           type: "Feature",
