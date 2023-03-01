@@ -1,4 +1,3 @@
-import { BoxIcon, CheckboxIcon } from "@radix-ui/react-icons";
 import { useCallback, useEffect, useState } from "react";
 import {
   useClearRefinements,
@@ -14,7 +13,6 @@ import useDebounce from "./useDebounce";
 import { useGeoSearch } from "./useGeoSearch";
 
 const defaultSort = sortProps[0].sortBy;
-console.log("defaultSort", defaultSort);
 const sortOptions = {
   items: sortProps.map((s) => {
     return { value: s.sortBy, label: s.label };
@@ -37,7 +35,6 @@ export const SearchBox = () => {
 
   // We keep track of the `sortBy` in a more efficient way to prevent unnecessary searches
   let setSort = useCallback((sort: string) => {
-    console.log("setSort", sort);
     setSortBySlow(sort);
     setSortByQuick(sort);
   }, []);
