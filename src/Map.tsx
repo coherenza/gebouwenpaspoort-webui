@@ -142,7 +142,9 @@ function smallerCirlceBounds(bounds) {
 
 export function Map() {
   const { refine } = useGeoSearch();
-  const { hits: items } = useInfiniteHits();
+  const { hits: items } = useInfiniteHits({
+    escapeHTML: false,
+  });
   const { query } = useSearchBox();
   const {
     setCurrent,
