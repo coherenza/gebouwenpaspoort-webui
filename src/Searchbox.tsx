@@ -122,11 +122,20 @@ export const SearchBox = () => {
         onChange={handleSetSearchTerm}
         autoFocus
       />
-      <button type="button" onClick={handleToggleExact}>
+      <button
+        title="Toon alleen resultaten die exact overeenkomen met de zoekopdracht."
+        type="button"
+        onClick={handleToggleExact}
+      >
         {exact ? <CheckboxIcon /> : <BoxIcon />}
         Exact
       </button>
-      <button id="reset" type="button" onClick={handleReset}>
+      <button
+        title="Verwijder de filters, de zoekopdracht en zoom uit naar de startpositie."
+        id="reset"
+        type="button"
+        onClick={handleReset}
+      >
         Reset
       </button>
     </form>
