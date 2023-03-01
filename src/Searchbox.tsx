@@ -1,3 +1,4 @@
+import { BoxIcon, CheckboxIcon } from "@radix-ui/react-icons";
 import { useCallback, useEffect, useState } from "react";
 import {
   useClearRefinements,
@@ -28,6 +29,7 @@ export const SearchBox = () => {
   let { refine: setSortBySlow, currentRefinement: sortBySlow } =
     useSortBy(sortOptions);
   let [sortByQuick, setSortByQuick] = useState(defaultSort);
+  let [exact, setExact] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 200);
@@ -73,28 +75,35 @@ export const SearchBox = () => {
     [searchTerm, sortByQuick, sortByQuick]
   );
 
-  let handleSearch = useCallback(
-    (q) => {
-      if (debouncedSearchTerm) {
-        refine(searchTerm);
-        clearGeo(startBoundsInstant);
-      } else {
-        refine("");
-      }
-    },
-    [debouncedSearchTerm]
-  );
+  let handleSearch = useCallback((query, exactOnly) => {
+    if (query) {
+      const modifiedQuery = exactOnly ? `"${query}"` : query;
+      refine(modifiedQuery);
+      clearGeo(startBoundsInstant);
+    } else {
+      refine("");
+    }
+  }, []);
 
   // On enter, we want to search
   let handleSubmit = useCallback((e) => {
     e.preventDefault();
-    handleSearch(searchTerm);
+    handleSearch(searchTerm, exact);
   }, []);
 
   // When the debounced search term changes, we want to search
   useEffect(() => {
-    handleSearch(debouncedSearchTerm);
+    handleSearch(debouncedSearchTerm, exact);
   }, [debouncedSearchTerm]);
+
+  const handleToggleExact = useCallback(
+    (e) => {
+      e.preventDefault();
+      handleSearch(searchTerm, !exact);
+      setExact(!exact);
+    },
+    [exact, searchTerm]
+  );
 
   return (
     <form
@@ -113,6 +122,10 @@ export const SearchBox = () => {
         onChange={handleSetSearchTerm}
         autoFocus
       />
+      <button type="button" onClick={handleToggleExact}>
+        {exact ? <CheckboxIcon /> : <BoxIcon />}
+        Exact
+      </button>
       <button id="reset" type="button" onClick={handleReset}>
         Reset
       </button>

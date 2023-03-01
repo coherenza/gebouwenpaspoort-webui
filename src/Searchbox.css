@@ -18,9 +18,13 @@
 
 .Searchbox button {
   height: 100%;
-  border-radius: var(--border-radius);
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 0;
+}
+
+/* If its the last item, round the right borders */
+.Searchbox button:last-child {
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
 }
 
 .ais-SearchBox {
