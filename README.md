@@ -34,9 +34,9 @@ VITE_MEILI_SERVER={url}
 docker run -it \
   -d --restart unless-stopped \
   -p 7700:7700 \
-  -e MEILI_MASTER_KEY='.......................'\
+  -e MEILI_MASTER_KEY='.....'
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v0.30
+  getmeili/meilisearch:v1.0.2
 ```
 
 Copy the data (indexes, ...) from a local dev server to the `meili_data/data.ms` directory.

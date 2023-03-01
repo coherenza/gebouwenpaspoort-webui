@@ -62,13 +62,15 @@ export const HitLine = ({ hit }: HitProps) => {
 
   const handleClick = useCallback(() => {
     if (isAob) {
-      if (hit.id === current?.id) {
-        let { lng, lat } = hit._geo;
-        map.flyTo({ center: [lng, lat], animate: true, zoom: streetLevel });
-        return;
-      }
-      setCurrent(hit);
+      let { lng, lat } = hit._geo;
       setLastInteractionOrigin("results");
+      map.flyTo({
+        center: [lng, lat],
+        animate: true,
+        zoom: streetLevel,
+        duration: 1000,
+      });
+      setCurrent(hit);
     } else {
       setLocationFilter({ id: hit.id, name: hit.naam });
     }
