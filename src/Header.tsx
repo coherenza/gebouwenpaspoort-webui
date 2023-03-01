@@ -18,6 +18,7 @@ export function Header() {
     setIsOpen(true);
     setShowResults(true);
     setShowFilter(true);
+    setShowInfoPage(false);
   }, []);
 
   if (showInfoPage) {

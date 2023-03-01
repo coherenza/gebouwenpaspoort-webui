@@ -13,13 +13,14 @@ import "./Searchbox.css";
 import useDebounce from "./useDebounce";
 import { useGeoSearch } from "./useGeoSearch";
 
+const defaultSort = sortProps[0].sortBy;
+console.log("defaultSort", defaultSort);
 const sortOptions = {
   items: sortProps.map((s) => {
     return { value: s.sortBy, label: s.label };
   }),
+  defaultSort: defaultSort,
 };
-
-const defaultSort = sortProps[0].sortBy;
 
 export const SearchBox = () => {
   const { refine, clear } = useSearchBox();
@@ -35,7 +36,8 @@ export const SearchBox = () => {
   const debouncedSearchTerm = useDebounce(searchTerm, 200);
 
   // We keep track of the `sortBy` in a more efficient way to prevent unnecessary searches
-  let handleSetSort = useCallback((sort: string) => {
+  let setSort = useCallback((sort: string) => {
+    console.log("setSort", sort);
     setSortBySlow(sort);
     setSortByQuick(sort);
   }, []);
@@ -62,12 +64,12 @@ export const SearchBox = () => {
       if (sortByQuick == defaultSort) {
         if (hasNumber) {
           // Sorting by indexName = sorting by relevance
-          handleSetSort(indexName);
+          setSort(indexName);
         }
       } else {
         if (!hasNumber) {
           // Use the default sort
-          handleSetSort(defaultSort);
+          setSort(defaultSort);
         }
       }
       setSearchTerm(e.target.value);
@@ -75,21 +77,27 @@ export const SearchBox = () => {
     [searchTerm, sortByQuick, sortByQuick]
   );
 
-  let handleSearch = useCallback((query, exactOnly) => {
-    if (query) {
-      const modifiedQuery = exactOnly ? `"${query}"` : query;
-      refine(modifiedQuery);
-      clearGeo(startBoundsInstant);
-    } else {
-      refine("");
-    }
-  }, []);
+  let handleSearch = useCallback(
+    (query, exactOnly) => {
+      if (query) {
+        const modifiedQuery = exactOnly ? `"${query}"` : query;
+        refine(modifiedQuery);
+        clearGeo(startBoundsInstant);
+      } else {
+        refine("");
+      }
+    },
+    [sortByQuick, sortBySlow]
+  );
 
   // On enter, we want to search
-  let handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    handleSearch(searchTerm, exact);
-  }, []);
+  let handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      handleSearch(searchTerm, exact);
+    },
+    [searchTerm, exact]
+  );
 
   // When the debounced search term changes, we want to search
   useEffect(() => {

@@ -337,6 +337,7 @@ export function Map() {
         {hoverInfo && <ToolTip {...hoverInfo} />}
         <NavigationControl position={"bottom-right"} />
         <GeolocateControl position={"bottom-left"} />
+        {/* TODO: Layer ordering. This is currently not supported. https://github.com/alex3165/react-mapbox-gl/issues/606 */}
         <Source type="geojson" data={data}>
           <Layer {...dataLayer} />
         </Source>
@@ -345,7 +346,6 @@ export function Map() {
           .map((layer) => (
             <LayerSource layer={layer} key={layer.id} />
           ))}
-        {/* {markers} */}
       </MapGL>
     </div>
   );
