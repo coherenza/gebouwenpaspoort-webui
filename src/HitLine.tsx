@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { Attributes, GBPObject, GBPObjectTypes, getObjectType } from "./schema";
 import "./Hit.css";
 import { AppContext } from "./App";
 import { TrashIcon } from "@radix-ui/react-icons";
+import { useMap } from "react-map-gl";
 
 interface HitProps {
   hit: GBPObject;
@@ -30,8 +31,12 @@ function shouldShowStatus(status: string) {
   return !!statusMapping[status];
 }
 
+const streetLevel = 18;
+
 export const HitLine = ({ hit }: HitProps) => {
-  const { current, setCurrent, setLocationFilter } = useContext(AppContext);
+  const { current, setCurrent, setLocationFilter, setLastInteractionOrigin } =
+    useContext(AppContext);
+  let { mainMap: map } = useMap();
 
   // function findHightLightedProp() {
   //   for (const prop of Object.keys(hit._highlightResult)) {
@@ -55,15 +60,22 @@ export const HitLine = ({ hit }: HitProps) => {
     hit[Attributes.huisnummerLetter.id]
   }`;
 
+  const handleClick = useCallback(() => {
+    if (isAob) {
+      if (hit.id === current?.id) {
+        let { lng, lat } = hit._geo;
+        map.flyTo({ center: [lng, lat], animate: true, zoom: streetLevel });
+        return;
+      }
+      setCurrent(hit);
+      setLastInteractionOrigin("results");
+    } else {
+      setLocationFilter({ id: hit.id, name: hit.naam });
+    }
+  }, [hit, isAob, setCurrent, setLastInteractionOrigin, setLocationFilter]);
+
   return (
-    <div
-      className={active ? "Hit Hit--active" : "Hit"}
-      onClick={() => {
-        isAob
-          ? setCurrent(hit)
-          : setLocationFilter({ id: hit.id, name: hit.naam });
-      }}
-    >
+    <div className={active ? "Hit Hit--active" : "Hit"} onClick={handleClick}>
       {/* Click on area-filter -> set filter on pdok-locatie-id == hit.id */}
       <div className="hit-naam">
         {isAob ? "" : "🔍 "}

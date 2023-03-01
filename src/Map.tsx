@@ -206,7 +206,8 @@ export function Map() {
 
   // If the user moves the map, update the query to filter current area
   const updateBoundsQuery = useCallback((evt) => {
-    if (!evt.originalEvent) {
+    // only if the user moves
+    if (!evt.originalEvent || lastInteractionOrigin === "text") {
       return;
     }
     const bounds = mapRef.current.getMap().getBounds();
@@ -249,7 +250,7 @@ export function Map() {
         const { color, isAob } = getObjectType(item);
 
         // If the first item is also an address, we open it on the map.
-        // But only if the user was interacting with the searchbar, not the map.
+        // But only if the user was interacting with something other than the map.
         if (index == 0 && isAob && lastInteractionOrigin == "text") {
           // @ts-ignore
           setCurrent(item);
@@ -295,6 +296,10 @@ export function Map() {
         const feature = evt.features[0];
         // find item with same bag ID in results, show that
         const item = items.find((i) => i.id == feature?.properties?.id);
+
+        if (!item) {
+          return;
+        }
 
         const type = getObjectType(item);
 

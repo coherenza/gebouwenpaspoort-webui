@@ -1,9 +1,13 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { useSearchBox, useSortBy } from "react-instantsearch-hooks-web";
+import {
+  useClearRefinements,
+  useSearchBox,
+  useSortBy,
+} from "react-instantsearch-hooks-web";
 import { useMap } from "react-map-gl";
 import { AppContext } from "./App";
 import { indexName } from "./config";
-import { startBoundsInstant } from "./Map";
+import { mapStartState, startBounds, startBoundsInstant } from "./Map";
 import { sortProps } from "./schema";
 import "./Searchbox.css";
 import useDebounce from "./useDebounce";
@@ -18,16 +22,18 @@ const sortOptions = {
 };
 
 export const SearchBox = () => {
-  const { refine } = useSearchBox();
+  const { refine, clear } = useSearchBox();
   let { refine: clearGeo } = useGeoSearch();
   let { mainMap: map } = useMap();
   let { refine: setSortBySlow, currentRefinement: sortBySlow } =
     useSortBy(sortOptions);
   let [sortByQuick, setSortByQuick] = useState(defaultSort);
   let [exact, setExact] = useState(false);
-  let { setLastInteractionOrigin } = useContext(AppContext);
+  let { setLastInteractionOrigin, setLocationFilter, setCurrent } =
+    useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 200);
+  const { refine: clearRefinements } = useClearRefinements();
 
   // We keep track of the `sortBy` in a more efficient way to prevent unnecessary searches
   let setSort = useCallback((sort: string) => {
@@ -40,15 +46,16 @@ export const SearchBox = () => {
     (e) => {
       e.preventDefault();
       // @ts-ignore
-      window.location = "/";
-      // refine("");
-      // setLastInteractionOrigin("text");
-      // clear();
-      // clearGeo(startBoundsInstant);
-      // map?.fitBounds(startBounds);
-      // clearRefinements();
-      // setSearchTerm("");
-      // setLocationFilter(undefined);
+      // window.location = "/";
+      refine("");
+      setCurrent(undefined);
+      setLastInteractionOrigin("text");
+      clear();
+      clearGeo(startBoundsInstant);
+      map?.fitBounds(startBounds);
+      clearRefinements();
+      setSearchTerm("");
+      setLocationFilter(undefined);
     },
     [map]
   );
@@ -59,6 +66,12 @@ export const SearchBox = () => {
       // we want to sort by relevance instead of sorting by RankType.
       // But we should not call `setSortBy` too often, as it will trigger a search.
       const hasNumber = /\d/.test(e.target.value);
+      let q = e.target.value;
+
+      if (q.length > 2) {
+        clearSearchQuery();
+      }
+
       if (sortByQuick == defaultSort) {
         if (hasNumber) {
           // Sorting by indexName = sorting by relevance
@@ -70,10 +83,15 @@ export const SearchBox = () => {
           setSort(defaultSort);
         }
       }
-      setSearchTerm(e.target.value);
+      setSearchTerm(q);
     },
     [searchTerm, sortByQuick, sortByQuick]
   );
+
+  const clearSearchQuery = useCallback(() => {
+    setLocationFilter(undefined);
+    map?.flyTo(mapStartState);
+  }, [map]);
 
   let handleSearch = useCallback(
     (query, exactOnly) => {
@@ -83,8 +101,7 @@ export const SearchBox = () => {
         setLastInteractionOrigin("text");
         clearGeo(startBoundsInstant);
       } else {
-        refine("");
-        setLastInteractionOrigin("text");
+        clearSearchQuery();
       }
     },
     [sortByQuick, sortBySlow]

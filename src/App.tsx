@@ -8,6 +8,7 @@ import {
   InstantSearch,
   Configure,
   useRefinementList,
+  useClearRefinements,
 } from "react-instantsearch-hooks-web";
 import { TourProvider, useTour } from "@reactour/tour";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
@@ -33,7 +34,7 @@ Bugsnag.start({
 });
 const ErrorBoundary = Bugsnag.getPlugin("react").createErrorBoundary(React);
 
-type InteractionOrigin = "map" | "text" | undefined;
+type InteractionOrigin = "map" | "text" | "results" | undefined;
 
 interface AppContextI {
   setCurrent: (gebouw: GBPObject) => void;
@@ -48,6 +49,7 @@ interface AppContextI {
   showFilter: boolean;
   setLocationFilter: (location: LocationFilter | undefined) => void;
   locationFilter: LocationFilter | undefined;
+  /** Where the user had its last interaction */
   lastInteractionOrigin: InteractionOrigin;
   setLastInteractionOrigin: (origin: InteractionOrigin) => void;
 }
@@ -66,7 +68,6 @@ const AppProvider = () => {
     let client = instantMeiliSearch(server, apiKey, {
       primaryKey: "id",
       // paginationTotalHits: 1000,
-      keepZeroFacets: true,
     });
     return client;
   }, [apiKey]);
@@ -116,10 +117,12 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   const { setIsOpen } = useTour();
 
   const { refine } = useRefinementList({ attribute: "pdok-locatie-id" });
+  const { refine: clearLocationFilter } = useClearRefinements({
+    includedAttributes: ["pdok-locatie-id"],
+  });
   const setLocationFilter = (locationFilter: LocationFilter | undefined) => {
     setLocationFilterInternal(locationFilter);
-    // TODO: Reset is not properly working
-    refine(locationFilter ? locationFilter.id : "");
+    locationFilter ? refine(locationFilter.id) : clearLocationFilter();
   };
 
   async function handleSetApiKey(e) {
