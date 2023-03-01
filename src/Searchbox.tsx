@@ -1,13 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import {
-  useClearRefinements,
-  useSearchBox,
-  useSortBy,
-} from "react-instantsearch-hooks-web";
+import { useSearchBox, useSortBy } from "react-instantsearch-hooks-web";
 import { useMap } from "react-map-gl";
 import { AppContext } from "./App";
 import { indexName } from "./config";
-import { startBounds, startBoundsInstant } from "./Map";
+import { startBoundsInstant } from "./Map";
 import { sortProps } from "./schema";
 import "./Searchbox.css";
 import useDebounce from "./useDebounce";
@@ -22,8 +18,7 @@ const sortOptions = {
 };
 
 export const SearchBox = () => {
-  const { refine, clear } = useSearchBox();
-  let { refine: clearRefinements } = useClearRefinements();
+  const { refine } = useSearchBox();
   let { refine: clearGeo } = useGeoSearch();
   let { mainMap: map } = useMap();
   let { refine: setSortBySlow, currentRefinement: sortBySlow } =
@@ -31,7 +26,6 @@ export const SearchBox = () => {
   let [sortByQuick, setSortByQuick] = useState(defaultSort);
   let [exact, setExact] = useState(false);
   let { setLastInteractionOrigin } = useContext(AppContext);
-
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 200);
 
@@ -45,13 +39,16 @@ export const SearchBox = () => {
   let handleReset = useCallback(
     (e) => {
       e.preventDefault();
-      refine("");
-      setLastInteractionOrigin("text");
-      clear();
-      clearGeo(startBoundsInstant);
-      map?.fitBounds(startBounds);
-      clearRefinements();
-      setSearchTerm("");
+      // @ts-ignore
+      window.location = "/";
+      // refine("");
+      // setLastInteractionOrigin("text");
+      // clear();
+      // clearGeo(startBoundsInstant);
+      // map?.fitBounds(startBounds);
+      // clearRefinements();
+      // setSearchTerm("");
+      // setLocationFilter(undefined);
     },
     [map]
   );

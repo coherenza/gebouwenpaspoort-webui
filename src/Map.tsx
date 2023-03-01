@@ -374,7 +374,6 @@ export function Map() {
 export const dataLayer: SymbolLayer = {
   id: "points",
   type: "symbol",
-  source: "points",
   layout: {
     // get the title name and icon from the source's properties
     "text-field": ["get", "title"],

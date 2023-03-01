@@ -108,16 +108,18 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   const [showResults, setShowResults] = useLocalStorage("showResults", true);
   const [showLayers, setShowLayers] = useLocalStorage("showLayers", false);
   const [layers, setLayers] = React.useState<LayerI[]>(layersDefault);
-  const [locationFilter, setLocationFilterInternal] = React.useState(undefined);
+  const [locationFilter, setLocationFilterInternal] = React.useState<
+    LocationFilter | undefined
+  >(undefined);
   const [apiKeyTemp, setApiKeyTemp] = React.useState("");
   const [validApiKey, setValidApiKey] = React.useState(false);
   const { setIsOpen } = useTour();
 
   const { refine } = useRefinementList({ attribute: "pdok-locatie-id" });
-  const setLocationFilter = (locationFilter: LocationFilter) => {
+  const setLocationFilter = (locationFilter: LocationFilter | undefined) => {
     setLocationFilterInternal(locationFilter);
     // TODO: Reset is not properly working
-    refine(locationFilter?.id || "");
+    refine(locationFilter ? locationFilter.id : "");
   };
 
   async function handleSetApiKey(e) {
