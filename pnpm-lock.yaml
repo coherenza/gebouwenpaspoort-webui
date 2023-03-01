@@ -19,7 +19,7 @@ specifiers:
   meilisearch: ^0.30.0
   react: ^18.2.0
   react-dom: ^18.2.0
-  react-instantsearch-hooks-web: ^6.38.3
+  react-instantsearch-hooks-web: ^6.40.0
   react-map-gl: ^7.0.21
   typescript: ^4.6.4
   vite: ^3.2.3
@@ -39,7 +39,7 @@ dependencies:
   meilisearch: 0.30.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  react-instantsearch-hooks-web: 6.38.3_fzyfqr3mixyxftdbf7mmfo2jb4
+  react-instantsearch-hooks-web: 6.40.1_fzyfqr3mixyxftdbf7mmfo2jb4
   react-map-gl: 7.0.21_tvf76fwem6vj2vuoalsgs6sdlu
 
 devDependencies:
@@ -842,6 +842,10 @@ packages:
     resolution: {integrity: sha512-juqNFdqqmY/nvsODq1Vba7PWIaqr01VcqICIrxbws97QKSQhQUMml8FqdHLmevwVpqH39H5mVXKFWiWCi1ke0w==}
     dev: false
 
+  /@types/dom-speech-recognition/0.0.1:
+    resolution: {integrity: sha512-udCxb8DvjcDKfk1WTBzDsxFbLgYxmQGKrE/ricoMqHRNjSlSUCcamVTA5lIQqzY10mY5qCY0QDwBfFEwhfoDPw==}
+    dev: false
+
   /@types/geojson/7946.0.10:
     resolution: {integrity: sha512-Nmh0K3iWQJzniTuPRcJn5hxXkfB1T1pgB89SBig5PlJQU5yocazeu4jATJlaA0GYFKWMqDdvYemoSnF2pXgLVA==}
     dev: false
@@ -914,8 +918,8 @@ packages:
       algoliasearch: 4.14.2
     dev: false
 
-  /algoliasearch-helper/3.11.2_algoliasearch@4.14.2:
-    resolution: {integrity: sha512-eKvSM5hz5w9RcUowu8LnQ5v0KRrFLCvF4K3KF/Ab3VwCT726rWgZUWUIQUPjr9qDENUMukQ/IHZ7bGUVYRGP0g==}
+  /algoliasearch-helper/3.11.3_algoliasearch@4.14.2:
+    resolution: {integrity: sha512-TbaEvLwiuGygHQIB8y+OsJKQQ40+JKUua5B91X66tMUHyyhbNHvqyr0lqd3wCoyKx7WybyQrC0WJvzoIeh24Aw==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
@@ -1422,19 +1426,20 @@ packages:
       search-insights: 2.2.3
     dev: false
 
-  /instantsearch.js/4.49.4_algoliasearch@4.14.2:
-    resolution: {integrity: sha512-yrYdlX3wo8xqTTTapnfX+qF2FvNK2qFtvI0e8kMrATfFtMiIzX5zYLfbaYyOgOmMhIr2GD9cJEm/mJsHzjfG+w==}
+  /instantsearch.js/4.51.1_algoliasearch@4.14.2:
+    resolution: {integrity: sha512-l4nETzassgSMBqOhNxntNH2MGG0KvFagwVwnXFis9P06nlspAyOdFLCQ0HA5wnlRDDev2WAZg9xRcTPCTLrwZw==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
       '@algolia/events': 4.0.1
       '@algolia/ui-components-highlight-vdom': 1.2.1
       '@algolia/ui-components-shared': 1.2.1
+      '@types/dom-speech-recognition': 0.0.1
       '@types/google.maps': 3.50.5
       '@types/hogan.js': 3.0.1
       '@types/qs': 6.9.7
       algoliasearch: 4.14.2
-      algoliasearch-helper: 3.11.2_algoliasearch@4.14.2
+      algoliasearch-helper: 3.11.3_algoliasearch@4.14.2
       hogan.js: 3.0.2
       htm: 3.1.1
       preact: 10.11.2
@@ -1659,8 +1664,8 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-instantsearch-hooks-web/6.38.3_fzyfqr3mixyxftdbf7mmfo2jb4:
-    resolution: {integrity: sha512-Q7D2x4DxP3jaWqEhUQ0nbqCPUo4EjNYkgDsB+sjATrxvcIYVsZze0q+Cbph/2rv8KBdbVtPq1tgWTH+krZcMdA==}
+  /react-instantsearch-hooks-web/6.40.1_fzyfqr3mixyxftdbf7mmfo2jb4:
+    resolution: {integrity: sha512-MbsS1nhyZWPJjSVRzkDVmb0TM4L2kjHANsr0e1NDwkVWicP8LtXdX6UINDnekMKVnk1OmoF10NAJt4LmcSOqaA==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 5'
       react: '>= 16.8.0 < 19'
@@ -1668,22 +1673,22 @@ packages:
     dependencies:
       '@babel/runtime': 7.20.1
       algoliasearch: 4.14.2
-      instantsearch.js: 4.49.4_algoliasearch@4.14.2
+      instantsearch.js: 4.51.1_algoliasearch@4.14.2
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-instantsearch-hooks: 6.38.3_jz5z4e34rsiperspnjrg6onci4
+      react-instantsearch-hooks: 6.40.1_jz5z4e34rsiperspnjrg6onci4
     dev: false
 
-  /react-instantsearch-hooks/6.38.3_jz5z4e34rsiperspnjrg6onci4:
-    resolution: {integrity: sha512-Sgdh9LripR/Xx3qeIsL+BA6hy0gBm+jgFPSi5leB4ypwUtijxDV24fEnZsRZJqIuYuA+n+KCxQEaDJKOWPymrg==}
+  /react-instantsearch-hooks/6.40.1_jz5z4e34rsiperspnjrg6onci4:
+    resolution: {integrity: sha512-Nqbmencg5816UVDkWUFpGyurAhp8WUBQgHiYj/bTnYQ7KuwXbbxIppIwexZqzXG8Q3DKVBWZw4PnmJiStLK2CA==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 5'
       react: '>= 16.8.0 < 19'
     dependencies:
       '@babel/runtime': 7.20.1
       algoliasearch: 4.14.2
-      algoliasearch-helper: 3.11.2_algoliasearch@4.14.2
-      instantsearch.js: 4.49.4_algoliasearch@4.14.2
+      algoliasearch-helper: 3.11.3_algoliasearch@4.14.2
+      instantsearch.js: 4.51.1_algoliasearch@4.14.2
       react: 18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
