@@ -248,13 +248,9 @@ export function Map() {
 
         const { color, isAob } = getObjectType(item);
 
-        // We need to find a way to identify if the new list of items is a result of a
-        // user query, or if it's an auto update because of a map move.
-        const textQueryChanged = lastInteractionOrigin == "text";
-
         // If the first item is also an address, we open it on the map.
-        if (index == 0 && isAob && textQueryChanged) {
-          console.log("CURRENT, CENTER", item);
+        // But only if the user was interacting with the searchbar, not the map.
+        if (index == 0 && isAob && lastInteractionOrigin == "text") {
           // @ts-ignore
           setCurrent(item);
           setCenter(item._geoloc);
@@ -298,7 +294,7 @@ export function Map() {
       if (evt.features) {
         const feature = evt.features[0];
         // find item with same bag ID in results, show that
-        const item = items.find((i) => i.id == feature.properties?.id);
+        const item = items.find((i) => i.id == feature?.properties?.id);
 
         const type = getObjectType(item);
 
