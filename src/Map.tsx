@@ -212,6 +212,13 @@ export function Map() {
     setViewState(evt.viewState);
   }, []);
 
+  const setCenter = useCallback(
+    ({ lat, lng }) => {
+      mapRef.current.setCenter([lng, lat]);
+    },
+    [mapRef]
+  );
+
   const handleHover = useCallback(
     (event) => {
       const {
@@ -232,11 +239,18 @@ export function Map() {
   const data: GeoJSON.FeatureCollection<GeoJSON.Geometry> = useMemo(() => {
     return {
       type: "FeatureCollection",
-      features: items.map((item) => {
+      features: items.map((item, index) => {
         const isCurrent =
           item.id == current?.id || locationFilter?.id == item.id;
 
         const { color, isAob } = getObjectType(item);
+
+        // If the first item is also an address, we open it on the map
+        if (index == 0 && isAob) {
+          // @ts-ignore
+          setCurrent(item);
+          setCenter(item._geoloc);
+        }
 
         return {
           type: "Feature",
