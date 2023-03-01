@@ -1,10 +1,10 @@
-import { useConnector } from 'react-instantsearch-hooks-web';
-import connectRange from 'instantsearch.js/es/connectors/range/connectRange';
+import { useConnector } from "react-instantsearch-hooks-web";
+import connectRange from "instantsearch.js/es/connectors/range/connectRange";
 
 import type {
   RangeConnectorParams,
   RangeWidgetDescription,
-} from 'instantsearch.js/es/connectors/range/connectRange';
+} from "instantsearch.js/es/connectors/range/connectRange";
 
 export type UseRangeSliderProps = RangeConnectorParams;
 
@@ -16,20 +16,18 @@ export function useRangeSlider(props?: UseRangeSliderProps) {
 }
 
 export function RangeSlider(props: UseRangeSliderProps) {
-  const {
-    start,
-    range,
-    canRefine,
-    refine,
-    sendEvent,
-  } = useRangeSlider(props);
+  const { start, range, canRefine, refine, sendEvent } = useRangeSlider(props);
 
-  return <>{JSON.stringify({
-    attribute: props.attribute,
-    start,
-    range,
-    canRefine,
-    refine,
-    sendEvent,
-  })}</>;
+  return (
+    <>
+      {JSON.stringify({
+        attribute: props.attribute,
+        start,
+        range,
+        canRefine,
+        refine,
+        sendEvent,
+      })}
+    </>
+  );
 }

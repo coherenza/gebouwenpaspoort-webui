@@ -4,7 +4,7 @@ specifiers:
   '@bugsnag/js': ^7.18.0
   '@bugsnag/plugin-react': ^7.18.0
   '@json2csv/plainjs': ^6.1.2
-  '@meilisearch/instant-meilisearch': ^0.10.1
+  '@meilisearch/instant-meilisearch': ^0.11.0
   '@radix-ui/react-dialog': ^1.0.2
   '@radix-ui/react-icons': ^1.1.1
   '@reactour/tour': ^3.1.10
@@ -13,8 +13,8 @@ specifiers:
   '@vitejs/plugin-react': ^2.2.0
   algoliasearch: ^4.14.2
   deploy-gh: ^0.2.1
-  instantsearch.css: 7.4.2
-  instantsearch.js: ^4.49.1
+  instantsearch.css: 8.0.0
+  instantsearch.js: ^4.51.1
   mapbox-gl: ^2.12.0
   meilisearch: ^0.30.0
   react: ^18.2.0
@@ -28,13 +28,13 @@ dependencies:
   '@bugsnag/js': 7.18.0
   '@bugsnag/plugin-react': 7.18.0
   '@json2csv/plainjs': 6.1.2
-  '@meilisearch/instant-meilisearch': 0.10.1
+  '@meilisearch/instant-meilisearch': 0.11.0
   '@radix-ui/react-dialog': 1.0.2_2zx2umvpluuhvlq44va5bta2da
   '@radix-ui/react-icons': 1.1.1_react@18.2.0
   '@reactour/tour': 3.1.10_react@18.2.0
   algoliasearch: 4.14.2
-  instantsearch.css: 7.4.2
-  instantsearch.js: 4.49.1_algoliasearch@4.14.2
+  instantsearch.css: 8.0.0
+  instantsearch.js: 4.51.1_algoliasearch@4.14.2
   mapbox-gl: 2.12.0
   meilisearch: 0.30.0
   react: 18.2.0
@@ -590,10 +590,10 @@ packages:
     engines: {node: '>=6.0.0'}
     dev: false
 
-  /@meilisearch/instant-meilisearch/0.10.1:
-    resolution: {integrity: sha512-uEw1P5zTRNtZvXrFqs2I2O1RNRZMXH2n6d3WEV7IWjKMO9drRLnI69YZALvG50238/9qWam4h07zXsq8ElXPBA==}
+  /@meilisearch/instant-meilisearch/0.11.0:
+    resolution: {integrity: sha512-JaSiF8aWeN/ZZQYpPTws2a7M3RWam8dtRxMb7Im2oJ6ui7Iacc6qxgmVXsY6SgW+mBC8SqEQGPLZTWUQfPvBQQ==}
     dependencies:
-      meilisearch: 0.30.0
+      meilisearch: 0.31.1
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -907,15 +907,6 @@ packages:
 
   /abbrev/1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
-    dev: false
-
-  /algoliasearch-helper/3.11.1_algoliasearch@4.14.2:
-    resolution: {integrity: sha512-mvsPN3eK4E0bZG0/WlWJjeqe/bUD2KOEVOl0GyL/TGXn6wcpZU8NOuztGHCUKXkyg5gq6YzUakVTmnmSSO5Yiw==}
-    peerDependencies:
-      algoliasearch: '>= 3.1 < 6'
-    dependencies:
-      '@algolia/events': 4.0.1
-      algoliasearch: 4.14.2
     dev: false
 
   /algoliasearch-helper/3.11.3_algoliasearch@4.14.2:
@@ -1402,28 +1393,8 @@ packages:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
     dev: true
 
-  /instantsearch.css/7.4.2:
-    resolution: {integrity: sha512-CaOdFWCpHOWGAkJRpwC4+8ROU3Upp3xrUuc0Mg92UucJ84MWMJWkVZDDyRwubgJe4HXQM2rV6b+bJaDeeZGunw==}
-    dev: false
-
-  /instantsearch.js/4.49.1_algoliasearch@4.14.2:
-    resolution: {integrity: sha512-iYGRF+UujVaxn/twZXTfYkI+wc1luCiHZ/ozBME5MiVoit0wBvtERGUFR01uauZJSXCCXmjBg/JJojPngf7mAA==}
-    peerDependencies:
-      algoliasearch: '>= 3.1 < 6'
-    dependencies:
-      '@algolia/events': 4.0.1
-      '@algolia/ui-components-highlight-vdom': 1.2.1
-      '@algolia/ui-components-shared': 1.2.1
-      '@types/google.maps': 3.50.5
-      '@types/hogan.js': 3.0.1
-      '@types/qs': 6.9.7
-      algoliasearch: 4.14.2
-      algoliasearch-helper: 3.11.1_algoliasearch@4.14.2
-      hogan.js: 3.0.2
-      htm: 3.1.1
-      preact: 10.11.2
-      qs: 6.9.7
-      search-insights: 2.2.3
+  /instantsearch.css/8.0.0:
+    resolution: {integrity: sha512-yU63cF9KdkyFFh7ynYQy39nh1MD1eVDHIaa/gdm8a/O9dTG/5P6hBF1ONoIbKTtjlxxsHS2S8MarCZZ0l31ajg==}
     dev: false
 
   /instantsearch.js/4.51.1_algoliasearch@4.14.2:
@@ -1533,6 +1504,14 @@ packages:
 
   /meilisearch/0.30.0:
     resolution: {integrity: sha512-3y1hALOwTDpquYar+gDREqRasFPWKxkWAhk6h+RF+nKObPVf9N77wcTNvukGwOKbxRyJnKge0OPgAB1BkB9VVw==}
+    dependencies:
+      cross-fetch: 3.1.5
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /meilisearch/0.31.1:
+    resolution: {integrity: sha512-ajMieU0e25lLkT+05J0snX0Ycow1UofxIy5sag03flERUbjXq8ouVwkrJkW27JsKftIeDeffRRRr89LasU9+0w==}
     dependencies:
       cross-fetch: 3.1.5
     transitivePeerDependencies:
