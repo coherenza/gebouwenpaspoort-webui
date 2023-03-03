@@ -230,7 +230,7 @@ export function Map() {
         point: { x, y },
       } = event;
       const hoveredFeature = features && features[0];
-      if (hoveredFeature) {
+      if (hoveredFeature && mapRef.current) {
         mapRef.current.getCanvas().style.cursor = "pointer";
       } else {
         mapRef.current.getCanvas().style.cursor = "";
