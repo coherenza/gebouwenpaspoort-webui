@@ -44,6 +44,18 @@ export function InfoPage() {
           naar het desbetreffende bronsysteem, waarin zij vervolgens alle
           beschikbare informatie kunnen raadplegen.
         </p>
+        
+        <h2>Legenda</h2>
+        <p>
+          Na een zoekopdracht toont het gebouwenpaspoort de volgende informatietypen
+          op de kaart en in het resultaat:
+          <ul>
+            <li><div class="hit-ball" title="woonplaats" style="background-color: rgb(0, 109, 255);"></div> Woonplaatsen</li>
+            <li>Wijken</li>
+            <li>Buurten</li>
+            <li></li>
+          </ul>
+        </p>
 
         <h2>Gegevens</h2>
         <p>
