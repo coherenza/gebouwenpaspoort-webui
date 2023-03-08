@@ -275,7 +275,7 @@ export function Map() {
             "sort-key": isCurrent ? 0 : 1,
             type: item["bag-object-type"],
             color: isCurrent ? "#000000" : color,
-            title: item[Attributes.huisnummerLetter.id] || item["naam"],
+            title: item[Attributes.bag_num_huisnummer_letter_aanduiding.id] || item["naam"],
             icon: isAob ? "my-marker" : "houses",
           },
         };
