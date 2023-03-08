@@ -22,7 +22,7 @@ import { AppContext } from "./App";
 import { Attributes, GBPObject, getObjectType } from "./schema";
 import { useInfiniteHits, useSearchBox } from "react-instantsearch-hooks-web";
 import { Header } from "./Header";
-import { LayerSource, meiliLayerId, symbolLayer } from "./Layers";
+import { LayerSource, bagLayerId, bagLayer } from "./Layers";
 import useDebounce from "./useDebounce";
 import { mapboxToken } from "./config";
 import { ToolTip } from "./Tooltip";
@@ -243,7 +243,7 @@ export function Map() {
   const data: GeoJSON.FeatureCollection<GeoJSON.Geometry> = useMemo(() => {
     return {
       type: "FeatureCollection",
-      id: meiliLayerId,
+      id: bagLayerId,
       features: items.map((item, index) => {
         const isCurrent =
           item.id == current?.id || locationFilter?.id == item.id;
@@ -284,9 +284,13 @@ export function Map() {
     };
   }, [items, current, lastInteractionOrigin]);
 
+  const showBagLayer =
+    layers.filter((l) => l.id == bagLayerId && l.visible).length > 0;
+
   const interactiveLayers = useMemo(() => {
+    console.log("showBagLayer", showBagLayer);
     let l = layers.filter((l) => l.visible).map((layer) => layer.id);
-    l.push("points");
+    showBagLayer && l.push(bagLayerId);
     return l;
   }, [layers]);
 
@@ -363,11 +367,14 @@ export function Map() {
         <NavigationControl position={"bottom-right"} />
         <GeolocateControl position={"bottom-left"} />
         {/* TODO: Layer ordering. This is currently not supported. https://github.com/alex3165/react-mapbox-gl/issues/606 */}
-        <Source type="geojson" data={data}>
-          <Layer {...symbolLayer} />
-        </Source>
+        {showBagLayer && (
+          <Source type="geojson" data={data}>
+            <Layer {...bagLayer} />
+          </Source>
+        )}
         {layers
           .filter((layer) => layer.visible)
+          .filter((layer) => layer.id !== bagLayerId)
           .map((layer) => (
             <LayerSource layer={layer} key={layer.id} />
           ))}

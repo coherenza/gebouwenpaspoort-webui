@@ -11,7 +11,15 @@ import { AnyLayer } from "react-map-gl/dist/esm/types";
 import { AppContext } from "./App";
 import "./Layers.css";
 
+export const bagLayerId = "points";
+
 export const layersDefault: LayerI[] = [
+  {
+    name: "BAG items",
+    id: bagLayerId,
+    visible: true,
+    url: "https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1",
+  },
   {
     name: "Luchtfoto",
     id: "2022_orthoHR",
@@ -55,16 +63,15 @@ export const layersDefault: LayerI[] = [
     id: "napinfo:nappeilmerken",
     visible: false,
     type: "symbol",
+    textField: "nap_hoogte",
     // https://service.pdok.nl/rws/napinfo/wms/v1_0?request=getCapabilities&service=WMS
-    url: "https://geodata.nationaalgeoregister.nl/napinfo/wms",
+    url: "https://geodata.nationaalgeoregister.nl/napinfo/wfs",
   },
 ];
 
-export const meiliLayerId = "points";
-
 /** Layer for clickable Address items */
-export const symbolLayer: SymbolLayer = {
-  id: meiliLayerId,
+export const bagLayer: SymbolLayer = {
+  id: bagLayerId,
   type: "symbol",
   layout: {
     // get the title name and icon from the source's properties
@@ -134,10 +141,15 @@ function LayerCheckbox({ layer }) {
   const { setLayers, layers } = useContext(AppContext);
   const [showDescription, setShowDescription] = useState(false);
 
-  const [description, setDescription] = useState("");
+  let [description, setDescription] = useState("");
   useEffect(() => {
     getDescription(layer).then((desc) => setDescription(desc));
   }, [layer]);
+
+  if (layer.id == bagLayerId) {
+    description =
+      "Adressen uit het Basisregistratie Adressen en Gebouwen (BAG)";
+  }
 
   // When clicking on a layers, toggle the visibility
   const toggleLayer = useCallback(
@@ -176,28 +188,33 @@ function LayerCheckbox({ layer }) {
 }
 
 /** This should describe Utrecht bounds */
-const boundsDefault = [3.21, 50.73, 7.25, 53.58];
+const boundsUtrecht = [4.93038, 51.986783, 5.25482, 52.166141];
+const boundsNL = [3, 50, 7.4, 54];
 
+/** Component that mounts the Source and Layer components, required by React-Map-gl */
 export function LayerSource({ layer }: { layer: LayerI }) {
+  if (layer.id == bagLayerId) {
+    return null;
+  }
   let mapBoxLayer = makeMapBoxLayer(layer);
 
-  if (layer.type == "fill") {
+  if (layer.type == "raster") {
     return (
-      <Source id={layer.id} type="geojson" data={makeWfsUrl(layer)}>
-        <Layer {...mapBoxLayer} key={layer.id} />
+      <Source
+        type="raster"
+        tileSize={1000}
+        bounds={boundsUtrecht}
+        tiles={[makeWmsUrl(layer)]}
+        scheme="xyz"
+      >
+        <Layer {...mapBoxLayer} />
       </Source>
     );
   }
 
   return (
-    <Source
-      type="raster"
-      tileSize={1000}
-      bounds={boundsDefault}
-      tiles={[makeWmsUrl(layer)]}
-      scheme="xyz"
-    >
-      <Layer {...mapBoxLayer} />
+    <Source id={layer.id} type="geojson" data={makeWfsUrl(layer)}>
+      <Layer {...mapBoxLayer} key={layer.id} />
     </Source>
   );
 }
@@ -217,16 +234,16 @@ const makeSymbolLayer = (layer: LayerI): SymbolLayer => ({
   type: "symbol",
   layout: {
     // get the title name and icon from the source's properties
-    // "text-field": ["get", "title"],
-    "text-field": "test",
+    "text-field": ["get", layer.textField],
+    // "text-field": "test",
     // Show icon depending on type
-    "icon-image": ["get", "icon"],
+    "icon-image": "marker",
     "icon-size": ["get", "size"],
     "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-    "text-offset": [0, 1.25],
-    "text-anchor": "top",
+    // "text-offset": [0, 1.25],
+    // "text-anchor": "top",
     "symbol-sort-key": ["get", "sort-key"],
-    "text-size": ["get", "text-size"],
+    "text-size": 12,
     "icon-padding": 1,
   },
   paint: {
@@ -263,10 +280,12 @@ export interface LayerI {
   url?: string;
   /** Optionally overwrite type, defaults to raster */
   type?: "raster" | "fill" | "symbol";
+  /** Which property is used to draw the text. Only for "symbol" types */
+  textField?: string;
 }
 
 // Convert object to searchParams
-function objectToSearchParams(obj: { [key: string]: string }) {
+function objectToSearchParams(obj: { [key: string]: any }) {
   const params = new URLSearchParams();
   Object.keys(obj).forEach((key) => {
     params.set(key, obj[key]);
@@ -276,6 +295,7 @@ function objectToSearchParams(obj: { [key: string]: string }) {
 
 export function makeWfsUrl(layer: LayerI) {
   let url = new URL(layer.url);
+  // See https://docs.geoserver.org/stable/en/user/services/wfs/reference.html
   let params = {
     SERVICE: "WFS",
     VERSION: "1.3.0",
@@ -284,6 +304,7 @@ export function makeWfsUrl(layer: LayerI) {
     acceptsFormat: "application/json",
     typeNames: layer.id,
     srsName: "EPSG:4326",
+    bbox: `${boundsUtrecht.toString()},EPSG:4326`,
   };
   url.search = objectToSearchParams(params).toString();
   return url.toString();
