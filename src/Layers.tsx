@@ -72,6 +72,13 @@ export const layersDefault: LayerI[] = [
     // https://service.pdok.nl/rws/napinfo/wms/v1_0?request=getCapabilities&service=WMS
     url: "https://geodata.nationaalgeoregister.nl/napinfo/wfs",
   },
+  {
+    name: "AHN3",
+    id: "ahn3_05m_dtm",
+    visible: true,
+    type: "raster",
+    url: "https://service.pdok.nl/rws/ahn3/wms/v1_0",
+  },
 ];
 
 /** Layer for clickable Address items */
@@ -283,8 +290,7 @@ export interface LayerI {
   visible: boolean;
   /** Optionally overwrite URL */
   url?: string;
-  /** Optionally overwrite type, defaults to raster */
-  type?: "raster" | "fill" | "symbol";
+  type: "raster" | "fill" | "symbol";
   /** Which property is used to draw the text. Only for "symbol" types */
   textField?: string;
 }
@@ -303,7 +309,7 @@ export function makeWfsUrl(layer: LayerI) {
   // See https://docs.geoserver.org/stable/en/user/services/wfs/reference.html
   let params = {
     SERVICE: "WFS",
-    VERSION: "1.3.0",
+    VERSION: "1.1.0",
     REQUEST: "GetFeature",
     outputFormat: "application/json",
     acceptsFormat: "application/json",
