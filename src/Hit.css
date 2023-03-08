@@ -155,6 +155,14 @@ div.hit-type {
   text-align: right;
 }
 
+.legend-item {
+  /* list item, but children all in a row */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
 .Input {
   width: 100%;
   flex: 1;

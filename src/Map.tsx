@@ -14,7 +14,6 @@ import MapGL, {
   MapRef,
   NavigationControl,
   Source,
-  SymbolLayer,
 } from "react-map-gl";
 import { LngLatBounds } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";

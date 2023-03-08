@@ -442,6 +442,7 @@ export interface GBPObjectType {
   isAob: boolean;
   id: string;
   icon?: string;
+  label: string;
 }
 
 // https://huisstijl.utrecht.nl/basiselementen/kleur/
@@ -468,39 +469,65 @@ const GBPObjectTypes: {
     isAob: false,
     id: "woonplaats",
     icon: "houses",
+    label: "Woonplaats",
   },
   wijk: {
     color: utrechtKleuren.geel,
     isAob: false,
     id: "wijk",
     icon: "houses",
+    label: "Wijk",
   },
   buurt: {
-    color: utrechtKleuren.oranje,
+    color: utrechtKleuren.paars,
     isAob: false,
     id: "buurt",
     icon: "houses",
+    label: "Buurt",
   },
   openbareruimte: {
     color: utrechtKleuren.oranje,
     isAob: false,
     id: "openbareruimte",
+    label: "Openbare ruimte",
   },
-  postcode: { color: utrechtKleuren.magenta, isAob: false, id: "postcode" },
+  postcode: {
+    color: utrechtKleuren.magenta,
+    isAob: false,
+    id: "postcode",
+    label: "Postcode",
+  },
   adres: {
-    color: utrechtKleuren.oranje,
+    color: utrechtKleuren.lime,
     isAob: false,
     id: "adres",
     icon: "my-marker",
+    label: "Adres",
   },
   verblijfsobject: {
     color: utrechtKleuren.rood,
     isAob: true,
     id: "verblijfsobject",
+    label: "Verblijfsobject",
   },
-  standplaats: { color: utrechtKleuren.cyaan, isAob: true, id: "standplaats" },
-  ligplaats: { color: utrechtKleuren.blauw, isAob: true, id: "ligplaats" },
-  unknown: { color: utrechtKleuren.rood, isAob: false, id: "unknown" },
+  standplaats: {
+    color: utrechtKleuren.cyaan,
+    isAob: true,
+    id: "standplaats",
+    label: "Standplaats",
+  },
+  ligplaats: {
+    color: utrechtKleuren.blauw,
+    isAob: true,
+    id: "ligplaats",
+    label: "Ligplaats",
+  },
+  unknown: {
+    color: utrechtKleuren.rood,
+    isAob: false,
+    id: "unknown",
+    label: "Onbekend",
+  },
 };
 
 export interface GBPObject {
