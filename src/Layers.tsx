@@ -75,7 +75,7 @@ export const layersDefault: LayerI[] = [
   {
     name: "AHN3",
     id: "ahn3_05m_dtm",
-    visible: true,
+    visible: false,
     type: "raster",
     url: "https://service.pdok.nl/rws/ahn3/wms/v1_0",
   },
