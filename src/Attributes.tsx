@@ -33,7 +33,7 @@ function nothingToSee(value) {
  * Renders a single section in the Details view, for one attribute.
  */
 export function AttributeView({ attribute, hit, selectedAttributes }) {
-  const isCollection = attribute.id && !!attribute.attributes;
+  const isCollection = Array.isArray(hit[attribute.id]) && !!attribute.attributes;
 
   if (!attribute.attributes) {
     return (

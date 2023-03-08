@@ -413,27 +413,27 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Externe referenties",
     "attributes": [
       {
-        "name": null,
+        "name": "Luchtfoto",
         "type": "URL",
         "id": "href-luchtfoto"
       },
       {
-        "name": null,
+        "name": "Google Streetview",
         "type": "URL",
         "id": "href-streetview"
       },
       {
-        "name": null,
-        "type": "URL",
-        "id": "href-utrechtsarchief"
-      },
-      {
-        "name": null,
+        "name": "Topo tijdreis",
         "type": "URL",
         "id": "href-topotijdreis"
       },
       {
-        "name": null,
+        "name": "Utrechts archief",
+        "type": "URL",
+        "id": "href-utrechtsarchief"
+      },
+      {
+        "name": "Rumtelijke plannen",
         "type": "URL",
         "id": "href-ruimtelijkeplannen"
       }
@@ -570,72 +570,188 @@ export const Attributes : {[index: string]: Attribute} = {
  * For each sub-attribute, the first Attribute is used as the title of the sub-section.
  */
 export const displayAttributes: Attribute[] =   [
-    Attributes.bag_object_type,
-    Attributes.naam,
-    Attributes.bag_aob_gebruiksdoel,
-    Attributes.bag_aob_oppervlakte,
-    Attributes.bag_aob_status,
-    Attributes.links,
+    
+  { id : "bag-object-type",
+    name : "Object type",
+  },
+    
+  { id : "naam",
+    name : "Adres",
+  },
+    
+  { id : "bag-aob-gebruiksdoel",
+    name : "Gebruiksdoel",
+  },
+    
+  { id : "bag-aob-oppervlakte",
+    name : "Oppervlakte",
+  },
+    
+  { id : "bag-aob-status",
+    name : "BAG status",
+  },
+    
+  { id : "links",
+    name : "Externe referenties",
+    attributes:    [
+      
+    { id : "href-luchtfoto",
+      name : "Luchtfoto",
+    },
+      
+    { id : "href-streetview",
+      name : "Google Streetview",
+    },
+      
+    { id : "href-topotijdreis",
+      name : "Topo tijdreis",
+    },
+      
+    { id : "href-utrechtsarchief",
+      name : "Utrechts archief",
+    },
+      
+    { id : "href-ruimtelijkeplannen",
+      name : "Rumtelijke plannen",
+    }
+    ]
+  },
     
   { id : "bag-pnd",
     name : "Pand",
-    attributes:
-      [
-      Attributes.bag_pnd_oorspronkelijk_bouwjaar,
-      Attributes.bag_pnd_status
+    attributes:    [
+      
+    { id : "bag-pnd-oorspronkelijk-bouwjaar",
+      name : "Bouwjaar",
+    },
+      
+    { id : "bag-pnd-status",
+      name : "Status",
+    }
     ]
   },
     
   { id : "bwk",
     name : "Wijk/buurt",
-    attributes:
-      [
-      Attributes.bwk_num_nadergebruiksdoel,
-      Attributes.bwk_num_wijknaam,
-      Attributes.bwk_num_subwijknaam,
-      Attributes.bwk_num_buurtnaam,
-      Attributes.bwk_num_subbuurtnaam
+    attributes:    [
+      
+    { id : "bwk-num-nadergebruiksdoel",
+      name : "Nader gebruiksdoel",
+    },
+      
+    { id : "bwk-num-wijknaam",
+      name : "Wijknaam",
+    },
+      
+    { id : "bwk-num-subwijknaam",
+      name : "Subwijk",
+    },
+      
+    { id : "bwk-num-buurtnaam",
+      name : "Buurt",
+    },
+      
+    { id : "bwk-num-subbuurtnaam",
+      name : "Subbuurt",
+    }
     ]
   },
     
   { id : "hoofdadres",
     name : "Adres",
-    attributes:
-      [
-      Attributes.bag_num_volledig,
-      Attributes.bag_num_postcode,
-      Attributes.bag_num_huisnummer,
-      Attributes.bag_num_huisletter,
-      Attributes.bag_num_huisnummertoevoeging,
-      Attributes.bag_num_huisnummer_letter_aanduiding,
-      Attributes.bag_num_status,
-      Attributes.bag_opr_naam,
-      Attributes.bag_wpl_naam
+    attributes:    [
+      
+    { id : "bag-num-volledig",
+      name : "Hoofdadres",
+    },
+      
+    { id : "bag-num-postcode",
+      name : "Postcode",
+    },
+      
+    { id : "bag-num-huisnummer",
+      name : "Huisnummer",
+    },
+      
+    { id : "bag-num-huisletter",
+      name : "Huisletter",
+    },
+      
+    { id : "bag-num-huisnummertoevoeging",
+      name : "Huisnummertoevoeging",
+    },
+      
+    { id : "bag-num-huisnummer-letter-aanduiding",
+      name : "Huisnummer-letter-aanduiding",
+    },
+      
+    { id : "bag-num-status",
+      name : "BAG status",
+    },
+      
+    { id : "bag-opr-naam",
+      name : "Openbare ruimte",
+    },
+      
+    { id : "bag-wpl-naam",
+      name : "Woonplaats",
+    }
     ]
   },
     
   { id : "nevenadres",
     name : "Nevenadres",
-    attributes:
-      [
-      Attributes.bag_num_volledig_neven,
-      Attributes.bag_num_postcode_neven,
-      Attributes.bag_num_huisnummer_neven,
-      Attributes.bag_num_huisletter_neven,
-      Attributes.bag_num_huisnummertoevoeging_neven,
-      Attributes.bag_num_huisnummer_letter_aanduiding_neven,
-      Attributes.bag_opr_naam_neven,
-      Attributes.bag_wpl_naam_neven
+    attributes:    [
+      
+    { id : "bag-num-volledig-neven",
+      name : "Nevenadres",
+    },
+      
+    { id : "bag-num-postcode-neven",
+      name : "Postcode",
+    },
+      
+    { id : "bag-num-huisnummer-neven",
+      name : "Huisnummer",
+    },
+      
+    { id : "bag-num-huisletter-neven",
+      name : "Huisletter",
+    },
+      
+    { id : "bag-num-huisnummertoevoeging-neven",
+      name : "Huisnummertoevoeging",
+    },
+      
+    { id : "bag-num-huisnummer-letter-aanduiding-neven",
+      name : "Huisnummer-letter-aanduiding",
+    },
+      
+    { id : "bag-opr-naam-neven",
+      name : "Openbare ruimte",
+    },
+      
+    { id : "bag-wpl-naam-neven",
+      name : "Woonplaats",
+    }
     ]
   },
     
   { id : "pand-vergunningen",
     name : "Pand Vergunningen",
-    attributes:
-      [
-      Attributes.zk_nummer,
-      Attributes.zk_soort,
-      Attributes.zk_status
+    attributes:    [
+      
+    { id : "zk-nummer",
+      name : "Zaaknummer",
+    },
+      
+    { id : "zk-soort",
+      name : "Zaaksoort",
+    },
+      
+    { id : "zk-status",
+      name : "Voortgangsstatus",
+    }
     ]
   }
   ];
@@ -644,17 +760,34 @@ export const displayAttributes: Attribute[] =   [
  * Filterable attributes, used for rendering filters and facets.
  */
 export const filterAttributes: Attribute[] =   [
-    Attributes.pdok_locatie_id,
-    Attributes.bag_aob_gebruiksdoel,
-    Attributes.bag_aob_oppervlakte_interval,
-    Attributes.bag_aob_status,
+    
+  { id : "pdok-locatie-id",
+    name : "Locatie identificaties",
+  },
+    
+  { id : "bag-aob-gebruiksdoel",
+    name : "Gebruiksdoel",
+  },
+    
+  { id : "bag-aob-oppervlakte-interval",
+    name : "Oppervlakte",
+  },
+    
+  { id : "bag-aob-status",
+    name : "BAG status",
+  },
     
   { id : "bag-pnd",
     name : "Pand",
-    attributes:
-      [
-      Attributes.bag_pnd_oorspronkelijk_bouwjaar_interval,
-      Attributes.bag_pnd_status
+    attributes:    [
+      
+    { id : "bag-pnd-oorspronkelijk-bouwjaar-interval",
+      name : "bouwjaar",
+    },
+      
+    { id : "bag-pnd-status",
+      name : "Status",
+    }
     ]
   }
   ];
@@ -716,8 +849,8 @@ export interface GBPObject {
   "bag-aob-documentnummer" : string;
   "bag-aob-voorkomen" : string;
   "geo-EPSG28992" : number[];
-  "_geo" : string;
-  "links" : string;
+  "_geo" : { "lat" : number; "lng" : number; };
+  "links" : { "href-luchtfoto" : string; "href-streetview" : string; "href-topotijdreis" : string; "href-utrechtsarchief" : string; "href-ruimtelijkeplannen" : string; };
   "bag-pnd" : { "bag-pnd-id" : string; "bag-pnd-oorspronkelijk-bouwjaar" : string; "bag-pnd-oorspronkelijk-bouwjaar-interval" : string; "bag-pnd-status" : string; "bag-pnd-geconstateerd" : string; "bag-pnd-documentdatum" : Date; "bag-pnd-documentnummer" : string; "bag-pnd-geo" : string; "bag-pnd-geo-EPSG28992" : string; };
   "bwk" : { "bwk-num-nadergebruiksdoel" : string; "bwk-num-status" : string; "bwk-num-adrestype" : string; "bwk-num-wijkid" : string; "bwk-num-wijkcode" : string; "bwk-num-wijknaam" : string; "bwk-num-subwijkid" : string; "bwk-num-subwijkcode" : string; "bwk-num-subwijknaam" : string; "bwk-num-buurtid" : string; "bwk-num-buurtcode" : string; "bwk-num-buurtnaam" : string; "bwk-num-subbuurtid" : string; "bwk-num-subbuurtcode" : string; "bwk-num-subbuurtnaam" : string; "bwk-vbo-laagstebouwlaag" : string; "bwk-vbo-hoogstebouwlaag" : string; "bwk-vbo-toegangbouwlaag" : string; "bwk-vbo-lagen" : string; "bwk-vbo-typetoegang" : string; "bwk-datum" : string; "bwk-num-geo-EPSG28992" : string; "bwk-num-geo-lat-lon" : string; };
   "hoofdadres" : { "bag-num-id" : string; "bag-num-volledig" : string; "bag-num-postcode" : string; "bag-num-huisnummer" : string; "bag-num-huisletter" : string; "bag-num-huisnummertoevoeging" : string; "bag-num-huisnummer-letter-aanduiding" : string; "bag-num-status" : string; "bag-num-documentdatum" : Date; "bag-num-documentnummer" : string; "bag-num-voorkomen" : string; "bag-opr-id" : string; "bag-opr-naam" : string; "bag-opr-type" : string; "bag-opr-status" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-opr-voorkomen" : string; "bag-wpl-id" : string; "bag-wpl-naam" : string; "bag-wpl-status" : string; "bag-wpl-documentdatum" : Date; "bag-wpl-documentnummer" : string; "bag-wpl-voorkomen" : string; };

@@ -36,7 +36,7 @@ export function Filters({}) {
 
         {filterAttributes.map((attribute) => {
           return (
-            <AttributeCollapsible attribute={attribute} key={attribute.name || attribute.id}>
+            <AttributeCollapsible attribute={attribute} key={'ac_'+attribute.id}>
               {attribute.attributes?.map((att) => {
                 return <Filter key={att?.name} {...att} />;
               })}
@@ -44,12 +44,12 @@ export function Filters({}) {
           );
         })}
 
-        { (["localhost", "127.0.0.1"].includes(window.location.hostname) || location.search === "?iamadeveloper") &&
+        {/* (["localhost", "127.0.0.1"].includes(window.location.hostname) || location.search === "?iamadeveloper") &&
           <div style={{'marginTop':'2em'}}>
             <button onClick={setIndexes}>set index properties</button>
             <div id="set-indexes-progress"></div>
           </div>
-        }
+      */}
 
       </div>
     </div>
