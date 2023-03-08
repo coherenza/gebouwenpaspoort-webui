@@ -285,7 +285,18 @@ export const Attributes : {[index: string]: Attribute} = {
   },
   "_geo": {
     "name": "latitude-longitude geo coordinaten",
-    "type": "string",
+    "attributes": [
+      {
+        "name": "latitude",
+        "type": "string",
+        "id": "lat"
+      },
+      {
+        "name": "longitude",
+        "type": "string",
+        "id": "lng"
+      }
+    ],
     "id": "_geo"
   },
   "ob_onderwerp": {
@@ -559,39 +570,19 @@ export const Attributes : {[index: string]: Attribute} = {
  * For each sub-attribute, the first Attribute is used as the title of the sub-section.
  */
 export const displayAttributes: Attribute[] =   [
-    Attributes.id,
-    Attributes.bag_aob_id,
-    Attributes.bag_num_id,
-    Attributes.bag_pnd_id,
     Attributes.bag_object_type,
     Attributes.naam,
-    Attributes.object_type_sort_order,
-    Attributes.location_sort_value,
-    Attributes.pdok_locatie_id,
     Attributes.bag_aob_gebruiksdoel,
     Attributes.bag_aob_oppervlakte,
-    Attributes.bag_aob_oppervlakte_interval,
     Attributes.bag_aob_status,
-    Attributes.bag_aob_documentdatum,
-    Attributes.bag_aob_documentnummer,
-    Attributes.bag_aob_voorkomen,
-    Attributes.geo_EPSG28992,
-    Attributes._geo,
     Attributes.links,
     
   { id : "bag-pnd",
     name : "Pand",
     attributes:
       [
-      Attributes.bag_pnd_id,
       Attributes.bag_pnd_oorspronkelijk_bouwjaar,
-      Attributes.bag_pnd_oorspronkelijk_bouwjaar_interval,
-      Attributes.bag_pnd_status,
-      Attributes.bag_pnd_geconstateerd,
-      Attributes.bag_pnd_documentdatum,
-      Attributes.bag_pnd_documentnummer,
-      Attributes.bag_pnd_geo,
-      Attributes.bag_pnd_geo_EPSG28992
+      Attributes.bag_pnd_status
     ]
   },
     
@@ -600,28 +591,10 @@ export const displayAttributes: Attribute[] =   [
     attributes:
       [
       Attributes.bwk_num_nadergebruiksdoel,
-      Attributes.bwk_num_status,
-      Attributes.bwk_num_adrestype,
-      Attributes.bwk_num_wijkid,
-      Attributes.bwk_num_wijkcode,
       Attributes.bwk_num_wijknaam,
-      Attributes.bwk_num_subwijkid,
-      Attributes.bwk_num_subwijkcode,
       Attributes.bwk_num_subwijknaam,
-      Attributes.bwk_num_buurtid,
-      Attributes.bwk_num_buurtcode,
       Attributes.bwk_num_buurtnaam,
-      Attributes.bwk_num_subbuurtid,
-      Attributes.bwk_num_subbuurtcode,
-      Attributes.bwk_num_subbuurtnaam,
-      Attributes.bwk_vbo_laagstebouwlaag,
-      Attributes.bwk_vbo_hoogstebouwlaag,
-      Attributes.bwk_vbo_toegangbouwlaag,
-      Attributes.bwk_vbo_lagen,
-      Attributes.bwk_vbo_typetoegang,
-      Attributes.bwk_datum,
-      Attributes.bwk_num_geo_EPSG28992,
-      Attributes.bwk_num_geo_lat_lon
+      Attributes.bwk_num_subbuurtnaam
     ]
   },
     
@@ -629,7 +602,6 @@ export const displayAttributes: Attribute[] =   [
     name : "Adres",
     attributes:
       [
-      Attributes.bag_num_id,
       Attributes.bag_num_volledig,
       Attributes.bag_num_postcode,
       Attributes.bag_num_huisnummer,
@@ -637,22 +609,8 @@ export const displayAttributes: Attribute[] =   [
       Attributes.bag_num_huisnummertoevoeging,
       Attributes.bag_num_huisnummer_letter_aanduiding,
       Attributes.bag_num_status,
-      Attributes.bag_num_documentdatum,
-      Attributes.bag_num_documentnummer,
-      Attributes.bag_num_voorkomen,
-      Attributes.bag_opr_id,
       Attributes.bag_opr_naam,
-      Attributes.bag_opr_type,
-      Attributes.bag_opr_status,
-      Attributes.bag_opr_documentdatum,
-      Attributes.bag_opr_documentnummer,
-      Attributes.bag_opr_voorkomen,
-      Attributes.bag_wpl_id,
-      Attributes.bag_wpl_naam,
-      Attributes.bag_wpl_status,
-      Attributes.bag_wpl_documentdatum,
-      Attributes.bag_wpl_documentnummer,
-      Attributes.bag_wpl_voorkomen
+      Attributes.bag_wpl_naam
     ]
   },
     
@@ -660,32 +618,14 @@ export const displayAttributes: Attribute[] =   [
     name : "Nevenadres",
     attributes:
       [
-      Attributes.bag_num_id_neven,
       Attributes.bag_num_volledig_neven,
       Attributes.bag_num_postcode_neven,
       Attributes.bag_num_huisnummer_neven,
       Attributes.bag_num_huisletter_neven,
       Attributes.bag_num_huisnummertoevoeging_neven,
       Attributes.bag_num_huisnummer_letter_aanduiding_neven,
-      Attributes.bag_opr_id_neven,
       Attributes.bag_opr_naam_neven,
-      Attributes.bag_opr_type_neven,
-      Attributes.bag_wpl_id_neven,
       Attributes.bag_wpl_naam_neven
-    ]
-  },
-    
-  { id : "officiele-bekendmakingen",
-    name : "Officiële Bekendmakingen",
-    attributes:
-      [
-      Attributes.identificatie,
-      Attributes.titel,
-      Attributes.ob_documenttype,
-      Attributes.wijzigingsdatum,
-      Attributes.publicatiedatum,
-      Attributes.ob_onderwerp,
-      Attributes.url_vindplaats
     ]
   },
     
@@ -694,10 +634,8 @@ export const displayAttributes: Attribute[] =   [
     attributes:
       [
       Attributes.zk_nummer,
-      Attributes.omschrijving,
       Attributes.zk_soort,
-      Attributes.zk_status,
-      Attributes.besluitdatum
+      Attributes.zk_status
     ]
   }
   ];
@@ -710,7 +648,6 @@ export const filterAttributes: Attribute[] =   [
     Attributes.bag_aob_gebruiksdoel,
     Attributes.bag_aob_oppervlakte_interval,
     Attributes.bag_aob_status,
-    Attributes._geo,
     
   { id : "bag-pnd",
     name : "Pand",
@@ -779,7 +716,7 @@ export interface GBPObject {
   "bag-aob-documentnummer" : string;
   "bag-aob-voorkomen" : string;
   "geo-EPSG28992" : number[];
-  "_geo" : number[];
+  "_geo" : string;
   "links" : string;
   "bag-pnd" : { "bag-pnd-id" : string; "bag-pnd-oorspronkelijk-bouwjaar" : string; "bag-pnd-oorspronkelijk-bouwjaar-interval" : string; "bag-pnd-status" : string; "bag-pnd-geconstateerd" : string; "bag-pnd-documentdatum" : Date; "bag-pnd-documentnummer" : string; "bag-pnd-geo" : string; "bag-pnd-geo-EPSG28992" : string; };
   "bwk" : { "bwk-num-nadergebruiksdoel" : string; "bwk-num-status" : string; "bwk-num-adrestype" : string; "bwk-num-wijkid" : string; "bwk-num-wijkcode" : string; "bwk-num-wijknaam" : string; "bwk-num-subwijkid" : string; "bwk-num-subwijkcode" : string; "bwk-num-subwijknaam" : string; "bwk-num-buurtid" : string; "bwk-num-buurtcode" : string; "bwk-num-buurtnaam" : string; "bwk-num-subbuurtid" : string; "bwk-num-subbuurtcode" : string; "bwk-num-subbuurtnaam" : string; "bwk-vbo-laagstebouwlaag" : string; "bwk-vbo-hoogstebouwlaag" : string; "bwk-vbo-toegangbouwlaag" : string; "bwk-vbo-lagen" : string; "bwk-vbo-typetoegang" : string; "bwk-datum" : string; "bwk-num-geo-EPSG28992" : string; "bwk-num-geo-lat-lon" : string; };
