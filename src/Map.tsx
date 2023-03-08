@@ -22,7 +22,7 @@ import { AppContext } from "./App";
 import { Attributes, GBPObject, getObjectType } from "./schema";
 import { useInfiniteHits, useSearchBox } from "react-instantsearch-hooks-web";
 import { Header } from "./Header";
-import { LayerSource } from "./Layers";
+import { LayerSource, meiliLayerId, symbolLayer } from "./Layers";
 import useDebounce from "./useDebounce";
 import { mapboxToken } from "./config";
 import { ToolTip } from "./Tooltip";
@@ -243,6 +243,7 @@ export function Map() {
   const data: GeoJSON.FeatureCollection<GeoJSON.Geometry> = useMemo(() => {
     return {
       type: "FeatureCollection",
+      id: meiliLayerId,
       features: items.map((item, index) => {
         const isCurrent =
           item.id == current?.id || locationFilter?.id == item.id;
@@ -363,7 +364,7 @@ export function Map() {
         <GeolocateControl position={"bottom-left"} />
         {/* TODO: Layer ordering. This is currently not supported. https://github.com/alex3165/react-mapbox-gl/issues/606 */}
         <Source type="geojson" data={data}>
-          <Layer {...dataLayer} />
+          <Layer {...symbolLayer} />
         </Source>
         {layers
           .filter((layer) => layer.visible)
@@ -374,27 +375,3 @@ export function Map() {
     </div>
   );
 }
-
-// For more information on data-driven styles, see https://www.mapbox.com/help/gl-dds-ref/
-export const dataLayer: SymbolLayer = {
-  id: "points",
-  type: "symbol",
-  layout: {
-    // get the title name and icon from the source's properties
-    "text-field": ["get", "title"],
-    // Show icon depending on type
-    "icon-image": ["get", "icon"],
-    "icon-size": ["get", "size"],
-    "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-    "text-offset": [0, 1.25],
-    "text-anchor": "top",
-    "symbol-sort-key": ["get", "sort-key"],
-    "text-size": ["get", "text-size"],
-    "icon-padding": 1,
-  },
-  paint: {
-    "text-halo-color": "rgba(255,255,255,0.75)",
-    "text-halo-width": 1,
-    "icon-color": ["get", "color"],
-  },
-};

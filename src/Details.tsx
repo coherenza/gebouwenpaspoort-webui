@@ -15,7 +15,7 @@ import { Cross1Icon } from "@radix-ui/react-icons";
 
 export function Details() {
   const { current, setCurrent } = useContext(AppContext);
-  const x = useRefinementList({ attribute: "pdok-locatie-id" });
+  // const x = useRefinementList({ attribute: "pdok-locatie-id" });
   // The `useCurrentRefinements` hook is quite expensive, so we call it once over here
   //  and pass the props all the way down.
   const { items: selectedAttributes } = useCurrentRefinements();

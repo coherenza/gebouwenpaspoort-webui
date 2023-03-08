@@ -1,6 +1,13 @@
 import { Cross1Icon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Layer, RasterLayer, FillLayer, Source } from "react-map-gl";
+import {
+  Layer,
+  RasterLayer,
+  FillLayer,
+  Source,
+  SymbolLayer,
+} from "react-map-gl";
+import { AnyLayer } from "react-map-gl/dist/esm/types";
 import { AppContext } from "./App";
 import "./Layers.css";
 
@@ -33,17 +40,51 @@ export const layersDefault: LayerI[] = [
     name: "Monumenten Gemeente",
     id: "UtrechtOpen:MONUMENTEN_OPEN_GM",
     visible: false,
-    type: "features",
+    type: "fill",
     url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wfs",
   },
   {
     name: "Monument Rijk",
     id: "UtrechtOpen:MONUMENTEN_OPEN_RM",
     visible: false,
-    type: "features",
+    type: "fill",
     url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wfs",
   },
+  {
+    name: "NAP Peilmerken",
+    id: "napinfo:nappeilmerken",
+    visible: false,
+    type: "symbol",
+    // https://service.pdok.nl/rws/napinfo/wms/v1_0?request=getCapabilities&service=WMS
+    url: "https://geodata.nationaalgeoregister.nl/napinfo/wms",
+  },
 ];
+
+export const meiliLayerId = "points";
+
+/** Layer for clickable Address items */
+export const symbolLayer: SymbolLayer = {
+  id: meiliLayerId,
+  type: "symbol",
+  layout: {
+    // get the title name and icon from the source's properties
+    "text-field": ["get", "title"],
+    // Show icon depending on type
+    "icon-image": ["get", "icon"],
+    "icon-size": ["get", "size"],
+    "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+    "text-offset": [0, 1.25],
+    "text-anchor": "top",
+    "symbol-sort-key": ["get", "sort-key"],
+    "text-size": ["get", "text-size"],
+    "icon-padding": 1,
+  },
+  paint: {
+    "text-halo-color": "rgba(255,255,255,0.75)",
+    "text-halo-width": 1,
+    "icon-color": ["get", "color"],
+  },
+};
 
 /** Get XML metadata description from PDOK */
 async function getDescription(layer: LayerI): Promise<string> {
@@ -138,10 +179,12 @@ function LayerCheckbox({ layer }) {
 const boundsDefault = [3.21, 50.73, 7.25, 53.58];
 
 export function LayerSource({ layer }: { layer: LayerI }) {
-  if (layer.type == "features") {
+  let mapBoxLayer = makeMapBoxLayer(layer);
+
+  if (layer.type == "fill") {
     return (
       <Source id={layer.id} type="geojson" data={makeWfsUrl(layer)}>
-        <Layer {...makeFillLayer(layer)} key={layer.id} />
+        <Layer {...mapBoxLayer} key={layer.id} />
       </Source>
     );
   }
@@ -154,15 +197,48 @@ export function LayerSource({ layer }: { layer: LayerI }) {
       tiles={[makeWmsUrl(layer)]}
       scheme="xyz"
     >
-      <Layer {...makeRasterLayer(layer)} />
+      <Layer {...mapBoxLayer} />
     </Source>
   );
 }
 
+function makeMapBoxLayer(layer: LayerI): AnyLayer {
+  if (layer.type == "fill") {
+    return makeFillLayer(layer);
+  } else if (layer.type == "symbol") {
+    return makeSymbolLayer(layer);
+  } else {
+    return makeRasterLayer(layer);
+  }
+}
+
+const makeSymbolLayer = (layer: LayerI): SymbolLayer => ({
+  id: layer.id,
+  type: "symbol",
+  layout: {
+    // get the title name and icon from the source's properties
+    // "text-field": ["get", "title"],
+    "text-field": "test",
+    // Show icon depending on type
+    "icon-image": ["get", "icon"],
+    "icon-size": ["get", "size"],
+    "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+    "text-offset": [0, 1.25],
+    "text-anchor": "top",
+    "symbol-sort-key": ["get", "sort-key"],
+    "text-size": ["get", "text-size"],
+    "icon-padding": 1,
+  },
+  paint: {
+    "text-halo-color": "rgba(255,255,255,0.75)",
+    "text-halo-width": 1,
+    "icon-color": ["get", "color"],
+  },
+});
+
 const makeFillLayer = (layer: LayerI): FillLayer => ({
   id: layer.id,
   type: "fill",
-  // "source-layer": layer.id,
   paint: {
     "fill-color": stringToColor(layer.id),
     "fill-opacity": 0.8,
@@ -186,7 +262,7 @@ export interface LayerI {
   /** Optionally overwrite URL */
   url?: string;
   /** Optionally overwrite type, defaults to raster */
-  type?: "raster" | "features";
+  type?: "raster" | "fill" | "symbol";
 }
 
 // Convert object to searchParams
@@ -212,6 +288,7 @@ export function makeWfsUrl(layer: LayerI) {
   url.search = objectToSearchParams(params).toString();
   return url.toString();
 }
+
 export function makeWmsUrl(layer: LayerI) {
   let url = new URL(layer.url);
   let params = {

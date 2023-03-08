@@ -1,5 +1,5 @@
 import { useCallback, useContext } from "react";
-import { Attributes, GBPObject, GBPObjectTypes, getObjectType } from "./schema";
+import { Attributes, GBPObject, getObjectType } from "./schema";
 import "./Hit.css";
 import { AppContext } from "./App";
 import { TrashIcon } from "@radix-ui/react-icons";
