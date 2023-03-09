@@ -1,30 +1,50 @@
 import { Cross1Icon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Layer, RasterLayer, FillLayer, Source } from "react-map-gl";
+import {
+  Layer,
+  RasterLayer,
+  FillLayer,
+  Source,
+  SymbolLayer,
+} from "react-map-gl";
+import { AnyLayer } from "react-map-gl/dist/esm/types";
 import { AppContext } from "./App";
 import "./Layers.css";
 
+export const bagLayerId = "points";
+
 export const layersDefault: LayerI[] = [
+  {
+    name: "BAG items",
+    id: bagLayerId,
+    visible: true,
+    type: "symbol",
+    url: "https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1",
+  },
   {
     name: "Luchtfoto",
     id: "2022_orthoHR",
+    type: "raster",
     visible: false,
     url: "https://service.pdok.nl/hwh/luchtfotocir/wms/v1_0",
   },
   {
     name: "CBS Buurten 2020",
+    type: "raster",
     id: "cbs_buurten_2020",
     visible: false,
     url: "https://service.pdok.nl/cbs/wijkenbuurten/2020/wms/v1_0",
   },
   {
     name: "CBS Wijken 2020",
+    type: "raster",
     id: "cbs_wijken_2020",
     visible: false,
     url: "https://service.pdok.nl/cbs/wijkenbuurten/2020/wms/v1_0",
   },
   {
     name: "Funderingsproblematiek",
+    type: "raster",
     id: "indgebfunderingsproblematiek",
     visible: false,
     url: "https://service.pdok.nl/rvo/indgebfunderingsproblematiek/wms/v1_0",
@@ -33,17 +53,57 @@ export const layersDefault: LayerI[] = [
     name: "Monumenten Gemeente",
     id: "UtrechtOpen:MONUMENTEN_OPEN_GM",
     visible: false,
-    type: "features",
+    type: "fill",
     url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wfs",
   },
   {
     name: "Monument Rijk",
     id: "UtrechtOpen:MONUMENTEN_OPEN_RM",
     visible: false,
-    type: "features",
+    type: "fill",
     url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wfs",
   },
+  {
+    name: "NAP Peilmerken",
+    id: "napinfo:nappeilmerken",
+    visible: false,
+    type: "symbol",
+    textField: "nap_hoogte",
+    // https://service.pdok.nl/rws/napinfo/wms/v1_0?request=getCapabilities&service=WMS
+    url: "https://geodata.nationaalgeoregister.nl/napinfo/wfs",
+  },
+  {
+    name: "AHN3",
+    id: "ahn3_05m_dtm",
+    visible: false,
+    type: "raster",
+    url: "https://service.pdok.nl/rws/ahn3/wms/v1_0",
+  },
 ];
+
+/** Layer for clickable Address items */
+export const bagLayer: SymbolLayer = {
+  id: bagLayerId,
+  type: "symbol",
+  layout: {
+    // get the title name and icon from the source's properties
+    "text-field": ["get", "title"],
+    // Show icon depending on type
+    "icon-image": ["get", "icon"],
+    "icon-size": ["get", "size"],
+    "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+    "text-offset": [0, 1.25],
+    "text-anchor": "top",
+    "symbol-sort-key": ["get", "sort-key"],
+    "text-size": ["get", "text-size"],
+    "icon-padding": 1,
+  },
+  paint: {
+    "text-halo-color": "rgba(255,255,255,0.75)",
+    "text-halo-width": 1,
+    "icon-color": ["get", "color"],
+  },
+};
 
 /** Get XML metadata description from PDOK */
 async function getDescription(layer: LayerI): Promise<string> {
@@ -93,10 +153,15 @@ function LayerCheckbox({ layer }) {
   const { setLayers, layers } = useContext(AppContext);
   const [showDescription, setShowDescription] = useState(false);
 
-  const [description, setDescription] = useState("");
+  let [description, setDescription] = useState("");
   useEffect(() => {
     getDescription(layer).then((desc) => setDescription(desc));
   }, [layer]);
+
+  if (layer.id == bagLayerId) {
+    description =
+      "Adressen uit het Basisregistratie Adressen en Gebouwen (BAG)";
+  }
 
   // When clicking on a layers, toggle the visibility
   const toggleLayer = useCallback(
@@ -135,34 +200,74 @@ function LayerCheckbox({ layer }) {
 }
 
 /** This should describe Utrecht bounds */
-const boundsDefault = [3.21, 50.73, 7.25, 53.58];
+const boundsUtrecht = [4.93038, 51.986783, 5.25482, 52.166141];
+const boundsNL = [3, 50, 7.4, 54];
 
+/** Component that mounts the Source and Layer components, required by React-Map-gl */
 export function LayerSource({ layer }: { layer: LayerI }) {
-  if (layer.type == "features") {
+  if (layer.id == bagLayerId) {
+    return null;
+  }
+  let mapBoxLayer = makeMapBoxLayer(layer);
+
+  if (layer.type == "raster") {
     return (
-      <Source id={layer.id} type="geojson" data={makeWfsUrl(layer)}>
-        <Layer {...makeFillLayer(layer)} key={layer.id} />
+      <Source
+        type="raster"
+        tileSize={1000}
+        bounds={boundsUtrecht}
+        tiles={[makeWmsUrl(layer)]}
+        scheme="xyz"
+      >
+        <Layer {...mapBoxLayer} />
       </Source>
     );
   }
 
   return (
-    <Source
-      type="raster"
-      tileSize={1000}
-      bounds={boundsDefault}
-      tiles={[makeWmsUrl(layer)]}
-      scheme="xyz"
-    >
-      <Layer {...makeRasterLayer(layer)} />
+    <Source id={layer.id} type="geojson" data={makeWfsUrl(layer)}>
+      <Layer {...mapBoxLayer} key={layer.id} />
     </Source>
   );
 }
 
+function makeMapBoxLayer(layer: LayerI): AnyLayer {
+  if (layer.type == "fill") {
+    return makeFillLayer(layer);
+  } else if (layer.type == "symbol") {
+    return makeSymbolLayer(layer);
+  } else {
+    return makeRasterLayer(layer);
+  }
+}
+
+const makeSymbolLayer = (layer: LayerI): SymbolLayer => ({
+  id: layer.id,
+  type: "symbol",
+  layout: {
+    // get the title name and icon from the source's properties
+    "text-field": ["get", layer.textField],
+    // "text-field": "test",
+    // Show icon depending on type
+    "icon-image": "marker",
+    "icon-size": ["get", "size"],
+    "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+    // "text-offset": [0, 1.25],
+    // "text-anchor": "top",
+    "symbol-sort-key": ["get", "sort-key"],
+    "text-size": 12,
+    "icon-padding": 1,
+  },
+  paint: {
+    "text-halo-color": "rgba(255,255,255,0.75)",
+    "text-halo-width": 1,
+    "icon-color": ["get", "color"],
+  },
+});
+
 const makeFillLayer = (layer: LayerI): FillLayer => ({
   id: layer.id,
   type: "fill",
-  // "source-layer": layer.id,
   paint: {
     "fill-color": stringToColor(layer.id),
     "fill-opacity": 0.8,
@@ -185,12 +290,13 @@ export interface LayerI {
   visible: boolean;
   /** Optionally overwrite URL */
   url?: string;
-  /** Optionally overwrite type, defaults to raster */
-  type?: "raster" | "features";
+  type: "raster" | "fill" | "symbol";
+  /** Which property is used to draw the text. Only for "symbol" types */
+  textField?: string;
 }
 
 // Convert object to searchParams
-function objectToSearchParams(obj: { [key: string]: string }) {
+function objectToSearchParams(obj: { [key: string]: any }) {
   const params = new URLSearchParams();
   Object.keys(obj).forEach((key) => {
     params.set(key, obj[key]);
@@ -200,18 +306,21 @@ function objectToSearchParams(obj: { [key: string]: string }) {
 
 export function makeWfsUrl(layer: LayerI) {
   let url = new URL(layer.url);
+  // See https://docs.geoserver.org/stable/en/user/services/wfs/reference.html
   let params = {
     SERVICE: "WFS",
-    VERSION: "1.3.0",
+    VERSION: "1.1.0",
     REQUEST: "GetFeature",
     outputFormat: "application/json",
     acceptsFormat: "application/json",
     typeNames: layer.id,
     srsName: "EPSG:4326",
+    bbox: `${boundsUtrecht.toString()},EPSG:4326`,
   };
   url.search = objectToSearchParams(params).toString();
   return url.toString();
 }
+
 export function makeWmsUrl(layer: LayerI) {
   let url = new URL(layer.url);
   let params = {

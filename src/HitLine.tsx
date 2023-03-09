@@ -1,5 +1,5 @@
 import { useCallback, useContext } from "react";
-import { Attributes, GBPObject, GBPObjectTypes, getObjectType } from "./schema";
+import { Attributes, GBPObject, getObjectType } from "./schema";
 import "./Hit.css";
 import { AppContext } from "./App";
 import { TrashIcon } from "@radix-ui/react-icons";
@@ -76,7 +76,11 @@ export const HitLine = ({ hit }: HitProps) => {
   return (
     <div className={active ? "Hit Hit--active" : "Hit"} onClick={handleClick}>
       {/* Click on area-filter -> set filter on pdok-locatie-id == hit.id */}
-      <div className="hit-naam">
+      <div
+        className={`hit-naam ${
+          status && shouldShowStatus(status) ? "hit-naam__deleted" : ""
+        }`}
+      >
         {isAob ? "" : "🔍 "}
         {isAob ? adres : hit["naam"]}
       </div>

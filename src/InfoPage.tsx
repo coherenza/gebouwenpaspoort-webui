@@ -1,4 +1,5 @@
 import "./InfoPage.css";
+import { GBPObjectTypes } from "./schema";
 
 export function InfoPage() {
   return (
@@ -44,6 +45,25 @@ export function InfoPage() {
           naar het desbetreffende bronsysteem, waarin zij vervolgens alle
           beschikbare informatie kunnen raadplegen.
         </p>
+
+        <h2>Legenda</h2>
+        <p>
+          Na een zoekopdracht toont het gebouwenpaspoort de volgende
+          informatietypen op de kaart en in het resultaat. Je kunt de betekenis
+          van de kleuren zien door er met je muis over te hoveren, of in de
+          lijst hieronder:
+        </p>
+        <ul>
+          {Object.values(GBPObjectTypes).map((type) => (
+            <li key={type.id} className="legend-item">
+              <div
+                className="hit-ball"
+                style={{ backgroundColor: type.color }}
+              ></div>{" "}
+              {type.label}
+            </li>
+          ))}
+        </ul>
 
         <h2>Gegevens</h2>
         <p>
