@@ -34,6 +34,7 @@ function nothingToSee(value) {
  */
 export function AttributeView({ attribute, hit, selectedAttributes }) {
   const isCollection = Array.isArray(hit[attribute.id]) && !!attribute.attributes;
+  const count = isCollection && hit[attribute?.id]?.length | 0;
 
   if (!attribute.attributes) {
     return (
@@ -44,45 +45,40 @@ export function AttributeView({ attribute, hit, selectedAttributes }) {
         selectedAttributes={selectedAttributes}
       />
     );
-  }
-
-  const count = isCollection && hit[attribute?.id]?.length | 0;
-
-  if (isCollection && count == 0) return null;
-  // Do not show attribute sets when all attributes are empty.
-  if (
-    !isCollection &&
-    attribute.attributes.every((a) => nothingToSee(hit[a.id]))
-  )
+  } else if (isCollection && count == 0) {
     return null;
-
-  return (
-    <AttributeCollapsible
-      attribute={attribute}
-      showCount={isCollection}
-      count={count}
-    >
-      {isCollection ? (
-        <AttributeCollection collection={attribute} hit={hit} />
-      ) : (
-        // The attribute represents an unidentified list of property-value combinations
-        attribute.attributes.map(
-          (att) =>
-            att &&
-            att.name &&
-            att.id && (
-              <PropValHighlights
-                selectedAttributes={selectedAttributes}
-                key={`${att.name} ${att.id}`}
-                hit={hit}
-                attribute={att}
-                useHighlight={true}
-              />
-            )
-        )
-      )}
-    </AttributeCollapsible>
-  );
+  } else if ( !isCollection && attribute.attributes.every((a) => !!hit[attribute.id] && nothingToSee(hit[attribute.id][a.id])) ) {
+    // Do not show attribute sets when all attributes are empty.
+    return null;
+  } else {
+    return (
+      <AttributeCollapsible
+        attribute={attribute}
+        showCount={isCollection}
+        count={count}
+      >
+        {isCollection ? (
+          <AttributeCollection collection={attribute} hit={hit} />
+        ) : (
+          // The attribute represents an unidentified list of property-value combinations
+          attribute.attributes.map(
+            (att) =>
+              att &&
+              att.name &&
+              att.id && (
+                <PropValHighlights
+                  selectedAttributes={selectedAttributes}
+                  key={`pvh_${att.id}`}
+                  hit={hit[attribute.id]}
+                  attribute={att}
+                  useHighlight={true}
+                />
+              )
+          )
+        )}
+      </AttributeCollapsible>
+    );
+  }
 }
 
 interface AttributeTitleProps {
@@ -152,7 +148,7 @@ function AttributeItem({ hit, attribute, item, collection, i, startOpen = false 
           // We can't use Highlight here, or maybe we can, but I don't know how to pass a path for
           // a resource that is stored in an array (e.g. `prop[0].subProp`) to the `Highlight` component.
           <PropValHighlights
-            key={attribute.name}
+            key={'pvh_'+attribute.name}
             hit={item[attribute.id]}
             attribute={attribute}
           />
@@ -177,6 +173,16 @@ function PropValHighlights({
 
   const isLink = attribute.type == "URL";
 
+  let hitValue =
+    ( Array.isArray(hit)
+    ? hit.join(' ')
+    : typeof(hit) == 'object'
+    ? hit[attribute.id]
+    : hit
+    );
+
+  if (hitValue == undefined) return '';
+
   return (
     <div
       className={`Attribute__propval ${
@@ -184,34 +190,35 @@ function PropValHighlights({
       }`}
     >
       {" "}
-      {isLink ? (
-        <a
-          className="Attribute__link"
-          href={hit[attribute.id] || hit}
-          target="_blank"
-        >
-          {attribute.name}
-          <ExternalLinkIcon />
-        </a>
-      ) : (
-        <>
-          <div className="Attribute__propval__key">{attribute.name}</div>
-          <div className="Attribute__propval__value">
-            {useHighlight ? (
-              <Highlight
-                key={`val-${attribute.id}`}
-                attribute={attribute.id}
-                // @ts-ignore
-                hit={hit}
-                // @ts-ignore
-                tagname="mark"
-              />
-            ) : (
-              hit?.toString()
-            )}
-          </div>
-        </>
-      )}
+      {
+        isLink ? ( <a
+            className="Attribute__link"
+            href={hitValue}
+            target="_blank"
+          >
+            {attribute.name}
+            <ExternalLinkIcon />
+          </a>
+        ) : (
+          <>
+            <div className="Attribute__propval__key">{attribute.name}</div>
+            <div className="Attribute__propval__value">
+              {useHighlight && false ? (
+                <Highlight
+                  key={`val-${attribute.id}`}
+                  attribute={attribute.id}
+                  // @ts-ignore
+                  hit={hitValue}
+                  // @ts-ignore
+                  tagname="mark"
+                />
+              ) : (
+                hitValue?.toString()
+              )}
+            </div>
+          </>
+        )
+      }
     </div>
   );
 }

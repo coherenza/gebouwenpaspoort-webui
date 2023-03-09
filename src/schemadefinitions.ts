@@ -571,24 +571,29 @@ export const Attributes : {[index: string]: Attribute} = {
  */
 export const displayAttributes: Attribute[] =   [
     
-  { id : "bag-object-type",
-    name : "Object type",
-  },
-    
   { id : "naam",
     name : "Adres",
+    type : "string",
+  },
+    
+  { id : "bag-object-type",
+    name : "Object type",
+    type : "string",
   },
     
   { id : "bag-aob-gebruiksdoel",
     name : "Gebruiksdoel",
+    type : "string",
   },
     
   { id : "bag-aob-oppervlakte",
     name : "Oppervlakte",
+    type : "string",
   },
     
   { id : "bag-aob-status",
     name : "BAG status",
+    type : "string",
   },
     
   { id : "links",
@@ -597,22 +602,27 @@ export const displayAttributes: Attribute[] =   [
       
     { id : "href-luchtfoto",
       name : "Luchtfoto",
+      type : "URL",
     },
       
     { id : "href-streetview",
       name : "Google Streetview",
+      type : "URL",
     },
       
     { id : "href-topotijdreis",
       name : "Topo tijdreis",
+      type : "URL",
     },
       
     { id : "href-utrechtsarchief",
       name : "Utrechts archief",
+      type : "URL",
     },
       
     { id : "href-ruimtelijkeplannen",
       name : "Rumtelijke plannen",
+      type : "URL",
     }
     ]
   },
@@ -623,10 +633,12 @@ export const displayAttributes: Attribute[] =   [
       
     { id : "bag-pnd-oorspronkelijk-bouwjaar",
       name : "Bouwjaar",
+      type : "string",
     },
       
     { id : "bag-pnd-status",
       name : "Status",
+      type : "string",
     }
     ]
   },
@@ -637,22 +649,27 @@ export const displayAttributes: Attribute[] =   [
       
     { id : "bwk-num-nadergebruiksdoel",
       name : "Nader gebruiksdoel",
+      type : "string",
     },
       
     { id : "bwk-num-wijknaam",
       name : "Wijknaam",
+      type : "string",
     },
       
     { id : "bwk-num-subwijknaam",
       name : "Subwijk",
+      type : "string",
     },
       
     { id : "bwk-num-buurtnaam",
       name : "Buurt",
+      type : "string",
     },
       
     { id : "bwk-num-subbuurtnaam",
       name : "Subbuurt",
+      type : "string",
     }
     ]
   },
@@ -663,38 +680,47 @@ export const displayAttributes: Attribute[] =   [
       
     { id : "bag-num-volledig",
       name : "Hoofdadres",
+      type : "string",
     },
       
     { id : "bag-num-postcode",
       name : "Postcode",
+      type : "string",
     },
       
     { id : "bag-num-huisnummer",
       name : "Huisnummer",
+      type : "string",
     },
       
     { id : "bag-num-huisletter",
       name : "Huisletter",
+      type : "string",
     },
       
     { id : "bag-num-huisnummertoevoeging",
       name : "Huisnummertoevoeging",
+      type : "string",
     },
       
     { id : "bag-num-huisnummer-letter-aanduiding",
       name : "Huisnummer-letter-aanduiding",
+      type : "string",
     },
       
     { id : "bag-num-status",
       name : "BAG status",
+      type : "string",
     },
       
     { id : "bag-opr-naam",
       name : "Openbare ruimte",
+      type : "string",
     },
       
     { id : "bag-wpl-naam",
       name : "Woonplaats",
+      type : "string",
     }
     ]
   },
@@ -705,34 +731,42 @@ export const displayAttributes: Attribute[] =   [
       
     { id : "bag-num-volledig-neven",
       name : "Nevenadres",
+      type : "string",
     },
       
     { id : "bag-num-postcode-neven",
       name : "Postcode",
+      type : "string",
     },
       
     { id : "bag-num-huisnummer-neven",
       name : "Huisnummer",
+      type : "string",
     },
       
     { id : "bag-num-huisletter-neven",
       name : "Huisletter",
+      type : "string",
     },
       
     { id : "bag-num-huisnummertoevoeging-neven",
       name : "Huisnummertoevoeging",
+      type : "string",
     },
       
     { id : "bag-num-huisnummer-letter-aanduiding-neven",
       name : "Huisnummer-letter-aanduiding",
+      type : "string",
     },
       
     { id : "bag-opr-naam-neven",
       name : "Openbare ruimte",
+      type : "string",
     },
       
     { id : "bag-wpl-naam-neven",
       name : "Woonplaats",
+      type : "string",
     }
     ]
   },
@@ -743,14 +777,17 @@ export const displayAttributes: Attribute[] =   [
       
     { id : "zk-nummer",
       name : "Zaaknummer",
+      type : "string",
     },
       
     { id : "zk-soort",
       name : "Zaaksoort",
+      type : "string",
     },
       
     { id : "zk-status",
       name : "Voortgangsstatus",
+      type : "string",
     }
     ]
   }
@@ -761,32 +798,39 @@ export const displayAttributes: Attribute[] =   [
  */
 export const filterAttributes: Attribute[] =   [
     
-  { id : "pdok-locatie-id",
-    name : "Locatie identificaties",
-  },
-    
-  { id : "bag-aob-gebruiksdoel",
-    name : "Gebruiksdoel",
-  },
-    
-  { id : "bag-aob-oppervlakte-interval",
-    name : "Oppervlakte",
-  },
-    
-  { id : "bag-aob-status",
-    name : "BAG status",
+  { id : "",
+    name : "Algemeen",
+    attributes:    [
+      
+    { id : "bag-aob-gebruiksdoel",
+      name : "Gebruiksdoel",
+      type : "string",
+    },
+      
+    { id : "bag-aob-oppervlakte-interval",
+      name : "Oppervlakte",
+      type : "string",
+    },
+      
+    { id : "bag-aob-status",
+      name : "BAG status",
+      type : "string",
+    }
+    ]
   },
     
   { id : "bag-pnd",
     name : "Pand",
     attributes:    [
       
-    { id : "bag-pnd-oorspronkelijk-bouwjaar-interval",
+    { id : "bag-pnd.bag-pnd-oorspronkelijk-bouwjaar-interval",
       name : "bouwjaar",
+      type : "string",
     },
       
-    { id : "bag-pnd-status",
+    { id : "bag-pnd.bag-pnd-status",
       name : "Status",
+      type : "string",
     }
     ]
   }
@@ -832,12 +876,12 @@ export const searchableAttributes = [
 ];
 
 export interface GBPObject {
+  "naam" : string;
   "id" : string;
   "bag-aob-id" : string;
   "bag-num-id" : string[];
   "bag-pnd-id" : string[];
   "bag-object-type" : string;
-  "naam" : string;
   "object-type-sort-order" : string;
   "location-sort-value" : string;
   "pdok-locatie-id" : string[];
