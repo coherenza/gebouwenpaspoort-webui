@@ -135,7 +135,7 @@ function AttributeCollection({ hit, collection }) {
 function AttributeItem({ hit, attribute, item, collection, i, startOpen = false }) {
   const [open, setOpen] = useState(startOpen);
 
-  const title = item[collection.attributes[0].id];
+  const title = (Array.isArray(item[collection.attributes[0].id])) ? item[collection.attributes[0].id][0] : item[collection.attributes[0].id];
 
   return (
     <div className="Attribute__item" key={`${item.id}${i}`}>
@@ -175,7 +175,7 @@ function PropValHighlights({
 
   let hitValue =
     ( Array.isArray(hit)
-    ? hit.join(' ')
+    ? hit.join('\n')
     : typeof(hit) == 'object'
     ? hit[attribute.id]
     : hit
@@ -213,7 +213,7 @@ function PropValHighlights({
                   tagname="mark"
                 />
               ) : (
-                hitValue?.toString()
+                hitValue?.toString().split('\n').map((hv) => ( <div>{hv}</div> ))
               )}
             </div>
           </>

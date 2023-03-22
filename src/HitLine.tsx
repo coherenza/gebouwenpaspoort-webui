@@ -55,7 +55,7 @@ export const HitLine = ({ hit }: HitProps) => {
   const { isAob, color } = getObjectType(hit);
 
   const status = hit[Attributes.bag_aob_status.id];
-  const adres = `${hit.hoofdadres['bag-opr-naam']} ${hit.hoofdadres['bag-num-huisnummer-letter-aanduiding']}`;
+  const adres = `${hit.hoofdadres?.['bag-opr-naam']} ${hit.hoofdadres?.['bag-num-huisnummer-letter-aanduiding']}`;
 
   const handleClick = useCallback(() => {
     if (isAob) {
