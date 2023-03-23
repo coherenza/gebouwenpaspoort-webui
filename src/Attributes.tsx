@@ -40,6 +40,7 @@ export function AttributeView({ attribute, hit, selectedAttributes }) {
     return (
       <PropValHighlights
         hit={hit}
+        key={`pvhe_${attribute.id}`}
         attribute={attribute}
         useHighlight
         selectedAttributes={selectedAttributes}
@@ -68,7 +69,7 @@ export function AttributeView({ attribute, hit, selectedAttributes }) {
               att.id && (
                 <PropValHighlights
                   selectedAttributes={selectedAttributes}
-                  key={`pvh_${att.id}`}
+                  key={`pvha_${att.id}`}
                   hit={hit[attribute.id]}
                   attribute={att}
                   useHighlight={true}
@@ -148,7 +149,7 @@ function AttributeItem({ hit, attribute, item, collection, i, startOpen = false 
           // We can't use Highlight here, or maybe we can, but I don't know how to pass a path for
           // a resource that is stored in an array (e.g. `prop[0].subProp`) to the `Highlight` component.
           <PropValHighlights
-            key={'pvh_'+attribute.name}
+            key={'pvhi_'+attribute.id}
             hit={item[attribute.id]}
             attribute={attribute}
           />
@@ -181,7 +182,7 @@ function PropValHighlights({
     : hit
     );
 
-  if (hitValue == undefined) return '';
+  if (hitValue == undefined) return null;
 
   return (
     <div

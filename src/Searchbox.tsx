@@ -45,8 +45,6 @@ export const SearchBox = () => {
   let handleReset = useCallback(
     (e) => {
       e.preventDefault();
-      // @ts-ignore
-      // window.location = "/";
       refine("");
       setCurrent(undefined);
       setLastInteractionOrigin("text");
@@ -56,6 +54,7 @@ export const SearchBox = () => {
       clearRefinements();
       setSearchTerm("");
       setLocationFilter(undefined);
+      window.location.href = "/";
     },
     [map]
   );

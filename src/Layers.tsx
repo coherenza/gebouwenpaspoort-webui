@@ -19,7 +19,7 @@ export const layersDefault: LayerI[] = [
     id: bagLayerId,
     visible: true,
     type: "symbol",
-    url: "https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1",
+    url: "https://service.pdok.nl/lv/bag/wms/v2_0" // "https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1",
   },
   {
     name: "Luchtfoto",
@@ -116,7 +116,7 @@ async function getDescription(layer: LayerI): Promise<string> {
     "text/xml"
   );
   const wmsAbstract =
-    wmsCapabilitiesDOM.querySelector("Service > Abstract").textContent;
+    wmsCapabilitiesDOM.querySelector("Service > Abstract")?.textContent;
   return wmsAbstract;
 }
 
