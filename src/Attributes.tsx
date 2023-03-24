@@ -34,7 +34,7 @@ function nothingToSee(value) {
  */
 export function AttributeView({ attribute, hit, selectedAttributes }) {
   const isCollection = Array.isArray(hit[attribute.id]) && !!attribute.attributes;
-  const count = isCollection && hit[attribute?.id]?.length | 0;
+  const count = isCollection && hit[attribute?.id]?.length || 0;
 
   if (!attribute.attributes) {
     return (
@@ -47,10 +47,12 @@ export function AttributeView({ attribute, hit, selectedAttributes }) {
       />
     );
   } else if (isCollection && count == 0) {
-    return null;
+    return false; // https://medium.com/@davidkelley87/stop-using-return-null-in-react-a2ebf08fc9cd
   } else if ( !isCollection && attribute.attributes.every((a) => !!hit[attribute.id] && nothingToSee(hit[attribute.id][a.id])) ) {
     // Do not show attribute sets when all attributes are empty.
-    return null;
+    return false;
+  } else if (!isCollection && hit[attribute.id] == undefined) {
+    return false;
   } else {
     return (
       <AttributeCollapsible

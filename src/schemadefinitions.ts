@@ -27,19 +27,10 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-opr-id"
   },
-  "bwk_num_buurtnaam": {
-    "name": "Buurt",
-    "id": "bwk-num-buurtnaam"
-  },
   "bag_pnd_geo": {
     "name": "Coördinaten",
     "type": "string",
     "id": "bag-pnd-geo"
-  },
-  "bwk_num_subbuurtid": {
-    "name": "Subbuurt identificatie",
-    "type": "string",
-    "id": "bwk-num-subbuurtid"
   },
   "ob_documenttype": {
     "name": "Documenttype",
@@ -70,16 +61,6 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Woonplaats",
     "type": "string",
     "id": "bag-wpl-naam"
-  },
-  "bwk_num_wijkcode": {
-    "name": "Wijkcode",
-    "type": "string",
-    "id": "bwk-num-wijkcode"
-  },
-  "bwk_vbo_toegangbouwlaag": {
-    "name": "Soort toegang bouwlaag",
-    "type": "string",
-    "id": "bwk-vbo-toegangbouwlaag"
   },
   "bag_object_type": {
     "name": "Object type",
@@ -126,11 +107,6 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "btk-inspectiedatum"
   },
-  "bwk_num_subbuurtnaam": {
-    "name": "Subbuurt",
-    "type": "string",
-    "id": "bwk-num-subbuurtnaam"
-  },
   "zk_einddatum_gepland": {
     "name": "Geplande einddatum",
     "type": "string",
@@ -140,11 +116,6 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Titel",
     "type": "string",
     "id": "titel"
-  },
-  "bwk_datum": {
-    "name": "Datum",
-    "type": "string",
-    "id": "bwk-datum"
   },
   "bag_num_postcode_neven": {
     "name": "Postcode",
@@ -185,15 +156,15 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-opr-type-neven"
   },
+  "bwk_subwijknaam": {
+    "name": "Subwijk",
+    "type": "string",
+    "id": "bwk-subwijknaam"
+  },
   "bag_opr_id_neven": {
     "name": "",
     "type": "string",
     "id": "bag-opr-id-neven"
-  },
-  "bwk_vbo_hoogstebouwlaag": {
-    "name": "Hoogste bouwlaag",
-    "type": "string",
-    "id": "bwk-vbo-hoogstebouwlaag"
   },
   "btk_actie_nodig": {
     "name": "Actie nodig voor stalen ligger",
@@ -226,16 +197,16 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-wpl-naam-neven"
   },
+  "bwk_subbuurtnaam": {
+    "name": "Subbuurt",
+    "type": "string",
+    "id": "bwk-subbuurtnaam"
+  },
   "bag_pnd_oorspronkelijk_bouwjaar": {
     "name": "Bouwjaar",
     "filterType": "range",
     "type": "string",
     "id": "bag-pnd-oorspronkelijk-bouwjaar"
-  },
-  "bwk_num_subwijkid": {
-    "name": "Subwijk identificatie",
-    "type": "string",
-    "id": "bwk-num-subwijkid"
   },
   "bag_num_huisletter": {
     "name": "Huisletter",
@@ -247,20 +218,10 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-opr-naam-neven"
   },
-  "bwk_vbo_laagstebouwlaag": {
-    "name": "Laagste bouwlaag",
-    "type": "string",
-    "id": "bwk-vbo-laagstebouwlaag"
-  },
   "date": {
     "name": "Datum",
     "type": "string",
     "id": "date"
-  },
-  "bwk_num_buurtcode": {
-    "name": "Buurtcode",
-    "type": "string",
-    "id": "bwk-num-buurtcode"
   },
   "bag_pnd_geo_EPSG28992": {
     "name": "Coördinaten",
@@ -276,16 +237,6 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Nevenadres",
     "type": "string",
     "id": "bag-num-volledig-neven"
-  },
-  "bwk_num_subwijknaam": {
-    "name": "Subwijk",
-    "type": "string",
-    "id": "bwk-num-subwijknaam"
-  },
-  "bwk_num_wijkid": {
-    "name": "Wijk identificatie",
-    "type": "string",
-    "id": "bwk-num-wijkid"
   },
   "bag_aob_documentnummer": {
     "name": "Documentnummer",
@@ -337,11 +288,6 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "ob-onderwerp"
   },
-  "bwk_num_subbuurtcode": {
-    "name": "Subbuurtcode",
-    "type": "string",
-    "id": "bwk-num-subbuurtcode"
-  },
   "bag_wpl_voorkomen": {
     "name": "Voorkomen",
     "type": "string",
@@ -372,25 +318,10 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-opr-documentnummer"
   },
-  "bwk_num_wijknaam": {
-    "name": "Wijknaam",
-    "type": "string",
-    "id": "bwk-num-wijknaam"
-  },
-  "bwk_num_status": {
-    "name": "Adresstatus",
-    "type": "string",
-    "id": "bwk-num-status"
-  },
   "bag_wpl_status": {
     "name": "BAG status",
     "type": "string",
     "id": "bag-wpl-status"
-  },
-  "bwk_num_adrestype": {
-    "name": "Adrestype",
-    "type": "string",
-    "id": "bwk-num-adrestype"
   },
   "bag_num_huisletter_neven": {
     "name": "Huisletter",
@@ -407,15 +338,20 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "identificatie"
   },
-  "bwk_vbo_lagen": {
-    "name": "Aantal bouwlagen",
+  "bwk_buurtid": {
+    "name": "Buurt identificatie",
     "type": "string",
-    "id": "bwk-vbo-lagen"
+    "id": "bwk-buurtid"
   },
   "publicatiedatum": {
     "name": "Publicatiedatum",
     "type": "string",
     "id": "publicatiedatum"
+  },
+  "bwk_wijkid": {
+    "name": "Wijk identificatie",
+    "type": "string",
+    "id": "bwk-wijkid"
   },
   "bag_opr_status": {
     "name": "BAG status",
@@ -432,11 +368,6 @@ export const Attributes : {[index: string]: Attribute} = {
     "filterType": "intervals",
     "type": "string",
     "id": "bag-pnd-oorspronkelijk-bouwjaar-interval"
-  },
-  "bwk_num_nadergebruiksdoel": {
-    "name": "Nader gebruiksdoel",
-    "type": "string",
-    "id": "bwk-num-nadergebruiksdoel"
   },
   "bag_aob_oppervlakte_interval": {
     "name": "Oppervlakte",
@@ -490,6 +421,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "pdok-locatie-id"
   },
+  "bwk_buurtnaam": {
+    "name": "Buurt",
+    "type": "string",
+    "id": "bwk-buurtnaam"
+  },
   "location_sort_value": {
     "name": "Sortering van locatie",
     "type": "string",
@@ -509,10 +445,10 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-num-huisnummer"
   },
-  "bwk_num_geo_lat_lon": {
-    "name": "Lat\/Lon coordinaten",
+  "bwk_wijknaam": {
+    "name": "Wijknaam",
     "type": "string",
-    "id": "bwk-num-geo-lat-lon"
+    "id": "bwk-wijknaam"
   },
   "btk_kenmerk_id": {
     "name": "Bouwtechnisch kenmerk",
@@ -524,19 +460,10 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "zk-startdatum"
   },
-  "bwk_num_buurtid": {
-    "name": "",
-    "type": "string",
-    "id": "bwk-num-buurtid"
-  },
   "bag_num_postcode": {
     "name": "Postcode",
     "type": "string",
     "id": "bag-num-postcode"
-  },
-  "bwk_num_geo_EPSG28992": {
-    "name": "Coördinaten",
-    "id": "bwk-num-geo-EPSG28992"
   },
   "bag_num_huisnummer_letter_aanduiding": {
     "name": "Huisnummer-letter-aanduiding",
@@ -553,11 +480,6 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-wpl-id"
   },
-  "bwk_vbo_typetoegang": {
-    "name": "Soort toegang",
-    "type": "string",
-    "id": "bwk-vbo-typetoegang"
-  },
   "wijzigingsdatum": {
     "name": "Wijzigingsdatum",
     "type": "string",
@@ -566,11 +488,6 @@ export const Attributes : {[index: string]: Attribute} = {
   "bag_aob_gebruiksdoel": {
     "name": "Gebruiksdoel",
     "id": "bag-aob-gebruiksdoel"
-  },
-  "bwk_num_subwijkcode": {
-    "name": "Subwijkcode",
-    "type": "string",
-    "id": "bwk-num-subwijkcode"
   },
   "geo_EPSG28992": {
     "name": "x,y of x,y,z coordinaten volgens Rijksdriehoek systeem",
@@ -613,6 +530,11 @@ export const displayAttributes: Attribute[] =   [
     
   { id : "naam",
     name : "Adres",
+    type : "string",
+  },
+    
+  { id : "id",
+    name : "Meili identificatie",
     type : "string",
   },
     
@@ -671,13 +593,23 @@ export const displayAttributes: Attribute[] =   [
     name : "Openbare Ruimte",
     attributes:    [
       
-    { id : "bag-opr-naam",
-      name : "Openbare ruimte",
+    { id : "naam",
+      name : "Adres",
+      type : "string",
+    },
+      
+    { id : "id",
+      name : "Meili identificatie",
       type : "string",
     },
       
     { id : "bag-object-type",
       name : "Object type",
+      type : "string",
+    },
+      
+    { id : "bag-opr-naam",
+      name : "Openbare ruimte",
       type : "string",
     }
     ]
@@ -724,27 +656,22 @@ export const displayAttributes: Attribute[] =   [
     name : "Wijk/buurt",
     attributes:    [
       
-    { id : "bwk-num-nadergebruiksdoel",
-      name : "Nader gebruiksdoel",
-      type : "string",
-    },
-      
-    { id : "bwk-num-wijknaam",
+    { id : "bwk-wijknaam",
       name : "Wijknaam",
       type : "string",
     },
       
-    { id : "bwk-num-subwijknaam",
+    { id : "bwk-subwijknaam",
       name : "Subwijk",
       type : "string",
     },
       
-    { id : "bwk-num-buurtnaam",
+    { id : "bwk-buurtnaam",
       name : "Buurt",
       type : "string",
     },
       
-    { id : "bwk-num-subbuurtnaam",
+    { id : "bwk-subbuurtnaam",
       name : "Subbuurt",
       type : "string",
     }
@@ -848,6 +775,42 @@ export const displayAttributes: Attribute[] =   [
     ]
   },
     
+  { id : "officiele-bekendmakingen",
+    name : "Officiële Bekendmakingen",
+    attributes:    [
+      
+    { id : "titel",
+      name : "Titel",
+      type : "string",
+    },
+      
+    { id : "ob-documenttype",
+      name : "Documenttype",
+      type : "string",
+    },
+      
+    { id : "wijzigingsdatum",
+      name : "Wijzigingsdatum",
+      type : "string",
+    },
+      
+    { id : "publicatiedatum",
+      name : "Publicatiedatum",
+      type : "string",
+    },
+      
+    { id : "ob-onderwerp",
+      name : "Onderwerp",
+      type : "string",
+    },
+      
+    { id : "url-vindplaats",
+      name : "Vindplaats",
+      type : "URL",
+    }
+    ]
+  },
+    
   { id : "pand-vergunningen",
     name : "Pand Vergunningen",
     attributes:    [
@@ -857,13 +820,58 @@ export const displayAttributes: Attribute[] =   [
       type : "string",
     },
       
+    { id : "omschrijving",
+      name : "Omschrijving",
+      type : "string",
+    },
+      
     { id : "zk-soort",
       name : "Zaaksoort",
       type : "string",
     },
       
+    { id : "zk-fase",
+      name : "Fase",
+      type : "string",
+    },
+      
     { id : "zk-status",
       name : "Voortgangsstatus",
+      type : "string",
+    },
+      
+    { id : "zk-besluit",
+      name : "Besluit",
+      type : "string",
+    },
+      
+    { id : "date",
+      name : "Datum",
+      type : "string",
+    },
+      
+    { id : "besluitdatum",
+      name : "Besluitdatum",
+      type : "string",
+    },
+      
+    { id : "zk-startdatum",
+      name : "Startdatum",
+      type : "string",
+    },
+      
+    { id : "zk-startdatum-gepland",
+      name : "Geplande startdatum",
+      type : "string",
+    },
+      
+    { id : "zk-einddatum",
+      name : "Einddatum",
+      type : "string",
+    },
+      
+    { id : "zk-einddatum-gepland",
+      name : "Geplande einddatum",
       type : "string",
     }
     ]
@@ -921,6 +929,38 @@ export const filterAttributes: Attribute[] =   [
       type : "string",
     }
     ]
+  },
+    
+  { id : "officiele-bekendmakingen",
+    name : "Officiële Bekendmakingen",
+    attributes:    [
+      
+    { id : "officiele-bekendmakingen.ob-documenttype",
+      name : "Documenttype",
+      type : "string",
+    }
+    ]
+  },
+    
+  { id : "pand-vergunningen",
+    name : "Pand Vergunningen",
+    attributes:    [
+      
+    { id : "pand-vergunningen.zk-soort",
+      name : "Zaaksoort",
+      type : "string",
+    },
+      
+    { id : "pand-vergunningen.zk-fase",
+      name : "Fase",
+      type : "string",
+    },
+      
+    { id : "pand-vergunningen.zk-status",
+      name : "Voortgangsstatus",
+      type : "string",
+    }
+    ]
   }
   ];
 
@@ -954,13 +994,10 @@ export const searchableAttributes = [
   "bag-wpl-id-neven",
   "bag-wpl-naam",
   "bag-wpl-naam-neven",
-  "bwk-num-geo-EPSG28992",
-  "bwk-num-geo-lat-lon",
-  "bwk-num-nadergebruiksdoel",
-  "bwk-num-wijknaam",
-  "bwk-num-subwijknaam",
-  "bwk-num-buurtnaam",
-  "bwk-num-subbuurtnaam"
+  "bwk-wijknaam",
+  "bwk-subwijknaam",
+  "bwk-buurtnaam",
+  "bwk-subbuurtnaam"
 ];
 
 export interface GBPObject {
@@ -983,12 +1020,12 @@ export interface GBPObject {
   "geo-EPSG28992" : number[];
   "_geo" : { "lat" : number; "lng" : number; };
   "links" : { "href-luchtfoto" : string; "href-streetview" : string; "href-topotijdreis" : string; "href-utrechtsarchief" : string; "href-ruimtelijkeplannen" : string; };
-  "bag-opr" : { "bag-opr-naam" : string; "id" : string; "bag-object-type" : string; "object-type-sort-order" : string; "location-sort-value" : string; "bag-opr-id" : string; "" : string; "bag-opr-type" : string; "bag-opr-status" : string; "" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-wpl-id" : string; "_geo" : { "lat" : number; "lng" : number; }; };
+  "bag-opr" : { "naam" : string; "id" : string; "bag-object-type" : string; "object-type-sort-order" : string; "location-sort-value" : string; "pdok-locatie-id" : string[]; "bag-opr-id" : string; "bag-opr-naam" : string; "" : string; "bag-opr-type" : string; "bag-opr-status" : string; "" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-wpl-id" : string; "_geo" : { "lat" : number; "lng" : number; }; };
   "bag-pnd" : { "bag-pnd-id" : string; "bag-pnd-oorspronkelijk-bouwjaar" : number; "bag-pnd-oorspronkelijk-bouwjaar-interval" : string; "bag-pnd-status" : string; "bag-pnd-geconstateerd" : string; "bag-pnd-documentdatum" : Date; "bag-pnd-documentnummer" : string; "bag-pnd-geo" : number[]; "bag-pnd-geo-EPSG28992" : number[]; };
   "bouwtechnische-kenmerken" : { "btk-kenmerk-id" : string[]; "btk-inspectiedatum" : Date; "btk-actie-nodig" : Date; };
-  "bwk" : { "bwk-num-nadergebruiksdoel" : string; "bwk-num-status" : string; "bwk-num-adrestype" : string; "bwk-num-wijkid" : string; "bwk-num-wijkcode" : string; "bwk-num-wijknaam" : string; "bwk-num-subwijkid" : string; "bwk-num-subwijkcode" : string; "bwk-num-subwijknaam" : string; "bwk-num-buurtid" : string; "bwk-num-buurtcode" : string; "bwk-num-buurtnaam" : string; "bwk-num-subbuurtid" : string; "bwk-num-subbuurtcode" : string; "bwk-num-subbuurtnaam" : string; "bwk-vbo-laagstebouwlaag" : string; "bwk-vbo-hoogstebouwlaag" : string; "bwk-vbo-toegangbouwlaag" : string; "bwk-vbo-lagen" : string; "bwk-vbo-typetoegang" : string; "bwk-datum" : Date; "bwk-num-geo-EPSG28992" : string; "bwk-num-geo-lat-lon" : string; };
+  "bwk" : { "bwk-wijkid" : string; "bwk-wijknaam" : string; "bwk-subwijknaam" : string; "bwk-buurtid" : string; "bwk-buurtnaam" : string; "bwk-subbuurtnaam" : string; };
   "hoofdadres" : { "bag-num-id" : string; "bag-num-volledig" : string; "bag-num-postcode" : string; "bag-num-huisnummer" : number; "bag-num-huisletter" : string; "bag-num-huisnummertoevoeging" : string; "bag-num-huisnummer-letter-aanduiding" : string; "bag-num-status" : string; "bag-num-documentdatum" : Date; "bag-num-documentnummer" : string; "bag-num-voorkomen" : number; "bag-opr-id" : string; "bag-opr-naam" : string; "bag-opr-type" : string; "bag-opr-status" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-opr-voorkomen" : number; "bag-wpl-id" : string; "bag-wpl-naam" : string; "bag-wpl-status" : string; "bag-wpl-documentdatum" : Date; "bag-wpl-documentnummer" : string; "bag-wpl-voorkomen" : number; };
   "nevenadres" : { "bag-num-id-neven" : string; "bag-num-volledig-neven" : string; "bag-num-postcode-neven" : string; "bag-num-huisnummer-neven" : number; "bag-num-huisletter-neven" : string; "bag-num-huisnummertoevoeging-neven" : string; "bag-num-huisnummer-letter-aanduiding-neven" : string; "bag-opr-id-neven" : string; "bag-opr-naam-neven" : string; "bag-opr-type-neven" : string; "bag-wpl-id-neven" : string; "bag-wpl-naam-neven" : string; };
   "officiele-bekendmakingen" : { "identificatie" : string; "titel" : string; "ob-documenttype" : string[]; "wijzigingsdatum" : Date; "publicatiedatum" : Date; "ob-onderwerp" : string[]; "url-vindplaats" : string; };
-  "pand-vergunningen" : { "zk-nummer" : string; "omschrijving" : string; "zk-soort" : string; "zk-status" : string; "besluitdatum" : Date; };
+  "pand-vergunningen" : { "zk-nummer" : string; "omschrijving" : string; "zk-soort" : string[]; "zk-fase" : string[]; "zk-status" : string[]; "zk-besluit" : string[]; "date" : Date; "besluitdatum" : Date; "zk-startdatum" : Date; "zk-startdatum-gepland" : Date; "zk-einddatum" : Date; "zk-einddatum-gepland" : Date; };
 }
