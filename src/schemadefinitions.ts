@@ -437,7 +437,7 @@ export const Attributes : {[index: string]: Attribute} = {
     "id": "zk-fase"
   },
   "id": {
-    "name": "Meili identificatie",
+    "name": "Identificatie",
     "id": "id"
   },
   "bag_num_huisnummer": {
@@ -534,7 +534,7 @@ export const displayAttributes: Attribute[] =   [
   },
     
   { id : "id",
-    name : "Meili identificatie",
+    name : "Identificatie",
     type : "string",
   },
     
@@ -551,6 +551,7 @@ export const displayAttributes: Attribute[] =   [
   { id : "bag-aob-oppervlakte",
     name : "Oppervlakte",
     type : "string",
+    filterType : "range",
   },
     
   { id : "bag-aob-status",
@@ -599,7 +600,7 @@ export const displayAttributes: Attribute[] =   [
     },
       
     { id : "id",
-      name : "Meili identificatie",
+      name : "Identificatie",
       type : "string",
     },
       
@@ -622,6 +623,7 @@ export const displayAttributes: Attribute[] =   [
     { id : "bag-pnd-oorspronkelijk-bouwjaar",
       name : "Bouwjaar",
       type : "string",
+      filterType : "range",
     },
       
     { id : "bag-pnd-status",
@@ -895,6 +897,7 @@ export const filterAttributes: Attribute[] =   [
     { id : "bag-aob-oppervlakte-interval",
       name : "Oppervlakte",
       type : "string",
+      filterType : "intervals",
     },
       
     { id : "bag-aob-status",
@@ -911,6 +914,7 @@ export const filterAttributes: Attribute[] =   [
     { id : "bag-pnd.bag-pnd-oorspronkelijk-bouwjaar-interval",
       name : "bouwjaar",
       type : "string",
+      filterType : "intervals",
     },
       
     { id : "bag-pnd.bag-pnd-status",
