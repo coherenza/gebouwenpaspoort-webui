@@ -30,10 +30,12 @@
 }
 
 .Attribute__propval__key {
+  margin-left:0.4rem;
   font-weight: bold;
 }
 
 .Attribute__propval__value {
+  margin-left: 1rem;
   font-style: italic;
 }
 

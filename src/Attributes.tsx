@@ -118,6 +118,9 @@ export function AttributeCollapsible({
 function AttributeCollection({ hit, collection }) {
   const items = hit[collection.id];
   if (!items) return null;
+  items.sort((a, b) => (collection.attributes[0].type == 'date') ?
+                         a[collection.attributes[0].id] < b[collection.attributes[0].id] :
+                         a[collection.attributes[0].id] > b[collection.attributes[0].id]);
   return (
     <div className="Attribute__list">
       {items.map((item, i) => (
@@ -138,7 +141,8 @@ function AttributeCollection({ hit, collection }) {
 function AttributeItem({ hit, attribute, item, collection, i, startOpen = false }) {
   const [open, setOpen] = useState(startOpen);
 
-  const title = (Array.isArray(item[collection.attributes[0].id])) ? item[collection.attributes[0].id][0] : item[collection.attributes[0].id];
+  let title = (Array.isArray(item[collection.attributes[0].id])) ? item[collection.attributes[0].id][0] : item[collection.attributes[0].id];
+  if (collection.attributes[0].type == 'date') title = new Date(title).toLocaleDateString();
 
   return (
     <div className="Attribute__item" key={`${item.id}${i}`}>
@@ -216,7 +220,11 @@ function PropValHighlights({
                   tagname="mark"
                 />
               ) : (
-                hitValue?.toString().split('\n').map((hv) => ( <div>{hv}</div> ))
+                hitValue?.toString().split('\n').
+                map((hv) => {
+                  if (attribute.type == 'date') hv = new Date(hv).toLocaleDateString();
+                  return( <div>{hv}</div> ) 
+                })
               )}
             </div>
           </>
