@@ -28,19 +28,25 @@ VITE_MEILI_SERVER={url}
 ## Deploying
 
 - The front-end is currently hosted on Github pages, on [https://gbp2.pandata.nl]. A new version is built and deployed upon pushing to master. See the [.github/deploy.yml]
-- Meilisearch is hosted on DigitalOcean at [http://meili.pandata.nl:7700]. To run it, see command below:
+- Meilisearch is hosted on DigitalOcean at [http://green.pandata.nl] and [http://blue.pandata.nl]. Check `config.ts` to see the one we're currently using. At this time of writing, `blue` contains the outdated / old data.
 
-```h
+To run it, SSH into the droplet (can be done in DigitalOcean console) and run the command below:
+
+```sh
 docker run -it \
   -d --restart unless-stopped \
   -p 7700:7700 \
+  # Set a good secret here
   -e MEILI_MASTER_KEY='.....'
   -v $(pwd)/meili_data:/meili_data \
   getmeili/meilisearch:v1.0.2
 ```
 
-Copy the data (indexes, ...) from a local dev server to the `meili_data/data.ms` directory.
-After copying, restart the docker image (`docker ps`, `docker stop`).
+## Updating the Meilisearch index
+
+- Turn off the docker container on the server using SSH (`docker ps`, `docker stop ID`).
+- Copy the data (indexes, ...) from a local dev server to the `meili_data/data.ms` directory.
+- After copying, restart the docker image (`docker ps`, `docker stop`).
 
 ## Build
 
