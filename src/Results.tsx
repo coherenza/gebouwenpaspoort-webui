@@ -37,11 +37,11 @@ function jsonToCSV2(items) {
         ...item
       })],
       fields: [
-        Attributes.aob_id.id,
-        Attributes.postcode.id,
-        Attributes.straatnaam.id,
-        Attributes.huisnummerLetter.id,
-        Attributes.bouwjaar.id,
+        Attributes.bag_aob_id.id,
+        Attributes.bag_num_postcode.id,
+        Attributes.bag_opr_naam.id,
+        Attributes.bag_num_huisnummer_letter_aanduiding.id,
+        Attributes.bag_pnd_oorspronkelijk_bouwjaar.id,
         'zoekopdracht',
       ],
     });

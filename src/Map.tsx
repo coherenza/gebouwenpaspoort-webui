@@ -257,6 +257,12 @@ export function Map() {
           setCenter(item._geoloc);
         }
 
+        const objectType = item["bag-object-type"];
+        const iconTitle =
+          ( objectType =='verblijfsobject' ? item.hoofdadres['bag-num-huisnummer-letter-aanduiding']
+          : item.naam
+          )
+
         return {
           type: "Feature",
           geometry: {
@@ -275,7 +281,7 @@ export function Map() {
             "sort-key": isCurrent ? 0 : 1,
             type: item["bag-object-type"],
             color: isCurrent ? "#000000" : color,
-            title: item[Attributes.huisnummerLetter.id] || item["naam"],
+            title: iconTitle,
             icon: isAob ? "my-marker" : "houses",
           },
         };

@@ -58,7 +58,7 @@ export function Details() {
               return (
                 <AttributeView
                   selectedAttributes={selectedAttributes}
-                  key={attribute.name}
+                  key={'av_'+attribute.id}
                   attribute={attribute}
                   hit={current}
                 />
