@@ -19,7 +19,7 @@ export const layersDefault: LayerI[] = [
     id: bagLayerId,
     visible: true,
     type: "symbol",
-    url: "https://service.pdok.nl/lv/bag/wms/v2_0" // "https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1",
+    //url: "https://service.pdok.nl/lv/bag/wms/v2_0" // "https://geodata.nationaalgeoregister.nl/bag/wfs/v1_1",
   },
   {
     name: "Luchtfoto",
@@ -72,13 +72,13 @@ export const layersDefault: LayerI[] = [
     // https://service.pdok.nl/rws/napinfo/wms/v1_0?request=getCapabilities&service=WMS
     url: "https://geodata.nationaalgeoregister.nl/napinfo/wfs",
   },
-  {
+  /*{
     name: "AHN3",
     id: "ahn3_05m_dtm",
     visible: false,
     type: "raster",
     url: "https://service.pdok.nl/rws/ahn3/wms/v1_0",
-  },
+  },*/
 ];
 
 /** Layer for clickable Address items */
