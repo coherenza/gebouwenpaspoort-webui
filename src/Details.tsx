@@ -56,9 +56,10 @@ export function Details() {
               if (i == 0) return null;
 
               return (
+                // @ts-ignore
                 <AttributeView
                   selectedAttributes={selectedAttributes}
-                  key={'av_'+attribute.id}
+                  key={"av_" + attribute.id}
                   attribute={attribute}
                   hit={current}
                 />
