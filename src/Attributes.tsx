@@ -7,6 +7,7 @@ import {
 } from "react-instantsearch-hooks-web";
 import {
   ChevronDownIcon,
+  ChevronUpIcon,
   ChevronRightIcon,
   ExternalLinkIcon,
 } from "@radix-ui/react-icons";
@@ -102,9 +103,10 @@ export function AttributeCollapsible({
 
   return (
     <div className="Attribute">
-      <div className="Attribute__title" onClick={() => setOpen(!open)}>
-        {open ? <ChevronDownIcon /> : <ChevronRightIcon />} {attribute.name}{" "}
+      <div className={"Attribute__title__"+(open ? "open" : "closed")} onClick={() => setOpen(!open)}>
+        {attribute.name}{" "}
         {showCount && `(${count})`}
+        <span className="icon">{open ? <ChevronDownIcon /> : <ChevronUpIcon />}</span>
       </div>
       {
         <div className={"Attribute__content__" + (open ? "open" : "closed")}>
@@ -147,7 +149,7 @@ function AttributeItem({ hit, attribute, item, collection, i, startOpen = false 
   return (
     <div className="Attribute__item" key={`${item.id}${i}`}>
       <h4 className="Attribute__item__title" onClick={() => setOpen(!open)}>
-        {open ? <ChevronDownIcon /> : <ChevronRightIcon />}
+        <span className="icon">{open ? <ChevronDownIcon /> : <ChevronRightIcon />}</span>
         {title}
       </h4>
       {open &&
@@ -203,8 +205,8 @@ function PropValHighlights({
             href={hitValue}
             target="_blank"
           >
-            {attribute.name}
-            <ExternalLinkIcon />
+            <div className="Attribute__propval__key">{attribute.name}</div>
+            <span className="icon"><ExternalLinkIcon /></span>
           </a>
         ) : (
           <>

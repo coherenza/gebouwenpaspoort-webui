@@ -44,7 +44,7 @@ export function Details() {
         <>
           <div className="Titlebar Titlebar--padded">
             <h3 className="details-panel__title">
-              {current[displayAttributes[0].id]}{" "}
+              {current[displayAttributes[0].id].replace(/(\d\d\d\d[A-Z][A-Z])\s+/, '$1\xA0') /* non-breakable space tussen postcode en woonplaats */}
             </h3>
             <button onClick={() => setCurrent(undefined)}>
               <Cross1Icon />

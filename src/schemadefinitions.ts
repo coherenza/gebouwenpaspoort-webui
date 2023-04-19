@@ -538,64 +538,70 @@ export const Attributes : {[index: string]: Attribute} = {
  */
 export const displayAttributes: Attribute[] =   [
     
-  { id : "naam",
-    name : "Adres",
-    type : "string",
-  },
-    
-  { id : "id",
-    name : "Identificatie",
-    type : "string",
-  },
-    
-  { id : "bag-object-type",
-    name : "Object type",
-    type : "string",
-  },
-    
-  { id : "bag-aob-gebruiksdoel",
-    name : "Gebruiksdoel",
-    type : "string",
-  },
-    
-  { id : "bag-aob-oppervlakte",
-    name : "Oppervlakte",
-    type : "string",
-    filterType : "range",
-  },
-    
-  { id : "bag-aob-status",
-    name : "BAG status",
-    type : "string",
-  },
-    
-  { id : "links",
-    name : "Externe referenties",
+  { id : "bag-aob",
+    name : "Adresseerbaar object; algemene gegeven uit BAG",
     attributes:    [
       
-    { id : "href-luchtfoto",
-      name : "Luchtfoto",
-      type : "URL",
+    { id : "naam",
+      name : "Adres",
+      type : "string",
     },
       
-    { id : "href-streetview",
-      name : "Google Streetview",
-      type : "URL",
+    { id : "id",
+      name : "Identificatie",
+      type : "string",
     },
       
-    { id : "href-topotijdreis",
-      name : "Topo tijdreis",
-      type : "URL",
+    { id : "bag-object-type",
+      name : "Object type",
+      type : "string",
     },
       
-    { id : "href-utrechtsarchief",
-      name : "Utrechts archief",
-      type : "URL",
+    { id : "bag-aob-gebruiksdoel",
+      name : "Gebruiksdoel",
+      type : "string",
     },
       
-    { id : "href-ruimtelijkeplannen",
-      name : "Rumtelijke plannen",
-      type : "URL",
+    { id : "bag-aob-oppervlakte",
+      name : "Oppervlakte",
+      type : "string",
+      filterType : "range",
+    },
+      
+    { id : "bag-aob-status",
+      name : "BAG status",
+      type : "string",
+    },
+      
+    { id : "links",
+      name : "Externe referenties",
+      attributes:      [
+        
+      { id : "href-luchtfoto",
+        name : "Luchtfoto",
+        type : "URL",
+      },
+        
+      { id : "href-streetview",
+        name : "Google Streetview",
+        type : "URL",
+      },
+        
+      { id : "href-topotijdreis",
+        name : "Topo tijdreis",
+        type : "URL",
+      },
+        
+      { id : "href-utrechtsarchief",
+        name : "Utrechts archief",
+        type : "URL",
+      },
+        
+      { id : "href-ruimtelijkeplannen",
+        name : "Rumtelijke plannen",
+        type : "URL",
+      }
+      ]
     }
     ]
   },
@@ -907,20 +913,24 @@ export const filterAttributes: Attribute[] =   [
     
   { id : "",
     name : "Algemeen",
+  },
+    
+  { id : "bag-aob",
+    name : "Adresseerbaar object; algemene gegeven uit BAG",
     attributes:    [
       
-    { id : "bag-aob-gebruiksdoel",
+    { id : "bag-aob.bag-aob-gebruiksdoel",
       name : "Gebruiksdoel",
       type : "string",
     },
       
-    { id : "bag-aob-oppervlakte-interval",
+    { id : "bag-aob.bag-aob-oppervlakte-interval",
       name : "Oppervlakte",
       type : "string",
       filterType : "intervals",
     },
       
-    { id : "bag-aob-status",
+    { id : "bag-aob.bag-aob-status",
       name : "BAG status",
       type : "string",
     }
@@ -1026,25 +1036,7 @@ export const searchableAttributes = [
 ];
 
 export interface GBPObject {
-  "naam" : string;
-  "id" : string;
-  "bag-aob-id" : string;
-  "bag-num-id" : string[];
-  "bag-pnd-id" : string[];
-  "bag-object-type" : string;
-  "object-type-sort-order" : string;
-  "location-sort-value" : string;
-  "pdok-locatie-id" : string[];
-  "bag-aob-gebruiksdoel" : string[];
-  "bag-aob-oppervlakte" : number;
-  "bag-aob-oppervlakte-interval" : string;
-  "bag-aob-status" : string;
-  "bag-aob-documentdatum" : Date;
-  "bag-aob-documentnummer" : string;
-  "bag-aob-voorkomen" : number;
-  "geo-EPSG28992" : number[];
-  "_geo" : { "lat" : number; "lng" : number; };
-  "links" : { "href-luchtfoto" : string; "href-streetview" : string; "href-topotijdreis" : string; "href-utrechtsarchief" : string; "href-ruimtelijkeplannen" : string; };
+  "bag-aob" : { "naam" : string; "id" : string; "bag-aob-id" : string; "bag-num-id" : string[]; "bag-pnd-id" : string[]; "bag-object-type" : string; "object-type-sort-order" : string; "location-sort-value" : string; "pdok-locatie-id" : string[]; "bag-aob-gebruiksdoel" : string[]; "bag-aob-oppervlakte" : number; "bag-aob-oppervlakte-interval" : string; "bag-aob-status" : string; "bag-aob-documentdatum" : Date; "bag-aob-documentnummer" : string; "bag-aob-voorkomen" : number; "geo-EPSG28992" : number[]; "_geo" : { "lat" : number; "lng" : number; }; "links" : { "href-luchtfoto" : string; "href-streetview" : string; "href-topotijdreis" : string; "href-utrechtsarchief" : string; "href-ruimtelijkeplannen" : string; }; };
   "bag-opr" : { "naam" : string; "id" : string; "bag-object-type" : string; "object-type-sort-order" : string; "location-sort-value" : string; "pdok-locatie-id" : string[]; "bag-opr-id" : string; "bag-opr-naam" : string; "bag-opr-volledig" : string; "bag-opr-type" : string; "bag-opr-status" : string; "bag-opr-geconstateerd" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-wpl-id" : string; "_geo" : { "lat" : number; "lng" : number; }; };
   "bag-pnd" : { "bag-pnd-id" : string; "bag-pnd-oorspronkelijk-bouwjaar" : number; "bag-pnd-oorspronkelijk-bouwjaar-interval" : string; "bag-pnd-status" : string; "bag-pnd-geconstateerd" : string; "bag-pnd-documentdatum" : Date; "bag-pnd-documentnummer" : string; "bag-pnd-geo" : number[]; "bag-pnd-geo-EPSG28992" : number[]; };
   "bouwtechnische-kenmerken" : { "btk-kenmerk-id" : string[]; "btk-inspectiedatum" : Date; "btk-actie-nodig" : string; };

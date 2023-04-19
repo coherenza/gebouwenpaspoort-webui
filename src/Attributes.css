@@ -1,22 +1,24 @@
 .Attribute {
   padding: 0.5rem;
+  border-top: 1px solid var(--g1);
+  border-bottom: 1px solid var(--g1);
 }
 
-.Attribute__title {
+.Attribute__title__closed, .Attribute__title__open {
   cursor: pointer;
-  color: var(--primary-color);
-  /* font-weight: bold; */
+  color: var(--primary-color-dark);
   font-size: 1rem;
 }
 
-.Attribute__title:hover {
-  background: var(--g0);
-  border-radius: var(--border-radius);
-  color: var(--primary-color-dark);
+.Attribute__title__open {
+}
+
+.Attribute__title__closed>.icon, .Attribute__title__open>.icon {
+  float: right;
 }
 
 .Attribute__content__open {
-  /* padding: 0.5rem; */
+  padding: 0.5ex;
 }
 
 .Attribute__content__closed {
@@ -26,7 +28,7 @@
 .Attribute__propval {
   display: flex;
   flex-direction: column;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0.5rem;
 }
 
 .Attribute__propval__key {
@@ -34,9 +36,12 @@
   font-weight: bold;
 }
 
+.Attribute__propval__key:after {
+  content: ":";
+}
+
 .Attribute__propval__value {
   margin-left: 1rem;
-  font-style: italic;
 }
 
 .Attribute__propval--selected {
@@ -44,8 +49,19 @@
   background: var(--primary-color-subtle);
 }
 
+.Attribute__item {
+  border: 1px solid var(--g4);
+  border-radius: var(--border-radius);
+  background-color: var(--g1);
+  margin: 1ex 0;
+}
+
 .Attribute__item__title {
   cursor: pointer;
+}
+
+.Attribute__item__title>.icon {
+  color: var(--primary-color-dark);
 }
 
 .Attribute__item__title:hover {
@@ -55,11 +71,7 @@
 }
 
 .Attribute__link {
-  margin: 0 .5rem;
-  background: var(--g0);
-  padding: 0.5rem;
-  border-radius: var(--border-radius);
-  color: var(--g4);
+  font-weight: bold;
   display: flex;
   justify-content: space-between;
   text-decoration: none;
@@ -67,8 +79,4 @@
 
 .Attribute__link:hover {
   background: var(--g1);
-}
-
-.Attribute__item {
-
 }
