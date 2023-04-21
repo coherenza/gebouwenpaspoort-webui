@@ -41,7 +41,7 @@ button,
   border: none;
   background-color: var(--g1);
   cursor: pointer;
-  color: var(--g4);
+  color: black;
   padding: 0.2rem 0.8rem;
   display: inline-flex;
   align-items: center;

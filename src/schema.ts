@@ -15,46 +15,15 @@ export const sortProps: SortProp[] = [
     sortBy: `${indexName}:location-sort-value:asc`,
     attribute: "location-sort-value",
     label: "Initial sort order",
-  },
-  // {
-  //   sortBy: `${indexName}:object-type-sort-order:asc`,
-  //   attribute: "object-type-sort-order",
-  //   label: "Object type",
-  // },
-  // { sortBy: `${indexName}:naam:asc`, attribute: "naam", label: "Naam" },
-  // {
-  //   sortBy: `${indexName}:bag-opr-naam:asc`,
-  //   attribute: "bag-opr-naam",
-  //   label: "Straat",
-  // },
-  // {
-  //   sortBy: `${indexName}:bag-num-huisnummer:asc`,
-  //   attribute: "bag-num-huisnummer",
-  //   label: "Huisnummer",
-  // },
-  // {
-  //   sortBy: `${indexName}:bag-num-huisletter:asc`,
-  //   attribute: "bag-num-huisletter",
-  //   label: "Huisletter",
-  // },
-  // {
-  //   sortBy: `${indexName}:bag-num-huisnummertoevoeging:asc`,
-  //   attribute: "bag-num-huisnummertoevoeging",
-  //   label: "Huisnummertoevoeging",
-  // },
-  // { sortBy: `${indexName}`, attribute: "", label: "Relevantie" },
+  }
 ];
 
 export function getObjectType(object: any): GBPObjectType {
-  // get 'bag-object-type' or set to 'unknown'
-
   if (!object) {
     return GBPObjectTypes.unknown;
   }
-  let typestring = object["bag-object-type"] || "unknown";
-  let found = GBPObjectTypes[typestring];
-
-  return found;
+  let typestring = object['object-type'] || object['bag-aob']?.['bag-object-type'] || object['bag-opr']?.['bag-object-type'] || "unknown";
+  return GBPObjectTypes[typestring];
 }
 
 export interface GBPObjectType {

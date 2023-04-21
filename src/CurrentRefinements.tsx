@@ -25,7 +25,7 @@ export function CurrentRefinements() {
 function Refinement({ item, refine, parent }) {
   const { locationFilter } = useContext(AppContext);
 
-  let attribute = Object.values(Attributes).find(a => a.id == item.attribute);
+  let attribute = Object.values(Attributes).find(a => a.id == item.attribute.replace(/.*\./, ''));
   let label = (attribute ? attribute.name + ': ' : '') + item.label;
 
   if (parent.label == "pdok-locatie-id") {

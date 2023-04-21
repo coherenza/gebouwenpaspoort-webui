@@ -73,8 +73,8 @@ body {
 .ais-RefinementList-count {
   font-size: 0.8rem;
   background-color: var(--g1);
-  color: var(--g4);
-  padding: 0.1rem;
+  color: var(black);
+  padding: 0.1rem 0.3rem;
   border-radius: var(--border-radius);
   margin-left: 0.3rem;
   height: 1.3rem;

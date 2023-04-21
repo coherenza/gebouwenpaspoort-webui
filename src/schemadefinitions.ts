@@ -23,7 +23,7 @@ export const Attributes : {[index: string]: Attribute} = {
     "id": "zk-status"
   },
   "bag_opr_id": {
-    "name": "",
+    "name": "Identificatie openbare ruimte",
     "type": "string",
     "id": "bag-opr-id"
   },
@@ -148,7 +148,8 @@ export const Attributes : {[index: string]: Attribute} = {
     "id": "zk-soort"
   },
   "bag_wpl_id_neven": {
-    "name": "",
+    "name": "Identificatie woonplaats",
+    "type": "string",
     "id": "bag-wpl-id-neven"
   },
   "zk_einddatum": {
@@ -167,7 +168,7 @@ export const Attributes : {[index: string]: Attribute} = {
     "id": "bwk-subwijknaam"
   },
   "bag_opr_id_neven": {
-    "name": "",
+    "name": "Identificatie openbare ruimte",
     "type": "string",
     "id": "bag-opr-id-neven"
   },
@@ -177,12 +178,12 @@ export const Attributes : {[index: string]: Attribute} = {
     "id": "btk-actie-nodig"
   },
   "bag_num_id": {
-    "name": "Identificatie adresseerbaar object",
+    "name": "Identificatie nummeraanduiding",
     "type": "string",
     "id": "bag-num-id"
   },
   "bag_pnd_id": {
-    "name": "",
+    "name": "Identificatie pand",
     "type": "string",
     "id": "bag-pnd-id"
   },
@@ -273,15 +274,15 @@ export const Attributes : {[index: string]: Attribute} = {
     "id": "object-type-sort-order"
   },
   "_geo": {
-    "name": "latitude-longitude geo coordinaten",
+    "name": "Latitude-longitude geo coordinaten",
     "attributes": [
       {
-        "name": "latitude",
+        "name": "Latitude",
         "type": "string",
         "id": "lat"
       },
       {
-        "name": "longitude",
+        "name": "Longitude",
         "type": "string",
         "id": "lng"
       }
@@ -314,7 +315,7 @@ export const Attributes : {[index: string]: Attribute} = {
     "id": "bag-aob-status"
   },
   "bag_num_id_neven": {
-    "name": "",
+    "name": "Identificatie nummeraanduiding",
     "type": "string",
     "id": "bag-num-id-neven"
   },
@@ -369,7 +370,7 @@ export const Attributes : {[index: string]: Attribute} = {
     "id": "bag-num-huisnummertoevoeging"
   },
   "bag_pnd_oorspronkelijk_bouwjaar_interval": {
-    "name": "bouwjaar",
+    "name": "Bouwjaar",
     "filterType": "intervals",
     "type": "string",
     "id": "bag-pnd-oorspronkelijk-bouwjaar-interval"
@@ -420,6 +421,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Geconstateerd",
     "type": "string",
     "id": "bag-pnd-geconstateerd"
+  },
+  "object_type": {
+    "name": "Type van object",
+    "type": "string",
+    "id": "object-type"
   },
   "pdok_locatie_id": {
     "name": "Locatie identificaties",
@@ -486,7 +492,7 @@ export const Attributes : {[index: string]: Attribute} = {
     "id": "bag-aob-id"
   },
   "bag_wpl_id": {
-    "name": "",
+    "name": "Identificatie woonplaats",
     "type": "string",
     "id": "bag-wpl-id"
   },
@@ -500,7 +506,7 @@ export const Attributes : {[index: string]: Attribute} = {
     "id": "bag-aob-gebruiksdoel"
   },
   "geo_EPSG28992": {
-    "name": "x,y of x,y,z coordinaten volgens Rijksdriehoek systeem",
+    "name": "Coördinatenordinaten volgens Rijksdriehoek systeem",
     "type": "string",
     "id": "geo-EPSG28992"
   },
@@ -538,19 +544,50 @@ export const Attributes : {[index: string]: Attribute} = {
  */
 export const displayAttributes: Attribute[] =   [
     
-  { id : "bag-aob",
-    name : "Adresseerbaar object; algemene gegeven uit BAG",
+  { id : "naam",
+    name : "Adres",
+    type : "string",
+  },
+    
+  { id : "id",
+    name : "Identificatie",
+    type : "string",
+  },
+    
+  { id : "links",
+    name : "Externe referenties",
     attributes:    [
       
-    { id : "naam",
-      name : "Adres",
-      type : "string",
+    { id : "href-luchtfoto",
+      name : "Luchtfoto",
+      type : "URL",
     },
       
-    { id : "id",
-      name : "Identificatie",
-      type : "string",
+    { id : "href-streetview",
+      name : "Google Streetview",
+      type : "URL",
     },
+      
+    { id : "href-topotijdreis",
+      name : "Topo tijdreis",
+      type : "URL",
+    },
+      
+    { id : "href-utrechtsarchief",
+      name : "Utrechts archief",
+      type : "URL",
+    },
+      
+    { id : "href-ruimtelijkeplannen",
+      name : "Rumtelijke plannen",
+      type : "URL",
+    }
+    ]
+  },
+    
+  { id : "bag-aob",
+    name : "Adresseerbaar object",
+    attributes:    [
       
     { id : "bag-object-type",
       name : "Object type",
@@ -571,37 +608,6 @@ export const displayAttributes: Attribute[] =   [
     { id : "bag-aob-status",
       name : "BAG status",
       type : "string",
-    },
-      
-    { id : "links",
-      name : "Externe referenties",
-      attributes:      [
-        
-      { id : "href-luchtfoto",
-        name : "Luchtfoto",
-        type : "URL",
-      },
-        
-      { id : "href-streetview",
-        name : "Google Streetview",
-        type : "URL",
-      },
-        
-      { id : "href-topotijdreis",
-        name : "Topo tijdreis",
-        type : "URL",
-      },
-        
-      { id : "href-utrechtsarchief",
-        name : "Utrechts archief",
-        type : "URL",
-      },
-        
-      { id : "href-ruimtelijkeplannen",
-        name : "Rumtelijke plannen",
-        type : "URL",
-      }
-      ]
     }
     ]
   },
@@ -609,16 +615,6 @@ export const displayAttributes: Attribute[] =   [
   { id : "bag-opr",
     name : "Openbare Ruimte",
     attributes:    [
-      
-    { id : "naam",
-      name : "Adres",
-      type : "string",
-    },
-      
-    { id : "id",
-      name : "Identificatie",
-      type : "string",
-    },
       
     { id : "bag-object-type",
       name : "Object type",
@@ -911,12 +907,8 @@ export const displayAttributes: Attribute[] =   [
  */
 export const filterAttributes: Attribute[] =   [
     
-  { id : "",
-    name : "Algemeen",
-  },
-    
   { id : "bag-aob",
-    name : "Adresseerbaar object; algemene gegeven uit BAG",
+    name : "Adresseerbaar object",
     attributes:    [
       
     { id : "bag-aob.bag-aob-gebruiksdoel",
@@ -942,7 +934,7 @@ export const filterAttributes: Attribute[] =   [
     attributes:    [
       
     { id : "bag-pnd.bag-pnd-oorspronkelijk-bouwjaar-interval",
-      name : "bouwjaar",
+      name : "Bouwjaar",
       type : "string",
       filterType : "intervals",
     },
@@ -960,6 +952,11 @@ export const filterAttributes: Attribute[] =   [
       
     { id : "bouwtechnische-kenmerken.btk-kenmerk-id",
       name : "Bouwtechnisch kenmerk",
+      type : "string",
+    },
+      
+    { id : "bouwtechnische-kenmerken.btk-actie-nodig",
+      name : "Actie nodig voor stalen ligger",
       type : "string",
     }
     ]
@@ -1003,8 +1000,8 @@ export const filterAttributes: Attribute[] =   [
  * It is also possible to use object-type-sort-order to sort instead of using relevance ranking.
  **/
 export const searchableAttributes = [
-  "id",
   "naam",
+  "id",
   "_geo",
   "geo-EPSG28992",
   "bag-aob-id",
@@ -1036,8 +1033,16 @@ export const searchableAttributes = [
 ];
 
 export interface GBPObject {
-  "bag-aob" : { "naam" : string; "id" : string; "bag-aob-id" : string; "bag-num-id" : string[]; "bag-pnd-id" : string[]; "bag-object-type" : string; "object-type-sort-order" : string; "location-sort-value" : string; "pdok-locatie-id" : string[]; "bag-aob-gebruiksdoel" : string[]; "bag-aob-oppervlakte" : number; "bag-aob-oppervlakte-interval" : string; "bag-aob-status" : string; "bag-aob-documentdatum" : Date; "bag-aob-documentnummer" : string; "bag-aob-voorkomen" : number; "geo-EPSG28992" : number[]; "_geo" : { "lat" : number; "lng" : number; }; "links" : { "href-luchtfoto" : string; "href-streetview" : string; "href-topotijdreis" : string; "href-utrechtsarchief" : string; "href-ruimtelijkeplannen" : string; }; };
-  "bag-opr" : { "naam" : string; "id" : string; "bag-object-type" : string; "object-type-sort-order" : string; "location-sort-value" : string; "pdok-locatie-id" : string[]; "bag-opr-id" : string; "bag-opr-naam" : string; "bag-opr-volledig" : string; "bag-opr-type" : string; "bag-opr-status" : string; "bag-opr-geconstateerd" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-wpl-id" : string; "_geo" : { "lat" : number; "lng" : number; }; };
+  "naam" : string;
+  "id" : string;
+  "object-type" : string;
+  "object-type-sort-order" : string;
+  "location-sort-value" : string;
+  "pdok-locatie-id" : string;
+  "_geo" : { "lat" : number; "lng" : number; };
+  "links" : { "href-luchtfoto" : string; "href-streetview" : string; "href-topotijdreis" : string; "href-utrechtsarchief" : string; "href-ruimtelijkeplannen" : string; };
+  "bag-aob" : { "bag-aob-id" : string; "bag-num-id" : string[]; "bag-pnd-id" : string[]; "bag-object-type" : string; "bag-aob-gebruiksdoel" : string[]; "bag-aob-oppervlakte" : number; "bag-aob-oppervlakte-interval" : string; "bag-aob-status" : string; "bag-aob-documentdatum" : Date; "bag-aob-documentnummer" : string; "bag-aob-voorkomen" : number; "geo-EPSG28992" : number[]; };
+  "bag-opr" : { "bag-object-type" : string; "bag-opr-id" : string; "bag-opr-naam" : string; "bag-opr-volledig" : string; "bag-opr-type" : string; "bag-opr-status" : string; "bag-opr-geconstateerd" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-wpl-id" : string; };
   "bag-pnd" : { "bag-pnd-id" : string; "bag-pnd-oorspronkelijk-bouwjaar" : number; "bag-pnd-oorspronkelijk-bouwjaar-interval" : string; "bag-pnd-status" : string; "bag-pnd-geconstateerd" : string; "bag-pnd-documentdatum" : Date; "bag-pnd-documentnummer" : string; "bag-pnd-geo" : number[]; "bag-pnd-geo-EPSG28992" : number[]; };
   "bouwtechnische-kenmerken" : { "btk-kenmerk-id" : string[]; "btk-inspectiedatum" : Date; "btk-actie-nodig" : string; };
   "bwk" : { "bwk-wijkid" : string; "bwk-wijknaam" : string; "bwk-subwijknaam" : string; "bwk-buurtid" : string; "bwk-buurtnaam" : string; "bwk-subbuurtnaam" : string; };
