@@ -13,7 +13,7 @@ import {
 import { TourProvider, useTour } from "@reactour/tour";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import { GBPObject, LocationFilter, sortProps } from "./schema";
-import { bugsnagKey, indexName, meiliKey, mode, server } from "./config";
+import { indexName, meiliKey, mode, server } from "./config";
 import { Map } from "./Map";
 import { Details } from "./Details";
 import { Results } from "./Results";
@@ -21,18 +21,9 @@ import { Filters } from "./Filters";
 import { KeyboardHandler } from "./KeyboardHandler";
 import { MapProvider } from "react-map-gl";
 import { useLocalStorage } from "./useLocalStorage";
-import Bugsnag from "@bugsnag/js";
-import BugsnagPluginReact from "@bugsnag/plugin-react";
 import { LayerI, layersDefault, LayerSelector } from "./Layers";
 import { tourSteps as steps } from "./Tour";
 
-Bugsnag.start({
-  apiKey: bugsnagKey,
-  plugins: [new BugsnagPluginReact()],
-  releaseStage: mode,
-  enabledReleaseStages: ["production", "staging"],
-});
-const ErrorBoundary = Bugsnag.getPlugin("react").createErrorBoundary(React);
 
 type InteractionOrigin = "map" | "text" | "results" | undefined;
 
@@ -172,7 +163,6 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
       }}
     >
       <MapProvider>
-        <ErrorBoundary>
           <KeyboardHandler>
             {!validApiKey ? (
               <form onSubmit={handleSetApiKey} className="app__api-key">
@@ -202,7 +192,6 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
               </div>
             )}
           </KeyboardHandler>
-        </ErrorBoundary>
       </MapProvider>
     </AppContext.Provider>
   );

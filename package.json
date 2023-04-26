@@ -11,8 +11,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@bugsnag/js": "^7.18.0",
-    "@bugsnag/plugin-react": "^7.18.0",
     "@json2csv/plainjs": "^6.1.2",
     "@meilisearch/instant-meilisearch": "^0.11.0",
     "@radix-ui/react-dialog": "^1.0.2",

@@ -549,11 +549,6 @@ export const displayAttributes: Attribute[] =   [
     type : "string",
   },
     
-  { id : "id",
-    name : "Identificatie",
-    type : "string",
-  },
-    
   { id : "links",
     name : "Externe referenties",
     attributes:    [
@@ -588,6 +583,11 @@ export const displayAttributes: Attribute[] =   [
   { id : "bag-aob",
     name : "Adresseerbaar object",
     attributes:    [
+      
+    { id : "bag-aob-id",
+      name : "Identificatie adresseerbaar object",
+      type : "string",
+    },
       
     { id : "bag-object-type",
       name : "Object type",

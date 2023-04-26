@@ -127,7 +127,7 @@ function AttributeCollection({ hit, collection }) {
     <div className="Attribute__list">
       {items.map((item, i) => (
         <AttributeItem
-          key={`${item.id}${i}`}
+          key={`al_${item.id}${i}`}
           hit={hit}
           attribute={collection}
           item={item}
@@ -147,7 +147,7 @@ function AttributeItem({ hit, attribute, item, collection, i, startOpen = false 
   if (collection.attributes[0].type == 'date') title = new Date(title).toLocaleDateString();
 
   return (
-    <div className="Attribute__item" key={`${item.id}${i}`}>
+    <div className="Attribute__item" key={`ai_${item.id}${i}`}>
       <h4 className="Attribute__item__title" onClick={() => setOpen(!open)}>
         <span className="icon">{open ? <ChevronDownIcon /> : <ChevronRightIcon />}</span>
         {title}
@@ -214,7 +214,7 @@ function PropValHighlights({
             <div className="Attribute__propval__value">
               {useHighlight && false ? (
                 <Highlight
-                  key={`val-${attribute.id}`}
+                  key={`val_${attribute.id}`}
                   attribute={attribute.id}
                   // @ts-ignore
                   hit={hitValue}
@@ -223,9 +223,9 @@ function PropValHighlights({
                 />
               ) : (
                 hitValue?.toString().split('\n').
-                map((hv) => {
+                map((hv, index) => {
                   if (attribute.type == 'date') hv = new Date(hv).toLocaleDateString();
-                  return( <div>{hv}</div> ) 
+                  return( <div key={`hv_${attribute.id}_${index}`}>{hv}</div> ) 
                 })
               )}
             </div>
