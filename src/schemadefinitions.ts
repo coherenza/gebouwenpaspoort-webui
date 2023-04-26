@@ -52,6 +52,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "zk-nummer"
   },
+  "dataset_id": {
+    "name": "Herkomst",
+    "type": "string",
+    "id": "dataset-id"
+  },
   "bag_num_status": {
     "name": "BAG status",
     "type": "string",
@@ -91,6 +96,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Documentdatum",
     "type": "date",
     "id": "bag-num-documentdatum"
+  },
+  "imported": {
+    "name": "Geimporteerd op",
+    "type": "string",
+    "id": "imported"
   },
   "bag_num_huisnummer_neven": {
     "name": "Huisnummer",
@@ -454,6 +464,7 @@ export const Attributes : {[index: string]: Attribute} = {
   },
   "id": {
     "name": "Identificatie",
+    "type": "string",
     "id": "id"
   },
   "bag_num_huisnummer": {
@@ -462,7 +473,7 @@ export const Attributes : {[index: string]: Attribute} = {
     "id": "bag-num-huisnummer"
   },
   "bwk_wijknaam": {
-    "name": "Wijknaam",
+    "name": "Wijk",
     "type": "string",
     "id": "bwk-wijknaam"
   },
@@ -676,7 +687,7 @@ export const displayAttributes: Attribute[] =   [
     attributes:    [
       
     { id : "bwk-wijknaam",
-      name : "Wijknaam",
+      name : "Wijk",
       type : "string",
     },
       
@@ -897,6 +908,16 @@ export const displayAttributes: Attribute[] =   [
     { id : "zk-einddatum-gepland",
       name : "Geplande einddatum",
       type : "date",
+    },
+      
+    { id : "dataset-id",
+      name : "Herkomst",
+      type : "string",
+    },
+      
+    { id : "imported",
+      name : "Geimporteerd op",
+      type : "string",
     }
     ]
   }
@@ -1049,5 +1070,5 @@ export interface GBPObject {
   "hoofdadres" : { "bag-num-id" : string; "bag-num-volledig" : string; "bag-num-postcode" : string; "bag-num-huisnummer" : number; "bag-num-huisletter" : string; "bag-num-huisnummertoevoeging" : string; "bag-num-huisnummer-letter-aanduiding" : string; "bag-num-status" : string; "bag-num-documentdatum" : Date; "bag-num-documentnummer" : string; "bag-num-voorkomen" : number; "bag-opr-id" : string; "bag-opr-naam" : string; "bag-opr-type" : string; "bag-opr-status" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-opr-voorkomen" : number; "bag-wpl-id" : string; "bag-wpl-naam" : string; "bag-wpl-status" : string; "bag-wpl-documentdatum" : Date; "bag-wpl-documentnummer" : string; "bag-wpl-voorkomen" : number; };
   "nevenadres" : { "bag-num-id-neven" : string; "bag-num-volledig-neven" : string; "bag-num-postcode-neven" : string; "bag-num-huisnummer-neven" : number; "bag-num-huisletter-neven" : string; "bag-num-huisnummertoevoeging-neven" : string; "bag-num-huisnummer-letter-aanduiding-neven" : string; "bag-opr-id-neven" : string; "bag-opr-naam-neven" : string; "bag-opr-type-neven" : string; "bag-wpl-id-neven" : string; "bag-wpl-naam-neven" : string; };
   "officiele-bekendmakingen" : { "publicatiedatum" : Date; "wijzigingsdatum" : Date; "identificatie" : string; "titel" : string; "ob-documenttype" : string[]; "ob-onderwerp" : string[]; "url-vindplaats" : string; };
-  "pand-vergunningen" : { "zk-nummer" : string; "omschrijving" : string; "zk-soort" : string[]; "zk-fase" : string[]; "zk-status" : string[]; "zk-besluit" : string[]; "date" : Date; "besluitdatum" : Date; "zk-startdatum" : Date; "zk-startdatum-gepland" : Date; "zk-einddatum" : Date; "zk-einddatum-gepland" : Date; };
+  "pand-vergunningen" : { "zk-nummer" : string; "omschrijving" : string; "zk-soort" : string[]; "zk-fase" : string[]; "zk-status" : string[]; "zk-besluit" : string[]; "date" : Date; "besluitdatum" : Date; "zk-startdatum" : Date; "zk-startdatum-gepland" : Date; "zk-einddatum" : Date; "zk-einddatum-gepland" : Date; "dataset-id" : string; "imported" : string; };
 }
