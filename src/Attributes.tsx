@@ -39,13 +39,15 @@ export function AttributeView({ attribute, hit, selectedAttributes }) {
 
   if (!attribute.attributes) {
     return (
-      <PropValHighlights
-        hit={hit}
-        key={`pvhe_${attribute.id}`}
-        attribute={attribute}
-        useHighlight
-        selectedAttributes={selectedAttributes}
-      />
+      <div className="Attribute__item" key={`ai_${attribute.id}`}>
+        <PropValHighlights
+          hit={hit}
+          key={`pvhe_${attribute.id}`}
+          attribute={attribute}
+          useHighlight
+          selectedAttributes={selectedAttributes}
+        />
+      </div>
     );
   } else if (isCollection && count == 0) {
     return false; // https://medium.com/@davidkelley87/stop-using-return-null-in-react-a2ebf08fc9cd
@@ -64,21 +66,25 @@ export function AttributeView({ attribute, hit, selectedAttributes }) {
         {isCollection ? (
           <AttributeCollection collection={attribute} hit={hit} />
         ) : (
-          // The attribute represents an unidentified list of property-value combinations
-          attribute.attributes.map(
-            (att) =>
-              att &&
-              att.name &&
-              att.id && (
-                <PropValHighlights
-                  selectedAttributes={selectedAttributes}
-                  key={`pvha_${att.id}`}
-                  hit={hit[attribute.id]}
-                  attribute={att}
-                  useHighlight={true}
-                />
+          // The attribute represents an unidentified list of property-value combinations.
+          <div className="Attribute__item" key={`ai_${attribute.id}`}>
+          {
+            attribute.attributes.map(
+              (att, index) =>
+                att &&
+                att.name &&
+                att.id && (
+                  <PropValHighlights
+                    selectedAttributes={selectedAttributes}
+                    key={`pvha_${att.id}`}
+                    hit={hit[attribute.id]}
+                    attribute={att}
+                    useHighlight={true}
+                    />
               )
-          )
+            )
+          }
+          </div>
         )}
       </AttributeCollapsible>
     );
@@ -186,7 +192,7 @@ function PropValHighlights({
     ( Array.isArray(hit)
     ? hit.join('\n')
     : typeof(hit) == 'object'
-    ? hit[attribute.id]
+    ? ( Array.isArray(hit[attribute.id]) ? hit[attribute.id].join('\n') : hit[attribute.id] )
     : hit
     );
 
