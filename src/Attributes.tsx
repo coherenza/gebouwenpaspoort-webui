@@ -121,8 +121,8 @@ function AttributeCollection({ hit, collection }) {
   const items = hit[collection.id];
   if (!items) return null;
   items.sort((a, b) => (collection.attributes[0].type == 'date') ?
-                         a[collection.attributes[0].id] < b[collection.attributes[0].id] :
-                         a[collection.attributes[0].id] > b[collection.attributes[0].id]);
+                         (a[collection.attributes[0].id] < b[collection.attributes[0].id] ? 1 : -1) :
+                         (a[collection.attributes[0].id] > b[collection.attributes[0].id] ? 1 : -1) );
   return (
     <div className="Attribute__list">
       {items.map((item, i) => (

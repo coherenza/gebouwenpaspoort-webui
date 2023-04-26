@@ -1,5 +1,5 @@
 import { useCallback, useContext } from "react";
-import { Attributes, GBPObject, getObjectType } from "./schema";
+import { Attributes, GBPObject, getObjectType, displayAttributes } from "./schema";
 import "./Hit.css";
 import { AppContext } from "./App";
 import { TrashIcon } from "@radix-ui/react-icons";
@@ -80,9 +80,10 @@ export const HitLine = ({ hit }: HitProps) => {
         className={`hit-naam ${
           status && shouldShowStatus(status) ? "hit-naam__deleted" : ""
         }`}
+        title={isAob ? hit[displayAttributes[0].id] : hit["bag-object-type"]}
       >
         {isAob ? "" : "🔍 "}
-        {isAob ? adres : hit["naam"]}
+        {isAob ? adres : hit[displayAttributes[0].id]}
       </div>
       <div className="hit-type-wrapper">
         {status && shouldShowStatus(status) && (
