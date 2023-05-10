@@ -27,10 +27,22 @@ VITE_MEILI_SERVER={url}
 
 ## Deploying
 
-- The front-end is currently hosted on Github pages, on [https://gbp2.pandata.nl]. A new version is built and deployed upon pushing to master. See the [.github/deploy.yml]
-- Meilisearch is hosted on DigitalOcean at [http://green.pandata.nl] and [http://blue.pandata.nl]. Check `config.ts` to see the one we're currently using. At this time of writing, `blue` contains the outdated / old data.
+- The front-end is currently hosted on Github pages, on [https://gbp2.pandata.nl].
+A new version is built and deployed upon pushing to master. See the [.github/deploy.yml]
 
-To run it, SSH into the droplet (can be done in DigitalOcean console) and run the command below:
+- Meilisearch is hosted on DigitalOcean at [http://green.pandata.nl] and [http://blue.pandata.nl].
+Check `config.ts` to see the one we're currently using.
+In order to change from blue to green or vice versa, change `const server` in `config.ts`.
+
+- The domains [http://green.pandata.nl] and [http://blue.pandata.nl] point to load balancers at DigitalOcean.
+This is configured in the DNS A-records for the domain `pandata.nl`.
+The load balancers forward all traffic to the 'meili-blue' and 'meili-green' droplets.
+The only purpose of the load balancers is to enable HTTPS.
+
+For testing, you may connect your local front-end to blue or green (the one that is not used for production).
+Of course both servers must be running for this testing scenario.
+
+To run MeiliSearch on a (blue / green) server, SSH into the droplet (can be done in DigitalOcean console) and run the command below:
 
 ```sh
 docker run -it \

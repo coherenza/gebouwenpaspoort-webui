@@ -13,7 +13,7 @@ import {
 import { TourProvider, useTour } from "@reactour/tour";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import { GBPObject, LocationFilter, sortProps } from "./schema";
-import { indexName, meiliKey, mode, server } from "./config";
+import { indexName, meiliKey, server } from "./config";
 import { Map } from "./Map";
 import { Details } from "./Details";
 import { Results } from "./Results";

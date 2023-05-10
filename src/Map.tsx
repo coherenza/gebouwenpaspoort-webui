@@ -108,7 +108,7 @@ function moveBounds(mapRef, items) {
 }
 
 /** Reads some bounds, creates some smaller bounds */
-function smallerCirlceBounds(bounds) {
+function smallerCircleBounds(bounds) {
   // Ratio to make the circle smaller
   const p = 0.7;
 
@@ -210,7 +210,7 @@ export function Map() {
       return;
     }
     const bounds = mapRef.current.getMap().getBounds();
-    refine(smallerCirlceBounds(bounds));
+    refine(smallerCircleBounds(bounds));
     setLastInteractionOrigin("map");
     setViewState(evt.viewState);
   }, []);
