@@ -188,13 +188,13 @@ function LayerCheckbox({ layer }) {
         ></input>
         {layer.name}{" "}
       </label>
-      <span
+      {/* <span
         className="Layer__info-button"
         title={description}
         onClick={() => setShowDescription(!showDescription)}
       >
         <InfoCircledIcon />
-      </span>
+      </span> */}
       {showDescription && <p className="Layer__description">{description}</p>}
     </div>
   );
