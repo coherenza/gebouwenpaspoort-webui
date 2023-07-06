@@ -292,7 +292,6 @@ export function Map() {
     layers.filter((l) => l.id == bagLayerId && l.visible).length > 0;
 
   const interactiveLayers = useMemo(() => {
-    //console.log("showBagLayer", showBagLayer);
     let l = layers.filter((l) => l.visible).map((layer) => layer.id);
     showBagLayer && l.push(bagLayerId);
     return l;
