@@ -258,11 +258,9 @@ export function Map() {
           setCenter(item._geoloc);
         }
 
-        const objectType = item["bag-aob"]?.["bag-object-type"];
-        const iconTitle =
-          objectType == "verblijfsobject"
-            ? item.hoofdadres["bag-num-huisnummer-letter-aanduiding"]
-            : item.naam;
+        const iconTitle = isAob
+          ? item.hoofdadres["bag-num-huisnummer-letter-aanduiding"]
+          : item.naam;
 
         return {
           type: "Feature",
@@ -294,7 +292,6 @@ export function Map() {
     layers.filter((l) => l.id == bagLayerId && l.visible).length > 0;
 
   const interactiveLayers = useMemo(() => {
-    //console.log("showBagLayer", showBagLayer);
     let l = layers.filter((l) => l.visible).map((layer) => layer.id);
     showBagLayer && l.push(bagLayerId);
     return l;
