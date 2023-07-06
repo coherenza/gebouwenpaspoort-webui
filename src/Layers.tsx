@@ -222,14 +222,14 @@ export function LayerSource({ layer }: { layer: LayerI }) {
         tiles={[makeWmsUrl(layer)]}
         scheme="xyz"
       >
-        <Layer {...mapBoxLayer} />
+        <Layer {...mapBoxLayer} beforeId={bagLayerId} />
       </Source>
     );
   }
 
   return (
     <Source id={layer.id} type="geojson" data={makeWfsUrl(layer)}>
-      <Layer {...mapBoxLayer} key={layer.id} />
+      <Layer {...mapBoxLayer} key={layer.id} id={layer.id} />
     </Source>
   );
 }
@@ -285,9 +285,6 @@ const makeRasterLayer = (layer: LayerI): RasterLayer => ({
   source: "raster-tiles",
   minzoom: 0,
   maxzoom: 22,
-  paint: {
-    "raster-opacity": 0.5,
-  },
 });
 
 export interface LayerI {
