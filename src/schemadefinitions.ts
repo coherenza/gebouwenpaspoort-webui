@@ -1035,7 +1035,8 @@ export const searchableAttributes = [
   "bwk-wijknaam",
   "bwk-subwijknaam",
   "bwk-buurtnaam",
-  "bwk-subbuurtnaam"
+  "bwk-subbuurtnaam",
+  "zk-nummer"
 ];
 
 export interface GBPObject {
