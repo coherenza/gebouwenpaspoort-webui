@@ -34,8 +34,9 @@ function nothingToSee(value) {
  * Renders a single section in the Details view, for one attribute.
  */
 export function AttributeView({ attribute, hit, selectedAttributes }) {
-  const isCollection = Array.isArray(hit[attribute.id]) && !!attribute.attributes;
-  const count = isCollection && hit[attribute?.id]?.length || 0;
+  const isCollection =
+    Array.isArray(hit[attribute.id]) && !!attribute.attributes;
+  const count = (isCollection && hit[attribute?.id]?.length) || 0;
 
   if (!attribute.attributes) {
     return (
@@ -51,7 +52,12 @@ export function AttributeView({ attribute, hit, selectedAttributes }) {
     );
   } else if (isCollection && count == 0) {
     return false; // https://medium.com/@davidkelley87/stop-using-return-null-in-react-a2ebf08fc9cd
-  } else if ( !isCollection && attribute.attributes.every((a) => !!hit[attribute.id] && nothingToSee(hit[attribute.id][a.id])) ) {
+  } else if (
+    !isCollection &&
+    attribute.attributes.every(
+      (a) => !!hit[attribute.id] && nothingToSee(hit[attribute.id][a.id])
+    )
+  ) {
     // Do not show attribute sets when all attributes are empty.
     return false;
   } else if (!isCollection && hit[attribute.id] == undefined) {
@@ -68,8 +74,7 @@ export function AttributeView({ attribute, hit, selectedAttributes }) {
         ) : (
           // The attribute represents an unidentified list of property-value combinations.
           <div className="Attribute__item" key={`ai_${attribute.id}`}>
-          {
-            attribute.attributes.map(
+            {attribute.attributes.map(
               (att, index) =>
                 att &&
                 att.name &&
@@ -80,10 +85,9 @@ export function AttributeView({ attribute, hit, selectedAttributes }) {
                     hit={hit[attribute.id]}
                     attribute={att}
                     useHighlight={true}
-                    />
-              )
-            )
-          }
+                  />
+                )
+            )}
           </div>
         )}
       </AttributeCollapsible>
@@ -109,10 +113,14 @@ export function AttributeCollapsible({
 
   return (
     <div className="Attribute">
-      <div className={"Attribute__title__"+(open ? "open" : "closed")} onClick={() => setOpen(!open)}>
-        {attribute.name}{" "}
-        {showCount && `(${count})`}
-        <span className="icon">{open ? <ChevronDownIcon /> : <ChevronUpIcon />}</span>
+      <div
+        className={"Attribute__title__" + (open ? "open" : "closed")}
+        onClick={() => setOpen(!open)}
+      >
+        {attribute.name} {showCount && `(${count})`}
+        <span className="icon">
+          {open ? <ChevronDownIcon /> : <ChevronUpIcon />}
+        </span>
       </div>
       {
         <div className={"Attribute__content__" + (open ? "open" : "closed")}>
@@ -126,9 +134,15 @@ export function AttributeCollapsible({
 function AttributeCollection({ hit, collection }) {
   const items = hit[collection.id];
   if (!items) return null;
-  items.sort((a, b) => (collection.attributes[0].type == 'date') ?
-                         (a[collection.attributes[0].id] < b[collection.attributes[0].id] ? 1 : -1) :
-                         (a[collection.attributes[0].id] > b[collection.attributes[0].id] ? 1 : -1) );
+  items.sort((a, b) =>
+    collection.attributes[0].type == "date"
+      ? a[collection.attributes[0].id] < b[collection.attributes[0].id]
+        ? 1
+        : -1
+      : a[collection.attributes[0].id] > b[collection.attributes[0].id]
+      ? 1
+      : -1
+  );
   return (
     <div className="Attribute__list">
       {items.map((item, i) => (
@@ -146,24 +160,38 @@ function AttributeCollection({ hit, collection }) {
   );
 }
 
-function AttributeItem({ hit, attribute, item, collection, i, startOpen = false }) {
+function AttributeItem({
+  hit,
+  attribute,
+  item,
+  collection,
+  i,
+  startOpen = false,
+}) {
   const [open, setOpen] = useState(startOpen);
 
-  let title = (Array.isArray(item[collection.attributes[0].id])) ? item[collection.attributes[0].id][0] : item[collection.attributes[0].id];
-  if (collection.attributes[0].type == 'date') title = new Date(title).toLocaleDateString();
+  let title = Array.isArray(item[collection.attributes[0].id])
+    ? item[collection.attributes[0].id][0]
+    : item[collection.attributes[0].id];
+  if (collection.attributes[0].type == "date")
+    title = new Date(title).toLocaleDateString();
 
+  const filterMatch = false;
   return (
     <div className="Attribute__item" key={`ai_${item.id}${i}`}>
       <h4 className="Attribute__item__title" onClick={() => setOpen(!open)}>
-        <span className="icon">{open ? <ChevronDownIcon /> : <ChevronRightIcon />}</span>
+        <span className="icon">
+          {open ? <ChevronDownIcon /> : <ChevronRightIcon />}
+        </span>
         {title}
+        {filterMatch}
       </h4>
       {open &&
         collection.attributes.map((attribute) => (
           // We can't use Highlight here, or maybe we can, but I don't know how to pass a path for
           // a resource that is stored in an array (e.g. `prop[0].subProp`) to the `Highlight` component.
           <PropValHighlights
-            key={'pvhi_'+attribute.id}
+            key={"pvhi_" + attribute.id}
             hit={item[attribute.id]}
             attribute={attribute}
           />
@@ -188,13 +216,13 @@ function PropValHighlights({
 
   const isLink = attribute.type == "URL";
 
-  let hitValue =
-    ( Array.isArray(hit)
-    ? hit.join('\n')
-    : typeof(hit) == 'object'
-    ? ( Array.isArray(hit[attribute.id]) ? hit[attribute.id].join('\n') : hit[attribute.id] )
-    : hit
-    );
+  let hitValue = Array.isArray(hit)
+    ? hit.join("\n")
+    : typeof hit == "object"
+    ? Array.isArray(hit[attribute.id])
+      ? hit[attribute.id].join("\n")
+      : hit[attribute.id]
+    : hit;
 
   if (hitValue == undefined) return null;
 
@@ -205,39 +233,39 @@ function PropValHighlights({
       }`}
     >
       {" "}
-      {
-        isLink ? ( <a
-            className="Attribute__link"
-            href={hitValue}
-            target="_blank"
-          >
-            <div className="Attribute__propval__key">{attribute.name}</div>
-            <span className="icon"><ExternalLinkIcon /></span>
-          </a>
-        ) : (
-          <>
-            <div className="Attribute__propval__key">{attribute.name}</div>
-            <div className="Attribute__propval__value">
-              {useHighlight && false ? (
-                <Highlight
-                  key={`val_${attribute.id}`}
-                  attribute={attribute.id}
-                  // @ts-ignore
-                  hit={hitValue}
-                  // @ts-ignore
-                  tagname="mark"
-                />
-              ) : (
-                hitValue?.toString().split('\n').
-                map((hv, index) => {
-                  if (attribute.type == 'date') hv = new Date(hv).toLocaleDateString();
-                  return( <div key={`hv_${attribute.id}_${index}`}>{hv}</div> ) 
+      {isLink ? (
+        <a className="Attribute__link" href={hitValue} target="_blank">
+          <div className="Attribute__propval__key">{attribute.name}</div>
+          <span className="icon">
+            <ExternalLinkIcon />
+          </span>
+        </a>
+      ) : (
+        <>
+          <div className="Attribute__propval__key">{attribute.name}</div>
+          <div className="Attribute__propval__value">
+            {useHighlight && false ? (
+              <Highlight
+                key={`val_${attribute.id}`}
+                attribute={attribute.id}
+                // @ts-ignore
+                hit={hitValue}
+                // @ts-ignore
+                tagname="mark"
+              />
+            ) : (
+              hitValue
+                ?.toString()
+                .split("\n")
+                .map((hv, index) => {
+                  if (attribute.type == "date")
+                    hv = new Date(hv).toLocaleDateString();
+                  return <div key={`hv_${attribute.id}_${index}`}>{hv}</div>;
                 })
-              )}
-            </div>
-          </>
-        )
-      }
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

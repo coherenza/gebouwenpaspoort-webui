@@ -84,6 +84,7 @@ export const layersDefault: LayerI[] = [
 /** Layer for clickable Address items */
 export const bagLayer: SymbolLayer = {
   id: bagLayerId,
+  source: bagLayerId,
   type: "symbol",
   layout: {
     // get the title name and icon from the source's properties
@@ -200,7 +201,9 @@ function LayerCheckbox({ layer }) {
 }
 
 /** This should describe Utrecht bounds */
-const boundsUtrecht = [4.93038, 51.986783, 5.25482, 52.166141];
+const boundsUtrecht: [number, number, number, number] = [
+  4.93038, 51.986783, 5.25482, 52.166141,
+];
 const boundsNL = [3, 50, 7.4, 54];
 
 /** Component that mounts the Source and Layer components, required by React-Map-gl */
@@ -243,6 +246,7 @@ function makeMapBoxLayer(layer: LayerI): AnyLayer {
 
 const makeSymbolLayer = (layer: LayerI): SymbolLayer => ({
   id: layer.id,
+  source: layer.id,
   type: "symbol",
   layout: {
     // get the title name and icon from the source's properties
@@ -267,6 +271,7 @@ const makeSymbolLayer = (layer: LayerI): SymbolLayer => ({
 
 const makeFillLayer = (layer: LayerI): FillLayer => ({
   id: layer.id,
+  source: layer.id,
   type: "fill",
   paint: {
     "fill-color": stringToColor(layer.id),
@@ -280,6 +285,9 @@ const makeRasterLayer = (layer: LayerI): RasterLayer => ({
   source: "raster-tiles",
   minzoom: 0,
   maxzoom: 22,
+  paint: {
+    "raster-opacity": 0.5,
+  },
 });
 
 export interface LayerI {

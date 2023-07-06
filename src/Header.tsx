@@ -7,6 +7,7 @@ import { useTour } from "@reactour/tour";
 import { useCallback } from "react";
 import { useContext } from "react";
 import { AppContext } from "./App";
+import { InfoCircledIcon, ChatBubbleIcon } from "@radix-ui/react-icons";
 
 export function Header() {
   const [showInfoPage, setShowInfoPage] = useState(false);
@@ -48,14 +49,14 @@ export function Header() {
             href="https://forms.gle/nxGbtVxoCiYgB83S6"
             title="Geef feedback over deze app."
           >
-            Feedback
+            <ChatBubbleIcon />
           </a>
           <button
             className="button"
             title="Toon informatie over deze app."
             onClick={() => setShowInfoPage(!showInfoPage)}
           >
-            Info
+            <InfoCircledIcon />
           </button>
         </div>
       </div>
