@@ -13,6 +13,7 @@ const hiddenProps = [
 
 /** Shown when hovering over an item in the map */
 export function ToolTip({ feature, x, y }) {
+  console.log("tt", feature);
   return (
     <div className="tooltip" style={{ left: x, top: y }}>
       {/* show all properties as key values */}
