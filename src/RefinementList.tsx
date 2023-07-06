@@ -15,7 +15,7 @@ export function RefinementList({ attribute, sortBy, limit = 10 }: RefinementList
       operator: "or",
       sortBy,
       // We use a large limit, because we do our own 'show more' button.
-      limit: 30,
+      limit: 1000,
   });
 
   const [savedItems, setSavedItems] = useState<RefinementListItem[]>([]);

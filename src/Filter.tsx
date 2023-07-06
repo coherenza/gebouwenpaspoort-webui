@@ -15,6 +15,11 @@ const intervalSortValue = function (x: string) {
   return Number.parseFloat(value);
 };
 
+const sortLabels: RefinementListProps["sortBy"] = (a, b) => {
+  // Dit werkt niet voor sorteren op label.
+  return intervalSortValue(a.escapedValue.toLowerCase()) > intervalSortValue(b.escapedValue.toLowerCase()) ? 1 : -1;
+};
+
 const sortIntervals: RefinementListProps["sortBy"] = (a, b) => {
   return intervalSortValue(a.name) < intervalSortValue(b.name) ? -1 : 1;
 };
@@ -27,7 +32,7 @@ export const Filter = (filter: Attribute) => {
       <h4 onClick={() => setOpen(!open)}>{open ? <ChevronDownIcon /> : <ChevronRightIcon />}{filter.name}</h4>
       <div className={"Attribute__content__"+(open ? "open" : "closed")}>
         {filterType === "select" && (
-          <RefinementList attribute={filter.id} limit={16} />
+          <RefinementList attribute={filter.id} limit={1000} sortBy={sortLabels} />
         )}
         {filterType === "range" && (
           <RangeInput attribute={filter.id} />
@@ -36,7 +41,7 @@ export const Filter = (filter: Attribute) => {
           <RefinementList
             attribute={filter.id}
             sortBy={sortIntervals}
-            limit={16}
+            limit={100}
           />
         )}
       </div>
