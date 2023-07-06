@@ -24,7 +24,6 @@ import { useLocalStorage } from "./useLocalStorage";
 import { LayerI, layersDefault, LayerSelector } from "./Layers";
 import { tourSteps as steps } from "./Tour";
 
-
 type InteractionOrigin = "map" | "text" | "results" | undefined;
 
 interface AppContextI {
@@ -163,35 +162,35 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
       }}
     >
       <MapProvider>
-          <KeyboardHandler>
-            {!validApiKey ? (
-              <form onSubmit={handleSetApiKey} className="app__api-key">
-                <input
-                  autoFocus
-                  placeholder="Voer de sleutel in"
-                  value={apiKeyTemp}
-                  onChange={(e) => setApiKeyTemp(e.target.value)}
-                />
-                <button type="submit">opslaan</button>
-              </form>
-            ) : (
-              <div className="app">
-                <Configure
-                  hitsPerPage={hitCount}
-                  attributesToSnippet={["description:50"]}
-                  snippetEllipsisText={"..."}
-                />
+        <KeyboardHandler>
+          {!validApiKey ? (
+            <form onSubmit={handleSetApiKey} className="app__api-key">
+              <input
+                autoFocus
+                placeholder="Voer de sleutel in"
+                value={apiKeyTemp}
+                onChange={(e) => setApiKeyTemp(e.target.value)}
+              />
+              <button type="submit">opslaan</button>
+            </form>
+          ) : (
+            <div className="app">
+              <Configure
+                hitsPerPage={hitCount}
+                attributesToSnippet={["description:50"]}
+                snippetEllipsisText={"..."}
+              />
 
-                <div className="app__columns">
-                  <Filters />
-                  <LayerSelector />
-                  <Map />
-                  <Results />
-                  <Details />
-                </div>
+              <div className="app__columns">
+                <Filters />
+                <LayerSelector />
+                <Map />
+                <Results />
+                <Details />
               </div>
-            )}
-          </KeyboardHandler>
+            </div>
+          )}
+        </KeyboardHandler>
       </MapProvider>
     </AppContext.Provider>
   );

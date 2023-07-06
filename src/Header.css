@@ -14,13 +14,11 @@
 .header {
   margin-bottom: 1rem;
   display: flex;
-  flex-wrap: wrap;
   gap: 0.5rem;
 }
 
 .header .logo {
   align-self: flex;
-  margin-right: 2rem;
 }
 
 .app-header__results-count {
@@ -34,7 +32,5 @@
 
 .header--buttons {
   display: flex;
-  flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 0.5rem;
 }

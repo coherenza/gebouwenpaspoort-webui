@@ -11,6 +11,7 @@ import { useGeoSearch } from "./useGeoSearch";
 import MapGL, {
   GeolocateControl,
   Layer,
+  MapLayerMouseEvent,
   MapRef,
   NavigationControl,
   Source,
@@ -18,7 +19,7 @@ import MapGL, {
 import { LngLatBounds } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { AppContext } from "./App";
-import { Attributes, GBPObject, getObjectType } from "./schema";
+import { GBPObject, getObjectType } from "./schema";
 import { useInfiniteHits, useSearchBox } from "react-instantsearch-hooks-web";
 import { Header } from "./Header";
 import { LayerSource, bagLayerId, bagLayer } from "./Layers";
@@ -259,9 +260,9 @@ export function Map() {
 
         const objectType = item["bag-aob"]?.["bag-object-type"];
         const iconTitle =
-          ( objectType =='verblijfsobject' ? item.hoofdadres['bag-num-huisnummer-letter-aanduiding']
-          : item.naam
-          )
+          objectType == "verblijfsobject"
+            ? item.hoofdadres["bag-num-huisnummer-letter-aanduiding"]
+            : item.naam;
 
         return {
           type: "Feature",
@@ -300,7 +301,7 @@ export function Map() {
   }, [layers]);
 
   const handleMapClick = useCallback(
-    (evt: mapboxgl.MapLayerMouseEvent) => {
+    (evt: MapLayerMouseEvent) => {
       setLastInteractionOrigin("map");
       if (evt.features) {
         const feature = evt.features[0];
