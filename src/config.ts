@@ -1,6 +1,6 @@
 /** Where meilisearch is hosted
  * The Vite Meili server is used locally on development machines.
- * The front-end server uses blue or green. This is the place where you must choose which one to use.
+ * The front-end server uses blue or green. This is the place where you must choose which one to use. Or you use the .env file.
  */
 export const server = import.meta.env["VITE_MEILI_SERVER"] || "https://blue.pandata.nl";
 /** Name of the Meilisearch Index */
