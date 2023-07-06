@@ -16,8 +16,7 @@ const intervalSortValue = function (x: string) {
 };
 
 const sortLabels: RefinementListProps["sortBy"] = (a, b) => {
-  // Dit werkt niet voor sorteren op label.
-  return intervalSortValue(a.escapedValue.toLowerCase()) > intervalSortValue(b.escapedValue.toLowerCase()) ? 1 : -1;
+  return a.escapedValue.toLowerCase() < b.escapedValue.toLowerCase() ? -1 : 1;
 };
 
 const sortIntervals: RefinementListProps["sortBy"] = (a, b) => {
