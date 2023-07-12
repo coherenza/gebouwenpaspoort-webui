@@ -30,7 +30,7 @@ export function InfoPage() {
           bouw en techniek. Dit verhoogt de herkenbaarheid en de
           uitwisselbaarheid van gegevens. Zie{" "}
           <a
-            href="https://gbp2.pandata.nl/sfb-bouwtechnische-kenmerken.html"
+            href="/sfb-bouwtechnische-kenmerken.html"
             target="_blank"
           >
             NL/SfB Tabel-1: Functionele gebouwelementen
