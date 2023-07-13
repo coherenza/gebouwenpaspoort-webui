@@ -1,19 +1,21 @@
 .Attribute {
-  padding: 0.5rem;
   border-top: 1px solid var(--g1);
   border-bottom: 1px solid var(--g1);
 }
 
-.Attribute__title__closed, .Attribute__title__open {
+.Attribute__title__closed,
+.Attribute__title__open {
   cursor: pointer;
   color: var(--primary-color-dark);
   font-size: 1rem;
+  padding: 0.5rem;
 }
 
 .Attribute__title__open {
 }
 
-.Attribute__title__closed>.icon, .Attribute__title__open>.icon {
+.Attribute__title__closed > .icon,
+.Attribute__title__open > .icon {
   float: right;
 }
 
@@ -32,7 +34,7 @@
 }
 
 .Attribute__propval__key {
-  margin-left:0.4rem;
+  margin-left: 0.4rem;
   font-weight: bold;
 }
 
@@ -60,7 +62,7 @@
   cursor: pointer;
 }
 
-.Attribute__item__title>.icon {
+.Attribute__item__title > .icon {
   color: var(--primary-color-dark);
 }
 
