@@ -3,30 +3,30 @@ import { useContext } from "react";
 import { AppContext } from "./App";
 import {
   displayAttributes as displayAttributes,
-  GBPObjectTypes,
   getObjectType,
 } from "./schema";
 import { AttributeView } from "./Attributes";
-import {
-  useCurrentRefinements,
-  useRefinementList,
-} from "react-instantsearch-hooks-web";
+import { useCurrentRefinements } from "react-instantsearch-hooks-web";
 import { Cross1Icon } from "@radix-ui/react-icons";
 
 export function Details() {
-  const { current, setCurrent } = useContext(AppContext);
-  // const x = useRefinementList({ attribute: "pdok-locatie-id" });
+  const { current, showDetails, setShowDetails } = useContext(AppContext);
   // The `useCurrentRefinements` hook is quite expensive, so we call it once over here
   //  and pass the props all the way down.
   const { items: selectedAttributes } = useCurrentRefinements();
 
-  if (!current) return null;
+  if (!current || !showDetails) return null;
 
   if (!getObjectType(current).isAob) {
     return (
       <div className="Sidebar details-panel">
         <div className="Titlebar Titlebar--padded">
-          <button onClick={() => setCurrent(undefined)}>
+          <button
+            title="Sluit details"
+            onClick={() => {
+              setShowDetails(false);
+            }}
+          >
             <Cross1Icon />
           </button>
         </div>
@@ -44,9 +44,14 @@ export function Details() {
         <>
           <div className="Titlebar Titlebar--padded">
             <h3 className="details-panel__title">
-              {current[displayAttributes[0].id].replace(/(\d\d\d\d[A-Z][A-Z])\s+/, '$1\xA0') /* non-breakable space tussen postcode en woonplaats */}
+              {
+                current[displayAttributes[0].id].replace(
+                  /(\d\d\d\d[A-Z][A-Z])\s+/,
+                  "$1\xA0"
+                ) /* non-breakable space tussen postcode en woonplaats */
+              }
             </h3>
-            <button onClick={() => setCurrent(undefined)}>
+            <button title="Sluit details" onClick={() => setShowDetails(false)}>
               <Cross1Icon />
             </button>
           </div>

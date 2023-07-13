@@ -29,6 +29,8 @@ type InteractionOrigin = "map" | "text" | "results" | undefined;
 interface AppContextI {
   setCurrent: (gebouw: GBPObject) => void;
   current: GBPObject | undefined;
+  setShowDetails: (b: boolean) => void;
+  showDetails: boolean;
   setShowResults: (b: boolean) => void;
   showResults: boolean;
   setShowFilter: (b: boolean) => void;
@@ -98,6 +100,7 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   const [showFilter, setShowFilter] = useLocalStorage("showFilter", true);
   const [showResults, setShowResults] = useLocalStorage("showResults", true);
   const [showLayers, setShowLayers] = useLocalStorage("showLayers", false);
+  const [showDetails, setShowDetails] = useLocalStorage("showLayers", true);
   const [layers, setLayers] = React.useState<LayerI[]>(layersDefault);
   const [locationFilter, setLocationFilterInternal] = React.useState<
     LocationFilter | undefined
@@ -151,6 +154,8 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
         current,
         showFilter,
         setShowFilter,
+        showDetails,
+        setShowDetails,
         showResults,
         lastInteractionOrigin,
         setLastInteractionOrigin,

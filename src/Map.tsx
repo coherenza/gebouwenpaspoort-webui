@@ -133,6 +133,8 @@ export function Map() {
     current,
     showFilter,
     showResults,
+    showDetails,
+    setShowDetails,
     setShowFilter,
     setShowResults,
     setShowLayerSelector,
@@ -155,7 +157,7 @@ export function Map() {
     if (mapRef.current) {
       mapRef.current.getMap().resize();
     }
-  }, [current, showFilter, showResults, showLayerSelector]);
+  }, [current, showFilter, showResults, showLayerSelector, showDetails]);
 
   // When the returned items change (e.g. after a fulltext query), we move the bounds of the map
   let moveMapToItemBounds = useCallback(() => {
@@ -294,6 +296,7 @@ export function Map() {
         const type = getObjectType(item);
 
         if (type.isAob) {
+          setShowDetails(true);
           setCurrent(item as unknown as GBPObject);
           return;
         } else {
@@ -329,6 +332,9 @@ export function Map() {
           <button onClick={() => setShowResults(!showResults)}>
             Resultaten
           </button>
+        )}
+        {!showDetails && current && (
+          <button onClick={() => setShowDetails(!showDetails)}>Details</button>
         )}
       </div>
       <Header />
