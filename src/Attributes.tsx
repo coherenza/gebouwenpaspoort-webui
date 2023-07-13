@@ -136,12 +136,11 @@ function AttributeCollection({ hit, collection }) {
   // attribute = {"name":"Zaaksoort","type":"string","id":"zk-soort"}
   // refinement = {"attribute":"zaakgegevens.zk-soort","type":"disjunctive","value":"Projectcontrole BAR","label":"Projectcontrole BAR","count":310}
   // [[attribute, [refinement...]]...]
-  const refinedAttributeValues = items.map((item) => {
-    let attribute = Object.values(Attributes).find(
-      (a) => a.id == item.attribute.replace(/.*\./, "")
-    );
-    return [attribute, item.refinements];
-  });
+  const refinedAttributeValues =
+    items.map((item) => {
+      let attribute = Object.values(Attributes).find(a => a.id == item.attribute.replace(/.*\./, ''));
+      return { 'attribute': attribute, 'refinements': item.refinements }
+    });
 
   const hitItems = hit[collection.id];
   if (!hitItems) return null;
@@ -156,14 +155,10 @@ function AttributeCollection({ hit, collection }) {
   );
   return (
     <div className="Attribute__list">
-      {hitItems.map((item, i) => {
-        const filterMatch = refinedAttributeValues.some(([attr, refs]) => {
-          //@ts-ignore
-          const itemAttrValues = item[attr.id] || [];
-          const match = refs
-            // @ts-ignore
-            .map((ref) => ref.value)
-            .some((value) => itemAttrValues.includes(value));
+      { hitItems.map((item, i) => {
+        const filterMatch = refinedAttributeValues.some((attrRefs) => {
+          const itemAttrValues = item[attrRefs.attribute.id] || [];
+          const match = attrRefs.refinements.map(ref => ref.value).some((value) => itemAttrValues.includes(value));
           return match;
         });
         return (
