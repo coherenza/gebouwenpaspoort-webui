@@ -136,11 +136,12 @@ function AttributeCollection({ hit, collection }) {
   // attribute = {"name":"Zaaksoort","type":"string","id":"zk-soort"}
   // refinement = {"attribute":"zaakgegevens.zk-soort","type":"disjunctive","value":"Projectcontrole BAR","label":"Projectcontrole BAR","count":310}
   // [[attribute, [refinement...]]...]
-  const refinedAttributeValues =
-    items.map((item) => {
-      let attribute = Object.values(Attributes).find(a => a.id == item.attribute.replace(/.*\./, ''));
-      return [ attribute, item.refinements ]
-    });
+  const refinedAttributeValues = items.map((item) => {
+    let attribute = Object.values(Attributes).find(
+      (a) => a.id == item.attribute.replace(/.*\./, "")
+    );
+    return [attribute, item.refinements];
+  });
 
   const hitItems = hit[collection.id];
   if (!hitItems) return null;
@@ -155,10 +156,14 @@ function AttributeCollection({ hit, collection }) {
   );
   return (
     <div className="Attribute__list">
-      { hitItems.map((item, i) => {
-        const filterMatch = refinedAttributeValues.some(([ attr, refs ]) => {
+      {hitItems.map((item, i) => {
+        const filterMatch = refinedAttributeValues.some(([attr, refs]) => {
+          //@ts-ignore
           const itemAttrValues = item[attr.id] || [];
-          const match = refs.map(ref => ref.value).some((value) => itemAttrValues.includes(value));
+          const match = refs
+            // @ts-ignore
+            .map((ref) => ref.value)
+            .some((value) => itemAttrValues.includes(value));
           return match;
         });
         return (
@@ -172,7 +177,7 @@ function AttributeCollection({ hit, collection }) {
             i={i}
             filterMatch={filterMatch}
           />
-        )
+        );
       })}
     </div>
   );
@@ -185,7 +190,7 @@ function AttributeItem({
   collection,
   i,
   startOpen = false,
-  filterMatch = false
+  filterMatch = false,
 }) {
   const [open, setOpen] = useState(startOpen);
 
@@ -197,7 +202,14 @@ function AttributeItem({
 
   return (
     <div className="Attribute__item" key={`ai_${item.id}${i}`}>
-      <h4 className={filterMatch ? 'Attribute__item__title Attribute__Refined' : 'Attribute__item__title'} onClick={() => setOpen(!open)}>
+      <h4
+        className={
+          filterMatch
+            ? "Attribute__item__title Attribute__Refined"
+            : "Attribute__item__title"
+        }
+        onClick={() => setOpen(!open)}
+      >
         <span className="icon">
           {open ? <ChevronDownIcon /> : <ChevronRightIcon />}
         </span>
