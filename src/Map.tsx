@@ -110,9 +110,6 @@ function moveBounds(mapRef, items) {
 
 /** Reads some bounds, creates some smaller bounds */
 function smallerCircleBounds(bounds) {
-  // Ratio to make the circle smaller
-  const p = 0.7;
-
   const neBounds = bounds.getNorthEast();
   const swBounds = bounds.getSouthWest();
 
@@ -123,20 +120,9 @@ function smallerCircleBounds(bounds) {
   let [x1, y1] = [neBounds.lng, neBounds.lat];
   let [x2, y2] = [swBounds.lng, swBounds.lat];
 
-  let [[xn1, yn1], [xn2, yn2]] = [
-    [
-      ((1 + p) / 2) * x1 + ((1 - p) / 2) * x2,
-      ((1 + p) / 2) * y1 + ((1 - p) / 2) * y2,
-    ],
-    [
-      ((1 + p) / 2) * x2 + ((1 - p) / 2) * x1,
-      ((1 + p) / 2) * y2 + ((1 - p) / 2) * y1,
-    ],
-  ];
-
   return {
-    northEast: { lng: xn1, lat: yn1 },
-    southWest: { lng: xn2, lat: yn2 },
+    northEast: { lng: x1, lat: y1 },
+    southWest: { lng: x2, lat: y2 },
   };
 }
 

@@ -5,8 +5,8 @@ dependencies:
     specifier: ^7.0.1
     version: 7.0.1
   '@meilisearch/instant-meilisearch':
-    specifier: ^0.11
-    version: 0.11.0
+    specifier: ^0.13
+    version: 0.13.0
   '@radix-ui/react-dialog':
     specifier: ^1.0.4
     version: 1.0.4(@types/react-dom@18.2.6)(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)
@@ -23,14 +23,14 @@ dependencies:
     specifier: 8.0.0
     version: 8.0.0
   instantsearch.js:
-    specifier: ^4.56.4
-    version: 4.56.4(algoliasearch@4.18.0)
+    specifier: ^4.56.5
+    version: 4.56.5(algoliasearch@4.18.0)
   mapbox-gl:
     specifier: ^2.15.0
     version: 2.15.0
   meilisearch:
-    specifier: ^0.31.0
-    version: 0.31.0
+    specifier: ^0.33.0
+    version: 0.33.0
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -38,8 +38,8 @@ dependencies:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
   react-instantsearch-hooks-web:
-    specifier: ^6.45.1
-    version: 6.45.1(algoliasearch@4.18.0)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^6.46
+    version: 6.46.0(algoliasearch@4.18.0)(react-dom@18.2.0)(react@18.2.0)
   react-map-gl:
     specifier: ^7.1.1
     version: 7.1.1(mapbox-gl@2.15.0)(react-dom@18.2.0)(react@18.2.0)
@@ -708,10 +708,10 @@ packages:
       sort-object: 3.0.3
     dev: false
 
-  /@meilisearch/instant-meilisearch@0.11.0:
-    resolution: {integrity: sha512-JaSiF8aWeN/ZZQYpPTws2a7M3RWam8dtRxMb7Im2oJ6ui7Iacc6qxgmVXsY6SgW+mBC8SqEQGPLZTWUQfPvBQQ==}
+  /@meilisearch/instant-meilisearch@0.13.0:
+    resolution: {integrity: sha512-8xWHqqUDlvJd/Y6ctdWM1uBwW74PMUidFBp6L9+/KTOkH/ghNgJK3ECdyuxXNCpDiLiszEDD46ZePZwauKuEyA==}
     dependencies:
-      meilisearch: 0.31.1
+      meilisearch: 0.32.5
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -1463,8 +1463,8 @@ packages:
     resolution: {integrity: sha512-yU63cF9KdkyFFh7ynYQy39nh1MD1eVDHIaa/gdm8a/O9dTG/5P6hBF1ONoIbKTtjlxxsHS2S8MarCZZ0l31ajg==}
     dev: false
 
-  /instantsearch.js@4.56.4(algoliasearch@4.18.0):
-    resolution: {integrity: sha512-ttLKQo64VYh3AyA9+zmyd3jYjKw8afibOA1to7dNhpaUKS7dHyOT0qC/7rzBGdJYEhzBR+MCG0yuuyDMoHgDAQ==}
+  /instantsearch.js@4.56.5(algoliasearch@4.18.0):
+    resolution: {integrity: sha512-H4f9/tpadWy5KQ5ZbA9RYzsuQrNVZZv2rTqT5nDxftjgfPzeuCEg61l9tukZIlxmbx8HGRKPt5wqpZKdmkkSdg==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
@@ -1592,16 +1592,16 @@ packages:
       vt-pbf: 3.1.3
     dev: false
 
-  /meilisearch@0.31.0:
-    resolution: {integrity: sha512-q6iw0aaIHGYKQ2aLg4DAjIyB7Uc9m/bzuTlfUWMOo8suSocVF5BDjUysW3WMMwsS0mlj1XrqAQu85nDOZqVLFQ==}
+  /meilisearch@0.32.5:
+    resolution: {integrity: sha512-pVccjGAGP1IDSLg3lx9VhyQjUo7kN8x/HVjSurtb8U24V5/pALpf5H2hj6f60QhJd0Ea4tnGRv8fGr2YqWMo9A==}
     dependencies:
       cross-fetch: 3.1.8
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /meilisearch@0.31.1:
-    resolution: {integrity: sha512-ajMieU0e25lLkT+05J0snX0Ycow1UofxIy5sag03flERUbjXq8ouVwkrJkW27JsKftIeDeffRRRr89LasU9+0w==}
+  /meilisearch@0.33.0:
+    resolution: {integrity: sha512-bYPb9WyITnJfzf92e7QFK8Rc50DmshFWxypXCs3ILlpNh8pT15A7KSu9Xgnnk/K3G/4vb3wkxxtFS4sxNkWB8w==}
     dependencies:
       cross-fetch: 3.1.8
     transitivePeerDependencies:
@@ -1731,8 +1731,8 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-instantsearch-hooks-web@6.45.1(algoliasearch@4.18.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-pFenMFHaKsS6bvXHymqTeBa4Nw5l8AGxxPozU0VWdkTkhwbLu64/1thB2T+Q7mJQ+WbF7WXXA4W8E47YqnfnSw==}
+  /react-instantsearch-hooks-web@6.46.0(algoliasearch@4.18.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-XLzC+SRfkNnEeIIGMNYha+J0k1Vuh9ZCff8G3Gx5MjqGIK3RNA6kTS+A3imUm1+IR4NZo5Y2OOjn6kZRsfy/sg==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 5'
       react: '>= 16.8.0 < 19'
@@ -1740,14 +1740,14 @@ packages:
     dependencies:
       '@babel/runtime': 7.20.1
       algoliasearch: 4.18.0
-      instantsearch.js: 4.56.4(algoliasearch@4.18.0)
+      instantsearch.js: 4.56.5(algoliasearch@4.18.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-instantsearch-hooks: 6.45.1(algoliasearch@4.18.0)(react@18.2.0)
+      react-instantsearch-hooks: 6.46.0(algoliasearch@4.18.0)(react@18.2.0)
     dev: false
 
-  /react-instantsearch-hooks@6.45.1(algoliasearch@4.18.0)(react@18.2.0):
-    resolution: {integrity: sha512-bklG/Y68ndvYaNEOEcojNP9qVAwwCs2l5Gzxhd8KOiuhxXYrozUJd1RiH9Qu6ef9TFjh1CuyWQR7RbsIMD6lDw==}
+  /react-instantsearch-hooks@6.46.0(algoliasearch@4.18.0)(react@18.2.0):
+    resolution: {integrity: sha512-6Ug9WhSBQGIVUyindciJ0BjpvKGO4jx1ThSUrLn0gMzxdAQ04gzfZiqy56rK1LwDopso6UsfW/m//u0zPt0CBw==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 5'
       react: '>= 16.8.0 < 19'
@@ -1755,7 +1755,7 @@ packages:
       '@babel/runtime': 7.20.1
       algoliasearch: 4.18.0
       algoliasearch-helper: 3.13.3(algoliasearch@4.18.0)
-      instantsearch.js: 4.56.4(algoliasearch@4.18.0)
+      instantsearch.js: 4.56.5(algoliasearch@4.18.0)
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
