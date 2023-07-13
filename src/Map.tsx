@@ -108,8 +108,7 @@ function moveBounds(mapRef, items) {
   }
 }
 
-/** Reads some bounds, creates some smaller bounds */
-function smallerCircleBounds(bounds) {
+function convertBounds(bounds) {
   const neBounds = bounds.getNorthEast();
   const swBounds = bounds.getSouthWest();
 
@@ -117,12 +116,9 @@ function smallerCircleBounds(bounds) {
     return;
   }
 
-  let [x1, y1] = [neBounds.lng, neBounds.lat];
-  let [x2, y2] = [swBounds.lng, swBounds.lat];
-
   return {
-    northEast: { lng: x1, lat: y1 },
-    southWest: { lng: x2, lat: y2 },
+    northEast: bounds.getNorthEast(),
+    southWest: bounds.getSouthWest(),
   };
 }
 
@@ -197,7 +193,7 @@ export function Map() {
       return;
     }
     const bounds = mapRef.current.getMap().getBounds();
-    refine(smallerCircleBounds(bounds));
+    refine(convertBounds(bounds));
     setLastInteractionOrigin("map");
     setViewState(evt.viewState);
   }, []);
