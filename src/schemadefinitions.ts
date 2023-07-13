@@ -1,3 +1,4 @@
+
 /**
  * Attributes represent properties that, together, describe the schema of the data.
  * These are used to render both the list of Filter options and the Details page.
@@ -14,6 +15,8 @@ export interface Attribute {
   filterType?: "select" | "range" | "intervals";
   /** sub-attributes */
   attributes?: Attribute[];
+  /** Terms from the vocabulary, if applicable. */
+  vocabulary?: any[];
 }
 
 export const Attributes : {[index: string]: Attribute} = {
@@ -663,6 +666,7 @@ export const displayAttributes: Attribute[] =   [
     { id : "btk-kenmerk-id",
       name : "Bouwtechnisch kenmerk",
       type : "string",
+      vocabulary : [  [  { id: 'gbp-btk-0010', label: 'Balkon (info)' } ,   { id: 'gbp-btk-00101', label: 'Balkon aanwezig' } ,   { id: 'gbp-btk-00102', label: 'Balkon, goed' } ,   { id: 'gbp-btk-00103', label: 'Balkon, matig' } ,   { id: 'gbp-btk-00104', label: 'Balkon, slecht' } ,   { id: 'gbp-btk-00105', label: 'Balkon met stalen liggers' } ,   { id: 'gbp-btk-00106', label: 'Balkon, geen stalen liggers' } ,   { id: 'gbp-btk-00107', label: 'Balkon, stalen liggers n.v.t.' } ,   { id: 'gbp-btk-00108', label: 'Balkon afwezig' } ,   { id: 'gbp-btk-00109', label: 'Balkon onbekend' } ,  ] ,   { id: 'gbp-btk-0020', label: 'Dak' } ,   { id: 'gbp-btk-0030', label: 'Dakkapel' } ,   { id: 'gbp-btk-0040', label: 'Dakrand' } ,   { id: 'gbp-btk-0050', label: 'Erker' } ,   { id: 'gbp-btk-0060', label: 'Fundering' } ,   { id: 'gbp-btk-0070', label: 'Galerij' } ,   { id: 'gbp-btk-0080', label: 'Gevel' } ,   { id: 'gbp-btk-0090', label: 'Goot' } ,   [  { id: 'gbp-btk-0100', label: 'Hekwerk (info)' } ,   { id: 'gbp-btk-01001', label: 'Hekwerk aanwezig' } ,   { id: 'gbp-btk-01002', label: 'Hekwerk afwezig' } ,   { id: 'gbp-btk-01009', label: 'Hekwerk onbekend' } ,  ] ,   { id: 'gbp-btk-0110', label: 'Kozijn' } ,   { id: 'gbp-btk-0120', label: 'Raam/deur' } ,   { id: 'gbp-btk-0130', label: 'Schoorsteen' } ,   { id: 'gbp-btk-0140', label: 'Tuin' } ,  ]
     },
       
     { id : "btk-inspectiedatum",
@@ -858,16 +862,19 @@ export const displayAttributes: Attribute[] =   [
     { id : "zk-soort",
       name : "Zaaksoort",
       type : "string",
+      vocabulary : [  { id: '000000', label: 'Niet ingevuld' } ,   { id: 'CHZ_CAL', label: 'Calamiteiten' } ,   [  { id: 'controlezaak', label: 'Controlezaak' } ,   { id: 'CHZ_OCA', label: 'Opleveringscontrole Asbest' } ,   { id: 'CHZ_OCBAR', label: 'Opleveringscontrole BAR' } ,   { id: 'CHZ_OCEVM', label: 'Opleveringscontrole Evenementen' } ,   { id: 'CHZ_HUIS', label: 'Opleveringscontrole Huisvesting' } ,   { id: 'CHZ_OCR', label: 'Opleveringscontrole Renovatie' } ,   { id: 'CHZ_OCS', label: 'Opleveringscontrole Sloop' } ,   { id: 'CHZ_OCB1', label: 'Opleveringscontrole bouw cat. 1' } ,   { id: 'CHZ_OCB2', label: 'Opleveringscontrole bouw cat. 2' } ,   { id: 'CHZ_OCB3', label: 'Opleveringscontrole bouw cat. 3' } ,   { id: 'CHZ_OCB4', label: 'Opleveringscontrole bouw cat. 4' } ,   { id: 'CHZ_SPL', label: 'Opleveringscontrole splitsingen' } ,   { id: 'CHZ_PCTBAR', label: 'Projectcontrole BAR' } ,   { id: 'CHZ_BRPLVL', label: 'Projectcontrole Breedplaatvloeren' } ,   { id: 'CHZ_PCGAL', label: 'Projectcontrole Galerijvloeren flatgebouwen' } ,   { id: 'CHZ_PCTOM', label: 'Projectcontrole Omzettingen' } ,   { id: 'CHZ_PCTOGI', label: 'Projectcontrole Omzettingen Geweigerd/Ingetrokken' } ,   { id: 'CHZ_BLS', label: 'Projectcontrole constructieve veiligheid balkons' } ,  ] ,   [  { id: 'klachtenzaak', label: 'Klacht/meldingzaak' } ,   { id: 'HZ_MBG', label: 'Melding brandveilig gebruik' } ,   { id: 'HZ_GBM', label: 'Gebruiksmelding' } ,   { id: 'HZ_SLM', label: 'Sloopmelding' } ,   { id: 'CHZ_KLA', label: 'Klacht/Melding' } ,   { id: 'KLA', label: 'klacht' } ,  ] ,   [  { id: 'vergunning', label: 'Vergunning' } ,   { id: 'HZ_BWT', label: 'Bouwvergunning uit BWT4all' } ,   { id: 'HZ_IOG', label: 'Inname Openbare Grond' } ,   { id: 'HZ_WABO', label: 'Omgevingsvergunning' } ,   { id: 'HZ_OAPV', label: 'Ontheffing APV (Incidentele Geluidsontheffingen tbv Civiel en Bouw)' } ,   [  { id: 'HZ_OWR', label: 'Onttrekking-/ Omzetting-/ Samenvoeging van Woonruimte' } ,   { id: 'HZ_OWR_O', label: 'Omzetting' } ,   { id: 'HZ_OWR_T', label: 'Transformatie' } ,  ] ,   { id: 'HZ_SPL', label: 'Splitsingsvergunning' } ,   { id: 'HZ_WIJ', label: 'Wijzigen Omgevingsvergunning' } ,  ] ,  ]
     },
       
     { id : "zk-status",
       name : "Voortgangsstatus",
       type : "string",
+      vocabulary : [  { id: 'C', label: 'Concept' } ,   { id: 'G', label: 'Gesloten' } ,   { id: 'O', label: 'Open' } ,   { id: 'T', label: 'Toekomstig' } ,  ]
     },
       
     { id : "zk-besluit",
       name : "Besluit",
       type : "string",
+      vocabulary : [  { id: 'voc-zk-besluit-001', label: 'Onbekend' } ,   { id: 'voc-zk-besluit-002', label: 'Aankondiging Intrekking' } ,   { id: 'voc-zk-besluit-003', label: 'Afgewezen' } ,   { id: 'voc-zk-besluit-004', label: 'Akkoord' } ,   { id: 'voc-zk-besluit-005', label: 'Besluit Intrekking' } ,   { id: 'voc-zk-besluit-006', label: 'Beëindigd' } ,   { id: 'voc-zk-besluit-007', label: 'Buiten behandeling gelaten' } ,   { id: 'voc-zk-besluit-008', label: 'Buiten behandeling gesteld' } ,   { id: 'voc-zk-besluit-021', label: 'Deels toegekend' } ,   { id: 'voc-zk-besluit-009', label: 'Geen afwijking' } ,   { id: 'voc-zk-besluit-010', label: 'Gelegaliseerd' } ,   { id: 'voc-zk-besluit-011', label: 'Gerepareerd' } ,   { id: 'voc-zk-besluit-012', label: 'Geweigerd' } ,   { id: 'voc-zk-besluit-013', label: 'Ingetrokken' } ,   { id: 'voc-zk-besluit-014', label: 'Niet nodig' } ,   { id: 'voc-zk-besluit-015', label: 'Toegekend' } ,   { id: 'voc-zk-besluit-019', label: 'Van rechtswege afgewezen' } ,   { id: 'voc-zk-besluit-020', label: 'Van rechtswege toegekend' } ,   { id: 'voc-zk-besluit-016', label: 'Vergunningvrij' } ,   { id: 'voc-zk-besluit-017', label: 'Verleend' } ,   { id: 'voc-zk-besluit-018', label: 'Verwerkt' } ,  ]
     },
       
     { id : "date",
@@ -964,6 +971,7 @@ export const filterAttributes: Attribute[] =   [
     { id : "bouwtechnische-kenmerken.btk-kenmerk-id",
       name : "Bouwtechnisch kenmerk",
       type : "string",
+      vocabulary : [  [  { id: 'gbp-btk-0010', label: 'Balkon (info)' } ,   { id: 'gbp-btk-00101', label: 'Balkon aanwezig' } ,   { id: 'gbp-btk-00102', label: 'Balkon, goed' } ,   { id: 'gbp-btk-00103', label: 'Balkon, matig' } ,   { id: 'gbp-btk-00104', label: 'Balkon, slecht' } ,   { id: 'gbp-btk-00105', label: 'Balkon met stalen liggers' } ,   { id: 'gbp-btk-00106', label: 'Balkon, geen stalen liggers' } ,   { id: 'gbp-btk-00107', label: 'Balkon, stalen liggers n.v.t.' } ,   { id: 'gbp-btk-00108', label: 'Balkon afwezig' } ,   { id: 'gbp-btk-00109', label: 'Balkon onbekend' } ,  ] ,   { id: 'gbp-btk-0020', label: 'Dak' } ,   { id: 'gbp-btk-0030', label: 'Dakkapel' } ,   { id: 'gbp-btk-0040', label: 'Dakrand' } ,   { id: 'gbp-btk-0050', label: 'Erker' } ,   { id: 'gbp-btk-0060', label: 'Fundering' } ,   { id: 'gbp-btk-0070', label: 'Galerij' } ,   { id: 'gbp-btk-0080', label: 'Gevel' } ,   { id: 'gbp-btk-0090', label: 'Goot' } ,   [  { id: 'gbp-btk-0100', label: 'Hekwerk (info)' } ,   { id: 'gbp-btk-01001', label: 'Hekwerk aanwezig' } ,   { id: 'gbp-btk-01002', label: 'Hekwerk afwezig' } ,   { id: 'gbp-btk-01009', label: 'Hekwerk onbekend' } ,  ] ,   { id: 'gbp-btk-0110', label: 'Kozijn' } ,   { id: 'gbp-btk-0120', label: 'Raam/deur' } ,   { id: 'gbp-btk-0130', label: 'Schoorsteen' } ,   { id: 'gbp-btk-0140', label: 'Tuin' } ,  ]
     },
       
     { id : "bouwtechnische-kenmerken.btk-actie-nodig",
@@ -991,11 +999,13 @@ export const filterAttributes: Attribute[] =   [
     { id : "zaakgegevens.zk-soort",
       name : "Zaaksoort",
       type : "string",
+      vocabulary : [  { id: '000000', label: 'Niet ingevuld' } ,   { id: 'CHZ_CAL', label: 'Calamiteiten' } ,   [  { id: 'controlezaak', label: 'Controlezaak' } ,   { id: 'CHZ_OCA', label: 'Opleveringscontrole Asbest' } ,   { id: 'CHZ_OCBAR', label: 'Opleveringscontrole BAR' } ,   { id: 'CHZ_OCEVM', label: 'Opleveringscontrole Evenementen' } ,   { id: 'CHZ_HUIS', label: 'Opleveringscontrole Huisvesting' } ,   { id: 'CHZ_OCR', label: 'Opleveringscontrole Renovatie' } ,   { id: 'CHZ_OCS', label: 'Opleveringscontrole Sloop' } ,   { id: 'CHZ_OCB1', label: 'Opleveringscontrole bouw cat. 1' } ,   { id: 'CHZ_OCB2', label: 'Opleveringscontrole bouw cat. 2' } ,   { id: 'CHZ_OCB3', label: 'Opleveringscontrole bouw cat. 3' } ,   { id: 'CHZ_OCB4', label: 'Opleveringscontrole bouw cat. 4' } ,   { id: 'CHZ_SPL', label: 'Opleveringscontrole splitsingen' } ,   { id: 'CHZ_PCTBAR', label: 'Projectcontrole BAR' } ,   { id: 'CHZ_BRPLVL', label: 'Projectcontrole Breedplaatvloeren' } ,   { id: 'CHZ_PCGAL', label: 'Projectcontrole Galerijvloeren flatgebouwen' } ,   { id: 'CHZ_PCTOM', label: 'Projectcontrole Omzettingen' } ,   { id: 'CHZ_PCTOGI', label: 'Projectcontrole Omzettingen Geweigerd/Ingetrokken' } ,   { id: 'CHZ_BLS', label: 'Projectcontrole constructieve veiligheid balkons' } ,  ] ,   [  { id: 'klachtenzaak', label: 'Klacht/meldingzaak' } ,   { id: 'HZ_MBG', label: 'Melding brandveilig gebruik' } ,   { id: 'HZ_GBM', label: 'Gebruiksmelding' } ,   { id: 'HZ_SLM', label: 'Sloopmelding' } ,   { id: 'CHZ_KLA', label: 'Klacht/Melding' } ,   { id: 'KLA', label: 'klacht' } ,  ] ,   [  { id: 'vergunning', label: 'Vergunning' } ,   { id: 'HZ_BWT', label: 'Bouwvergunning uit BWT4all' } ,   { id: 'HZ_IOG', label: 'Inname Openbare Grond' } ,   { id: 'HZ_WABO', label: 'Omgevingsvergunning' } ,   { id: 'HZ_OAPV', label: 'Ontheffing APV (Incidentele Geluidsontheffingen tbv Civiel en Bouw)' } ,   [  { id: 'HZ_OWR', label: 'Onttrekking-/ Omzetting-/ Samenvoeging van Woonruimte' } ,   { id: 'HZ_OWR_O', label: 'Omzetting' } ,   { id: 'HZ_OWR_T', label: 'Transformatie' } ,  ] ,   { id: 'HZ_SPL', label: 'Splitsingsvergunning' } ,   { id: 'HZ_WIJ', label: 'Wijzigen Omgevingsvergunning' } ,  ] ,  ]
     },
       
     { id : "zaakgegevens.zk-status",
       name : "Voortgangsstatus",
       type : "string",
+      vocabulary : [  { id: 'C', label: 'Concept' } ,   { id: 'G', label: 'Gesloten' } ,   { id: 'O', label: 'Open' } ,   { id: 'T', label: 'Toekomstig' } ,  ]
     }
     ]
   }
