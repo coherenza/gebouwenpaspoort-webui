@@ -80,3 +80,7 @@
 .Attribute__link:hover {
   background: var(--g1);
 }
+
+.Attribute__Refined {
+  background-color: var(--accent-color);
+}

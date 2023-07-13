@@ -11,6 +11,7 @@ import {
   ChevronRightIcon,
   ExternalLinkIcon,
 } from "@radix-ui/react-icons";
+import { Attributes } from "./schema";
 
 interface DetailSectionProps {
   attribute: Attribute;
@@ -109,8 +110,6 @@ export function AttributeCollapsible({
   children,
 }: AttributeTitleProps) {
   const [open, setOpen] = useState(false);
-  const { items: selectedAttributes } = useCurrentRefinements();
-
   return (
     <div className="Attribute">
       <div
@@ -132,9 +131,20 @@ export function AttributeCollapsible({
 }
 
 function AttributeCollection({ hit, collection }) {
-  const items = hit[collection.id];
-  if (!items) return null;
-  items.sort((a, b) =>
+  const { items } = useCurrentRefinements();
+  // item = {"indexName":"gbp:location-sort-value:asc","indexId":"gbp","attribute":"zaakgegevens.zk-soort","label":"zaakgegevens.zk-soort","refinements":[{"attribute":"zaakgegevens.zk-soort","type":"disjunctive","value":"Projectcontrole Breedplaatvloeren","label":"Projectcontrole Breedplaatvloeren","count":12},{"attribute":"zaakgegevens.zk-soort","type":"disjunctive","value":"Projectcontrole BAR","label":"Projectcontrole BAR","count":310}]}
+  // attribute = {"name":"Zaaksoort","type":"string","id":"zk-soort"}
+  // refinement = {"attribute":"zaakgegevens.zk-soort","type":"disjunctive","value":"Projectcontrole BAR","label":"Projectcontrole BAR","count":310}
+  // [[attribute, [refinement...]]...]
+  const refinedAttributeValues =
+    items.map((item) => {
+      let attribute = Object.values(Attributes).find(a => a.id == item.attribute.replace(/.*\./, ''));
+      return [ attribute, item.refinements ]
+    });
+
+  const hitItems = hit[collection.id];
+  if (!hitItems) return null;
+  hitItems.sort((a, b) =>
     collection.attributes[0].type == "date"
       ? a[collection.attributes[0].id] < b[collection.attributes[0].id]
         ? 1
@@ -145,17 +155,25 @@ function AttributeCollection({ hit, collection }) {
   );
   return (
     <div className="Attribute__list">
-      {items.map((item, i) => (
-        <AttributeItem
-          key={`al_${item.id}${i}`}
-          hit={hit}
-          attribute={collection}
-          item={item}
-          collection={collection}
-          startOpen={items.length == 1}
-          i={i}
-        />
-      ))}
+      { hitItems.map((item, i) => {
+        const filterMatch = refinedAttributeValues.some(([ attr, refs ]) => {
+          const itemAttrValues = item[attr.id] || [];
+          const match = refs.map(ref => ref.value).some((value) => itemAttrValues.includes(value));
+          return match;
+        });
+        return (
+          <AttributeItem
+            key={`al_${item.id}${i}`}
+            hit={hit}
+            attribute={collection}
+            item={item}
+            collection={collection}
+            startOpen={hitItems.length == 1}
+            i={i}
+            filterMatch={filterMatch}
+          />
+        )
+      })}
     </div>
   );
 }
@@ -167,6 +185,7 @@ function AttributeItem({
   collection,
   i,
   startOpen = false,
+  filterMatch = false
 }) {
   const [open, setOpen] = useState(startOpen);
 
@@ -176,15 +195,13 @@ function AttributeItem({
   if (collection.attributes[0].type == "date")
     title = new Date(title).toLocaleDateString();
 
-  const filterMatch = false;
   return (
     <div className="Attribute__item" key={`ai_${item.id}${i}`}>
-      <h4 className="Attribute__item__title" onClick={() => setOpen(!open)}>
+      <h4 className={filterMatch ? 'Attribute__item__title Attribute__Refined' : 'Attribute__item__title'} onClick={() => setOpen(!open)}>
         <span className="icon">
           {open ? <ChevronDownIcon /> : <ChevronRightIcon />}
         </span>
         {title}
-        {filterMatch}
       </h4>
       {open &&
         collection.attributes.map((attribute) => (
