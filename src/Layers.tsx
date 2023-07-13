@@ -152,17 +152,17 @@ export function LayerSelector() {
 
 function LayerCheckbox({ layer }) {
   const { setLayers, layers } = useContext(AppContext);
-  const [showDescription, setShowDescription] = useState(false);
+  // const [showDescription, setShowDescription] = useState(false);
 
-  let [description, setDescription] = useState("");
-  useEffect(() => {
-    getDescription(layer).then((desc) => setDescription(desc));
-  }, [layer]);
+  // let [description, setDescription] = useState("");
+  // useEffect(() => {
+  //   getDescription(layer).then((desc) => setDescription(desc));
+  // }, [layer]);
 
-  if (layer.id == bagLayerId) {
-    description =
-      "Adressen uit het Basisregistratie Adressen en Gebouwen (BAG)";
-  }
+  // if (layer.id == bagLayerId) {
+  //   description =
+  //     "Adressen uit het Basisregistratie Adressen en Gebouwen (BAG)";
+  // }
 
   // When clicking on a layers, toggle the visibility
   const toggleLayer = useCallback(
@@ -180,7 +180,7 @@ function LayerCheckbox({ layer }) {
 
   return (
     <div key={layer.name}>
-      <label title={description}>
+      <label>
         <input
           type="checkbox"
           checked={layer.visible}
@@ -195,7 +195,7 @@ function LayerCheckbox({ layer }) {
       >
         <InfoCircledIcon />
       </span> */}
-      {showDescription && <p className="Layer__description">{description}</p>}
+      {/* {showDescription && <p className="Layer__description">{description}</p>} */}
     </div>
   );
 }
