@@ -31,6 +31,7 @@ export function HierarchicalRefinementList({ attribute, sortBy, limit = 1000, vo
       <ul className="ais-RefinementList-list">
         { terms.map(term => {
             if (Array.isArray(term)) {
+  console.info(`Showing ${term[0].label}`);
               return displayTerm(term[0], items, term.slice(1));
             } else {
               return displayTerm(term, items, null);
@@ -43,24 +44,26 @@ export function HierarchicalRefinementList({ attribute, sortBy, limit = 1000, vo
 
   function displayTerm(term, items, nestedTerms) {
     const item = items.find(item => item.value == term.label);
-    return ( !item ? false :
+    const isRefined = item ? item.isRefined : false;
+    const count = item ? item.count : 0;
+    return (
       <li
-        key={item.value}
+        key={term.label}
         className={cx(
           'ais-RefinementList-item',
-          item.isRefined && 'ais-RefinementList-item--selected'
+          isRefined && 'ais-RefinementList-item--selected'
         )}
       >
         <label className="ais-RefinementList-label">
           <input
             className="ais-RefinementList-checkbox"
             type="checkbox"
-            value={item.value}
-            checked={item.isRefined}
-            onChange={() => refine(item.value)}
+            value={term.label}
+            checked={isRefined}
+            onChange={() => refine(term.label)}
           />
-          <span className="ais-RefinementList-labelText">{item.label}</span>
-          <span className="ais-RefinementList-count">{item.count}</span>
+          <span className="ais-RefinementList-labelText">{term.label}</span>
+          <span className="ais-RefinementList-count">{count}</span>
         </label>
         {
           nestedTerms ? displayTermList(nestedTerms, items) : false
