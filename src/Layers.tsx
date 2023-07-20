@@ -320,7 +320,9 @@ export function makeWfsUrl(layer: LayerI) {
     acceptsFormat: "application/json",
     typeNames: layer.id,
     srsName: "EPSG:4326",
-    bbox: `${boundsUtrecht.toString()}`,
+    bbox: `${boundsUtrecht.toString()}${
+      layer.url.includes("utrecht") ? ",EPSG:4326" : ""
+    }`,
   };
   url.search = objectToSearchParams(params).toString();
   return url.toString();

@@ -34,7 +34,6 @@ function jsonToCSV2(items) {
     ...selectedExportList.attributeIds,
     "zoekopdracht",
   ]);
-  console.log("fields", fields);
   try {
     const parser = new Parser({
       delimiter: CSV_DELIMITER,
@@ -46,9 +45,7 @@ function jsonToCSV2(items) {
       ],
       fields,
     });
-    console.log("items", items);
     const csv = parser.parse(items);
-    console.log("csv", csv);
     return csv;
   } catch (err) {
     console.error(err);
