@@ -32,3 +32,13 @@
   overflow-y: scroll;
   flex: 1;
 }
+
+.ais-InfiniteHits-loadMore {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+}
+
+.ais-InfiniteHits-loadMore[disabled] {
+  display: none;
+}
