@@ -21,7 +21,7 @@ import {
   DownloadIcon,
 } from "@radix-ui/react-icons";
 import { Parser } from "@json2csv/plainjs";
-import { Attributes } from "./schema";
+import { exportLists } from "./schema";
 
 export const LocationFilterContext = createContext(undefined);
 
@@ -29,23 +29,26 @@ export const LocationFilterContext = createContext(undefined);
 const CSV_DELIMITER = ";";
 
 function jsonToCSV2(items) {
+  let selectedExportList = exportLists[0];
+  const fields = Array.from([
+    ...selectedExportList.attributeIds,
+    "zoekopdracht",
+  ]);
+  console.log("fields", fields);
   try {
     const parser = new Parser({
       delimiter: CSV_DELIMITER,
-      transforms: [(item) => ({
-        'zoekopdracht': window.location.href,
-        ...item
-      })],
-      fields: [
-        Attributes.bag_aob_id.id,
-        Attributes.bag_num_postcode.id,
-        Attributes.bag_opr_naam.id,
-        Attributes.bag_num_huisnummer_letter_aanduiding.id,
-        Attributes.bag_pnd_oorspronkelijk_bouwjaar.id,
-        'zoekopdracht',
+      transforms: [
+        (item) => ({
+          zoekopdracht: window.location.href,
+          ...item,
+        }),
       ],
+      fields,
     });
+    console.log("items", items);
     const csv = parser.parse(items);
+    console.log("csv", csv);
     return csv;
   } catch (err) {
     console.error(err);

@@ -1,7 +1,11 @@
 import { indexName } from "./config";
 export type { Attribute, GBPObject } from "./schemadefinitions";
-export { Attributes, displayAttributes, filterAttributes, searchableAttributes } from "./schemadefinitions";
-
+export {
+  Attributes,
+  displayAttributes,
+  filterAttributes,
+  searchableAttributes,
+} from "./schemadefinitions";
 
 export interface SortProp {
   sortBy: string /** {index}:{propKey}:{asc/desc} */;
@@ -15,14 +19,18 @@ export const sortProps: SortProp[] = [
     sortBy: `${indexName}:location-sort-value:asc`,
     attribute: "location-sort-value",
     label: "Initial sort order",
-  }
+  },
 ];
 
 export function getObjectType(object: any): GBPObjectType {
   if (!object) {
     return GBPObjectTypes.unknown;
   }
-  let typestring = object['object-type'] || object['bag-aob']?.['bag-object-type'] || object['bag-opr']?.['bag-object-type'] || "unknown";
+  let typestring =
+    object["object-type"] ||
+    object["bag-aob"]?.["bag-object-type"] ||
+    object["bag-opr"]?.["bag-object-type"] ||
+    "unknown";
   return GBPObjectTypes[typestring];
 }
 
@@ -123,3 +131,20 @@ export interface LocationFilter {
   id: string;
   name: string;
 }
+
+export interface ExportList {
+  attributeIds: string[];
+  name: string;
+}
+
+export const exportLists: ExportList[] = [
+  {
+    attributeIds: [
+      "bag-aob.bag-object-type",
+      "hoofdadres.bag-num-postcode",
+      "hoofdadres.bag-num-huisnummer",
+      "hoofdadres.bag-num-huisletter",
+    ],
+    name: "standaard",
+  },
+];
