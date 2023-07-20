@@ -1,5 +1,10 @@
 import { useCallback, useContext } from "react";
-import { Attributes, GBPObject, getObjectType, displayAttributes } from "./schema";
+import {
+  Attributes,
+  GBPObject,
+  getObjectType,
+  displayAttributes,
+} from "./schema";
 import "./Hit.css";
 import { AppContext } from "./App";
 import { TrashIcon } from "@radix-ui/react-icons";
@@ -34,8 +39,13 @@ function shouldShowStatus(status: string) {
 const streetLevel = 18;
 
 export const HitLine = ({ hit }: HitProps) => {
-  const { current, setCurrent, setLocationFilter, setLastInteractionOrigin } =
-    useContext(AppContext);
+  const {
+    current,
+    setCurrent,
+    setLocationFilter,
+    setLastInteractionOrigin,
+    setShowDetails,
+  } = useContext(AppContext);
   let { mainMap: map } = useMap();
 
   // function findHightLightedProp() {
@@ -54,8 +64,10 @@ export const HitLine = ({ hit }: HitProps) => {
   const active = current?.id === hit.id;
   const { isAob, color } = getObjectType(hit);
 
-  const status = hit['bag-aob'] ? hit['bag-aob'][Attributes.bag_aob_status.id] : undefined;
-  const adres = `${hit.hoofdadres?.['bag-opr-naam']} ${hit.hoofdadres?.['bag-num-huisnummer-letter-aanduiding']}`;
+  const status = hit["bag-aob"]
+    ? hit["bag-aob"][Attributes.bag_aob_status.id]
+    : undefined;
+  const adres = `${hit.hoofdadres?.["bag-opr-naam"]} ${hit.hoofdadres?.["bag-num-huisnummer-letter-aanduiding"]}`;
 
   const handleClick = useCallback(() => {
     if (isAob) {
@@ -68,6 +80,7 @@ export const HitLine = ({ hit }: HitProps) => {
         duration: 1000,
       });
       setCurrent(hit);
+      setShowDetails(true);
     } else {
       setLocationFilter({ id: hit.id, name: hit.naam });
     }
