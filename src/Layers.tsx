@@ -63,15 +63,15 @@ export const layersDefault: LayerI[] = [
     type: "fill",
     url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wfs",
   },
-  {
-    name: "NAP Peilmerken",
-    id: "napinfo:nappeilmerken",
-    visible: false,
-    type: "symbol",
-    textField: "nap_hoogte",
-    // https://service.pdok.nl/rws/napinfo/wms/v1_0?request=getCapabilities&service=WMS
-    url: "https://geodata.nationaalgeoregister.nl/napinfo/wfs",
-  },
+  // {
+  //   name: "NAP Peilmerken",
+  //   id: "napinfo:nappeilmerken",
+  //   visible: false,
+  //   type: "symbol",
+  //   textField: "nap_hoogte",
+  //   // https://service.pdok.nl/rws/napinfo/wms/v1_0?request=getCapabilities&service=WMS
+  //   url: "https://geodata.nationaalgeoregister.nl/napinfo/wfs",
+  // },
   /*{
     name: "AHN3",
     id: "ahn3_05m_dtm",
