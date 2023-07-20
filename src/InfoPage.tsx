@@ -1,6 +1,6 @@
 import "./InfoPage.css";
 import { GBPObjectTypes } from "./schema";
-import { server } from "./config";
+import { version, server } from "./config";
 
 export function InfoPage() {
   return (
@@ -8,7 +8,7 @@ export function InfoPage() {
       <article>
         <h1>Gebouwenpaspoort</h1>
 
-        <p>Versie 0.3, augustus 2023 (data van {server.replace(/^https?:\/\//, '').replace(/^([A-Za-z0-9]+).*/, '$1')})</p>
+        <p>Versie {version} (data van {server.replace(/^https?:\/\//, '').replace(/^([A-Za-z0-9]+).*/, '$1')})</p>
 
         <h2>Introductie</h2>
 

@@ -31,7 +31,6 @@ export function HierarchicalRefinementList({ attribute, sortBy, limit = 1000, vo
       <ul className="ais-RefinementList-list">
         { terms.map(term => {
             if (Array.isArray(term)) {
-  console.info(`Showing ${term[0].label}`);
               return displayTerm(term[0], items, term.slice(1));
             } else {
               return displayTerm(term, items, null);

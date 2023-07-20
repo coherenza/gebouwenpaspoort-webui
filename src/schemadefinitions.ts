@@ -1,5 +1,5 @@
 
-/**
+/** THIS FILE IS GENERATED. DO NOT EDIT!
  * Attributes represent properties that, together, describe the schema of the data.
  * These are used to render both the list of Filter options and the Details page.
  * Attributes are recursive, so that they can be used to describe nested objects.
@@ -10,7 +10,7 @@ export interface Attribute {
   /** Human readable string, shown in the front-end */
   name: string;
   /** Type of the attribute */
-  type?: "string" | "URL" | "date";
+  type?: "string" | "URL" | "date" | "dateTime";
   /** Type of filter on the attribute */
   filterType?: "select" | "range" | "intervals";
   /** sub-attributes */
@@ -39,6 +39,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Documenttype",
     "type": "string",
     "id": "ob-documenttype"
+  },
+  "monumenttype": {
+    "name": "Monumenttype",
+    "type": "string",
+    "id": "monumenttype"
   },
   "bag_num_huisnummertoevoeging_neven": {
     "name": "Huisnummertoevoeging",
@@ -102,7 +107,7 @@ export const Attributes : {[index: string]: Attribute} = {
   },
   "imported": {
     "name": "Geimporteerd op",
-    "type": "string",
+    "type": "dateTime",
     "id": "imported"
   },
   "bag_num_huisnummer_neven": {
@@ -159,6 +164,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Zaaksoort",
     "type": "string",
     "id": "zk-soort"
+  },
+  "href_monumentenregister": {
+    "name": "Monumentenregister",
+    "type": "URL",
+    "id": "href-monumentenregister"
   },
   "bag_wpl_id_neven": {
     "name": "Identificatie woonplaats",
@@ -475,6 +485,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bwk-wijknaam"
   },
+  "monumentnummer": {
+    "name": "Monumentnummer",
+    "type": "string",
+    "id": "monumentnummer"
+  },
   "btk_kenmerk_id": {
     "name": "Bouwtechnisch kenmerk",
     "type": "string",
@@ -605,7 +620,6 @@ export const displayAttributes: Attribute[] =   [
       
     { id : "bag-aob-gebruiksdoel",
       name : "Gebruiksdoel",
-      type : "string",
     },
       
     { id : "bag-aob-oppervlakte",
@@ -617,6 +631,16 @@ export const displayAttributes: Attribute[] =   [
     { id : "bag-aob-status",
       name : "BAG status",
       type : "string",
+    },
+      
+    { id : "dataset-id",
+      name : "Herkomst",
+      type : "string",
+    },
+      
+    { id : "imported",
+      name : "Geimporteerd op",
+      type : "dateTime",
     }
     ]
   },
@@ -655,6 +679,16 @@ export const displayAttributes: Attribute[] =   [
     { id : "bag-pnd-status",
       name : "Status",
       type : "string",
+    },
+      
+    { id : "dataset-id",
+      name : "Herkomst",
+      type : "string",
+    },
+      
+    { id : "imported",
+      name : "Geimporteerd op",
+      type : "dateTime",
     }
     ]
   },
@@ -677,6 +711,16 @@ export const displayAttributes: Attribute[] =   [
     { id : "btk-actie-nodig",
       name : "Actie nodig voor stalen ligger",
       type : "string",
+    },
+      
+    { id : "dataset-id",
+      name : "Herkomst",
+      type : "string",
+    },
+      
+    { id : "imported",
+      name : "Geimporteerd op",
+      type : "dateTime",
     }
     ]
   },
@@ -703,6 +747,16 @@ export const displayAttributes: Attribute[] =   [
     { id : "bwk-subbuurtnaam",
       name : "Subbuurt",
       type : "string",
+    },
+      
+    { id : "dataset-id",
+      name : "Herkomst",
+      type : "string",
+    },
+      
+    { id : "imported",
+      name : "Geimporteerd op",
+      type : "dateTime",
     }
     ]
   },
@@ -754,6 +808,38 @@ export const displayAttributes: Attribute[] =   [
     { id : "bag-wpl-naam",
       name : "Woonplaats",
       type : "string",
+    }
+    ]
+  },
+    
+  { id : "monumenten",
+    name : "Monumenten",
+    attributes:    [
+      
+    { id : "monumenttype",
+      name : "Monumenttype",
+      type : "string",
+      vocabulary : [  { id: 'voc-mnmt-tp-001', label: 'Gemeentelijk monument' } ,   { id: 'voc-mnmt-tp-002', label: 'Rijksmonument' } ,   { id: 'voc-mnmt-tp-003', label: 'Voorgesteld voor gemeentelijke lijst' } ,   { id: 'voc-mnmt-tp-004', label: 'Anderszins monumentaal' } ,  ]
+    },
+      
+    { id : "monumentnummer",
+      name : "Monumentnummer",
+      type : "string",
+    },
+      
+    { id : "href-monumentenregister",
+      name : "Monumentenregister",
+      type : "URL",
+    },
+      
+    { id : "dataset-id",
+      name : "Herkomst",
+      type : "string",
+    },
+      
+    { id : "imported",
+      name : "Geimporteerd op",
+      type : "dateTime",
     }
     ]
   },
@@ -841,6 +927,16 @@ export const displayAttributes: Attribute[] =   [
     { id : "url-vindplaats",
       name : "Vindplaats",
       type : "URL",
+    },
+      
+    { id : "dataset-id",
+      name : "Herkomst",
+      type : "string",
+    },
+      
+    { id : "imported",
+      name : "Geimporteerd op",
+      type : "dateTime",
     }
     ]
   },
@@ -914,7 +1010,7 @@ export const displayAttributes: Attribute[] =   [
       
     { id : "imported",
       name : "Geimporteerd op",
-      type : "string",
+      type : "dateTime",
     }
     ]
   }
@@ -931,7 +1027,6 @@ export const filterAttributes: Attribute[] =   [
       
     { id : "bag-aob.bag-aob-gebruiksdoel",
       name : "Gebruiksdoel",
-      type : "string",
     },
       
     { id : "bag-aob.bag-aob-oppervlakte-interval",
@@ -977,6 +1072,18 @@ export const filterAttributes: Attribute[] =   [
     { id : "bouwtechnische-kenmerken.btk-actie-nodig",
       name : "Actie nodig voor stalen ligger",
       type : "string",
+    }
+    ]
+  },
+    
+  { id : "monumenten",
+    name : "Monumenten",
+    attributes:    [
+      
+    { id : "monumenten.monumenttype",
+      name : "Monumenttype",
+      type : "string",
+      vocabulary : [  { id: 'voc-mnmt-tp-001', label: 'Gemeentelijk monument' } ,   { id: 'voc-mnmt-tp-002', label: 'Rijksmonument' } ,   { id: 'voc-mnmt-tp-003', label: 'Voorgesteld voor gemeentelijke lijst' } ,   { id: 'voc-mnmt-tp-004', label: 'Anderszins monumentaal' } ,  ]
     }
     ]
   },
@@ -1058,13 +1165,14 @@ export interface GBPObject {
   "pdok-locatie-id" : string;
   "_geo" : { "lat" : number; "lng" : number; };
   "links" : { "href-luchtfoto" : string; "href-streetview" : string; "href-topotijdreis" : string; "href-utrechtsarchief" : string; "href-ruimtelijkeplannen" : string; };
-  "bag-aob" : { "bag-aob-id" : string; "bag-num-id" : string[]; "bag-pnd-id" : string[]; "bag-object-type" : string; "bag-aob-gebruiksdoel" : string[]; "bag-aob-oppervlakte" : number; "bag-aob-oppervlakte-interval" : string; "bag-aob-status" : string; "bag-aob-documentdatum" : Date; "bag-aob-documentnummer" : string; "bag-aob-voorkomen" : number; "geo-EPSG28992" : number[]; };
+  "bag-aob" : { "bag-aob-id" : string; "bag-num-id" : string[]; "bag-pnd-id" : string[]; "bag-object-type" : string; "bag-aob-gebruiksdoel" : string[]; "bag-aob-oppervlakte" : number; "bag-aob-oppervlakte-interval" : string; "bag-aob-status" : string; "bag-aob-documentdatum" : Date; "bag-aob-documentnummer" : string; "bag-aob-voorkomen" : number; "geo-EPSG28992" : number[]; "dataset-id" : string; "imported" : Date; };
   "bag-opr" : { "bag-object-type" : string; "bag-opr-id" : string; "bag-opr-naam" : string; "bag-opr-volledig" : string; "bag-opr-type" : string; "bag-opr-status" : string; "bag-opr-geconstateerd" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-wpl-id" : string; };
-  "bag-pnd" : { "bag-pnd-id" : string; "bag-pnd-oorspronkelijk-bouwjaar" : number; "bag-pnd-oorspronkelijk-bouwjaar-interval" : string; "bag-pnd-status" : string; "bag-pnd-geconstateerd" : string; "bag-pnd-documentdatum" : Date; "bag-pnd-documentnummer" : string; "bag-pnd-geo" : number[]; "bag-pnd-geo-EPSG28992" : number[]; };
-  "bouwtechnische-kenmerken" : { "btk-kenmerk-id" : string[]; "btk-inspectiedatum" : Date; "btk-actie-nodig" : string; };
-  "bwk" : { "bwk-wijkid" : string; "bwk-wijknaam" : string; "bwk-subwijknaam" : string; "bwk-buurtid" : string; "bwk-buurtnaam" : string; "bwk-subbuurtnaam" : string; };
+  "bag-pnd" : { "bag-pnd-id" : string; "bag-pnd-oorspronkelijk-bouwjaar" : number; "bag-pnd-oorspronkelijk-bouwjaar-interval" : string; "bag-pnd-status" : string; "bag-pnd-geconstateerd" : string; "bag-pnd-documentdatum" : Date; "bag-pnd-documentnummer" : string; "bag-pnd-geo" : number[]; "bag-pnd-geo-EPSG28992" : number[]; "dataset-id" : string; "imported" : Date; };
+  "bouwtechnische-kenmerken" : { "btk-kenmerk-id" : string[]; "btk-inspectiedatum" : Date; "btk-actie-nodig" : string; "dataset-id" : string; "imported" : Date; };
+  "bwk" : { "bwk-wijkid" : string; "bwk-wijknaam" : string; "bwk-subwijknaam" : string; "bwk-buurtid" : string; "bwk-buurtnaam" : string; "bwk-subbuurtnaam" : string; "dataset-id" : string; "imported" : Date; };
   "hoofdadres" : { "bag-num-id" : string; "bag-num-volledig" : string; "bag-num-postcode" : string; "bag-num-huisnummer" : number; "bag-num-huisletter" : string; "bag-num-huisnummertoevoeging" : string; "bag-num-huisnummer-letter-aanduiding" : string; "bag-num-status" : string; "bag-num-documentdatum" : Date; "bag-num-documentnummer" : string; "bag-num-voorkomen" : number; "bag-opr-id" : string; "bag-opr-naam" : string; "bag-opr-type" : string; "bag-opr-status" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-opr-voorkomen" : number; "bag-wpl-id" : string; "bag-wpl-naam" : string; "bag-wpl-status" : string; "bag-wpl-documentdatum" : Date; "bag-wpl-documentnummer" : string; "bag-wpl-voorkomen" : number; };
+  "monumenten" : { "bag-num-id" : string; "bag-pnd-id" : string; "monumenttype" : string; "monumentnummer" : string; "href-monumentenregister" : string[]; "dataset-id" : string; "imported" : Date; };
   "nevenadres" : { "bag-num-id-neven" : string; "bag-num-volledig-neven" : string; "bag-num-postcode-neven" : string; "bag-num-huisnummer-neven" : number; "bag-num-huisletter-neven" : string; "bag-num-huisnummertoevoeging-neven" : string; "bag-num-huisnummer-letter-aanduiding-neven" : string; "bag-opr-id-neven" : string; "bag-opr-naam-neven" : string; "bag-opr-type-neven" : string; "bag-wpl-id-neven" : string; "bag-wpl-naam-neven" : string; };
-  "officiele-bekendmakingen" : { "publicatiedatum" : Date; "wijzigingsdatum" : Date; "identificatie" : string; "titel" : string; "ob-documenttype" : string[]; "ob-onderwerp" : string[]; "url-vindplaats" : string; };
-  "zaakgegevens" : { "zk-nummer" : string; "omschrijving" : string; "zk-soort" : string[]; "zk-status" : string[]; "zk-besluit" : string[]; "date" : Date; "besluitdatum" : Date; "zk-startdatum" : Date; "zk-startdatum-gepland" : Date; "zk-einddatum" : Date; "zk-einddatum-gepland" : Date; "dataset-id" : string; "imported" : string; };
+  "officiele-bekendmakingen" : { "publicatiedatum" : Date; "wijzigingsdatum" : Date; "identificatie" : string; "titel" : string; "ob-documenttype" : string[]; "ob-onderwerp" : string[]; "url-vindplaats" : string; "dataset-id" : string; "imported" : Date; };
+  "zaakgegevens" : { "zk-nummer" : string; "omschrijving" : string; "zk-soort" : string[]; "zk-status" : string[]; "zk-besluit" : string[]; "date" : Date; "besluitdatum" : Date; "zk-startdatum" : Date; "zk-startdatum-gepland" : Date; "zk-einddatum" : Date; "zk-einddatum-gepland" : Date; "dataset-id" : string; "imported" : Date; };
 }

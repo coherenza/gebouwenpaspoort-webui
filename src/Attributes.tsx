@@ -194,7 +194,8 @@ function AttributeItem({
     : item[collection.attributes[0].id];
   if (collection.attributes[0].type == "date")
     title = new Date(title).toLocaleDateString();
-
+  if (collection.attributes[0].type == "dateTime")
+    title = new Date(title).toLocaleString('nl-NL');
   return (
     <div className="Attribute__item" key={`ai_${item.id}${i}`}>
       <h4
@@ -282,8 +283,8 @@ function PropValHighlights({
                 ?.toString()
                 .split("\n")
                 .map((hv, index) => {
-                  if (attribute.type == "date")
-                    hv = new Date(hv).toLocaleDateString();
+                  if (attribute.type == "date") hv = new Date(hv).toLocaleDateString();
+                  if (attribute.type == "dateTime") hv = new Date(hv).toLocaleString('nl-NL');
                   return <div key={`hv_${attribute.id}_${index}`}>{hv}</div>;
                 })
             )}
