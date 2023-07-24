@@ -14,10 +14,13 @@
 }
 
 .RefinementList li > input[type=checkbox], label.ais-RefinementList-label > input[type=checkbox] {
-  float:left;
   margin-left: -1.5em;
 }
 
+.ais-RefinementList-labelText {
+  margin-left: 0.3em;
+}
+
 li.ais-RefinementList-item> ul.ais-RefinementList-list {
-  margin-left: 1.5em;
+  margin-left: 1.3em;
 }
