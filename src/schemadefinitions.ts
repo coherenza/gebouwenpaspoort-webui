@@ -20,6 +20,11 @@ export interface Attribute {
 }
 
 export const Attributes : {[index: string]: Attribute} = {
+  "zon_zonnepanelen_2017": {
+    "name": "Panelen in 2017",
+    "type": "string",
+    "id": "zon-zonnepanelen_2017"
+  },
   "zk_status": {
     "name": "Voortgangsstatus",
     "type": "string",
@@ -30,25 +35,60 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-opr-id"
   },
+  "epl_pand_opnametype": {
+    "name": "Opnametype",
+    "type": "string",
+    "id": "epl-pand-opnametype"
+  },
+  "epl_pand_eis_primaire_fossiele_energie": {
+    "name": "Eis primaire fossiele energie (BENG2)",
+    "type": "string",
+    "id": "epl-pand-eis-primaire-fossiele-energie"
+  },
+  "epl_pand_aandeel_hernieuwbare_energie_EMG_forfaitair": {
+    "name": "Aandeel hernieuwbare energie EMG forfaitair",
+    "type": "string",
+    "id": "epl-pand-aandeel-hernieuwbare-energie-EMG-forfaitair"
+  },
   "bag_pnd_geo": {
     "name": "Coördinaten",
     "type": "string",
     "id": "bag-pnd-geo"
+  },
+  "zon_zonnepanelen_2018": {
+    "name": "Panelen in 2018",
+    "type": "string",
+    "id": "zon-zonnepanelen_2018"
   },
   "ob_documenttype": {
     "name": "Documenttype",
     "type": "string",
     "id": "ob-documenttype"
   },
+  "epl_pand_gebouwtype": {
+    "name": "Gebouwtype",
+    "type": "string",
+    "id": "epl-pand-gebouwtype"
+  },
   "monumenttype": {
     "name": "Monumenttype",
     "type": "string",
     "id": "monumenttype"
   },
+  "epl_pand_eis_temperatuuroverschrijding": {
+    "name": "Temperatuuroverschrijding",
+    "type": "string",
+    "id": "epl-pand-eis-temperatuuroverschrijding"
+  },
   "bag_num_huisnummertoevoeging_neven": {
     "name": "Huisnummertoevoeging",
     "type": "string",
     "id": "bag-num-huisnummertoevoeging-neven"
+  },
+  "zon_zonnepanelen_2019": {
+    "name": "Panelen in 2019",
+    "type": "string",
+    "id": "zon-zonnepanelen_2019"
   },
   "bag_pnd_status": {
     "name": "Status",
@@ -120,6 +160,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "omschrijving"
   },
+  "epl_pand_is_op_basis_van_referentie_gebouw": {
+    "name": "Is i.b.v. referentiegebouw",
+    "type": "string",
+    "id": "epl-pand-is-op-basis-van-referentie-gebouw"
+  },
   "bag_opr_geconstateerd": {
     "name": "BAG status",
     "type": "string",
@@ -165,6 +210,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "zk-soort"
   },
+  "zon_zonnepaneel_oppervlakte": {
+    "name": "Oppervlakte van de zonnepanelen",
+    "type": "string",
+    "id": "zon-zonnepaneel_oppervlakte"
+  },
   "href_monumentenregister": {
     "name": "Monumentenregister",
     "type": "URL",
@@ -190,10 +240,30 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bwk-subwijknaam"
   },
+  "epl_pand_opnamedatum": {
+    "name": "Opnamedatum",
+    "type": "date",
+    "id": "epl-pand-opnamedatum"
+  },
+  "epl_meting_geldig_tot": {
+    "name": "Meting geldig tot",
+    "type": "date",
+    "id": "epl-meting-geldig-tot"
+  },
   "bag_opr_id_neven": {
     "name": "Identificatie openbare ruimte",
     "type": "string",
     "id": "bag-opr-id-neven"
+  },
+  "epl_pand_primaire_fossiele_energie_EMG_forfaitair": {
+    "name": "Primaire fossiele energie EMG forfaitair",
+    "type": "string",
+    "id": "epl-pand-primaire-fossiele-energie-EMG-forfaitair"
+  },
+  "epl_pand_eis_aandeel_hernieuwbare_energie": {
+    "name": "Eis aandeel hernieuwbare energie (BENG3)",
+    "type": "string",
+    "id": "epl-pand-eis-aandeel-hernieuwbare-energie"
   },
   "btk_actie_nodig": {
     "name": "Actie nodig voor stalen ligger",
@@ -204,6 +274,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Identificatie nummeraanduiding",
     "type": "string",
     "id": "bag-num-id"
+  },
+  "epl_pand_gebruiksoppervlakte_thermische_zone": {
+    "name": "Gebruiksoppervlakte thermische zone",
+    "type": "string",
+    "id": "epl-pand-gebruiksoppervlakte-thermische-zone"
   },
   "bag_pnd_id": {
     "name": "Identificatie pand",
@@ -231,16 +306,36 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bwk-subbuurtnaam"
   },
+  "epl_pand_gebouwklasse": {
+    "name": "Gebouwklasse",
+    "type": "string",
+    "id": "epl-pand-gebouwklasse"
+  },
+  "epl_pand_status": {
+    "name": "Pand status",
+    "type": "string",
+    "id": "epl-pand-status"
+  },
   "bag_pnd_oorspronkelijk_bouwjaar": {
     "name": "Bouwjaar",
     "filterType": "range",
     "type": "string",
     "id": "bag-pnd-oorspronkelijk-bouwjaar"
   },
+  "epl_pand_warmtebehoefte": {
+    "name": "Warmtebehoefte",
+    "type": "string",
+    "id": "epl-pand-warmtebehoefte"
+  },
   "bag_num_huisletter": {
     "name": "Huisletter",
     "type": "string",
     "id": "bag-num-huisletter"
+  },
+  "epl_pand_SBIcode": {
+    "name": "SBI Code",
+    "type": "string",
+    "id": "epl-pand-SBIcode"
   },
   "bag_opr_naam_neven": {
     "name": "Openbare ruimte",
@@ -252,10 +347,20 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "date",
     "id": "date"
   },
+  "epl_pand_energiebehoefte": {
+    "name": "Energiebehoefte (EP1)",
+    "type": "string",
+    "id": "epl-pand-energiebehoefte"
+  },
   "bag_pnd_geo_EPSG28992": {
     "name": "Coördinaten",
     "type": "string",
     "id": "bag-pnd-geo-EPSG28992"
+  },
+  "epl_pand_berekeningstype": {
+    "name": "Berekeningstype",
+    "type": "string",
+    "id": "epl-pand-berekeningstype"
   },
   "bag_opr_documentdatum": {
     "name": "Documentdatum",
@@ -266,6 +371,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Nevenadres",
     "type": "string",
     "id": "bag-num-volledig-neven"
+  },
+  "epl_pand_primaire_fossiele_energie": {
+    "name": "Primaire fossiele energie (EP2)",
+    "type": "string",
+    "id": "epl-pand-primaire-fossiele-energie"
   },
   "bag_aob_documentnummer": {
     "name": "Documentnummer",
@@ -280,6 +390,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Documentdatum",
     "type": "date",
     "id": "bag-wpl-documentdatum"
+  },
+  "epl_pand_temperatuuroverschrijding": {
+    "name": "Temperatuuroverschrijding",
+    "type": "string",
+    "id": "epl-pand-temperatuuroverschrijding"
   },
   "bag_wpl_documentnummer": {
     "name": "Documentnummer",
@@ -312,15 +427,30 @@ export const Attributes : {[index: string]: Attribute} = {
     ],
     "id": "_geo"
   },
+  "zon_plat_dak_oppervlakte": {
+    "name": "Oppervlakte van het (platte) dak",
+    "type": "string",
+    "id": "zon-plat_dak_oppervlakte"
+  },
   "ob_onderwerp": {
     "name": "Onderwerp",
     "type": "string",
     "id": "ob-onderwerp"
   },
+  "epl_pand_gebouwsubtype": {
+    "name": "Gebouwsubtype",
+    "type": "string",
+    "id": "epl-pand-gebouwsubtype"
+  },
   "bag_wpl_voorkomen": {
     "name": "Voorkomen",
     "type": "string",
     "id": "bag-wpl-voorkomen"
+  },
+  "epl_pand_detailaanduiding": {
+    "name": "Detailkenmerk",
+    "type": "string",
+    "id": "epl-pand-detailaanduiding"
   },
   "url_vindplaats": {
     "name": "Vindplaats",
@@ -392,17 +522,32 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-num-huisnummertoevoeging"
   },
+  "zon_zonnepanelen_2020": {
+    "name": "Panelen in 2020",
+    "type": "string",
+    "id": "zon-zonnepanelen_2020"
+  },
   "bag_pnd_oorspronkelijk_bouwjaar_interval": {
     "name": "Bouwjaar",
     "filterType": "intervals",
     "type": "string",
     "id": "bag-pnd-oorspronkelijk-bouwjaar-interval"
   },
+  "epl_pand_energieklasse": {
+    "name": "Energieklasse",
+    "type": "string",
+    "id": "epl-pand-energieklasse"
+  },
   "bag_aob_oppervlakte_interval": {
     "name": "Oppervlakte",
     "filterType": "intervals",
     "type": "string",
     "id": "bag-aob-oppervlakte-interval"
+  },
+  "zon_zonnepanelen_2021": {
+    "name": "Panelen in 2021",
+    "type": "string",
+    "id": "zon-zonnepanelen_2021"
   },
   "zk_startdatum_gepland": {
     "name": "Geplande startdatum",
@@ -436,6 +581,11 @@ export const Attributes : {[index: string]: Attribute} = {
         "name": "Rumtelijke plannen",
         "type": "URL",
         "id": "href-ruimtelijkeplannen"
+      },
+      {
+        "name": "WOZ-waardeloket",
+        "type": "URL",
+        "id": "href-wozwaardeloket"
       }
     ],
     "id": "links"
@@ -455,6 +605,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "pdok-locatie-id"
   },
+  "zon_zonnepanelen_2022": {
+    "name": "Panelen in 2022",
+    "type": "string",
+    "id": "zon-zonnepanelen_2022"
+  },
   "bwk_buurtnaam": {
     "name": "Buurt",
     "type": "string",
@@ -464,6 +619,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Sortering van locatie",
     "type": "string",
     "id": "location-sort-value"
+  },
+  "epl_pand_aandeel_hernieuwbare_energie": {
+    "name": "Aandeel hernieuwbare energie (EP3)",
+    "type": "string",
+    "id": "epl-pand-aandeel-hernieuwbare-energie"
   },
   "bag_opr_volledig": {
     "name": "Openbare ruimte",
@@ -520,10 +680,25 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-wpl-id"
   },
+  "zon_gemeentelijk_vastgoed": {
+    "name": "Gemeentelijk vastgoed",
+    "type": "string",
+    "id": "zon-gemeentelijk_vastgoed"
+  },
+  "epl_pand_energieindex_met_EMG_forfaitair": {
+    "name": "Energieindex met EMG forfaitair",
+    "type": "string",
+    "id": "epl-pand-energieindex-met-EMG-forfaitair"
+  },
   "wijzigingsdatum": {
     "name": "Wijzigingsdatum",
     "type": "date",
     "id": "wijzigingsdatum"
+  },
+  "epl_pand_registratiedatum": {
+    "name": "Registratiedatum",
+    "type": "date",
+    "id": "epl-pand-registratiedatum"
   },
   "bag_aob_gebruiksdoel": {
     "name": "Gebruiksdoel",
@@ -553,10 +728,25 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-pnd-documentnummer"
   },
+  "epl_pand_energieindex": {
+    "name": "Prestatieindex",
+    "type": "string",
+    "id": "epl-pand-energieindex"
+  },
   "bag_opr_type": {
     "name": "Type",
     "type": "string",
     "id": "bag-opr-type"
+  },
+  "epl_pand_energielabel_is_prive": {
+    "name": "Is privé",
+    "type": "string",
+    "id": "epl-pand-energielabel-is-prive"
+  },
+  "epl_pand_eis_energiebehoefte": {
+    "name": "Eis energiebehoefte (BENG1)",
+    "type": "string",
+    "id": "epl-pand-eis-energiebehoefte"
   }
 };
 
@@ -599,6 +789,11 @@ export const displayAttributes: Attribute[] =   [
       
     { id : "href-ruimtelijkeplannen",
       name : "Rumtelijke plannen",
+      type : "URL",
+    },
+      
+    { id : "href-wozwaardeloket",
+      name : "WOZ-waardeloket",
       type : "URL",
     }
     ]
@@ -700,7 +895,7 @@ export const displayAttributes: Attribute[] =   [
     { id : "btk-kenmerk-id",
       name : "Bouwtechnisch kenmerk",
       type : "string",
-      vocabulary : [  [  { id: 'gbp-btk-0010', label: 'Balkon (info)' } ,   { id: 'gbp-btk-00101', label: 'Balkon aanwezig' } ,   { id: 'gbp-btk-00102', label: 'Balkon, goed' } ,   { id: 'gbp-btk-00103', label: 'Balkon, matig' } ,   { id: 'gbp-btk-00104', label: 'Balkon, slecht' } ,   { id: 'gbp-btk-00105', label: 'Balkon met stalen liggers' } ,   { id: 'gbp-btk-00106', label: 'Balkon, geen stalen liggers' } ,   { id: 'gbp-btk-00107', label: 'Balkon, stalen liggers n.v.t.' } ,   { id: 'gbp-btk-00108', label: 'Balkon afwezig' } ,   { id: 'gbp-btk-00109', label: 'Balkon onbekend' } ,  ] ,   { id: 'gbp-btk-0020', label: 'Dak' } ,   { id: 'gbp-btk-0030', label: 'Dakkapel' } ,   { id: 'gbp-btk-0040', label: 'Dakrand' } ,   { id: 'gbp-btk-0050', label: 'Erker' } ,   { id: 'gbp-btk-0060', label: 'Fundering' } ,   { id: 'gbp-btk-0070', label: 'Galerij' } ,   { id: 'gbp-btk-0080', label: 'Gevel' } ,   { id: 'gbp-btk-0090', label: 'Goot' } ,   [  { id: 'gbp-btk-0100', label: 'Hekwerk (info)' } ,   { id: 'gbp-btk-01001', label: 'Hekwerk aanwezig' } ,   { id: 'gbp-btk-01002', label: 'Hekwerk afwezig' } ,   { id: 'gbp-btk-01009', label: 'Hekwerk onbekend' } ,  ] ,   { id: 'gbp-btk-0110', label: 'Kozijn' } ,   { id: 'gbp-btk-0120', label: 'Raam/deur' } ,   { id: 'gbp-btk-0130', label: 'Schoorsteen' } ,   { id: 'gbp-btk-0140', label: 'Tuin' } ,  ]
+      vocabulary : [  [  { id: "gbp-btk-0010", label: "Balkon (info)" } ,   { id: "gbp-btk-00101", label: "Balkon aanwezig" } ,   { id: "gbp-btk-00105", label: "Balkon met stalen liggers" } ,   { id: "gbp-btk-00106", label: "Balkon, geen stalen liggers" } ,   { id: "gbp-btk-00107", label: "Balkon, stalen liggers n.v.t." } ,   { id: "gbp-btk-00108", label: "Balkon afwezig" } ,  ] ,   [  { id: "gbp-btk-0100", label: "Hekwerk (info)" } ,   { id: "gbp-btk-01001", label: "Hekwerk aanwezig" } ,   { id: "gbp-btk-01002", label: "Hekwerk afwezig" } ,  ] ,  ]
     },
       
     { id : "btk-inspectiedatum",
@@ -746,6 +941,166 @@ export const displayAttributes: Attribute[] =   [
       
     { id : "bwk-subbuurtnaam",
       name : "Subbuurt",
+      type : "string",
+    },
+      
+    { id : "dataset-id",
+      name : "Herkomst",
+      type : "string",
+    },
+      
+    { id : "imported",
+      name : "Geimporteerd op",
+      type : "dateTime",
+    }
+    ]
+  },
+    
+  { id : "energielabels",
+    name : "Energielabels",
+    attributes:    [
+      
+    { id : "epl-pand-energieklasse",
+      name : "Energieklasse",
+      type : "string",
+      vocabulary : [  { id: "A+++++", label: "Energieklasse A+++++" } ,   { id: "A++++", label: "Energieklasse A++++" } ,   { id: "A+++", label: "Energieklasse A+++" } ,   { id: "A++", label: "Energieklasse A++" } ,   { id: "A+", label: "Energieklasse A+" } ,   { id: "A", label: "Energieklasse A" } ,   { id: "B", label: "Energieklasse B" } ,   { id: "C", label: "Energieklasse C" } ,   { id: "D", label: "Energieklasse D" } ,   { id: "E", label: "Energieklasse E" } ,   { id: "F", label: "Energieklasse F" } ,   { id: "G", label: "Energieklasse G" } ,  ]
+    },
+      
+    { id : "epl-pand-opnamedatum",
+      name : "Opnamedatum",
+      type : "date",
+    },
+      
+    { id : "epl-pand-opnametype",
+      name : "Opnametype",
+      type : "string",
+    },
+      
+    { id : "epl-pand-status",
+      name : "Pand status",
+      type : "string",
+    },
+      
+    { id : "epl-pand-berekeningstype",
+      name : "Berekeningstype",
+      type : "string",
+    },
+      
+    { id : "epl-pand-energieindex",
+      name : "Prestatieindex",
+      type : "string",
+    },
+      
+    { id : "epl-pand-energielabel-is-prive",
+      name : "Is privé",
+      type : "string",
+    },
+      
+    { id : "epl-pand-is-op-basis-van-referentie-gebouw",
+      name : "Is i.b.v. referentiegebouw",
+      type : "string",
+      vocabulary : [  { id: "0", label: "Nee" } ,   { id: "1", label: "Ja" } ,  ]
+    },
+      
+    { id : "epl-pand-gebouwklasse",
+      name : "Gebouwklasse",
+      type : "string",
+      vocabulary : [  { id: "W", label: "Woningbouw" } ,   { id: "U", label: "Utiliteitsbouw" } ,  ]
+    },
+      
+    { id : "epl-meting-geldig-tot",
+      name : "Meting geldig tot",
+      type : "date",
+    },
+      
+    { id : "epl-pand-registratiedatum",
+      name : "Registratiedatum",
+      type : "date",
+    },
+      
+    { id : "epl-pand-detailaanduiding",
+      name : "Detailkenmerk",
+      type : "string",
+    },
+      
+    { id : "epl-pand-gebouwtype",
+      name : "Gebouwtype",
+      type : "string",
+    },
+      
+    { id : "epl-pand-gebouwsubtype",
+      name : "Gebouwsubtype",
+      type : "string",
+    },
+      
+    { id : "epl-pand-SBIcode",
+      name : "SBI Code",
+      type : "string",
+      vocabulary : [  [  { id: "C", label: "Industrie" } ,   { id: "18", label: "Drukkerijen, reproductie van opgenomen media" } ,   { id: "20", label: "Vervaardiging van chemische producten" } ,   { id: "25", label: "Vervaardiging van producten van metaal (geen machines en apparaten)" } ,   { id: "31", label: "Vervaardiging van meubels" } ,  ] ,   [  { id: "D", label: "Productie en distributie van en handel in elektriciteit, aardgas, stoom en gekoelde lucht" } ,   { id: "35", label: "Productie en distributie van en handel in elektriciteit, aardgas, stoom en gekoelde lucht" } ,  ] ,   [  { id: "E", label: "Winning en distributie van water; afval- en afvalwaterbeheer en sanering" } ,   { id: "38", label: "Afvalinzameling en -behandeling; voorbereiding tot recycling" } ,  ] ,   [  { id: "F", label: "Bouwnijverheid" } ,   { id: "41", label: "Algemene burgerlijke en utiliteitsbouw en projectontwikkeling" } ,   [  { id: "42", label: "Grond-, water- en wegenbouw (geen grondverzet)" } ,   { id: "42.1", label: "Bouw van wegen, spoorwegen en kunstwerken" } ,  ] ,   [  { id: "43", label: "Gespecialiseerde werkzaamheden in de bouw" } ,   { id: "43.9", label: "Dakbouw en overige gespecialiseerde werkzaamheden in de bouw" } ,  ] ,  ] ,   [  { id: "G", label: "Groot- en detailhandel; reparatie van auto\'s" } ,   [  { id: "45", label: "Handel in en reparatie van auto\'s, motorfietsen en aanhangers" } ,   [  { id: "45.2", label: "Gespecialiseerde reparatie van auto\'s" } ,   [  { id: "45.20", label: "Gespecialiseerde reparatie van auto\'s" } ,   { id: "45.20.3", label: "Reparatie van specifieke auto-onderdelen" } ,  ] ,  ] ,   [  { id: "45.3", label: "Handel in auto-onderdelen en -accessoires" } ,   [  { id: "45.31", label: "Groothandel en handelsbemiddeling in auto-onderdelen en -accessoires" } ,   { id: "45.31.1", label: "Groothandel en handelsbemiddeling in auto-onderdelen en -accessoires (geen banden)" } ,  ] ,  ] ,  ] ,   { id: "46", label: "Groothandel en handelsbemiddeling (niet in auto\'s en motorfietsen)" } ,   [  { id: "47", label: "Detailhandel (niet in auto\'s)" } ,   [  { id: "47.1", label: "Supermarkten, warenhuizen en dergelijke winkels met een algemeen assortiment" } ,   { id: "47.11", label: "Supermarkten en dergelijke winkels met een algemeen assortiment voedings- en genotmiddelen" } ,  ] ,   [  { id: "47.9", label: "Detailhandel niet via winkel of markt" } ,   { id: "47.91", label: "Detailhandel via internet" } ,   [  { id: "47.99", label: "Colportage, straathandel en detailhandel via overige distributievormen" } ,   { id: "47.99.9", label: "Detailhandel via overige distributievormen" } ,  ] ,  ] ,  ] ,  ] ,   [  { id: "H", label: "Vervoer en opslag" } ,   { id: "49", label: "Vervoer over land" } ,   { id: "52", label: "Opslag en dienstverlening voor vervoer" } ,   [  { id: "53", label: "Post en koeriers" } ,   [  { id: "53.2", label: "Post zonder universele dienstverplichting en koeriers" } ,   [  { id: "53.20", label: "Post zonder universele dienstverplichting en koeriers" } ,   { id: "53.20.1", label: "Post zonder universele dienstverplichting" } ,  ] ,  ] ,  ] ,  ] ,   [  { id: "I", label: "Logies-, maaltijd- en drankverstrekking" } ,   [  { id: "55", label: "Logiesverstrekking" } ,   [  { id: "55.1", label: "Hotels e.d." } ,   [  { id: "55.10", label: "Hotels e.d." } ,   { id: "55.10.1", label: "Hotel-restaurants" } ,  ] ,  ] ,  ] ,   [  { id: "56", label: "Eet- en drinkgelegenheden" } ,   [  { id: "56.1", label: "Restaurants, cafetaria\'s e.d." } ,   [  { id: "56.10", label: "Restaurants, cafetaria\'s e.d. en ijssalons" } ,   { id: "56.10.2", label: "Fastfoodrestaurants, cafetaria\'s,  ijssalons, eetkramen e.d." } ,  ] ,  ] ,   [  { id: "56.3", label: "Cafés" } ,   { id: "56.30", label: "Cafés" } ,  ] ,  ] ,  ] ,   [  { id: "J", label: "Informatie en communicatie" } ,   { id: "58", label: "Uitgeverijen" } ,   { id: "59", label: "Productie en distributie van films en televisieprogramma´s; maken en uitgeven van geluidsopnamen" } ,   { id: "61", label: "Telecommunicatie" } ,   { id: "62", label: "Dienstverlenende activiteiten op het gebied van informatietechnologie" } ,   { id: "63", label: "Dienstverlenende activiteiten op het gebied van informatie" } ,  ] ,   [  { id: "K", label: "Financiële instellingen" } ,   [  { id: "64", label: "Financiële instellingen (geen verzekeringen en pensioenfondsen)" } ,   { id: "64.3", label: "Beleggingsinstellingen" } ,  ] ,   { id: "65", label: "Verzekeringen en pensioenfondsen (geen verplichte sociale verzekeringen)" } ,   { id: "66", label: "Overige financiële dienstverlening" } ,  ] ,   [  { id: "L", label: "Verhuur van en handel in onroerend goed" } ,   [  { id: "68", label: "Verhuur van en handel in onroerend goed" } ,   [  { id: "68.2", label: "Verhuur van onroerend goed" } ,   [  { id: "68.20", label: "Verhuur van onroerend goed" } ,   { id: "68.20.1", label: "Woningbouwverenigingen en -stichtingen" } ,  ] ,  ] ,  ] ,  ] ,   [  { id: "M", label: "Advisering, onderzoek en overige specialistische zakelijke dienstverlening" } ,   { id: "69", label: "Rechtskundige dienstverlening, accountancy, belastingadvisering en administratie" } ,   { id: "70", label: "Holdings (geen financiële), concerndiensten binnen eigen concern en managementadvisering" } ,   { id: "71", label: "Architecten, ingenieurs en technisch ontwerp en advies; keuring en controle" } ,   { id: "72", label: "Speur- en ontwikkelingswerk" } ,   { id: "73", label: "Reclame en marktonderzoek" } ,   { id: "74", label: "Industrieel ontwerp en vormgeving, fotografie, vertaling en overige consultancy" } ,   { id: "75", label: "Veterinaire dienstverlening" } ,  ] ,   [  { id: "N", label: "Verhuur van roerende goederen en overige zakelijke dienstverlening" } ,   { id: "77", label: "Verhuur en lease van auto\'s, consumentenartikelen, machines en overige roerende goederen" } ,   { id: "78", label: "Arbeidsbemiddeling, uitzendbureaus en personeelsbeheer" } ,   { id: "79", label: "Reisbemiddeling, reisorganisatie, toeristische informatie en reserveringsbureaus" } ,   { id: "81", label: "Facility management, reiniging en landschapsverzorging" } ,   [  { id: "82", label: "Overige zakelijke dienstverlening" } ,   [  { id: "82.9", label: "Overige zakelijke dienstverlening(rest)" } ,   [  { id: "82.99", label: "Overige zakelijke dienstverlening (rest)" } ,   { id: "82.99.9", label: "Overige zakelijke dienstverlening (rest)" } ,  ] ,  ] ,  ] ,  ] ,   [  { id: "O", label: "Openbaar bestuur, overheidsdiensten en verplichte sociale verzekeringen" } ,   { id: "84", label: "Openbaar bestuur, overheidsdiensten en verplichte sociale verzekeringen" } ,  ] ,   [  { id: "P", label: "Onderwijs" } ,   [  { id: "85", label: "Onderwijs" } ,   [  { id: "85.2", label: "Primair en speciaal onderwijs" } ,   [  { id: "85.20", label: "Primair en speciaal onderwijs" } ,   { id: "85.20.1", label: "Basisonderwijs voor leerplichtigen" } ,  ] ,  ] ,  ] ,  ] ,   [  { id: "Q", label: "Gezondheids- en welzijnszorg" } ,   [  { id: "86", label: "Gezondheidszorg" } ,   [  { id: "86.1", label: "Ziekenhuizen en geestelijke gezondheids- en verslavingszorg met overnachting" } ,   [  { id: "86.10", label: "Ziekenhuizen en geestelijke gezondheids- en verslavingszorg met overnachting" } ,   { id: "86.10.3", label: "Categorale ziekenhuizen" } ,  ] ,  ] ,   [  { id: "86.2", label: "Medische en tandheelkundige praktijken" } ,   { id: "86.21", label: "Praktijken van huisartsen" } ,  ] ,   [  { id: "86.9", label: "Paramedische praktijken en overige gezondheidszorg zonder overnachting" } ,   [  { id: "86.92", label: "Overige aanbieders van gezondheidszorg zonder overnachting en gezondheidsondersteunende diensten" } ,   { id: "86.92.4", label: "Medische laboratoria, trombosediensten en overig behandelingsondersteunend onderzoek" } ,  ] ,  ] ,  ] ,   { id: "87", label: "Verpleging, verzorging en begeleiding met overnachting" } ,   [  { id: "88", label: "Maatschappelijke dienstverlening zonder overnachting" } ,   [  { id: "88.9", label: "Maatschappelijke dienstverlening zonder overnachting niet specifiek gericht op ouderen en gehandicapten" } ,   [  { id: "88.91", label: "Kinderopvang en peuterspeelzaalwerk" } ,   { id: "88.91.1", label: "Kinderopvang" } ,  ] ,  ] ,  ] ,  ] ,   [  { id: "R", label: "Cultuur, sport en recreatie" } ,   { id: "90", label: "Kunst" } ,   [  { id: "91", label: "Culturele uitleencentra, openbare archieven, musea, dieren- en plantentuinen, natuurbehoud" } ,   [  { id: "91.0", label: "Culturele uitleencentra, openbare archieven, musea, dieren- en plantentuinen, natuurbehoud" } ,   [  { id: "91.02", label: "Musea, kunstgalerieën en –expositieruimten" } ,   { id: "91.02.1", label: "Musea" } ,  ] ,  ] ,  ] ,   { id: "92", label: "Loterijen en kansspelen" } ,   [  { id: "93", label: "Sport en recreatie" } ,   [  { id: "93.1", label: "Sport" } ,   [  { id: "93.12", label: "Buitensport" } ,   { id: "93.12.1", label: "Veldvoetbal" } ,  ] ,   { id: "93.13", label: "Fitnesscentra" } ,  ] ,  ] ,  ] ,   [  { id: "S", label: "Overige dienstverlening" } ,   { id: "94", label: "Levensbeschouwelijke en politieke organisaties, belangen- en ideële organisaties, hobbyclubs" } ,   { id: "95", label: "Reparatie van computers en consumentenartikelen" } ,   { id: "96", label: "Wellness en overige dienstverlening; uitvaartbranche" } ,  ] ,  ]
+    },
+      
+    { id : "epl-pand-gebruiksoppervlakte-thermische-zone",
+      name : "Gebruiksoppervlakte thermische zone",
+      type : "string",
+    },
+      
+    { id : "epl-pand-energiebehoefte",
+      name : "Energiebehoefte (EP1)",
+      type : "string",
+    },
+      
+    { id : "epl-pand-eis-energiebehoefte",
+      name : "Eis energiebehoefte (BENG1)",
+      type : "string",
+    },
+      
+    { id : "epl-pand-primaire-fossiele-energie",
+      name : "Primaire fossiele energie (EP2)",
+      type : "string",
+    },
+      
+    { id : "epl-pand-eis-primaire-fossiele-energie",
+      name : "Eis primaire fossiele energie (BENG2)",
+      type : "string",
+    },
+      
+    { id : "epl-pand-primaire-fossiele-energie-EMG-forfaitair",
+      name : "Primaire fossiele energie EMG forfaitair",
+      type : "string",
+    },
+      
+    { id : "epl-pand-aandeel-hernieuwbare-energie",
+      name : "Aandeel hernieuwbare energie (EP3)",
+      type : "string",
+    },
+      
+    { id : "epl-pand-eis-aandeel-hernieuwbare-energie",
+      name : "Eis aandeel hernieuwbare energie (BENG3)",
+      type : "string",
+    },
+      
+    { id : "epl-pand-aandeel-hernieuwbare-energie-EMG-forfaitair",
+      name : "Aandeel hernieuwbare energie EMG forfaitair",
+      type : "string",
+    },
+      
+    { id : "epl-pand-temperatuuroverschrijding",
+      name : "Temperatuuroverschrijding",
+      type : "string",
+    },
+      
+    { id : "epl-pand-eis-temperatuuroverschrijding",
+      name : "Temperatuuroverschrijding",
+      type : "string",
+    },
+      
+    { id : "epl-pand-warmtebehoefte",
+      name : "Warmtebehoefte",
+      type : "string",
+    },
+      
+    { id : "epl-pand-energieindex-met-EMG-forfaitair",
+      name : "Energieindex met EMG forfaitair",
       type : "string",
     },
       
@@ -819,7 +1174,7 @@ export const displayAttributes: Attribute[] =   [
     { id : "monumenttype",
       name : "Monumenttype",
       type : "string",
-      vocabulary : [  { id: 'voc-mnmt-tp-001', label: 'Gemeentelijk monument' } ,   { id: 'voc-mnmt-tp-002', label: 'Rijksmonument' } ,   { id: 'voc-mnmt-tp-003', label: 'Voorgesteld voor gemeentelijke lijst' } ,   { id: 'voc-mnmt-tp-004', label: 'Anderszins monumentaal' } ,  ]
+      vocabulary : [  { id: "voc-mnmt-tp-001", label: "Gemeentelijk monument" } ,   { id: "voc-mnmt-tp-002", label: "Rijksmonument" } ,   { id: "voc-mnmt-tp-003", label: "Voorgesteld voor gemeentelijke lijst" } ,   { id: "voc-mnmt-tp-004", label: "Anderszins monumentaal" } ,  ]
     },
       
     { id : "monumentnummer",
@@ -958,19 +1313,19 @@ export const displayAttributes: Attribute[] =   [
     { id : "zk-soort",
       name : "Zaaksoort",
       type : "string",
-      vocabulary : [  { id: '000000', label: 'Niet ingevuld' } ,   { id: 'CHZ_CAL', label: 'Calamiteiten' } ,   [  { id: 'controlezaak', label: 'Controlezaak' } ,   { id: 'CHZ_OCA', label: 'Opleveringscontrole Asbest' } ,   { id: 'CHZ_OCBAR', label: 'Opleveringscontrole BAR' } ,   { id: 'CHZ_OCEVM', label: 'Opleveringscontrole Evenementen' } ,   { id: 'CHZ_HUIS', label: 'Opleveringscontrole Huisvesting' } ,   { id: 'CHZ_OCR', label: 'Opleveringscontrole Renovatie' } ,   { id: 'CHZ_OCS', label: 'Opleveringscontrole Sloop' } ,   { id: 'CHZ_OCB1', label: 'Opleveringscontrole bouw cat. 1' } ,   { id: 'CHZ_OCB2', label: 'Opleveringscontrole bouw cat. 2' } ,   { id: 'CHZ_OCB3', label: 'Opleveringscontrole bouw cat. 3' } ,   { id: 'CHZ_OCB4', label: 'Opleveringscontrole bouw cat. 4' } ,   { id: 'CHZ_SPL', label: 'Opleveringscontrole splitsingen' } ,   { id: 'CHZ_PCTBAR', label: 'Projectcontrole BAR' } ,   { id: 'CHZ_BRPLVL', label: 'Projectcontrole Breedplaatvloeren' } ,   { id: 'CHZ_PCGAL', label: 'Projectcontrole Galerijvloeren flatgebouwen' } ,   { id: 'CHZ_PCTOM', label: 'Projectcontrole Omzettingen' } ,   { id: 'CHZ_PCTOGI', label: 'Projectcontrole Omzettingen Geweigerd/Ingetrokken' } ,   { id: 'CHZ_BLS', label: 'Projectcontrole constructieve veiligheid balkons' } ,  ] ,   [  { id: 'klachtenzaak', label: 'Klacht/meldingzaak' } ,   { id: 'HZ_MBG', label: 'Melding brandveilig gebruik' } ,   { id: 'HZ_GBM', label: 'Gebruiksmelding' } ,   { id: 'HZ_SLM', label: 'Sloopmelding' } ,   { id: 'CHZ_KLA', label: 'Klacht/Melding' } ,   { id: 'KLA', label: 'klacht' } ,  ] ,   [  { id: 'vergunning', label: 'Vergunning' } ,   { id: 'HZ_BWT', label: 'Bouwvergunning uit BWT4all' } ,   { id: 'HZ_IOG', label: 'Inname Openbare Grond' } ,   { id: 'HZ_WABO', label: 'Omgevingsvergunning' } ,   { id: 'HZ_OAPV', label: 'Ontheffing APV (Incidentele Geluidsontheffingen tbv Civiel en Bouw)' } ,   [  { id: 'HZ_OWR', label: 'Onttrekking-/ Omzetting-/ Samenvoeging van Woonruimte' } ,   { id: 'HZ_OWR_O', label: 'Omzetting' } ,   { id: 'HZ_OWR_T', label: 'Transformatie' } ,  ] ,   { id: 'HZ_SPL', label: 'Splitsingsvergunning' } ,   { id: 'HZ_WIJ', label: 'Wijzigen Omgevingsvergunning' } ,  ] ,  ]
+      vocabulary : [  { id: "CHZ_CAL", label: "Calamiteiten" } ,   [  { id: "controlezaak", label: "Controlezaak" } ,   { id: "CHZ_OCA", label: "Opleveringscontrole Asbest" } ,   { id: "CHZ_OCBAR", label: "Opleveringscontrole BAR" } ,   { id: "CHZ_OCEVM", label: "Opleveringscontrole Evenementen" } ,   { id: "CHZ_HUIS", label: "Opleveringscontrole Huisvesting" } ,   { id: "CHZ_OCR", label: "Opleveringscontrole Renovatie" } ,   { id: "CHZ_OCS", label: "Opleveringscontrole Sloop" } ,   { id: "CHZ_OCB1", label: "Opleveringscontrole bouw cat. 1" } ,   { id: "CHZ_OCB2", label: "Opleveringscontrole bouw cat. 2" } ,   { id: "CHZ_OCB3", label: "Opleveringscontrole bouw cat. 3" } ,   { id: "CHZ_OCB4", label: "Opleveringscontrole bouw cat. 4" } ,   { id: "CHZ_SPL", label: "Opleveringscontrole splitsingen" } ,   { id: "CHZ_PCTBAR", label: "Projectcontrole BAR" } ,   { id: "CHZ_BRPLVL", label: "Projectcontrole Breedplaatvloeren" } ,   { id: "CHZ_PCGAL", label: "Projectcontrole Galerijvloeren flatgebouwen" } ,   { id: "CHZ_BLS", label: "Projectcontrole constructieve veiligheid balkons" } ,  ] ,   [  { id: "klachtenzaak", label: "Klacht/meldingzaak" } ,   { id: "HZ_MBG", label: "Melding brandveilig gebruik" } ,   { id: "HZ_GBM", label: "Gebruiksmelding" } ,   { id: "HZ_SLM", label: "Sloopmelding" } ,   { id: "CHZ_KLA", label: "Klacht/Melding" } ,   { id: "KLA", label: "klacht" } ,  ] ,   [  { id: "vergunning", label: "Vergunning" } ,   { id: "HZ_BWT", label: "Bouwvergunning uit BWT4all" } ,   { id: "HZ_IOG", label: "Inname Openbare Grond" } ,   { id: "HZ_WABO", label: "Omgevingsvergunning" } ,   { id: "HZ_OAPV", label: "Ontheffing APV (Incidentele Geluidsontheffingen tbv Civiel en Bouw)" } ,   [  { id: "HZ_OWR", label: "Onttrekking-/ Omzetting-/ Samenvoeging van Woonruimte" } ,   { id: "HZ_OWR_O", label: "Omzetting" } ,   { id: "HZ_OWR_T", label: "Transformatie" } ,  ] ,   { id: "HZ_SPL", label: "Splitsingsvergunning" } ,   { id: "HZ_WIJ", label: "Wijzigen Omgevingsvergunning" } ,  ] ,  ]
     },
       
     { id : "zk-status",
       name : "Voortgangsstatus",
       type : "string",
-      vocabulary : [  { id: 'C', label: 'Concept' } ,   { id: 'G', label: 'Gesloten' } ,   { id: 'O', label: 'Open' } ,   { id: 'T', label: 'Toekomstig' } ,  ]
+      vocabulary : [  { id: "C", label: "Concept" } ,   { id: "G", label: "Gesloten" } ,   { id: "O", label: "Open" } ,   { id: "T", label: "Toekomstig" } ,  ]
     },
       
     { id : "zk-besluit",
       name : "Besluit",
       type : "string",
-      vocabulary : [  { id: 'voc-zk-besluit-001', label: 'Onbekend' } ,   { id: 'voc-zk-besluit-002', label: 'Aankondiging Intrekking' } ,   { id: 'voc-zk-besluit-003', label: 'Afgewezen' } ,   { id: 'voc-zk-besluit-004', label: 'Akkoord' } ,   { id: 'voc-zk-besluit-005', label: 'Besluit Intrekking' } ,   { id: 'voc-zk-besluit-006', label: 'Beëindigd' } ,   { id: 'voc-zk-besluit-007', label: 'Buiten behandeling gelaten' } ,   { id: 'voc-zk-besluit-008', label: 'Buiten behandeling gesteld' } ,   { id: 'voc-zk-besluit-021', label: 'Deels toegekend' } ,   { id: 'voc-zk-besluit-009', label: 'Geen afwijking' } ,   { id: 'voc-zk-besluit-010', label: 'Gelegaliseerd' } ,   { id: 'voc-zk-besluit-011', label: 'Gerepareerd' } ,   { id: 'voc-zk-besluit-012', label: 'Geweigerd' } ,   { id: 'voc-zk-besluit-013', label: 'Ingetrokken' } ,   { id: 'voc-zk-besluit-014', label: 'Niet nodig' } ,   { id: 'voc-zk-besluit-015', label: 'Toegekend' } ,   { id: 'voc-zk-besluit-019', label: 'Van rechtswege afgewezen' } ,   { id: 'voc-zk-besluit-020', label: 'Van rechtswege toegekend' } ,   { id: 'voc-zk-besluit-016', label: 'Vergunningvrij' } ,   { id: 'voc-zk-besluit-017', label: 'Verleend' } ,   { id: 'voc-zk-besluit-018', label: 'Verwerkt' } ,  ]
+      vocabulary : [  { id: "voc-zk-besluit-001", label: "Onbekend" } ,   { id: "voc-zk-besluit-002", label: "Aankondiging Intrekking" } ,   { id: "voc-zk-besluit-003", label: "Afgewezen" } ,   { id: "voc-zk-besluit-004", label: "Akkoord" } ,   { id: "voc-zk-besluit-005", label: "Besluit Intrekking" } ,   { id: "voc-zk-besluit-006", label: "Beëindigd" } ,   { id: "voc-zk-besluit-007", label: "Buiten behandeling gelaten" } ,   { id: "voc-zk-besluit-008", label: "Buiten behandeling gesteld" } ,   { id: "voc-zk-besluit-021", label: "Deels toegekend" } ,   { id: "voc-zk-besluit-009", label: "Geen afwijking" } ,   { id: "voc-zk-besluit-010", label: "Gelegaliseerd" } ,   { id: "voc-zk-besluit-011", label: "Gerepareerd" } ,   { id: "voc-zk-besluit-012", label: "Geweigerd" } ,   { id: "voc-zk-besluit-013", label: "Ingetrokken" } ,   { id: "voc-zk-besluit-014", label: "Niet nodig" } ,   { id: "voc-zk-besluit-015", label: "Toegekend" } ,   { id: "voc-zk-besluit-019", label: "Van rechtswege afgewezen" } ,   { id: "voc-zk-besluit-020", label: "Van rechtswege toegekend" } ,   { id: "voc-zk-besluit-016", label: "Vergunningvrij" } ,   { id: "voc-zk-besluit-017", label: "Verleend" } ,   { id: "voc-zk-besluit-018", label: "Verwerkt" } ,  ]
     },
       
     { id : "date",
@@ -1001,6 +1356,74 @@ export const displayAttributes: Attribute[] =   [
     { id : "zk-einddatum-gepland",
       name : "Geplande einddatum",
       type : "date",
+    },
+      
+    { id : "dataset-id",
+      name : "Herkomst",
+      type : "string",
+    },
+      
+    { id : "imported",
+      name : "Geimporteerd op",
+      type : "dateTime",
+    }
+    ]
+  },
+    
+  { id : "zonnepanelen",
+    name : "Zonnepanelen",
+    attributes:    [
+      
+    { id : "zon-zonnepanelen_2022",
+      name : "Panelen in 2022",
+      type : "string",
+      vocabulary : [  { id: "0", label: "Nee" } ,   { id: "1", label: "Ja" } ,  ]
+    },
+      
+    { id : "zon-zonnepanelen_2021",
+      name : "Panelen in 2021",
+      type : "string",
+      vocabulary : [  { id: "0", label: "Nee" } ,   { id: "1", label: "Ja" } ,  ]
+    },
+      
+    { id : "zon-zonnepanelen_2020",
+      name : "Panelen in 2020",
+      type : "string",
+      vocabulary : [  { id: "0", label: "Nee" } ,   { id: "1", label: "Ja" } ,  ]
+    },
+      
+    { id : "zon-zonnepanelen_2019",
+      name : "Panelen in 2019",
+      type : "string",
+      vocabulary : [  { id: "0", label: "Nee" } ,   { id: "1", label: "Ja" } ,  ]
+    },
+      
+    { id : "zon-zonnepanelen_2018",
+      name : "Panelen in 2018",
+      type : "string",
+      vocabulary : [  { id: "0", label: "Nee" } ,   { id: "1", label: "Ja" } ,  ]
+    },
+      
+    { id : "zon-zonnepanelen_2017",
+      name : "Panelen in 2017",
+      type : "string",
+      vocabulary : [  { id: "0", label: "Nee" } ,   { id: "1", label: "Ja" } ,  ]
+    },
+      
+    { id : "zon-gemeentelijk_vastgoed",
+      name : "Gemeentelijk vastgoed",
+      type : "string",
+      vocabulary : [  { id: "0", label: "Nee" } ,   { id: "1", label: "Ja" } ,  ]
+    },
+      
+    { id : "zon-plat_dak_oppervlakte",
+      name : "Oppervlakte van het (platte) dak",
+      type : "string",
+    },
+      
+    { id : "zon-zonnepaneel_oppervlakte",
+      name : "Oppervlakte van de zonnepanelen",
+      type : "string",
     },
       
     { id : "dataset-id",
@@ -1066,12 +1489,30 @@ export const filterAttributes: Attribute[] =   [
     { id : "bouwtechnische-kenmerken.btk-kenmerk-id",
       name : "Bouwtechnisch kenmerk",
       type : "string",
-      vocabulary : [  [  { id: 'gbp-btk-0010', label: 'Balkon (info)' } ,   { id: 'gbp-btk-00101', label: 'Balkon aanwezig' } ,   { id: 'gbp-btk-00102', label: 'Balkon, goed' } ,   { id: 'gbp-btk-00103', label: 'Balkon, matig' } ,   { id: 'gbp-btk-00104', label: 'Balkon, slecht' } ,   { id: 'gbp-btk-00105', label: 'Balkon met stalen liggers' } ,   { id: 'gbp-btk-00106', label: 'Balkon, geen stalen liggers' } ,   { id: 'gbp-btk-00107', label: 'Balkon, stalen liggers n.v.t.' } ,   { id: 'gbp-btk-00108', label: 'Balkon afwezig' } ,   { id: 'gbp-btk-00109', label: 'Balkon onbekend' } ,  ] ,   { id: 'gbp-btk-0020', label: 'Dak' } ,   { id: 'gbp-btk-0030', label: 'Dakkapel' } ,   { id: 'gbp-btk-0040', label: 'Dakrand' } ,   { id: 'gbp-btk-0050', label: 'Erker' } ,   { id: 'gbp-btk-0060', label: 'Fundering' } ,   { id: 'gbp-btk-0070', label: 'Galerij' } ,   { id: 'gbp-btk-0080', label: 'Gevel' } ,   { id: 'gbp-btk-0090', label: 'Goot' } ,   [  { id: 'gbp-btk-0100', label: 'Hekwerk (info)' } ,   { id: 'gbp-btk-01001', label: 'Hekwerk aanwezig' } ,   { id: 'gbp-btk-01002', label: 'Hekwerk afwezig' } ,   { id: 'gbp-btk-01009', label: 'Hekwerk onbekend' } ,  ] ,   { id: 'gbp-btk-0110', label: 'Kozijn' } ,   { id: 'gbp-btk-0120', label: 'Raam/deur' } ,   { id: 'gbp-btk-0130', label: 'Schoorsteen' } ,   { id: 'gbp-btk-0140', label: 'Tuin' } ,  ]
+      vocabulary : [  [  { id: "gbp-btk-0010", label: "Balkon (info)" } ,   { id: "gbp-btk-00101", label: "Balkon aanwezig" } ,   { id: "gbp-btk-00105", label: "Balkon met stalen liggers" } ,   { id: "gbp-btk-00106", label: "Balkon, geen stalen liggers" } ,   { id: "gbp-btk-00107", label: "Balkon, stalen liggers n.v.t." } ,   { id: "gbp-btk-00108", label: "Balkon afwezig" } ,  ] ,   [  { id: "gbp-btk-0100", label: "Hekwerk (info)" } ,   { id: "gbp-btk-01001", label: "Hekwerk aanwezig" } ,   { id: "gbp-btk-01002", label: "Hekwerk afwezig" } ,  ] ,  ]
     },
       
     { id : "bouwtechnische-kenmerken.btk-actie-nodig",
       name : "Actie nodig voor stalen ligger",
       type : "string",
+    }
+    ]
+  },
+    
+  { id : "energielabels",
+    name : "Energielabels",
+    attributes:    [
+      
+    { id : "energielabels.epl-pand-energieklasse",
+      name : "Energieklasse",
+      type : "string",
+      vocabulary : [  { id: "A+++++", label: "Energieklasse A+++++" } ,   { id: "A++++", label: "Energieklasse A++++" } ,   { id: "A+++", label: "Energieklasse A+++" } ,   { id: "A++", label: "Energieklasse A++" } ,   { id: "A+", label: "Energieklasse A+" } ,   { id: "A", label: "Energieklasse A" } ,   { id: "B", label: "Energieklasse B" } ,   { id: "C", label: "Energieklasse C" } ,   { id: "D", label: "Energieklasse D" } ,   { id: "E", label: "Energieklasse E" } ,   { id: "F", label: "Energieklasse F" } ,   { id: "G", label: "Energieklasse G" } ,  ]
+    },
+      
+    { id : "energielabels.epl-pand-SBIcode",
+      name : "SBI Code",
+      type : "string",
+      vocabulary : [  [  { id: "C", label: "Industrie" } ,   { id: "18", label: "Drukkerijen, reproductie van opgenomen media" } ,   { id: "20", label: "Vervaardiging van chemische producten" } ,   { id: "25", label: "Vervaardiging van producten van metaal (geen machines en apparaten)" } ,   { id: "31", label: "Vervaardiging van meubels" } ,  ] ,   [  { id: "D", label: "Productie en distributie van en handel in elektriciteit, aardgas, stoom en gekoelde lucht" } ,   { id: "35", label: "Productie en distributie van en handel in elektriciteit, aardgas, stoom en gekoelde lucht" } ,  ] ,   [  { id: "E", label: "Winning en distributie van water; afval- en afvalwaterbeheer en sanering" } ,   { id: "38", label: "Afvalinzameling en -behandeling; voorbereiding tot recycling" } ,  ] ,   [  { id: "F", label: "Bouwnijverheid" } ,   { id: "41", label: "Algemene burgerlijke en utiliteitsbouw en projectontwikkeling" } ,   [  { id: "42", label: "Grond-, water- en wegenbouw (geen grondverzet)" } ,   { id: "42.1", label: "Bouw van wegen, spoorwegen en kunstwerken" } ,  ] ,   [  { id: "43", label: "Gespecialiseerde werkzaamheden in de bouw" } ,   { id: "43.9", label: "Dakbouw en overige gespecialiseerde werkzaamheden in de bouw" } ,  ] ,  ] ,   [  { id: "G", label: "Groot- en detailhandel; reparatie van auto\'s" } ,   [  { id: "45", label: "Handel in en reparatie van auto\'s, motorfietsen en aanhangers" } ,   [  { id: "45.2", label: "Gespecialiseerde reparatie van auto\'s" } ,   [  { id: "45.20", label: "Gespecialiseerde reparatie van auto\'s" } ,   { id: "45.20.3", label: "Reparatie van specifieke auto-onderdelen" } ,  ] ,  ] ,   [  { id: "45.3", label: "Handel in auto-onderdelen en -accessoires" } ,   [  { id: "45.31", label: "Groothandel en handelsbemiddeling in auto-onderdelen en -accessoires" } ,   { id: "45.31.1", label: "Groothandel en handelsbemiddeling in auto-onderdelen en -accessoires (geen banden)" } ,  ] ,  ] ,  ] ,   { id: "46", label: "Groothandel en handelsbemiddeling (niet in auto\'s en motorfietsen)" } ,   [  { id: "47", label: "Detailhandel (niet in auto\'s)" } ,   [  { id: "47.1", label: "Supermarkten, warenhuizen en dergelijke winkels met een algemeen assortiment" } ,   { id: "47.11", label: "Supermarkten en dergelijke winkels met een algemeen assortiment voedings- en genotmiddelen" } ,  ] ,   [  { id: "47.9", label: "Detailhandel niet via winkel of markt" } ,   { id: "47.91", label: "Detailhandel via internet" } ,   [  { id: "47.99", label: "Colportage, straathandel en detailhandel via overige distributievormen" } ,   { id: "47.99.9", label: "Detailhandel via overige distributievormen" } ,  ] ,  ] ,  ] ,  ] ,   [  { id: "H", label: "Vervoer en opslag" } ,   { id: "49", label: "Vervoer over land" } ,   { id: "52", label: "Opslag en dienstverlening voor vervoer" } ,   [  { id: "53", label: "Post en koeriers" } ,   [  { id: "53.2", label: "Post zonder universele dienstverplichting en koeriers" } ,   [  { id: "53.20", label: "Post zonder universele dienstverplichting en koeriers" } ,   { id: "53.20.1", label: "Post zonder universele dienstverplichting" } ,  ] ,  ] ,  ] ,  ] ,   [  { id: "I", label: "Logies-, maaltijd- en drankverstrekking" } ,   [  { id: "55", label: "Logiesverstrekking" } ,   [  { id: "55.1", label: "Hotels e.d." } ,   [  { id: "55.10", label: "Hotels e.d." } ,   { id: "55.10.1", label: "Hotel-restaurants" } ,  ] ,  ] ,  ] ,   [  { id: "56", label: "Eet- en drinkgelegenheden" } ,   [  { id: "56.1", label: "Restaurants, cafetaria\'s e.d." } ,   [  { id: "56.10", label: "Restaurants, cafetaria\'s e.d. en ijssalons" } ,   { id: "56.10.2", label: "Fastfoodrestaurants, cafetaria\'s,  ijssalons, eetkramen e.d." } ,  ] ,  ] ,   [  { id: "56.3", label: "Cafés" } ,   { id: "56.30", label: "Cafés" } ,  ] ,  ] ,  ] ,   [  { id: "J", label: "Informatie en communicatie" } ,   { id: "58", label: "Uitgeverijen" } ,   { id: "59", label: "Productie en distributie van films en televisieprogramma´s; maken en uitgeven van geluidsopnamen" } ,   { id: "61", label: "Telecommunicatie" } ,   { id: "62", label: "Dienstverlenende activiteiten op het gebied van informatietechnologie" } ,   { id: "63", label: "Dienstverlenende activiteiten op het gebied van informatie" } ,  ] ,   [  { id: "K", label: "Financiële instellingen" } ,   [  { id: "64", label: "Financiële instellingen (geen verzekeringen en pensioenfondsen)" } ,   { id: "64.3", label: "Beleggingsinstellingen" } ,  ] ,   { id: "65", label: "Verzekeringen en pensioenfondsen (geen verplichte sociale verzekeringen)" } ,   { id: "66", label: "Overige financiële dienstverlening" } ,  ] ,   [  { id: "L", label: "Verhuur van en handel in onroerend goed" } ,   [  { id: "68", label: "Verhuur van en handel in onroerend goed" } ,   [  { id: "68.2", label: "Verhuur van onroerend goed" } ,   [  { id: "68.20", label: "Verhuur van onroerend goed" } ,   { id: "68.20.1", label: "Woningbouwverenigingen en -stichtingen" } ,  ] ,  ] ,  ] ,  ] ,   [  { id: "M", label: "Advisering, onderzoek en overige specialistische zakelijke dienstverlening" } ,   { id: "69", label: "Rechtskundige dienstverlening, accountancy, belastingadvisering en administratie" } ,   { id: "70", label: "Holdings (geen financiële), concerndiensten binnen eigen concern en managementadvisering" } ,   { id: "71", label: "Architecten, ingenieurs en technisch ontwerp en advies; keuring en controle" } ,   { id: "72", label: "Speur- en ontwikkelingswerk" } ,   { id: "73", label: "Reclame en marktonderzoek" } ,   { id: "74", label: "Industrieel ontwerp en vormgeving, fotografie, vertaling en overige consultancy" } ,   { id: "75", label: "Veterinaire dienstverlening" } ,  ] ,   [  { id: "N", label: "Verhuur van roerende goederen en overige zakelijke dienstverlening" } ,   { id: "77", label: "Verhuur en lease van auto\'s, consumentenartikelen, machines en overige roerende goederen" } ,   { id: "78", label: "Arbeidsbemiddeling, uitzendbureaus en personeelsbeheer" } ,   { id: "79", label: "Reisbemiddeling, reisorganisatie, toeristische informatie en reserveringsbureaus" } ,   { id: "81", label: "Facility management, reiniging en landschapsverzorging" } ,   [  { id: "82", label: "Overige zakelijke dienstverlening" } ,   [  { id: "82.9", label: "Overige zakelijke dienstverlening(rest)" } ,   [  { id: "82.99", label: "Overige zakelijke dienstverlening (rest)" } ,   { id: "82.99.9", label: "Overige zakelijke dienstverlening (rest)" } ,  ] ,  ] ,  ] ,  ] ,   [  { id: "O", label: "Openbaar bestuur, overheidsdiensten en verplichte sociale verzekeringen" } ,   { id: "84", label: "Openbaar bestuur, overheidsdiensten en verplichte sociale verzekeringen" } ,  ] ,   [  { id: "P", label: "Onderwijs" } ,   [  { id: "85", label: "Onderwijs" } ,   [  { id: "85.2", label: "Primair en speciaal onderwijs" } ,   [  { id: "85.20", label: "Primair en speciaal onderwijs" } ,   { id: "85.20.1", label: "Basisonderwijs voor leerplichtigen" } ,  ] ,  ] ,  ] ,  ] ,   [  { id: "Q", label: "Gezondheids- en welzijnszorg" } ,   [  { id: "86", label: "Gezondheidszorg" } ,   [  { id: "86.1", label: "Ziekenhuizen en geestelijke gezondheids- en verslavingszorg met overnachting" } ,   [  { id: "86.10", label: "Ziekenhuizen en geestelijke gezondheids- en verslavingszorg met overnachting" } ,   { id: "86.10.3", label: "Categorale ziekenhuizen" } ,  ] ,  ] ,   [  { id: "86.2", label: "Medische en tandheelkundige praktijken" } ,   { id: "86.21", label: "Praktijken van huisartsen" } ,  ] ,   [  { id: "86.9", label: "Paramedische praktijken en overige gezondheidszorg zonder overnachting" } ,   [  { id: "86.92", label: "Overige aanbieders van gezondheidszorg zonder overnachting en gezondheidsondersteunende diensten" } ,   { id: "86.92.4", label: "Medische laboratoria, trombosediensten en overig behandelingsondersteunend onderzoek" } ,  ] ,  ] ,  ] ,   { id: "87", label: "Verpleging, verzorging en begeleiding met overnachting" } ,   [  { id: "88", label: "Maatschappelijke dienstverlening zonder overnachting" } ,   [  { id: "88.9", label: "Maatschappelijke dienstverlening zonder overnachting niet specifiek gericht op ouderen en gehandicapten" } ,   [  { id: "88.91", label: "Kinderopvang en peuterspeelzaalwerk" } ,   { id: "88.91.1", label: "Kinderopvang" } ,  ] ,  ] ,  ] ,  ] ,   [  { id: "R", label: "Cultuur, sport en recreatie" } ,   { id: "90", label: "Kunst" } ,   [  { id: "91", label: "Culturele uitleencentra, openbare archieven, musea, dieren- en plantentuinen, natuurbehoud" } ,   [  { id: "91.0", label: "Culturele uitleencentra, openbare archieven, musea, dieren- en plantentuinen, natuurbehoud" } ,   [  { id: "91.02", label: "Musea, kunstgalerieën en –expositieruimten" } ,   { id: "91.02.1", label: "Musea" } ,  ] ,  ] ,  ] ,   { id: "92", label: "Loterijen en kansspelen" } ,   [  { id: "93", label: "Sport en recreatie" } ,   [  { id: "93.1", label: "Sport" } ,   [  { id: "93.12", label: "Buitensport" } ,   { id: "93.12.1", label: "Veldvoetbal" } ,  ] ,   { id: "93.13", label: "Fitnesscentra" } ,  ] ,  ] ,  ] ,   [  { id: "S", label: "Overige dienstverlening" } ,   { id: "94", label: "Levensbeschouwelijke en politieke organisaties, belangen- en ideële organisaties, hobbyclubs" } ,   { id: "95", label: "Reparatie van computers en consumentenartikelen" } ,   { id: "96", label: "Wellness en overige dienstverlening; uitvaartbranche" } ,  ] ,  ]
     }
     ]
   },
@@ -1083,7 +1524,7 @@ export const filterAttributes: Attribute[] =   [
     { id : "monumenten.monumenttype",
       name : "Monumenttype",
       type : "string",
-      vocabulary : [  { id: 'voc-mnmt-tp-001', label: 'Gemeentelijk monument' } ,   { id: 'voc-mnmt-tp-002', label: 'Rijksmonument' } ,   { id: 'voc-mnmt-tp-003', label: 'Voorgesteld voor gemeentelijke lijst' } ,   { id: 'voc-mnmt-tp-004', label: 'Anderszins monumentaal' } ,  ]
+      vocabulary : [  { id: "voc-mnmt-tp-001", label: "Gemeentelijk monument" } ,   { id: "voc-mnmt-tp-002", label: "Rijksmonument" } ,   { id: "voc-mnmt-tp-003", label: "Voorgesteld voor gemeentelijke lijst" } ,   { id: "voc-mnmt-tp-004", label: "Anderszins monumentaal" } ,  ]
     }
     ]
   },
@@ -1106,13 +1547,25 @@ export const filterAttributes: Attribute[] =   [
     { id : "zaakgegevens.zk-soort",
       name : "Zaaksoort",
       type : "string",
-      vocabulary : [  { id: '000000', label: 'Niet ingevuld' } ,   { id: 'CHZ_CAL', label: 'Calamiteiten' } ,   [  { id: 'controlezaak', label: 'Controlezaak' } ,   { id: 'CHZ_OCA', label: 'Opleveringscontrole Asbest' } ,   { id: 'CHZ_OCBAR', label: 'Opleveringscontrole BAR' } ,   { id: 'CHZ_OCEVM', label: 'Opleveringscontrole Evenementen' } ,   { id: 'CHZ_HUIS', label: 'Opleveringscontrole Huisvesting' } ,   { id: 'CHZ_OCR', label: 'Opleveringscontrole Renovatie' } ,   { id: 'CHZ_OCS', label: 'Opleveringscontrole Sloop' } ,   { id: 'CHZ_OCB1', label: 'Opleveringscontrole bouw cat. 1' } ,   { id: 'CHZ_OCB2', label: 'Opleveringscontrole bouw cat. 2' } ,   { id: 'CHZ_OCB3', label: 'Opleveringscontrole bouw cat. 3' } ,   { id: 'CHZ_OCB4', label: 'Opleveringscontrole bouw cat. 4' } ,   { id: 'CHZ_SPL', label: 'Opleveringscontrole splitsingen' } ,   { id: 'CHZ_PCTBAR', label: 'Projectcontrole BAR' } ,   { id: 'CHZ_BRPLVL', label: 'Projectcontrole Breedplaatvloeren' } ,   { id: 'CHZ_PCGAL', label: 'Projectcontrole Galerijvloeren flatgebouwen' } ,   { id: 'CHZ_PCTOM', label: 'Projectcontrole Omzettingen' } ,   { id: 'CHZ_PCTOGI', label: 'Projectcontrole Omzettingen Geweigerd/Ingetrokken' } ,   { id: 'CHZ_BLS', label: 'Projectcontrole constructieve veiligheid balkons' } ,  ] ,   [  { id: 'klachtenzaak', label: 'Klacht/meldingzaak' } ,   { id: 'HZ_MBG', label: 'Melding brandveilig gebruik' } ,   { id: 'HZ_GBM', label: 'Gebruiksmelding' } ,   { id: 'HZ_SLM', label: 'Sloopmelding' } ,   { id: 'CHZ_KLA', label: 'Klacht/Melding' } ,   { id: 'KLA', label: 'klacht' } ,  ] ,   [  { id: 'vergunning', label: 'Vergunning' } ,   { id: 'HZ_BWT', label: 'Bouwvergunning uit BWT4all' } ,   { id: 'HZ_IOG', label: 'Inname Openbare Grond' } ,   { id: 'HZ_WABO', label: 'Omgevingsvergunning' } ,   { id: 'HZ_OAPV', label: 'Ontheffing APV (Incidentele Geluidsontheffingen tbv Civiel en Bouw)' } ,   [  { id: 'HZ_OWR', label: 'Onttrekking-/ Omzetting-/ Samenvoeging van Woonruimte' } ,   { id: 'HZ_OWR_O', label: 'Omzetting' } ,   { id: 'HZ_OWR_T', label: 'Transformatie' } ,  ] ,   { id: 'HZ_SPL', label: 'Splitsingsvergunning' } ,   { id: 'HZ_WIJ', label: 'Wijzigen Omgevingsvergunning' } ,  ] ,  ]
+      vocabulary : [  { id: "CHZ_CAL", label: "Calamiteiten" } ,   [  { id: "controlezaak", label: "Controlezaak" } ,   { id: "CHZ_OCA", label: "Opleveringscontrole Asbest" } ,   { id: "CHZ_OCBAR", label: "Opleveringscontrole BAR" } ,   { id: "CHZ_OCEVM", label: "Opleveringscontrole Evenementen" } ,   { id: "CHZ_HUIS", label: "Opleveringscontrole Huisvesting" } ,   { id: "CHZ_OCR", label: "Opleveringscontrole Renovatie" } ,   { id: "CHZ_OCS", label: "Opleveringscontrole Sloop" } ,   { id: "CHZ_OCB1", label: "Opleveringscontrole bouw cat. 1" } ,   { id: "CHZ_OCB2", label: "Opleveringscontrole bouw cat. 2" } ,   { id: "CHZ_OCB3", label: "Opleveringscontrole bouw cat. 3" } ,   { id: "CHZ_OCB4", label: "Opleveringscontrole bouw cat. 4" } ,   { id: "CHZ_SPL", label: "Opleveringscontrole splitsingen" } ,   { id: "CHZ_PCTBAR", label: "Projectcontrole BAR" } ,   { id: "CHZ_BRPLVL", label: "Projectcontrole Breedplaatvloeren" } ,   { id: "CHZ_PCGAL", label: "Projectcontrole Galerijvloeren flatgebouwen" } ,   { id: "CHZ_BLS", label: "Projectcontrole constructieve veiligheid balkons" } ,  ] ,   [  { id: "klachtenzaak", label: "Klacht/meldingzaak" } ,   { id: "HZ_MBG", label: "Melding brandveilig gebruik" } ,   { id: "HZ_GBM", label: "Gebruiksmelding" } ,   { id: "HZ_SLM", label: "Sloopmelding" } ,   { id: "CHZ_KLA", label: "Klacht/Melding" } ,   { id: "KLA", label: "klacht" } ,  ] ,   [  { id: "vergunning", label: "Vergunning" } ,   { id: "HZ_BWT", label: "Bouwvergunning uit BWT4all" } ,   { id: "HZ_IOG", label: "Inname Openbare Grond" } ,   { id: "HZ_WABO", label: "Omgevingsvergunning" } ,   { id: "HZ_OAPV", label: "Ontheffing APV (Incidentele Geluidsontheffingen tbv Civiel en Bouw)" } ,   [  { id: "HZ_OWR", label: "Onttrekking-/ Omzetting-/ Samenvoeging van Woonruimte" } ,   { id: "HZ_OWR_O", label: "Omzetting" } ,   { id: "HZ_OWR_T", label: "Transformatie" } ,  ] ,   { id: "HZ_SPL", label: "Splitsingsvergunning" } ,   { id: "HZ_WIJ", label: "Wijzigen Omgevingsvergunning" } ,  ] ,  ]
     },
       
     { id : "zaakgegevens.zk-status",
       name : "Voortgangsstatus",
       type : "string",
-      vocabulary : [  { id: 'C', label: 'Concept' } ,   { id: 'G', label: 'Gesloten' } ,   { id: 'O', label: 'Open' } ,   { id: 'T', label: 'Toekomstig' } ,  ]
+      vocabulary : [  { id: "C", label: "Concept" } ,   { id: "G", label: "Gesloten" } ,   { id: "O", label: "Open" } ,   { id: "T", label: "Toekomstig" } ,  ]
+    }
+    ]
+  },
+    
+  { id : "zonnepanelen",
+    name : "Zonnepanelen",
+    attributes:    [
+      
+    { id : "zonnepanelen.zon-zonnepanelen_2022",
+      name : "Panelen in 2022",
+      type : "string",
+      vocabulary : [  { id: "0", label: "Nee" } ,   { id: "1", label: "Ja" } ,  ]
     }
     ]
   }
@@ -1164,15 +1617,17 @@ export interface GBPObject {
   "location-sort-value" : string;
   "pdok-locatie-id" : string;
   "_geo" : { "lat" : number; "lng" : number; };
-  "links" : { "href-luchtfoto" : string; "href-streetview" : string; "href-topotijdreis" : string; "href-utrechtsarchief" : string; "href-ruimtelijkeplannen" : string; };
+  "links" : { "href-luchtfoto" : string; "href-streetview" : string; "href-topotijdreis" : string; "href-utrechtsarchief" : string; "href-ruimtelijkeplannen" : string; "href-wozwaardeloket" : string; };
   "bag-aob" : { "bag-aob-id" : string; "bag-num-id" : string[]; "bag-pnd-id" : string[]; "bag-object-type" : string; "bag-aob-gebruiksdoel" : string[]; "bag-aob-oppervlakte" : number; "bag-aob-oppervlakte-interval" : string; "bag-aob-status" : string; "bag-aob-documentdatum" : Date; "bag-aob-documentnummer" : string; "bag-aob-voorkomen" : number; "geo-EPSG28992" : number[]; "dataset-id" : string; "imported" : Date; };
   "bag-opr" : { "bag-object-type" : string; "bag-opr-id" : string; "bag-opr-naam" : string; "bag-opr-volledig" : string; "bag-opr-type" : string; "bag-opr-status" : string; "bag-opr-geconstateerd" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-wpl-id" : string; };
   "bag-pnd" : { "bag-pnd-id" : string; "bag-pnd-oorspronkelijk-bouwjaar" : number; "bag-pnd-oorspronkelijk-bouwjaar-interval" : string; "bag-pnd-status" : string; "bag-pnd-geconstateerd" : string; "bag-pnd-documentdatum" : Date; "bag-pnd-documentnummer" : string; "bag-pnd-geo" : number[]; "bag-pnd-geo-EPSG28992" : number[]; "dataset-id" : string; "imported" : Date; };
   "bouwtechnische-kenmerken" : { "btk-kenmerk-id" : string[]; "btk-inspectiedatum" : Date; "btk-actie-nodig" : string; "dataset-id" : string; "imported" : Date; };
   "bwk" : { "bwk-wijkid" : string; "bwk-wijknaam" : string; "bwk-subwijknaam" : string; "bwk-buurtid" : string; "bwk-buurtnaam" : string; "bwk-subbuurtnaam" : string; "dataset-id" : string; "imported" : Date; };
+  "energielabels" : { "bag-pnd-id" : string; "epl-pand-energieklasse" : string; "epl-pand-opnamedatum" : Date; "epl-pand-opnametype" : string; "epl-pand-status" : string; "epl-pand-berekeningstype" : string; "epl-pand-energieindex" : string; "epl-pand-energielabel-is-prive" : string; "epl-pand-is-op-basis-van-referentie-gebouw" : string; "epl-pand-gebouwklasse" : string; "epl-meting-geldig-tot" : Date; "epl-pand-registratiedatum" : Date; "epl-pand-detailaanduiding" : string; "epl-pand-gebouwtype" : string; "epl-pand-gebouwsubtype" : string; "epl-pand-SBIcode" : string; "epl-pand-gebruiksoppervlakte-thermische-zone" : string; "epl-pand-energiebehoefte" : string; "epl-pand-eis-energiebehoefte" : string; "epl-pand-primaire-fossiele-energie" : string; "epl-pand-eis-primaire-fossiele-energie" : string; "epl-pand-primaire-fossiele-energie-EMG-forfaitair" : string; "epl-pand-aandeel-hernieuwbare-energie" : string; "epl-pand-eis-aandeel-hernieuwbare-energie" : string; "epl-pand-aandeel-hernieuwbare-energie-EMG-forfaitair" : string; "epl-pand-temperatuuroverschrijding" : string; "epl-pand-eis-temperatuuroverschrijding" : string; "epl-pand-warmtebehoefte" : string; "epl-pand-energieindex-met-EMG-forfaitair" : string; "dataset-id" : string; "imported" : Date; };
   "hoofdadres" : { "bag-num-id" : string; "bag-num-volledig" : string; "bag-num-postcode" : string; "bag-num-huisnummer" : number; "bag-num-huisletter" : string; "bag-num-huisnummertoevoeging" : string; "bag-num-huisnummer-letter-aanduiding" : string; "bag-num-status" : string; "bag-num-documentdatum" : Date; "bag-num-documentnummer" : string; "bag-num-voorkomen" : number; "bag-opr-id" : string; "bag-opr-naam" : string; "bag-opr-type" : string; "bag-opr-status" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-opr-voorkomen" : number; "bag-wpl-id" : string; "bag-wpl-naam" : string; "bag-wpl-status" : string; "bag-wpl-documentdatum" : Date; "bag-wpl-documentnummer" : string; "bag-wpl-voorkomen" : number; };
   "monumenten" : { "bag-num-id" : string; "bag-pnd-id" : string; "monumenttype" : string; "monumentnummer" : string; "href-monumentenregister" : string[]; "dataset-id" : string; "imported" : Date; };
   "nevenadres" : { "bag-num-id-neven" : string; "bag-num-volledig-neven" : string; "bag-num-postcode-neven" : string; "bag-num-huisnummer-neven" : number; "bag-num-huisletter-neven" : string; "bag-num-huisnummertoevoeging-neven" : string; "bag-num-huisnummer-letter-aanduiding-neven" : string; "bag-opr-id-neven" : string; "bag-opr-naam-neven" : string; "bag-opr-type-neven" : string; "bag-wpl-id-neven" : string; "bag-wpl-naam-neven" : string; };
   "officiele-bekendmakingen" : { "publicatiedatum" : Date; "wijzigingsdatum" : Date; "identificatie" : string; "titel" : string; "ob-documenttype" : string[]; "ob-onderwerp" : string[]; "url-vindplaats" : string; "dataset-id" : string; "imported" : Date; };
   "zaakgegevens" : { "zk-nummer" : string; "omschrijving" : string; "zk-soort" : string[]; "zk-status" : string[]; "zk-besluit" : string[]; "date" : Date; "besluitdatum" : Date; "zk-startdatum" : Date; "zk-startdatum-gepland" : Date; "zk-einddatum" : Date; "zk-einddatum-gepland" : Date; "dataset-id" : string; "imported" : Date; };
+  "zonnepanelen" : { "zon-zonnepanelen_2022" : string; "zon-zonnepanelen_2021" : string; "zon-zonnepanelen_2020" : string; "zon-zonnepanelen_2019" : string; "zon-zonnepanelen_2018" : string; "zon-zonnepanelen_2017" : string; "zon-gemeentelijk_vastgoed" : string; "zon-plat_dak_oppervlakte" : string; "zon-zonnepaneel_oppervlakte" : string; "dataset-id" : string; "imported" : Date; };
 }

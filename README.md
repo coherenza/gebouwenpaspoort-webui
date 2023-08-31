@@ -20,10 +20,13 @@ pnpm dev
 
 Create a `.env` to set some optional vars, which are important to set in production.
 
-```ini
-VITE_MEILI_API_KEY={key}
-VITE_MEILI_SERVER={url}
+Zet in .env:
 ```
+VITE_MEILI_API_KEY=hebjepasjepoort
+VITE_MEILI_SERVER=https://green.pandata.nl/
+```
+Build met `pnpm build` (en zet je .env terug).
+Zet nu met SFTP de inhoud van de `dist` directory in `/var/www/gbp`.
 
 ## Deploying
 
