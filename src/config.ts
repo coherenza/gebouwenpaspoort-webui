@@ -2,9 +2,9 @@
  * The Vite Meili server is used locally on development machines.
  * The front-end server uses blue or green. This is the place where you must choose which one to use. Or you use the .env file to override.
  */
-export const version = '0.4 (20230720)';
+export const version = '0.5 (20230906)';
 const servers = {blue: "https://blue.pandata.nl", green: "https://green.pandata.nl"};
-export const server = import.meta.env["VITE_MEILI_SERVER"] || servers.blue;
+export const server = import.meta.env["VITE_MEILI_SERVER"] || servers.green;
 /** Name of the Meilisearch Index */
 export const indexName = "gbp";
 /** Meilisearch key that needs to provide permission to query, or import (if you use browser import button) */

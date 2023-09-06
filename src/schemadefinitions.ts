@@ -235,6 +235,12 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-opr-type-neven"
   },
+  "jaar": {
+    "name": "Jaar",
+    "filterType": "range",
+    "type": "string",
+    "id": "jaar"
+  },
   "bwk_subwijknaam": {
     "name": "Subwijk",
     "type": "string",
@@ -659,6 +665,12 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Startdatum",
     "type": "date",
     "id": "zk-startdatum"
+  },
+  "jaar_interval": {
+    "name": "Jaar",
+    "filterType": "intervals",
+    "type": "string",
+    "id": "jaar-interval"
   },
   "bag_num_postcode": {
     "name": "Postcode",
@@ -1259,6 +1271,12 @@ export const displayAttributes: Attribute[] =   [
       type : "date",
     },
       
+    { id : "jaar",
+      name : "Jaar",
+      type : "string",
+      filterType : "range",
+    },
+      
     { id : "identificatie",
       name : "Identificatie",
       type : "string",
@@ -1533,6 +1551,12 @@ export const filterAttributes: Attribute[] =   [
     name : "Officiële Bekendmakingen",
     attributes:    [
       
+    { id : "officiele-bekendmakingen.jaar-interval",
+      name : "Jaar",
+      type : "string",
+      filterType : "intervals",
+    },
+      
     { id : "officiele-bekendmakingen.ob-documenttype",
       name : "Documenttype",
       type : "string",
@@ -1578,6 +1602,7 @@ export const filterAttributes: Attribute[] =   [
 export const searchableAttributes = [
   "naam",
   "id",
+  "jaar",
   "_geo",
   "geo-EPSG28992",
   "bag-aob-id",
@@ -1623,11 +1648,11 @@ export interface GBPObject {
   "bag-pnd" : { "bag-pnd-id" : string; "bag-pnd-oorspronkelijk-bouwjaar" : number; "bag-pnd-oorspronkelijk-bouwjaar-interval" : string; "bag-pnd-status" : string; "bag-pnd-geconstateerd" : string; "bag-pnd-documentdatum" : Date; "bag-pnd-documentnummer" : string; "bag-pnd-geo" : number[]; "bag-pnd-geo-EPSG28992" : number[]; "dataset-id" : string; "imported" : Date; };
   "bouwtechnische-kenmerken" : { "btk-kenmerk-id" : string[]; "btk-inspectiedatum" : Date; "btk-actie-nodig" : string; "dataset-id" : string; "imported" : Date; };
   "bwk" : { "bwk-wijkid" : string; "bwk-wijknaam" : string; "bwk-subwijknaam" : string; "bwk-buurtid" : string; "bwk-buurtnaam" : string; "bwk-subbuurtnaam" : string; "dataset-id" : string; "imported" : Date; };
-  "energielabels" : { "bag-pnd-id" : string; "epl-pand-energieklasse" : string; "epl-pand-opnamedatum" : Date; "epl-pand-opnametype" : string; "epl-pand-status" : string; "epl-pand-berekeningstype" : string; "epl-pand-energieindex" : string; "epl-pand-energielabel-is-prive" : string; "epl-pand-is-op-basis-van-referentie-gebouw" : string; "epl-pand-gebouwklasse" : string; "epl-meting-geldig-tot" : Date; "epl-pand-registratiedatum" : Date; "epl-pand-detailaanduiding" : string; "epl-pand-gebouwtype" : string; "epl-pand-gebouwsubtype" : string; "epl-pand-SBIcode" : string; "epl-pand-gebruiksoppervlakte-thermische-zone" : string; "epl-pand-energiebehoefte" : string; "epl-pand-eis-energiebehoefte" : string; "epl-pand-primaire-fossiele-energie" : string; "epl-pand-eis-primaire-fossiele-energie" : string; "epl-pand-primaire-fossiele-energie-EMG-forfaitair" : string; "epl-pand-aandeel-hernieuwbare-energie" : string; "epl-pand-eis-aandeel-hernieuwbare-energie" : string; "epl-pand-aandeel-hernieuwbare-energie-EMG-forfaitair" : string; "epl-pand-temperatuuroverschrijding" : string; "epl-pand-eis-temperatuuroverschrijding" : string; "epl-pand-warmtebehoefte" : string; "epl-pand-energieindex-met-EMG-forfaitair" : string; "dataset-id" : string; "imported" : Date; };
+  "energielabels" : { "bag-pnd-id" : string; "epl-pand-energieklasse" : string; "epl-pand-opnamedatum" : Date; "epl-pand-opnametype" : string; "epl-pand-status" : string; "epl-pand-berekeningstype" : string; "epl-pand-energieindex" : string; "epl-pand-energielabel-is-prive" : string; "epl-pand-is-op-basis-van-referentie-gebouw" : string; "epl-pand-gebouwklasse" : string; "epl-meting-geldig-tot" : Date; "epl-pand-registratiedatum" : Date; "epl-pand-detailaanduiding" : string; "epl-pand-gebouwtype" : string; "epl-pand-gebouwsubtype" : string; "epl-pand-SBIcode" : string[]; "epl-pand-gebruiksoppervlakte-thermische-zone" : string; "epl-pand-energiebehoefte" : string; "epl-pand-eis-energiebehoefte" : string; "epl-pand-primaire-fossiele-energie" : string; "epl-pand-eis-primaire-fossiele-energie" : string; "epl-pand-primaire-fossiele-energie-EMG-forfaitair" : string; "epl-pand-aandeel-hernieuwbare-energie" : string; "epl-pand-eis-aandeel-hernieuwbare-energie" : string; "epl-pand-aandeel-hernieuwbare-energie-EMG-forfaitair" : string; "epl-pand-temperatuuroverschrijding" : string; "epl-pand-eis-temperatuuroverschrijding" : string; "epl-pand-warmtebehoefte" : string; "epl-pand-energieindex-met-EMG-forfaitair" : string; "dataset-id" : string; "imported" : Date; };
   "hoofdadres" : { "bag-num-id" : string; "bag-num-volledig" : string; "bag-num-postcode" : string; "bag-num-huisnummer" : number; "bag-num-huisletter" : string; "bag-num-huisnummertoevoeging" : string; "bag-num-huisnummer-letter-aanduiding" : string; "bag-num-status" : string; "bag-num-documentdatum" : Date; "bag-num-documentnummer" : string; "bag-num-voorkomen" : number; "bag-opr-id" : string; "bag-opr-naam" : string; "bag-opr-type" : string; "bag-opr-status" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-opr-voorkomen" : number; "bag-wpl-id" : string; "bag-wpl-naam" : string; "bag-wpl-status" : string; "bag-wpl-documentdatum" : Date; "bag-wpl-documentnummer" : string; "bag-wpl-voorkomen" : number; };
   "monumenten" : { "bag-num-id" : string; "bag-pnd-id" : string; "monumenttype" : string; "monumentnummer" : string; "href-monumentenregister" : string[]; "dataset-id" : string; "imported" : Date; };
   "nevenadres" : { "bag-num-id-neven" : string; "bag-num-volledig-neven" : string; "bag-num-postcode-neven" : string; "bag-num-huisnummer-neven" : number; "bag-num-huisletter-neven" : string; "bag-num-huisnummertoevoeging-neven" : string; "bag-num-huisnummer-letter-aanduiding-neven" : string; "bag-opr-id-neven" : string; "bag-opr-naam-neven" : string; "bag-opr-type-neven" : string; "bag-wpl-id-neven" : string; "bag-wpl-naam-neven" : string; };
-  "officiele-bekendmakingen" : { "publicatiedatum" : Date; "wijzigingsdatum" : Date; "identificatie" : string; "titel" : string; "ob-documenttype" : string[]; "ob-onderwerp" : string[]; "url-vindplaats" : string; "dataset-id" : string; "imported" : Date; };
+  "officiele-bekendmakingen" : { "publicatiedatum" : Date; "wijzigingsdatum" : Date; "jaar" : number; "jaar-interval" : string; "identificatie" : string; "titel" : string; "ob-documenttype" : string[]; "ob-onderwerp" : string[]; "url-vindplaats" : string; "dataset-id" : string; "imported" : Date; };
   "zaakgegevens" : { "zk-nummer" : string; "omschrijving" : string; "zk-soort" : string[]; "zk-status" : string[]; "zk-besluit" : string[]; "date" : Date; "besluitdatum" : Date; "zk-startdatum" : Date; "zk-startdatum-gepland" : Date; "zk-einddatum" : Date; "zk-einddatum-gepland" : Date; "dataset-id" : string; "imported" : Date; };
   "zonnepanelen" : { "zon-zonnepanelen_2022" : string; "zon-zonnepanelen_2021" : string; "zon-zonnepanelen_2020" : string; "zon-zonnepanelen_2019" : string; "zon-zonnepanelen_2018" : string; "zon-zonnepanelen_2017" : string; "zon-gemeentelijk_vastgoed" : string; "zon-plat_dak_oppervlakte" : string; "zon-zonnepaneel_oppervlakte" : string; "dataset-id" : string; "imported" : Date; };
 }
