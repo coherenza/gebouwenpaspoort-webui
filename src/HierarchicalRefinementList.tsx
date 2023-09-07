@@ -22,13 +22,13 @@ export function HierarchicalRefinementList({ attribute, sortBy, limit = 1000, vo
 
   return (
     <div className="ais-RefinementList">
-      { displayTermList(vocabulary, items) }
+      { displayTermList(vocabulary, items, false) }
     </div>
   );
 
-  function displayTermList(terms, items) {
+  function displayTermList(terms, items, nested) {
     return (
-      <ul className="ais-RefinementList-list">
+      <ul className={cx('ais-RefinementList-list', nested && 'invisible')}>
         { terms.map(term => {
             if (Array.isArray(term)) {
               return displayTerm(term[0], items, term.slice(1));
@@ -53,7 +53,18 @@ export function HierarchicalRefinementList({ attribute, sortBy, limit = 1000, vo
           isRefined && 'ais-RefinementList-item--selected'
         )}
       >
-        <label className="ais-RefinementList-label">
+        <label className={cx("ais-RefinementList-label", nestedTerms && "closed")}
+            onClick={ (e) => {
+              if (e.target.tagName.toLowerCase() == 'input') {
+              } else {
+                e.preventDefault(); e.stopPropagation();
+                if (nestedTerms) {
+                  e.target.closest('label').classList.toggle('closed');
+                  e.target.closest('label').nextElementSibling.classList.toggle('invisible');
+                }
+              }
+            } }
+        >
           <input
             className="ais-RefinementList-checkbox"
             type="checkbox"
@@ -61,11 +72,12 @@ export function HierarchicalRefinementList({ attribute, sortBy, limit = 1000, vo
             checked={isRefined}
             onChange={() => refine(term.label)}
           />
-          <span className="ais-RefinementList-labelText">{term.label}</span>
+          <span className="ais-RefinementList-labelText"
+          >{term.label}</span>
           <span className="ais-RefinementList-count">{count}</span>
         </label>
         {
-          nestedTerms ? displayTermList(nestedTerms, items) : false
+          nestedTerms ? displayTermList(nestedTerms, items, true) : false
         }
       </li>
     )

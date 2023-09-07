@@ -35,10 +35,11 @@ You may have to change `.env` before building and restore it afterwards.
 
 # Deploying
 
-Deployment now happens automatically, but you could copy the contents of the `dist` directory into `/var/www/gbp`.
+Deployment of the web UI now happens automatically at https://app.netlify.com/.
+Jan has the account on Netlify.
+Netlify watches changes on https://github.com/coherenza/gebouwenpaspoort-webui.
 
-The front-end was hosted on Github pages, on [https://gbp2.pandata.nl].
-A new version is built and deployed upon pushing to master. See the [.github/deploy.yml]
+Alternatively, you could copy the contents of the `dist` directory into `/var/www/gbp`.
 
 ## Blue / Green deployment
 

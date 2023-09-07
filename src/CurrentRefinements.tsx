@@ -13,9 +13,9 @@ export function CurrentRefinements() {
   }
   return (
     <div className="CurrentRefinements">
-      {items.map((item, index) => {
-        return item.refinements.map((refinement) => (
-          <Refinement item={refinement} refine={refine} parent={item} key={`refinement-${item.label} ${index.toString()}`}/>
+      {items.map((item, item_index) => {
+        return item.refinements.map((refinement, refinement_index) => (
+          <Refinement item={refinement} refine={refine} parent={item} key={`refinement-${item.label}-${item_index.toString()}-${refinement_index.toString()}`}/>
         ));
       })}
     </div>

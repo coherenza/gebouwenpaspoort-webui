@@ -15,3 +15,15 @@
 .RefinementList li > input[type=checkbox], .aisRefinementList li > input[type=checkbox] {
   float: left;
 }
+
+.closed::after {
+  content: "...";
+  background-color: var(--g1);
+  border-radius: var(--border-radius);
+  margin-left: 1ex;
+}
+
+.invisible {
+  display: none;
+  height: 1ex;
+}
