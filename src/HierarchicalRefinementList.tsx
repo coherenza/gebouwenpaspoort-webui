@@ -55,12 +55,13 @@ export function HierarchicalRefinementList({ attribute, sortBy, limit = 1000, vo
       >
         <label className={cx("ais-RefinementList-label", nestedTerms && "closed")}
             onClick={ (e) => {
-              if (e.target.tagName.toLowerCase() == 'input') {
+              const target = e.target as HTMLElement;
+              if (target.tagName.toLowerCase() == 'input') {
               } else {
                 e.preventDefault(); e.stopPropagation();
                 if (nestedTerms) {
-                  e.target.closest('label').classList.toggle('closed');
-                  e.target.closest('label').nextElementSibling.classList.toggle('invisible');
+                  target.closest('label').classList.toggle('closed');
+                  target.closest('label').nextElementSibling.classList.toggle('invisible');
                 }
               }
             } }
