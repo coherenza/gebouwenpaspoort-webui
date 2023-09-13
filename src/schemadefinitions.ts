@@ -835,6 +835,11 @@ export const displayAttributes: Attribute[] =   [
       type : "string",
     },
       
+    { id : "bag-num-id",
+      name : "Identificatie nummeraanduiding",
+      type : "string",
+    },
+      
     { id : "bag-object-type",
       name : "Object type",
       type : "string",
@@ -1147,6 +1152,11 @@ export const displayAttributes: Attribute[] =   [
     name : "Adres",
     attributes:    [
       
+    { id : "bag-num-id",
+      name : "Identificatie nummeraanduiding",
+      type : "string",
+    },
+      
     { id : "bag-num-volledig",
       name : "Hoofdadres",
       type : "string",
@@ -1198,6 +1208,11 @@ export const displayAttributes: Attribute[] =   [
     name : "Monumenten",
     attributes:    [
       
+    { id : "bag-num-id",
+      name : "Identificatie nummeraanduiding",
+      type : "string",
+    },
+      
     { id : "monumenttype",
       name : "Monumenttype",
       type : "string",
@@ -1229,6 +1244,11 @@ export const displayAttributes: Attribute[] =   [
   { id : "nevenadres",
     name : "Nevenadres",
     attributes:    [
+      
+    { id : "bag-num-id-neven",
+      name : "Identificatie nummeraanduiding",
+      type : "string",
+    },
       
     { id : "bag-num-volledig-neven",
       name : "Nevenadres",
