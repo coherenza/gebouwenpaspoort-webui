@@ -75,7 +75,9 @@ export function HierarchicalRefinementList({ attribute, sortBy, limit = 1000, vo
           />
           <span className="ais-RefinementList-labelText"
           >{term.label}</span>
-          <span className="ais-RefinementList-count">{count}</span>
+          { count ? // Count is zero when the facet limit of 100 is surpassed.
+            <span className="ais-RefinementList-count">{count}</span>
+          : false }
         </label>
         {
           nestedTerms ? displayTermList(nestedTerms, items, true) : false
