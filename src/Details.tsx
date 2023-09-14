@@ -38,6 +38,8 @@ export function Details() {
     );
   }
 
+  const detailsPropertyIds = displayAttributes.map(at => at.id);
+
   return (
     <div className="Sidebar details-panel">
       {current ? (
@@ -54,6 +56,15 @@ export function Details() {
             <button title="Sluit details" onClick={() => setShowDetails(false)}>
               <Cross1Icon />
             </button>
+          </div>
+          <div className="details-info">
+            <span>
+            { Object.entries(current).
+                map(([key, value]) => (detailsPropertyIds.includes(key) && Array.isArray(value)) ? value.length : 0).
+                reduce((a, b) => a + b, 0)
+            }
+            </span>
+            <span> details</span>
           </div>
           <div className="Sidebar__scroller">
             {displayAttributes.map((attribute, i) => {

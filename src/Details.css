@@ -10,3 +10,8 @@
 .ais-Pagination {
   margin-bottom: 1rem;
 }
+
+.details-info {
+  margin-left: 1ex;
+  color: var(--primary-color);
+}

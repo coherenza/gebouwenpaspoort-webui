@@ -123,8 +123,7 @@ async function getDescription(layer: LayerI): Promise<string> {
 
 /** Fetches description from PDOK XML metadata */
 export function LayerSelector() {
-  const { showLayerSelector, setShowLayerSelector, layers } =
-    useContext(AppContext);
+  const { showLayerSelector, setShowLayerSelector, layers } = useContext(AppContext);
 
   return (
     <div

@@ -95,16 +95,13 @@ const AppProvider = () => {
 
 const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   const [current, setCurrent] = React.useState(undefined);
-  const [lastInteractionOrigin, setLastInteractionOrigin] =
-    React.useState(undefined);
+  const [lastInteractionOrigin, setLastInteractionOrigin] = React.useState(undefined);
   const [showFilter, setShowFilter] = useLocalStorage("showFilter", true);
   const [showResults, setShowResults] = useLocalStorage("showResults", true);
   const [showLayers, setShowLayers] = useLocalStorage("showLayers", false);
-  const [showDetails, setShowDetails] = useLocalStorage("showLayers", true);
+  const [showDetails, setShowDetails] = useLocalStorage("showDetails", true);
   const [layers, setLayers] = React.useState<LayerI[]>(layersDefault);
-  const [locationFilter, setLocationFilterInternal] = React.useState<
-    LocationFilter | undefined
-  >(undefined);
+  const [locationFilter, setLocationFilterInternal] = React.useState<LocationFilter | undefined>(undefined);
   const [apiKeyTemp, setApiKeyTemp] = React.useState("");
   const [validApiKey, setValidApiKey] = React.useState(false);
   const { setIsOpen } = useTour();
