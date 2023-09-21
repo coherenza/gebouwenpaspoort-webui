@@ -2,6 +2,7 @@ import { RefinementListItem } from "instantsearch.js/es/connectors/refinement-li
 import { useEffect, useState } from "react";
 import { useRefinementList } from "react-instantsearch-hooks-web";
 import { filterAttributes } from "./schema";
+import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 
 interface HierarchicalRefinementListProps {
   attribute: string;
@@ -73,11 +74,16 @@ export function HierarchicalRefinementList({ attribute, sortBy, limit = 1000, vo
             checked={isRefined}
             onChange={() => refine(term.label)}
           />
+          { nestedTerms
+          ? <><span className="icon open"><ChevronDownIcon /></span><span className="icon closed"><ChevronUpIcon /></span></>
+          : false
+          }
           <span className="ais-RefinementList-labelText"
           >{term.label}</span>
-          { count ? // Count is zero when the facet limit of 100 is surpassed.
-            <span className="ais-RefinementList-count">{count}</span>
-          : false }
+          { count // Count is zero when the facet limit of 100 is surpassed.
+          ? <span className="ais-RefinementList-count">{count}</span>
+          : false
+          }
         </label>
         {
           nestedTerms ? displayTermList(nestedTerms, items, true) : false

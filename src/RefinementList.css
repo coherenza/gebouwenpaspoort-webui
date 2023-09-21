@@ -16,11 +16,12 @@
   float: left;
 }
 
-.closed::after {
-  content: "...";
-  background-color: var(--g1);
-  border-radius: var(--border-radius);
-  margin-left: 1ex;
+.ais-RefinementList-label .icon.open , .ais-RefinementList-label.closed .icon.closed {
+  float: right;
+  display: block;
+}
+.ais-RefinementList-label .icon.closed , .ais-RefinementList-label.closed .icon.open {
+  display: none;
 }
 
 .invisible {
