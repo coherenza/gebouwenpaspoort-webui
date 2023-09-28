@@ -286,6 +286,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "epl-pand-gebruiksoppervlakte-thermische-zone"
   },
+  "arch_item_code_file": {
+    "name": "Archiefbestandcode",
+    "type": "string",
+    "id": "arch-item-code-file"
+  },
   "bag_pnd_id": {
     "name": "Identificatie pand",
     "type": "string",
@@ -483,6 +488,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "type": "string",
     "id": "bag-aob-status"
   },
+  "arch_reference_1": {
+    "name": "Archiefbeschrijving 1",
+    "type": "string",
+    "id": "arch-reference-1"
+  },
   "bag_num_id_neven": {
     "name": "Identificatie nummeraanduiding",
     "type": "string",
@@ -502,6 +512,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Huisletter",
     "type": "string",
     "id": "bag-num-huisletter-neven"
+  },
+  "arch_reference_3": {
+    "name": "Archiefbeschrijving 3",
+    "type": "string",
+    "id": "arch-reference-3"
   },
   "zk_besluit": {
     "name": "Besluit",
@@ -527,6 +542,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Wijk identificatie",
     "type": "string",
     "id": "bwk-wijkid"
+  },
+  "arch_reference_4": {
+    "name": "Archiefbeschrijving 4",
+    "type": "string",
+    "id": "arch-reference-4"
   },
   "bag_opr_status": {
     "name": "BAG status",
@@ -680,6 +700,11 @@ export const Attributes : {[index: string]: Attribute} = {
     "name": "Startdatum",
     "type": "date",
     "id": "zk-startdatum"
+  },
+  "arch_reference_10": {
+    "name": "Archiefbeschrijving 10",
+    "type": "string",
+    "id": "arch-reference-10"
   },
   "jaar_interval": {
     "name": "Jaar",
@@ -1204,6 +1229,47 @@ export const displayAttributes: Attribute[] =   [
     ]
   },
     
+  { id : "limburgs-archief",
+    name : "Limburgs Archief",
+    attributes:    [
+      
+    { id : "arch-item-code-file",
+      name : "Archiefbestandcode",
+      type : "string",
+    },
+      
+    { id : "arch-reference-1",
+      name : "Archiefbeschrijving 1",
+      type : "string",
+    },
+      
+    { id : "arch-reference-3",
+      name : "Archiefbeschrijving 3",
+      type : "string",
+    },
+      
+    { id : "arch-reference-4",
+      name : "Archiefbeschrijving 4",
+      type : "string",
+    },
+      
+    { id : "arch-reference-10",
+      name : "Archiefbeschrijving 10",
+      type : "string",
+    },
+      
+    { id : "dataset-label",
+      name : "Herkomst",
+      type : "string",
+    },
+      
+    { id : "imported",
+      name : "Geimporteerd op",
+      type : "dateTime",
+    }
+    ]
+  },
+    
   { id : "monumenten",
     name : "Monumenten",
     attributes:    [
@@ -1706,6 +1772,7 @@ export interface GBPObject {
   "bwk" : { "bwk-wijkid" : string; "bwk-wijknaam" : string; "bwk-subwijknaam" : string; "bwk-buurtid" : string; "bwk-buurtnaam" : string; "bwk-subbuurtnaam" : string; "dataset-label" : string; "imported" : Date; };
   "energielabels" : { "bag-pnd-id" : string; "epl-pand-energieklasse" : string; "epl-pand-opnamedatum" : Date; "epl-pand-opnametype" : string; "epl-pand-status" : string; "epl-pand-berekeningstype" : string; "epl-pand-energieindex" : string; "epl-pand-energielabel-is-prive" : string; "epl-pand-is-op-basis-van-referentie-gebouw" : string; "epl-pand-gebouwklasse" : string; "epl-meting-geldig-tot" : Date; "epl-pand-registratiedatum" : Date; "epl-pand-detailaanduiding" : string; "epl-pand-gebouwtype" : string; "epl-pand-gebouwsubtype" : string; "epl-pand-SBIcode" : string[]; "epl-pand-gebruiksoppervlakte-thermische-zone" : string; "epl-pand-energiebehoefte" : string; "epl-pand-eis-energiebehoefte" : string; "epl-pand-primaire-fossiele-energie" : string; "epl-pand-eis-primaire-fossiele-energie" : string; "epl-pand-primaire-fossiele-energie-EMG-forfaitair" : string; "epl-pand-aandeel-hernieuwbare-energie" : string; "epl-pand-eis-aandeel-hernieuwbare-energie" : string; "epl-pand-aandeel-hernieuwbare-energie-EMG-forfaitair" : string; "epl-pand-temperatuuroverschrijding" : string; "epl-pand-eis-temperatuuroverschrijding" : string; "epl-pand-warmtebehoefte" : string; "epl-pand-energieindex-met-EMG-forfaitair" : string; "dataset-label" : string; "imported" : Date; };
   "hoofdadres" : { "bag-num-id" : string; "bag-num-volledig" : string; "bag-num-postcode" : string; "bag-num-huisnummer" : number; "bag-num-huisletter" : string; "bag-num-huisnummertoevoeging" : string; "bag-num-huisnummer-letter-aanduiding" : string; "bag-num-status" : string; "bag-num-documentdatum" : Date; "bag-num-documentnummer" : string; "bag-num-voorkomen" : number; "bag-opr-id" : string; "bag-opr-naam" : string; "bag-opr-type" : string; "bag-opr-status" : string; "bag-opr-documentdatum" : Date; "bag-opr-documentnummer" : string; "bag-opr-voorkomen" : number; "bag-wpl-id" : string; "bag-wpl-naam" : string; "bag-wpl-status" : string; "bag-wpl-documentdatum" : Date; "bag-wpl-documentnummer" : string; "bag-wpl-voorkomen" : number; };
+  "limburgs-archief" : { "arch-item-code-file" : string; "arch-reference-1" : string; "arch-reference-3" : string; "arch-reference-4" : string; "arch-reference-10" : string; "dataset-label" : string; "imported" : Date; };
   "monumenten" : { "bag-num-id" : string; "bag-pnd-id" : string; "monumenttype" : string; "monumentnummer" : string; "href-monumentenregister" : string[]; "dataset-label" : string; "imported" : Date; };
   "nevenadres" : { "bag-num-id-neven" : string; "bag-num-volledig-neven" : string; "bag-num-postcode-neven" : string; "bag-num-huisnummer-neven" : number; "bag-num-huisletter-neven" : string; "bag-num-huisnummertoevoeging-neven" : string; "bag-num-huisnummer-letter-aanduiding-neven" : string; "bag-opr-id-neven" : string; "bag-opr-naam-neven" : string; "bag-opr-type-neven" : string; "bag-wpl-id-neven" : string; "bag-wpl-naam-neven" : string; };
   "officiele-bekendmakingen" : { "publicatiedatum" : Date; "wijzigingsdatum" : Date; "jaar" : number; "jaar-interval" : string; "identificatie" : string; "titel" : string; "ob-documenttype" : string[]; "ob-onderwerp" : string[]; "url-vindplaats" : string; "dataset-label" : string; "imported" : Date; };
