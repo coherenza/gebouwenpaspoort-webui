@@ -1,4 +1,4 @@
-import { useCurrentRefinements } from "react-instantsearch-hooks-web";
+import { useCurrentRefinements } from "react-instantsearch";
 import "./CurrentRefinements.css";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { useContext } from "react";
@@ -15,7 +15,14 @@ export function CurrentRefinements() {
     <div className="CurrentRefinements">
       {items.map((item, item_index) => {
         return item.refinements.map((refinement, refinement_index) => (
-          <Refinement item={refinement} refine={refine} parent={item} key={`refinement-${item.label}-${item_index.toString()}-${refinement_index.toString()}`}/>
+          <Refinement
+            item={refinement}
+            refine={refine}
+            parent={item}
+            key={`refinement-${
+              item.label
+            }-${item_index.toString()}-${refinement_index.toString()}`}
+          />
         ));
       })}
     </div>
@@ -25,11 +32,13 @@ export function CurrentRefinements() {
 function Refinement({ item, refine, parent }) {
   const { locationFilter } = useContext(AppContext);
 
-  let attribute = Object.values(Attributes).find(a => a.id == item.attribute.replace(/.*\./, ''));
-  let label = (attribute ? attribute.name + ': ' : '') + item.label;
+  let attribute = Object.values(Attributes).find(
+    (a) => a.id == item.attribute.replace(/.*\./, "")
+  );
+  let label = (attribute ? attribute.name + ": " : "") + item.label;
 
   if (parent.label == "pdok-locatie-id") {
-    label = locationFilter?.name || 'locatie filter';
+    label = locationFilter?.name || "locatie filter";
   }
 
   return (

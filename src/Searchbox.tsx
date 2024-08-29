@@ -3,7 +3,8 @@ import {
   useClearRefinements,
   useSearchBox,
   useSortBy,
-} from "react-instantsearch-hooks-web";
+  useGeoSearch,
+} from "react-instantsearch";
 import { useMap } from "react-map-gl";
 import { AppContext } from "./App";
 import { indexName } from "./config";
@@ -11,7 +12,6 @@ import { mapStartState, startBounds, startBoundsInstant } from "./Map";
 import { sortProps } from "./schema";
 import "./Searchbox.css";
 import useDebounce from "./useDebounce";
-import { useGeoSearch } from "./useGeoSearch";
 
 const defaultSort = sortProps[0].sortBy;
 const sortOptions = {

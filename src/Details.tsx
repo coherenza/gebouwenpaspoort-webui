@@ -6,7 +6,7 @@ import {
   getObjectType,
 } from "./schema";
 import { AttributeView } from "./Attributes";
-import { useCurrentRefinements } from "react-instantsearch-hooks-web";
+import { useCurrentRefinements } from "react-instantsearch";
 import { Cross1Icon } from "@radix-ui/react-icons";
 
 export function Details() {
@@ -38,7 +38,7 @@ export function Details() {
     );
   }
 
-  const detailsPropertyIds = displayAttributes.map(at => at.id);
+  const detailsPropertyIds = displayAttributes.map((at) => at.id);
 
   return (
     <div className="Sidebar details-panel">
@@ -59,10 +59,13 @@ export function Details() {
           </div>
           <div className="details-info">
             <span>
-            { Object.entries(current).
-                map(([key, value]) => (detailsPropertyIds.includes(key) && Array.isArray(value)) ? value.length : 0).
-                reduce((a, b) => a + b, 0)
-            }
+              {Object.entries(current)
+                .map(([key, value]) =>
+                  detailsPropertyIds.includes(key) && Array.isArray(value)
+                    ? value.length
+                    : 0
+                )
+                .reduce((a, b) => a + b, 0)}
             </span>
             <span> details</span>
           </div>

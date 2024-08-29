@@ -1,8 +1,4 @@
-import {
-  InfiniteHits,
-  useHits,
-  HitsPerPage,
-} from "react-instantsearch-hooks-web";
+import { InfiniteHits, useHits, HitsPerPage } from "react-instantsearch";
 import { HitLine } from "./HitLine";
 import "./Results.css";
 import {

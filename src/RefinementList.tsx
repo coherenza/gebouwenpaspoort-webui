@@ -1,6 +1,6 @@
 import { RefinementListItem } from "instantsearch.js/es/connectors/refinement-list/connectRefinementList";
 import { useEffect, useState } from "react";
-import { useRefinementList } from "react-instantsearch-hooks-web";
+import { useRefinementList } from "react-instantsearch";
 
 interface RefinementListProps {
   attribute: string;
@@ -8,14 +8,17 @@ interface RefinementListProps {
   limit?: number;
 }
 
-export function RefinementList({ attribute, sortBy, limit = 10 }: RefinementListProps) {
-  const { items, refine } =
-    useRefinementList({
-      attribute,
-      operator: "or",
-      sortBy,
-      // We use a large limit, because we do our own 'show more' button.
-      limit: 1000,
+export function RefinementList({
+  attribute,
+  sortBy,
+  limit = 10,
+}: RefinementListProps) {
+  const { items, refine } = useRefinementList({
+    attribute,
+    operator: "or",
+    sortBy,
+    // We use a large limit, because we do our own 'show more' button.
+    limit: 1000,
   });
 
   const [savedItems, setSavedItems] = useState<RefinementListItem[]>([]);
@@ -62,9 +65,11 @@ export function RefinementList({ attribute, sortBy, limit = 10 }: RefinementList
           </li>
         ))}
       </ul>
-      {savedItems.length > limit && <button onClick={() => setShowMore(!showMore)}>
-        {showMore ? "minder" : "meer"}
-      </button>}
+      {savedItems.length > limit && (
+        <button onClick={() => setShowMore(!showMore)}>
+          {showMore ? "minder" : "meer"}
+        </button>
+      )}
     </div>
   );
 }

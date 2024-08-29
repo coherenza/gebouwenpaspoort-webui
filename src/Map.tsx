@@ -7,7 +7,6 @@ import React, {
   useState,
 } from "react";
 import "./Map.css";
-import { useGeoSearch } from "./useGeoSearch";
 import MapGL, {
   GeolocateControl,
   Layer,
@@ -20,7 +19,11 @@ import { LngLatBounds } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { AppContext } from "./App";
 import { GBPObject, getObjectType } from "./schema";
-import { useInfiniteHits, useSearchBox } from "react-instantsearch-hooks-web";
+import {
+  useInfiniteHits,
+  useSearchBox,
+  useGeoSearch,
+} from "react-instantsearch";
 import { Header } from "./Header";
 import { LayerSource, bagLayerId, bagLayer } from "./Layers";
 import useDebounce from "./useDebounce";

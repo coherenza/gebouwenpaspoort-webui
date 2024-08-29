@@ -1,10 +1,7 @@
 import "./Attributes.css";
 import { useState } from "react";
 import { Attribute, GBPObject } from "./schema";
-import {
-  Highlight,
-  useCurrentRefinements,
-} from "react-instantsearch-hooks-web";
+import { Highlight, useCurrentRefinements } from "react-instantsearch";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -136,11 +133,12 @@ function AttributeCollection({ hit, collection }) {
   // attribute = {"name":"Zaaksoort","type":"string","id":"zk-soort"}
   // refinement = {"attribute":"zaakgegevens.zk-soort","type":"disjunctive","value":"Projectcontrole BAR","label":"Projectcontrole BAR","count":310}
   // [[attribute, [refinement...]]...]
-  const refinedAttributeValues =
-    items.map((item) => {
-      let attribute = Object.values(Attributes).find(a => a.id == item.attribute.replace(/.*\./, ''));
-      return { 'attribute': attribute, 'refinements': item.refinements }
-    });
+  const refinedAttributeValues = items.map((item) => {
+    let attribute = Object.values(Attributes).find(
+      (a) => a.id == item.attribute.replace(/.*\./, "")
+    );
+    return { attribute: attribute, refinements: item.refinements };
+  });
 
   const hitItems = hit[collection.id];
   if (!hitItems) return null;
@@ -155,10 +153,12 @@ function AttributeCollection({ hit, collection }) {
   );
   return (
     <div className="Attribute__list">
-      { hitItems.map((item, i) => {
+      {hitItems.map((item, i) => {
         const filterMatch = refinedAttributeValues.some((attrRefs) => {
           const itemAttrValues = item[attrRefs.attribute.id] || [];
-          const match = attrRefs.refinements.map(ref => ref.value).some((value) => itemAttrValues.includes(value));
+          const match = attrRefs.refinements
+            .map((ref) => ref.value)
+            .some((value) => itemAttrValues.includes(value));
           return match;
         });
         return (
@@ -195,7 +195,7 @@ function AttributeItem({
   if (collection.attributes[0].type == "date")
     title = new Date(title).toLocaleDateString();
   if (collection.attributes[0].type == "dateTime")
-    title = new Date(title).toLocaleString('nl-NL');
+    title = new Date(title).toLocaleString("nl-NL");
   return (
     <div className="Attribute__item" key={`ai_${item.id}${i}`}>
       <h4
@@ -283,8 +283,10 @@ function PropValHighlights({
                 ?.toString()
                 .split("\n")
                 .map((hv, index) => {
-                  if (attribute.type == "date") hv = new Date(hv).toLocaleDateString();
-                  if (attribute.type == "dateTime") hv = new Date(hv).toLocaleString('nl-NL');
+                  if (attribute.type == "date")
+                    hv = new Date(hv).toLocaleDateString();
+                  if (attribute.type == "dateTime")
+                    hv = new Date(hv).toLocaleString("nl-NL");
                   return <div key={`hv_${attribute.id}_${index}`}>{hv}</div>;
                 })
             )}

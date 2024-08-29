@@ -1,4 +1,4 @@
-import { SortBy } from "react-instantsearch-hooks-web";
+import { SortBy } from "react-instantsearch";
 import { setIndexes } from "./import";
 import { Filter } from "./Filter";
 import "./Filters.css";
@@ -9,8 +9,7 @@ import { filterAttributes, sortProps } from "./schema";
 import { Cross1Icon } from "@radix-ui/react-icons";
 
 export function Filters({}) {
-  const { showFilter, setShowFilter } =
-    useContext(AppContext);
+  const { showFilter, setShowFilter } = useContext(AppContext);
   return (
     <div
       className={`Sidebar filter-panel ${
@@ -19,10 +18,11 @@ export function Filters({}) {
     >
       <div className="Titlebar">
         <h3>Filters</h3>
-        <button title="Filters sluiten" onClick={() => setShowFilter(false)}><Cross1Icon /></button>
+        <button title="Filters sluiten" onClick={() => setShowFilter(false)}>
+          <Cross1Icon />
+        </button>
       </div>
       <div className="filters Sidebar__scroller">
-
         {/* Zonder SortBy widget vindt er geen sortering plaats. */}
         <SortBy
           style={{ display: "none" }}
@@ -36,7 +36,10 @@ export function Filters({}) {
 
         {filterAttributes.map((attribute) => {
           return (
-            <AttributeCollapsible attribute={attribute} key={'ac_'+attribute.id}>
+            <AttributeCollapsible
+              attribute={attribute}
+              key={"ac_" + attribute.id}
+            >
               {attribute.attributes?.map((att) => {
                 return <Filter key={att?.name} {...att} />;
               })}
@@ -50,7 +53,6 @@ export function Filters({}) {
             <div id="set-indexes-progress"></div>
           </div>
       */}
-
       </div>
     </div>
   );

@@ -1,10 +1,14 @@
 import { Attribute } from "./schema";
 import { useState } from "react";
-import { RangeInput, RefinementListProps, RefinementList } from "react-instantsearch-hooks-web";
+import {
+  RangeInput,
+  RefinementListProps,
+  RefinementList,
+} from "react-instantsearch";
 import "./Filter.css";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { HierarchicalRefinementList } from "./HierarchicalRefinementList";
-import "./RefinementList.css"
+import "./RefinementList.css";
 
 // Sort strings that we use to indicate numeric intervals.
 const intervalSortValue = function (x: string) {
@@ -28,18 +32,27 @@ export const Filter = (filter: Attribute) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="Filter">
-      <h4 onClick={() => setOpen(!open)}>{open ? <ChevronDownIcon /> : <ChevronRightIcon />}{filter.name}</h4>
-      <div className={"Attribute__content__"+(open ? "open" : "closed")}>
-        {filterType === "select" && (
-          !!filter.vocabulary ? (
-            <HierarchicalRefinementList attribute={filter.id} limit={1000} sortBy={sortLabels} vocabulary={filter.vocabulary} />
+      <h4 onClick={() => setOpen(!open)}>
+        {open ? <ChevronDownIcon /> : <ChevronRightIcon />}
+        {filter.name}
+      </h4>
+      <div className={"Attribute__content__" + (open ? "open" : "closed")}>
+        {filterType === "select" &&
+          (!!filter.vocabulary ? (
+            <HierarchicalRefinementList
+              attribute={filter.id}
+              limit={1000}
+              sortBy={sortLabels}
+              vocabulary={filter.vocabulary}
+            />
           ) : (
-            <RefinementList attribute={filter.id} limit={1000} sortBy={sortLabels} />
-          )
-        )}
-        {filterType === "range" && (
-          <RangeInput attribute={filter.id} />
-        )}
+            <RefinementList
+              attribute={filter.id}
+              limit={1000}
+              sortBy={sortLabels}
+            />
+          ))}
+        {filterType === "range" && <RangeInput attribute={filter.id} />}
         {filterType === "intervals" && (
           <RefinementList
             attribute={filter.id}

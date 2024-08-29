@@ -1,4 +1,4 @@
-import { useConnector } from "react-instantsearch-hooks-web";
+import { useConnector } from "react-instantsearch";
 import connectRange from "instantsearch.js/es/connectors/range/connectRange";
 
 import type {
