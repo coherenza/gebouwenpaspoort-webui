@@ -4,8 +4,8 @@ import { Attribute, GBPObject } from "./schema";
 import { Highlight, useCurrentRefinements } from "react-instantsearch";
 import {
   ChevronDownIcon,
-  ChevronUpIcon,
   ChevronRightIcon,
+  ChevronUpIcon,
   ExternalLinkIcon,
 } from "@radix-ui/react-icons";
 import { Attributes } from "./schema";
@@ -16,8 +16,7 @@ interface DetailSectionProps {
 }
 
 function nothingToSee(value) {
-  const nTS =
-    value == undefined ||
+  const nTS = value == undefined ||
     value == null ||
     value == "" ||
     typeof value == "symbol" ||
@@ -32,8 +31,8 @@ function nothingToSee(value) {
  * Renders a single section in the Details view, for one attribute.
  */
 export function AttributeView({ attribute, hit, selectedAttributes }) {
-  const isCollection =
-    Array.isArray(hit[attribute.id]) && !!attribute.attributes;
+  const isCollection = Array.isArray(hit[attribute.id]) &&
+    !!attribute.attributes;
   const count = (isCollection && hit[attribute?.id]?.length) || 0;
 
   if (!attribute.attributes) {
@@ -53,7 +52,7 @@ export function AttributeView({ attribute, hit, selectedAttributes }) {
   } else if (
     !isCollection &&
     attribute.attributes.every(
-      (a) => !!hit[attribute.id] && nothingToSee(hit[attribute.id][a.id])
+      (a) => !!hit[attribute.id] && nothingToSee(hit[attribute.id][a.id]),
     )
   ) {
     // Do not show attribute sets when all attributes are empty.
@@ -67,27 +66,27 @@ export function AttributeView({ attribute, hit, selectedAttributes }) {
         showCount={isCollection}
         count={count}
       >
-        {isCollection ? (
-          <AttributeCollection collection={attribute} hit={hit} />
-        ) : (
-          // The attribute represents an unidentified list of property-value combinations.
-          <div className="Attribute__item" key={`ai_${attribute.id}`}>
-            {attribute.attributes.map(
-              (att, index) =>
-                att &&
-                att.name &&
-                att.id && (
-                  <PropValHighlights
-                    selectedAttributes={selectedAttributes}
-                    key={`pvha_${att.id}`}
-                    hit={hit[attribute.id]}
-                    attribute={att}
-                    useHighlight={true}
-                  />
-                )
-            )}
-          </div>
-        )}
+        {isCollection
+          ? <AttributeCollection collection={attribute} hit={hit} />
+          : (
+            // The attribute represents an unidentified list of property-value combinations.
+            <div className="Attribute__item" key={`ai_${attribute.id}`}>
+              {attribute.attributes.map(
+                (att, index) =>
+                  att &&
+                  att.name &&
+                  att.id && (
+                    <PropValHighlights
+                      selectedAttributes={selectedAttributes}
+                      key={`pvha_${att.id}`}
+                      hit={hit[attribute.id]}
+                      attribute={att}
+                      useHighlight={true}
+                    />
+                  ),
+              )}
+            </div>
+          )}
       </AttributeCollapsible>
     );
   }
@@ -135,7 +134,7 @@ function AttributeCollection({ hit, collection }) {
   // [[attribute, [refinement...]]...]
   const refinedAttributeValues = items.map((item) => {
     let attribute = Object.values(Attributes).find(
-      (a) => a.id == item.attribute.replace(/.*\./, "")
+      (a) => a.id == item.attribute.replace(/.*\./, ""),
     );
     return { attribute: attribute, refinements: item.refinements };
   });
@@ -144,9 +143,7 @@ function AttributeCollection({ hit, collection }) {
   if (!hitItems) return null;
   hitItems.sort((a, b) =>
     collection.attributes[0].type == "date"
-      ? a[collection.attributes[0].id] < b[collection.attributes[0].id]
-        ? 1
-        : -1
+      ? a[collection.attributes[0].id] < b[collection.attributes[0].id] ? 1 : -1
       : a[collection.attributes[0].id] > b[collection.attributes[0].id]
       ? 1
       : -1
@@ -192,18 +189,18 @@ function AttributeItem({
   let title = Array.isArray(item[collection.attributes[0].id])
     ? item[collection.attributes[0].id][0]
     : item[collection.attributes[0].id];
-  if (collection.attributes[0].type == "date")
+  if (collection.attributes[0].type == "date") {
     title = new Date(title).toLocaleDateString();
-  if (collection.attributes[0].type == "dateTime")
+  }
+  if (collection.attributes[0].type == "dateTime") {
     title = new Date(title).toLocaleString("nl-NL");
+  }
   return (
     <div className="Attribute__item" key={`ai_${item.id}${i}`}>
       <h4
-        className={
-          filterMatch
-            ? "Attribute__item__title Attribute__Refined"
-            : "Attribute__item__title"
-        }
+        className={filterMatch
+          ? "Attribute__item__title Attribute__Refined"
+          : "Attribute__item__title"}
         onClick={() => setOpen(!open)}
       >
         <span className="icon">
@@ -258,41 +255,49 @@ function PropValHighlights({
       }`}
     >
       {" "}
-      {isLink ? (
-        <a className="Attribute__link" href={hitValue} target="_blank">
-          <div className="Attribute__propval__key">{attribute.name}</div>
-          <span className="icon">
-            <ExternalLinkIcon />
-          </span>
-        </a>
-      ) : (
-        <>
-          <div className="Attribute__propval__key">{attribute.name}</div>
-          <div className="Attribute__propval__value">
-            {useHighlight && false ? (
-              <Highlight
-                key={`val_${attribute.id}`}
-                attribute={attribute.id}
-                // @ts-ignore
-                hit={hitValue}
-                // @ts-ignore
-                tagname="mark"
-              />
-            ) : (
-              hitValue
-                ?.toString()
-                .split("\n")
-                .map((hv, index) => {
-                  if (attribute.type == "date")
-                    hv = new Date(hv).toLocaleDateString();
-                  if (attribute.type == "dateTime")
-                    hv = new Date(hv).toLocaleString("nl-NL");
-                  return <div key={`hv_${attribute.id}_${index}`}>{hv}</div>;
-                })
-            )}
-          </div>
-        </>
-      )}
+      {isLink
+        ? (
+          <a className="Attribute__link" href={hitValue} target="_blank">
+            <div className="Attribute__propval__key">{attribute.name}</div>
+            <span className="icon">
+              <ExternalLinkIcon />
+            </span>
+          </a>
+        )
+        : (
+          <>
+            <div className="Attribute__propval__key">{attribute.name}</div>
+            <div className="Attribute__propval__value">
+              {useHighlight && false
+                ? (
+                  <Highlight
+                    key={`val_${attribute.id}`}
+                    attribute={attribute.id}
+                    // @ts-ignore
+                    hit={hitValue}
+                    // @ts-ignore
+                    tagname="mark"
+                  />
+                )
+                : (
+                  hitValue
+                    ?.toString()
+                    .split("\n")
+                    .map((hv, index) => {
+                      if (attribute.type == "date") {
+                        hv = new Date(hv).toLocaleDateString();
+                      }
+                      if (attribute.type == "dateTime") {
+                        hv = new Date(hv).toLocaleString("nl-NL");
+                      }
+                      return (
+                        <div key={`hv_${attribute.id}_${index}`}>{hv}</div>
+                      );
+                    })
+                )}
+            </div>
+          </>
+        )}
     </div>
   );
 }

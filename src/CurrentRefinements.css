@@ -1,5 +1,5 @@
 .CurrentRefinements {
-  gap: .5rem;
+  gap: 0.5rem;
   display: flex;
   margin: 1rem;
   flex-wrap: wrap;
@@ -7,7 +7,7 @@
 
 .CurrentRefinements__button {
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .CurrentRefinements__button .label {

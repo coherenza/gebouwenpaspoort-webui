@@ -13,7 +13,8 @@
   margin-left: 1.5em;
 }
 
-.RefinementList li > input[type=checkbox], label.ais-RefinementList-label > input[type=checkbox] {
+.RefinementList li > input[type="checkbox"],
+label.ais-RefinementList-label > input[type="checkbox"] {
   margin-left: -1.5em;
 }
 
@@ -21,6 +22,6 @@
   margin-left: 0.3em;
 }
 
-li.ais-RefinementList-item> ul.ais-RefinementList-list {
+li.ais-RefinementList-item > ul.ais-RefinementList-list {
   margin-left: 1.3em;
 }

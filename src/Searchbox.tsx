@@ -1,9 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import {
   useClearRefinements,
+  useGeoSearch,
   useSearchBox,
   useSortBy,
-  useGeoSearch,
 } from "react-instantsearch";
 import { useMap } from "react-map-gl";
 import { AppContext } from "./App";
@@ -25,12 +25,14 @@ export const SearchBox = () => {
   const { refine, clear } = useSearchBox();
   let { refine: clearGeo } = useGeoSearch();
   let { mainMap: map } = useMap();
-  let { refine: setSortBySlow, currentRefinement: sortBySlow } =
-    useSortBy(sortOptions);
+  let { refine: setSortBySlow, currentRefinement: sortBySlow } = useSortBy(
+    sortOptions,
+  );
   let [sortByQuick, setSortByQuick] = useState(defaultSort);
   let [exact, setExact] = useState(false);
-  let { setLastInteractionOrigin, setLocationFilter, setCurrent } =
-    useContext(AppContext);
+  let { setLastInteractionOrigin, setLocationFilter, setCurrent } = useContext(
+    AppContext,
+  );
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 200);
   const { refine: clearRefinements } = useClearRefinements();
@@ -56,7 +58,7 @@ export const SearchBox = () => {
       setLocationFilter(undefined);
       window.location.href = "/";
     },
-    [map]
+    [map],
   );
 
   let handleSetSearchTerm = useCallback(
@@ -84,7 +86,7 @@ export const SearchBox = () => {
       }
       setSearchTerm(q);
     },
-    [searchTerm, sortByQuick, sortByQuick]
+    [searchTerm, sortByQuick, sortByQuick],
   );
 
   const clearSearchQuery = useCallback(() => {
@@ -103,7 +105,7 @@ export const SearchBox = () => {
         clearSearchQuery();
       }
     },
-    [sortByQuick, sortBySlow]
+    [sortByQuick, sortBySlow],
   );
 
   // On enter, we want to search
@@ -112,7 +114,7 @@ export const SearchBox = () => {
       e.preventDefault();
       handleSearch(searchTerm, exact);
     },
-    [searchTerm, exact]
+    [searchTerm, exact],
   );
 
   // When the debounced search term changes, we want to search
@@ -126,7 +128,7 @@ export const SearchBox = () => {
       handleSearch(searchTerm, !exact);
       setExact(!exact);
     },
-    [exact, searchTerm]
+    [exact, searchTerm],
   );
 
   return (

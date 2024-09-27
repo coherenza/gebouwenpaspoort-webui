@@ -1,10 +1,10 @@
 .RefinementList__count, .ais-RefinementList__count {
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: 400;
   background-color: var(--g1);
-  padding: .2rem;
+  padding: 0.2rem;
   border-radius: var(--border-radius);
-  margin-left: .4rem;
+  margin-left: 0.4rem;
 }
 
 .RefinementList li > label, .ais-RefinementList li > label {
@@ -12,15 +12,18 @@
   margin-left: 1.5em;
 }
 
-.RefinementList li > input[type=checkbox], .aisRefinementList li > input[type=checkbox] {
+.RefinementList li > input[type="checkbox"],
+.aisRefinementList li > input[type="checkbox"] {
   float: left;
 }
 
-.ais-RefinementList-label .icon.open , .ais-RefinementList-label.closed .icon.closed {
+.ais-RefinementList-label .icon.open,
+.ais-RefinementList-label.closed .icon.closed {
   float: right;
   display: block;
 }
-.ais-RefinementList-label .icon.closed , .ais-RefinementList-label.closed .icon.open {
+.ais-RefinementList-label .icon.closed,
+.ais-RefinementList-label.closed .icon.open {
   display: none;
 }
 

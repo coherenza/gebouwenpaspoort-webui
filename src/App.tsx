@@ -5,10 +5,10 @@ import "./global.css";
 
 import React, { createContext, useEffect, useMemo } from "react";
 import {
-  InstantSearch,
   Configure,
-  useRefinementList,
+  InstantSearch,
   useClearRefinements,
+  useRefinementList,
 } from "react-instantsearch";
 import { TourProvider, useTour } from "@reactour/tour";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
@@ -53,7 +53,7 @@ const AppProvider = () => {
   const [apiKey, setApiKey] = useLocalStorage("apiKey", meiliKey);
   const [hasCompletedTour, setHasCompletedTour] = useLocalStorage(
     "completedTour",
-    false
+    false,
   );
 
   const searchClient = useMemo(() => {
@@ -97,8 +97,9 @@ const AppProvider = () => {
 
 const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   const [current, setCurrent] = React.useState(undefined);
-  const [lastInteractionOrigin, setLastInteractionOrigin] =
-    React.useState(undefined);
+  const [lastInteractionOrigin, setLastInteractionOrigin] = React.useState(
+    undefined,
+  );
   const [showFilter, setShowFilter] = useLocalStorage("showFilter", true);
   const [showResults, setShowResults] = useLocalStorage("showResults", true);
   const [showLayers, setShowLayers] = useLocalStorage("showLayers", false);
@@ -170,33 +171,35 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
     >
       <MapProvider>
         <KeyboardHandler>
-          {!validApiKey ? (
-            <form onSubmit={handleSetApiKey} className="app__api-key">
-              <input
-                autoFocus
-                placeholder="Voer de sleutel in"
-                value={apiKeyTemp}
-                onChange={(e) => setApiKeyTemp(e.target.value)}
-              />
-              <button type="submit">opslaan</button>
-            </form>
-          ) : (
-            <div className="app">
-              <Configure
-                hitsPerPage={hitCount}
-                attributesToSnippet={["description:50"]}
-                snippetEllipsisText={"..."}
-              />
+          {!validApiKey
+            ? (
+              <form onSubmit={handleSetApiKey} className="app__api-key">
+                <input
+                  autoFocus
+                  placeholder="Voer de sleutel in"
+                  value={apiKeyTemp}
+                  onChange={(e) => setApiKeyTemp(e.target.value)}
+                />
+                <button type="submit">opslaan</button>
+              </form>
+            )
+            : (
+              <div className="app">
+                <Configure
+                  hitsPerPage={hitCount}
+                  attributesToSnippet={["description:50"]}
+                  snippetEllipsisText={"..."}
+                />
 
-              <div className="app__columns">
-                <Filters />
-                <LayerSelector />
-                <Map />
-                <Results />
-                <Details />
+                <div className="app__columns">
+                  <Filters />
+                  <LayerSelector />
+                  <Map />
+                  <Results />
+                  <Details />
+                </div>
               </div>
-            </div>
-          )}
+            )}
         </KeyboardHandler>
       </MapProvider>
     </AppContext.Provider>

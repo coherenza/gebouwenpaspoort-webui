@@ -1,9 +1,9 @@
 import React, {
-  useEffect,
-  useRef,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import "./Map.css";
@@ -20,12 +20,12 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { AppContext } from "./App";
 import { GBPObject, getObjectType } from "./schema";
 import {
+  useGeoSearch,
   useInfiniteHits,
   useSearchBox,
-  useGeoSearch,
 } from "react-instantsearch";
 import { Header } from "./Header";
-import { LayerSource, bagLayerId, bagLayer } from "./Layers";
+import { bagLayer, bagLayerId, LayerSource } from "./Layers";
 import useDebounce from "./useDebounce";
 import { mapboxToken } from "./config";
 import { ToolTip } from "./Tooltip";
@@ -44,7 +44,7 @@ export const startBoundsInstant = {
 
 export const startBounds = new LngLatBounds(
   startBoundsInstant.northEast,
-  startBoundsInstant.southWest
+  startBoundsInstant.southWest,
 );
 
 function moveBounds(mapRef, items) {
@@ -101,7 +101,7 @@ function moveBounds(mapRef, items) {
   try {
     bounds = new LngLatBounds(
       { lat: highLat, lng: highLng },
-      { lat: lowLat, lng: lowLng }
+      { lat: lowLat, lng: lowLng },
     );
     mapRef.current?.fitBounds(bounds, {
       padding: 25,
@@ -207,7 +207,7 @@ export function Map() {
     ({ lat, lng }) => {
       mapRef.current.setCenter([lng, lat]);
     },
-    [mapRef]
+    [mapRef],
   );
 
   const handleHover = useCallback(
@@ -227,7 +227,7 @@ export function Map() {
       }
       setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
     },
-    [layers]
+    [layers],
   );
 
   const data: GeoJSON.FeatureCollection<GeoJSON.Geometry> = useMemo(() => {
@@ -235,8 +235,8 @@ export function Map() {
       type: "FeatureCollection",
       id: bagLayerId,
       features: items.map((item, index) => {
-        const isCurrent =
-          item.id == current?.id || locationFilter?.id == item.id;
+        const isCurrent = item.id == current?.id ||
+          locationFilter?.id == item.id;
 
         const { color, isAob } = getObjectType(item);
 
@@ -315,7 +315,7 @@ export function Map() {
         console.warn("no features on this point", evt);
       }
     },
-    [items]
+    [items],
   );
 
   return (
@@ -372,9 +372,7 @@ export function Map() {
         {layers
           .filter((layer) => layer.visible)
           .filter((layer) => layer.id !== bagLayerId)
-          .map((layer) => (
-            <LayerSource layer={layer} key={layer.id} />
-          ))}
+          .map((layer) => <LayerSource layer={layer} key={layer.id} />)}
       </MapGL>
     </div>
   );

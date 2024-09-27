@@ -26,8 +26,7 @@ export function getObjectType(object: any): GBPObjectType {
   if (!object) {
     return GBPObjectTypes.unknown;
   }
-  let typestring =
-    object["object-type"] ||
+  let typestring = object["object-type"] ||
     object["bag-aob"]?.["bag-object-type"] ||
     object["bag-opr"]?.["bag-object-type"] ||
     "unknown";

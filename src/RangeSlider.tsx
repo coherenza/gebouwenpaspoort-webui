@@ -11,7 +11,7 @@ export type UseRangeSliderProps = RangeConnectorParams;
 export function useRangeSlider(props?: UseRangeSliderProps) {
   return useConnector<RangeConnectorParams, RangeWidgetDescription>(
     connectRange,
-    props
+    props,
   );
 }
 

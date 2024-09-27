@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect } from "react";
 import { AppContext } from "./App";
 
-export function KeyboardHandler({children}) {
+export function KeyboardHandler({ children }) {
   const {
     current,
     setCurrent,
@@ -15,7 +15,7 @@ export function KeyboardHandler({children}) {
     (event) => {
       const { key, keyCode } = event;
 
-      if (event.target.tagName === 'INPUT') { return; }
+      if (event.target.tagName === "INPUT") return;
 
       // Escape closes windows
       if (keyCode === 27) {
@@ -41,7 +41,7 @@ export function KeyboardHandler({children}) {
         document.getElementById("search-box")?.focus();
       }
     },
-    [current, showFilter, showResults]
+    [current, showFilter, showResults],
   );
 
   useEffect(() => {

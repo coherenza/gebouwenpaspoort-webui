@@ -1,9 +1,9 @@
 import { useCallback, useContext } from "react";
 import {
   Attributes,
+  displayAttributes,
   GBPObject,
   getObjectType,
-  displayAttributes,
 } from "./schema";
 import "./Hit.css";
 import { AppContext } from "./App";
@@ -67,7 +67,9 @@ export const HitLine = ({ hit }: HitProps) => {
   const status = hit["bag-aob"]
     ? hit["bag-aob"][Attributes.bag_aob_status.id]
     : undefined;
-  const adres = `${hit.hoofdadres?.["bag-opr-naam"]} ${hit.hoofdadres?.["bag-num-huisnummer-letter-aanduiding"]}`;
+  const adres = `${hit.hoofdadres?.["bag-opr-naam"]} ${
+    hit.hoofdadres?.["bag-num-huisnummer-letter-aanduiding"]
+  }`;
 
   const handleClick = useCallback(() => {
     if (isAob) {

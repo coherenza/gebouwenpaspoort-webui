@@ -5,7 +5,8 @@ import type { StepType } from "@reactour/tour";
 export const tourSteps: StepType[] = [
   {
     selector: ".app-header",
-    content: "Welkom bij GebouwenPaspoort! Hier zoek je naar straatnamen, wijken of buurten.",
+    content:
+      "Welkom bij GebouwenPaspoort! Hier zoek je naar straatnamen, wijken of buurten.",
   },
   {
     selector: ".filter-panel",
@@ -29,7 +30,8 @@ export const tourSteps: StepType[] = [
   },
   {
     selector: "#reset",
-    content: "Terug naar start? Verwijder je zoekopdracht en filters met Reset.",
+    content:
+      "Terug naar start? Verwijder je zoekopdracht en filters met Reset.",
   },
   {
     selector: "#feedback-button",
@@ -37,6 +39,7 @@ export const tourSteps: StepType[] = [
   },
   {
     selector: "#root",
-    content: "Klik op het kruisje om deze help te sluiten. Veel plezier met GebouwenPaspoort!",
+    content:
+      "Klik op het kruisje om deze help te sluiten. Veel plezier met GebouwenPaspoort!",
   },
 ];

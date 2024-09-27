@@ -19,9 +19,7 @@ export function CurrentRefinements() {
             item={refinement}
             refine={refine}
             parent={item}
-            key={`refinement-${
-              item.label
-            }-${item_index.toString()}-${refinement_index.toString()}`}
+            key={`refinement-${item.label}-${item_index.toString()}-${refinement_index.toString()}`}
           />
         ));
       })}
@@ -33,7 +31,7 @@ function Refinement({ item, refine, parent }) {
   const { locationFilter } = useContext(AppContext);
 
   let attribute = Object.values(Attributes).find(
-    (a) => a.id == item.attribute.replace(/.*\./, "")
+    (a) => a.id == item.attribute.replace(/.*\./, ""),
   );
   let label = (attribute ? attribute.name + ": " : "") + item.label;
 

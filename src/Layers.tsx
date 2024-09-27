@@ -1,12 +1,12 @@
 import { Cross1Icon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { useCallback, useContext, useEffect, useState } from "react";
 import {
+  AnyLayer,
+  FillLayer,
   Layer,
   RasterLayer,
-  FillLayer,
   Source,
   SymbolLayer,
-  AnyLayer,
 } from "react-map-gl";
 
 import { AppContext } from "./App";
@@ -115,17 +115,18 @@ async function getDescription(layer: LayerI): Promise<string> {
   const parser = new DOMParser();
   const wmsCapabilitiesDOM = parser.parseFromString(
     wmsCapabilitiesXML,
-    "text/xml"
+    "text/xml",
   );
-  const wmsAbstract =
-    wmsCapabilitiesDOM.querySelector("Service > Abstract")?.textContent;
+  const wmsAbstract = wmsCapabilitiesDOM.querySelector("Service > Abstract")
+    ?.textContent;
   return wmsAbstract;
 }
 
 /** Fetches description from PDOK XML metadata */
 export function LayerSelector() {
-  const { showLayerSelector, setShowLayerSelector, layers } =
-    useContext(AppContext);
+  const { showLayerSelector, setShowLayerSelector, layers } = useContext(
+    AppContext,
+  );
 
   return (
     <div
@@ -143,9 +144,7 @@ export function LayerSelector() {
         </button>
       </div>
       <div className="layers-checkboxes">
-        {layers.map((layer) => (
-          <LayerCheckbox layer={layer} key={layer.id} />
-        ))}
+        {layers.map((layer) => <LayerCheckbox layer={layer} key={layer.id} />)}
       </div>
     </div>
   );
@@ -176,7 +175,7 @@ function LayerCheckbox({ layer }) {
       });
       setLayers(newLayers);
     },
-    [layers]
+    [layers],
   );
 
   return (
@@ -186,16 +185,20 @@ function LayerCheckbox({ layer }) {
           type="checkbox"
           checked={layer.visible}
           onChange={() => toggleLayer(layer)}
-        ></input>
-        {layer.name}{" "}
+        >
+        </input>
+        {layer.name}
+        {" "}
       </label>
-      {/* <span
+      {
+        /* <span
         className="Layer__info-button"
         title={description}
         onClick={() => setShowDescription(!showDescription)}
       >
         <InfoCircledIcon />
-      </span> */}
+      </span> */
+      }
       {/* {showDescription && <p className="Layer__description">{description}</p>} */}
     </div>
   );
@@ -203,7 +206,10 @@ function LayerCheckbox({ layer }) {
 
 /** This should describe Utrecht bounds */
 const boundsUtrecht: [number, number, number, number] = [
-  4.93038, 51.986783, 5.25482, 52.166141,
+  4.93038,
+  51.986783,
+  5.25482,
+  52.166141,
 ];
 const boundsNL = [3, 50, 7.4, 54];
 

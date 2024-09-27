@@ -7,7 +7,7 @@ import { useTour } from "@reactour/tour";
 import { useCallback } from "react";
 import { useContext } from "react";
 import { AppContext } from "./App";
-import { InfoCircledIcon, ChatBubbleIcon } from "@radix-ui/react-icons";
+import { ChatBubbleIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 
 export function Header() {
   const [showInfoPage, setShowInfoPage] = useState(false);

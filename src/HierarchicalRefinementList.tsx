@@ -54,7 +54,7 @@ export function HierarchicalRefinementList({
         key={term.label}
         className={cx(
           "ais-RefinementList-item",
-          isRefined && "ais-RefinementList-item--selected"
+          isRefined && "ais-RefinementList-item--selected",
         )}
       >
         <label
@@ -81,24 +81,28 @@ export function HierarchicalRefinementList({
             checked={isRefined}
             onChange={() => refine(term.label)}
           />
-          {nestedTerms ? (
-            <>
-              <span className="icon open">
-                <ChevronDownIcon />
-              </span>
-              <span className="icon closed">
-                <ChevronUpIcon />
-              </span>
-            </>
-          ) : (
-            false
-          )}
+          {nestedTerms
+            ? (
+              <>
+                <span className="icon open">
+                  <ChevronDownIcon />
+                </span>
+                <span className="icon closed">
+                  <ChevronUpIcon />
+                </span>
+              </>
+            )
+            : (
+              false
+            )}
           <span className="ais-RefinementList-labelText">{term.label}</span>
-          {count ? ( // Count is zero when the facet limit of 100 is surpassed.
-            <span className="ais-RefinementList-count">{count}</span>
-          ) : (
-            false
-          )}
+          {count
+            ? ( // Count is zero when the facet limit of 100 is surpassed.
+              <span className="ais-RefinementList-count">{count}</span>
+            )
+            : (
+              false
+            )}
         </label>
         {nestedTerms ? displayTermList(nestedTerms, items, true) : false}
       </li>

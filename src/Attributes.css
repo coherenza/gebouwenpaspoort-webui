@@ -11,8 +11,7 @@
   padding: 0.5rem;
 }
 
-.Attribute__title__open {
-}
+.Attribute__title__open {}
 
 .Attribute__title__closed > .icon,
 .Attribute__title__open > .icon {

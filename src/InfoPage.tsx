@@ -1,6 +1,6 @@
 import "./InfoPage.css";
 import { GBPObjectTypes } from "./schema";
-import { version, server } from "./config";
+import { server, version } from "./config";
 
 export function InfoPage() {
   return (
@@ -8,7 +8,13 @@ export function InfoPage() {
       <article>
         <h1>Gebouwenpaspoort</h1>
 
-        <p>Versie {version} (data van {server.replace(/^https?:\/\//, '').replace(/^([A-Za-z0-9]+).*/, '$1')})</p>
+        <p>
+          Versie {version} (data van{" "}
+          {server.replace(/^https?:\/\//, "").replace(
+            /^([A-Za-z0-9]+).*/,
+            "$1",
+          )})
+        </p>
 
         <h2>Introductie</h2>
 
@@ -60,7 +66,8 @@ export function InfoPage() {
               <div
                 className="hit-ball"
                 style={{ backgroundColor: type.color }}
-              ></div>{" "}
+              >
+              </div>{" "}
               {type.label}
             </li>
           ))}
@@ -74,7 +81,8 @@ export function InfoPage() {
 
         <ul>
           <li>
-            <em>Woonplaatsen, Openbare ruimten en Adresseerbare objecten</em>{" "}
+            <em>Woonplaatsen, Openbare ruimten en Adresseerbare objecten</em>
+            {" "}
             (Standplaatsen, ligplaatsen en Verblijfsobjecten), afkomstig uit
             Basisregistratie Adressen en Gebouwen (BAG) van Kadaster.
           </li>

@@ -2,8 +2,8 @@ import { Attribute } from "./schema";
 import { useState } from "react";
 import {
   RangeInput,
-  RefinementListProps,
   RefinementList,
+  RefinementListProps,
 } from "react-instantsearch";
 import "./Filter.css";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
@@ -38,20 +38,22 @@ export const Filter = (filter: Attribute) => {
       </h4>
       <div className={"Attribute__content__" + (open ? "open" : "closed")}>
         {filterType === "select" &&
-          (!!filter.vocabulary ? (
-            <HierarchicalRefinementList
-              attribute={filter.id}
-              limit={1000}
-              sortBy={sortLabels}
-              vocabulary={filter.vocabulary}
-            />
-          ) : (
-            <RefinementList
-              attribute={filter.id}
-              limit={1000}
-              sortBy={sortLabels}
-            />
-          ))}
+          (!!filter.vocabulary
+            ? (
+              <HierarchicalRefinementList
+                attribute={filter.id}
+                limit={1000}
+                sortBy={sortLabels}
+                vocabulary={filter.vocabulary}
+              />
+            )
+            : (
+              <RefinementList
+                attribute={filter.id}
+                limit={1000}
+                sortBy={sortLabels}
+              />
+            ))}
         {filterType === "range" && <RangeInput attribute={filter.id} />}
         {filterType === "intervals" && (
           <RefinementList
