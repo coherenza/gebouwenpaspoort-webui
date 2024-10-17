@@ -14,10 +14,10 @@ function equalArrays(xs: any[], ys: any[]) {
   );
 }
 
-export const filterableAttributes = filterAttributes.map((prop) =>
-  prop?.attributes?.map((attr) => attr.id)
-).flat();
-//filterableAttributes.push("_geo", "pdok-locatie-id", Attributes.pand_status.id);
+export const filterableAttributes = filterAttributes
+  .map((prop) => prop?.attributes?.map((attr) => attr.id))
+  .flat();
+filterableAttributes.push("_geo", "pdok-locatie-id");
 
 const sortableAttributes = sortProps.map((prop) => prop.attribute);
 
@@ -66,13 +66,17 @@ export async function setIndexes() {
 
   const reportSetIndexesProgress = function () {
     const progressElement = document.getElementById("set-indexes-progress");
-    fetch(`${server}tasks/`).then((response) => {
+    fetch(`${server}tasks/`, {
+      headers: {
+        Authorization: `Bearer ${meiliKey}`,
+      },
+    }).then((response) => {
       if (response.ok) {
         response.json().then((json) => {
           const lines = json.results
-            .filter((
-              r,
-            ) => (r.type == "settingsUpdate" && r.status != "succeeded"))
+            .filter(
+              (r) => r.type == "settingsUpdate" && r.status != "succeeded"
+            )
             .map((r) => `<div>${Object.keys(r.details)}: ${r.status}</div>`);
           console.log(`report set-index progress, ${lines.length} processes`);
           progressElement.innerHTML = lines.join("");
