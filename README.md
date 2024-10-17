@@ -66,7 +66,7 @@ To run MeiliSearch on a (blue / green) server, SSH into the droplet (can be done
 in DigitalOcean console) and run the command below:
 
 ```
-docker run -it -d --restart unless-stopped -p 7700:7700 -e MEILI_MASTER_KEY='hebjepasjepoort' -v $(pwd)/meili_data:/meili_data getmeili/meilisearch:v1.2
+docker run -it -d --restart unless-stopped -p 7700:7700 -e MEILI_MASTER_KEY='hebjepasjepoort' -v $(pwd)/meili_data:/meili_data getmeili/meilisearch:v1.10.2
 ```
 
 ### Updating the Meilisearch index
@@ -75,7 +75,7 @@ docker run -it -d --restart unless-stopped -p 7700:7700 -e MEILI_MASTER_KEY='heb
   `docker stop ID`).
 - Copy the data (indexes, ...) from a local dev server to the
   `meili_data/data.ms` directory.
-- After copying, restart the docker image (`docker ps`, `docker stop`).
+- After copying, restart the docker image (`docker ps`, `docker run`).
 
 ### Changing the Meilisearch index on the Digital Ocean server (meili-droplet)
 
