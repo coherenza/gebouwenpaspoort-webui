@@ -76,6 +76,7 @@ docker run -it -d --restart unless-stopped -p 7700:7700 -e MEILI_MASTER_KEY='heb
 - Copy the data (indexes, ...) from a local dev server to the
   `meili_data/data.ms` directory.
 - After copying, restart the docker image (`docker ps`, `docker run`).
+- Run the `set index properties` button in the web app in the `filter` menu on the left (only works when running locally, or by adding the `iamadeveloper` query param)
 
 ### Changing the Meilisearch index on the Digital Ocean server (meili-droplet)
 
