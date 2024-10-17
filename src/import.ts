@@ -17,7 +17,7 @@ function equalArrays(xs: any[], ys: any[]) {
 export const filterableAttributes = filterAttributes
   .map((prop) => prop?.attributes?.map((attr) => attr.id))
   .flat();
-// filterableAttributes.push("_geo", "pdok-locatie-id"); // are added automatically
+filterableAttributes.push("_geo",); // is not added automatically
 
 const sortableAttributes = sortProps.map((prop) => prop.attribute);
 
@@ -66,7 +66,7 @@ export async function setIndexes() {
 
   const reportSetIndexesProgress = function () {
     const progressElement = document.getElementById("set-indexes-progress");
-    fetch(`${server}tasks/`, {
+    fetch(`${server}/tasks/`, {
       headers: {
         Authorization: `Bearer ${meiliKey}`,
       },
