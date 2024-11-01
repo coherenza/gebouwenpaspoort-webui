@@ -1583,33 +1583,6 @@ export const displayAttributes: Attribute[] =   [
  */
 export const filterAttributes: Attribute[] =   [
     
-  { id : "",
-    name : "Algemeen",
-    attributes:    [
-      
-    { id : "pdok-locatie-id",
-      name : "Locatie identificaties",
-      type : "string",
-    }
-    ]
-  },
-    
-  { id : "_geo",
-    name : "Latitude-longitude geo coordinaten",
-    attributes:    [
-      
-    { id : "_geo.lat",
-      name : "Latitude",
-      type : "string",
-    },
-      
-    { id : "_geo.lng",
-      name : "Longitude",
-      type : "string",
-    }
-    ]
-  },
-    
   { id : "bag-aob",
     name : "Adresseerbaar object",
     attributes:    [
