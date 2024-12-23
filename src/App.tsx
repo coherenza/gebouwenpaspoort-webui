@@ -97,9 +97,8 @@ const AppProvider = () => {
 
 const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   const [current, setCurrent] = React.useState(undefined);
-  const [lastInteractionOrigin, setLastInteractionOrigin] = React.useState(
-    undefined,
-  );
+  const [lastInteractionOrigin, setLastInteractionOrigin] =
+    React.useState(undefined);
   const [showFilter, setShowFilter] = useLocalStorage("showFilter", true);
   const [showResults, setShowResults] = useLocalStorage("showResults", true);
   const [showLayers, setShowLayers] = useLocalStorage("showLayers", false);
@@ -129,7 +128,8 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   useEffect(() => {
     if (validApiKey && !hasCompletedTour) {
       // start the tour
-      setIsOpen(true);
+      // Temp disabled https://github.com/coherenza/gebouwenpaspoort-webui/issues/23
+      // setIsOpen(true);
     }
   }, [validApiKey, hasCompletedTour]);
 
@@ -171,35 +171,33 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
     >
       <MapProvider>
         <KeyboardHandler>
-          {!validApiKey
-            ? (
-              <form onSubmit={handleSetApiKey} className="app__api-key">
-                <input
-                  autoFocus
-                  placeholder="Voer de sleutel in"
-                  value={apiKeyTemp}
-                  onChange={(e) => setApiKeyTemp(e.target.value)}
-                />
-                <button type="submit">opslaan</button>
-              </form>
-            )
-            : (
-              <div className="app">
-                <Configure
-                  hitsPerPage={hitCount}
-                  attributesToSnippet={["description:50"]}
-                  snippetEllipsisText={"..."}
-                />
+          {!validApiKey ? (
+            <form onSubmit={handleSetApiKey} className="app__api-key">
+              <input
+                autoFocus
+                placeholder="Voer de sleutel in"
+                value={apiKeyTemp}
+                onChange={(e) => setApiKeyTemp(e.target.value)}
+              />
+              <button type="submit">opslaan</button>
+            </form>
+          ) : (
+            <div className="app">
+              <Configure
+                hitsPerPage={hitCount}
+                attributesToSnippet={["description:50"]}
+                snippetEllipsisText={"..."}
+              />
 
-                <div className="app__columns">
-                  <Filters />
-                  <LayerSelector />
-                  <Map />
-                  <Results />
-                  <Details />
-                </div>
+              <div className="app__columns">
+                <Filters />
+                <LayerSelector />
+                <Map />
+                <Results />
+                <Details />
               </div>
-            )}
+            </div>
+          )}
         </KeyboardHandler>
       </MapProvider>
     </AppContext.Provider>
