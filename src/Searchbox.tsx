@@ -25,14 +25,16 @@ export const SearchBox = () => {
   const { refine, clear } = useSearchBox();
   let { refine: clearGeo } = useGeoSearch();
   let { mainMap: map } = useMap();
-  let { refine: setSortBySlow, currentRefinement: sortBySlow } = useSortBy(
-    sortOptions,
-  );
+  let { refine: setSortBySlow, currentRefinement: sortBySlow } =
+    useSortBy(sortOptions);
   let [sortByQuick, setSortByQuick] = useState(defaultSort);
   let [exact, setExact] = useState(false);
-  let { setLastInteractionOrigin, setLocationFilter, setCurrent } = useContext(
-    AppContext,
-  );
+  let {
+    setLastInteractionOrigin,
+    setLocationFilter,
+    setCurrent,
+    setShowDetails,
+  } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 200);
   const { refine: clearRefinements } = useClearRefinements();
@@ -97,6 +99,7 @@ export const SearchBox = () => {
   let handleSearch = useCallback(
     (query, exactOnly) => {
       if (query) {
+        setShowDetails(false);
         const modifiedQuery = exactOnly ? `"${query}"` : query;
         refine(modifiedQuery);
         setLastInteractionOrigin("text");
