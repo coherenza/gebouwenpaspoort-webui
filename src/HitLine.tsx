@@ -62,7 +62,7 @@ export const HitLine = ({ hit }: HitProps) => {
   if (!hit) return null;
 
   const active = current?.id === hit.id;
-  const { isAob, color } = getObjectType(hit);
+  const { isAob, color, label } = getObjectType(hit);
 
   const status = hit["bag-aob"]
     ? hit["bag-aob"][Attributes.bag_aob_status.id]
@@ -107,7 +107,7 @@ export const HitLine = ({ hit }: HitProps) => {
         {/* <div className="hit-type">{hit["bag-object-type"]}</div> */}
         <div
           className="hit-ball"
-          title={hit["bag-object-type"]}
+          title={hit["bag-object-type"] || label}
           style={{
             backgroundColor: color || "initial",
           }}

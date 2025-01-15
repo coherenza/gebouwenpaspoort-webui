@@ -101,7 +101,7 @@ const GBPObjectTypes: {
     label: "Adres",
   },
   verblijfsobject: {
-    color: utrechtKleuren.rood,
+    color: utrechtKleuren.groen,
     isAob: true,
     id: "verblijfsobject",
     label: "Verblijfsobject",
