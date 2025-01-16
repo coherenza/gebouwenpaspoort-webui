@@ -74,12 +74,26 @@ const GBPObjectTypes: {
     icon: "houses",
     label: "Wijk",
   },
+  subwijk: {
+    color: utrechtKleuren.geel,
+    isAob: false,
+    id: "subwijk",
+    icon: "houses",
+    label: "Subwijk",
+  },
   buurt: {
     color: utrechtKleuren.paars,
     isAob: false,
     id: "buurt",
     icon: "houses",
     label: "Buurt",
+  },
+  subbuurt: {
+    color: utrechtKleuren.paars,
+    isAob: false,
+    id: "subbuurt",
+    icon: "houses",
+    label: "Subbuurt",
   },
   openbareruimte: {
     color: utrechtKleuren.oranje,
