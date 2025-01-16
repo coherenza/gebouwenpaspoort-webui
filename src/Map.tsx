@@ -238,7 +238,7 @@ export function Map() {
         const isCurrent = item.id == current?.id ||
           locationFilter?.id == item.id;
 
-        const { color, isAob } = getObjectType(item);
+        const { color, isAob, label } = getObjectType(item);
 
         // If the first item is also an address, we open it on the map.
         // But only if the user was interacting with something other than the map.
@@ -260,7 +260,7 @@ export function Map() {
           },
           properties: {
             // These are be displayed in the popup
-            naam: item.naam,
+            [label]: item.naam,
             // These are used to style the point.
             // Add the keys to `hiddenProps` in `Tooltip.tsx` to hide them from the tooltip.
             id: item.id,

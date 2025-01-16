@@ -45,6 +45,7 @@ export interface GBPObjectType {
 export const utrechtKleuren = {
   rood: "#cc0000",
   geel: "#ffcc00",
+  neon: "#ff5f1f",
   paars: "#762cd1",
   magenta: "#f02198",
   oranje: "#ff6e00",
@@ -61,35 +62,35 @@ const GBPObjectTypes: {
   readonly [index: string]: GBPObjectType;
 } = {
   woonplaats: {
-    color: utrechtKleuren.blauw,
+    color: utrechtKleuren.marineblauw,
     isAob: false,
     id: "woonplaats",
     icon: "houses",
     label: "Woonplaats",
   },
   wijk: {
-    color: utrechtKleuren.geel,
+    color: utrechtKleuren.blauw,
     isAob: false,
     id: "wijk",
     icon: "houses",
     label: "Wijk",
   },
   subwijk: {
-    color: utrechtKleuren.geel,
+    color: utrechtKleuren.paars,
     isAob: false,
     id: "subwijk",
     icon: "houses",
     label: "Subwijk",
   },
   buurt: {
-    color: utrechtKleuren.paars,
+    color: utrechtKleuren.neon,
     isAob: false,
     id: "buurt",
     icon: "houses",
     label: "Buurt",
   },
   subbuurt: {
-    color: utrechtKleuren.paars,
+    color: utrechtKleuren.geel,
     isAob: false,
     id: "subbuurt",
     icon: "houses",
@@ -108,7 +109,7 @@ const GBPObjectTypes: {
     label: "Postcode",
   },
   adres: {
-    color: utrechtKleuren.lime,
+    color: utrechtKleuren.bruin,
     isAob: false,
     id: "adres",
     icon: "my-marker",
@@ -127,7 +128,7 @@ const GBPObjectTypes: {
     label: "Standplaats",
   },
   ligplaats: {
-    color: utrechtKleuren.blauw,
+    color: utrechtKleuren.lime,
     isAob: true,
     id: "ligplaats",
     label: "Ligplaats",
