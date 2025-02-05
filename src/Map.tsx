@@ -30,6 +30,9 @@ import useDebounce from "./useDebounce";
 import { mapboxToken } from "./config";
 import { ToolTip } from "./Tooltip";
 import CustomIcons from "./Icons";
+import MapboxDraw from "@mapbox/mapbox-gl-draw";
+import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
+import * as turf from "@turf/turf";
 
 export const mapStartState = {
   latitude: 52.0907,
@@ -125,6 +128,34 @@ function convertBounds(bounds) {
   };
 }
 
+// Add this custom control definition before your Map component:
+class AreaControl {
+  _container: HTMLButtonElement | null = null;
+  _map: any;
+
+  onAdd(map: any) {
+    this._map = map;
+    this._container = document.createElement("button");
+    // Use Mapbox control default classes for basic styling
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    // You can use inline styles to adjust appearance
+    this._container.style.backgroundColor = "#fff";
+    this._container.style.border = "none";
+    this._container.style.padding = "5px";
+    this._container.style.cursor = "default";
+    this._container.type = "button";
+    this._container.style.display = "none"; // Hide control initially
+    return this._container;
+  }
+
+  onRemove() {
+    if (this._container && this._container.parentNode) {
+      this._container.parentNode.removeChild(this._container);
+    }
+    this._map = undefined;
+  }
+}
+
 export function Map() {
   const { refine } = useGeoSearch();
   const { hits: items } = useInfiniteHits({
@@ -151,6 +182,10 @@ export function Map() {
   const mapRef = useRef<MapRef>();
   const [viewState, setViewState] = useState(mapStartState);
   const [hoverInfo, setHoverInfo] = useState(null);
+  const [area, setArea] = useState<number | null>(null);
+
+  // Add a ref for our custom area control:
+  const areaControlRef = useRef<AreaControl | null>(null);
 
   // We need to wait for new items to load after setting the location filter
   let debouncedLocationFilter = useDebounce(locationFilter, 1000);
@@ -317,6 +352,72 @@ export function Map() {
     },
     [items],
   );
+
+  // Draw a polygon on the map and calculate the surface area
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+
+    const draw = new MapboxDraw({
+      displayControlsDefault: false,
+      controls: {
+        polygon: true,
+        trash: true,
+      },
+    });
+
+    map.addControl(draw, 'bottom-left');
+
+    const updateArea = (e?: { type: string }) => {
+      const data = draw.getAll();
+      if (data.features.length > 0) {
+        const area = turf.area(data);
+        setArea(Math.round(area * 100) / 100);
+      } else {
+        setArea(null);
+      }
+    };
+
+    map.on('draw.create', updateArea);
+    map.on('draw.delete', updateArea);
+    map.on('draw.update', updateArea);
+
+    // Cleanup
+    return () => {
+      map.removeControl(draw);
+      map.off('draw.create', updateArea);
+      map.off('draw.delete', updateArea);
+      map.off('draw.update', updateArea);
+    };
+  }, [mapRef.current]); // Only run once when map is initialized
+
+  // Add useEffect to create our custom area control
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (!map) return;
+    if (!areaControlRef.current) {
+      areaControlRef.current = new AreaControl();
+      map.addControl(areaControlRef.current, 'bottom-left');
+    }
+    return () => {
+      if (areaControlRef.current) {
+        map.removeControl(areaControlRef.current);
+        areaControlRef.current = null;
+      }
+    };
+  }, [mapRef.current]);
+
+  // Update the custom control button text when the area changes
+  useEffect(() => {
+    if (areaControlRef.current && areaControlRef.current._container) {
+      if (area !== null) {
+        areaControlRef.current._container.textContent = `${area} m²`;
+        areaControlRef.current._container.style.display = "block";
+      } else {
+        areaControlRef.current._container.style.display = "none";
+      }
+    }
+  }, [area]);
 
   return (
     <div className="Map__wrapper">
