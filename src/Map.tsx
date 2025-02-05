@@ -33,6 +33,7 @@ import CustomIcons from "./Icons";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import * as turf from "@turf/turf";
+import { boundsLngLatToIS, boundsLngLatToMatrix } from "./bounds";
 
 export const mapStartState = {
   latitude: 52.0907,
@@ -114,19 +115,6 @@ function moveBounds(mapRef, items) {
   }
 }
 
-function convertBounds(bounds) {
-  const neBounds = bounds.getNorthEast();
-  const swBounds = bounds.getSouthWest();
-
-  if (!neBounds || !swBounds) {
-    return;
-  }
-
-  return {
-    northEast: bounds.getNorthEast(),
-    southWest: bounds.getSouthWest(),
-  };
-}
 
 // Add this custom control definition before your Map component:
 class AreaControl {
@@ -156,6 +144,7 @@ class AreaControl {
   }
 }
 
+
 export function Map() {
   const { refine } = useGeoSearch();
   const { hits: items } = useInfiniteHits({
@@ -183,6 +172,7 @@ export function Map() {
   const [viewState, setViewState] = useState(mapStartState);
   const [hoverInfo, setHoverInfo] = useState(null);
   const [area, setArea] = useState<number | null>(null);
+  const [currentBounds, setCurrentBounds] = useState<LngLatBounds | null>(null);
 
   // Add a ref for our custom area control:
   const areaControlRef = useRef<AreaControl | null>(null);
@@ -232,11 +222,15 @@ export function Map() {
     if (!evt.originalEvent || lastInteractionOrigin === "text") {
       return;
     }
-    const bounds = mapRef.current.getMap().getBounds();
-    refine(convertBounds(bounds));
+    const latLngBounds = mapRef.current.getMap().getBounds();
+    if (latLngBounds) {
+      setCurrentBounds(latLngBounds);
+      const boundsIS = boundsLngLatToIS(latLngBounds);
+      refine(boundsIS);
+    }
     setLastInteractionOrigin("map");
     setViewState(evt.viewState);
-  }, []);
+  }, [lastInteractionOrigin, refine]);
 
   const setCenter = useCallback(
     ({ lat, lng }) => {
@@ -473,7 +467,7 @@ export function Map() {
         {layers
           .filter((layer) => layer.visible)
           .filter((layer) => layer.id !== bagLayerId)
-          .map((layer) => <LayerSource layer={layer} key={layer.id} />)}
+          .map((layer) => <LayerSource layer={layer} key={layer.id} bounds={currentBounds ? boundsLngLatToMatrix(currentBounds) : null} />)}
       </MapGL>
     </div>
   );

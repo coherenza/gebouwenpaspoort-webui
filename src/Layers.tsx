@@ -11,6 +11,7 @@ import {
 
 import { AppContext } from "./App";
 import "./Layers.css";
+import { boundsLngLatToMatrix, BoundsMatrix } from "./bounds";
 
 export const bagLayerId = "points";
 
@@ -73,6 +74,13 @@ export const layersDefault: LayerI[] = [
     url: "https://service.pdok.nl/rws/napinfo/wfs/v1_0",
     // url: "https://geodata.nationaalgeoregister.nl/napinfo/wfs",
   },
+  {
+    name: "Kadastrale grenzen (WFS)",
+    id: "kadastralekaart:KadastraleGrens",
+    visible: false,
+    type: "fill",
+    url: "https://service.pdok.nl/kadaster/kadastralekaart/wfs/v5_0"
+  }
   /*{
     name: "AHN3",
     id: "ahn3_05m_dtm",
@@ -204,17 +212,18 @@ function LayerCheckbox({ layer }) {
   );
 }
 
+
 /** This should describe Utrecht bounds */
-const boundsUtrecht: [number, number, number, number] = [
+const boundsUtrecht: BoundsMatrix = [
   4.93038,
   51.986783,
   5.25482,
   52.166141,
 ];
-const boundsNL = [3, 50, 7.4, 54];
+const boundsNL: BoundsMatrix = [3, 50, 7.4, 54];
 
 /** Component that mounts the Source and Layer components, required by React-Map-gl */
-export function LayerSource({ layer }: { layer: LayerI }) {
+export function LayerSource({ layer, bounds }: { layer: LayerI, bounds: BoundsMatrix }) {
   if (layer.id == bagLayerId) {
     return null;
   }
@@ -225,8 +234,8 @@ export function LayerSource({ layer }: { layer: LayerI }) {
       <Source
         type="raster"
         tileSize={1000}
-        bounds={boundsUtrecht}
-        tiles={[makeWmsUrl(layer)]}
+        bounds={bounds}
+        tiles={[makeWmsUrl(layer, bounds)]}
         scheme="xyz"
       >
         <Layer {...mapBoxLayer} beforeId={bagLayerId} />
@@ -235,16 +244,16 @@ export function LayerSource({ layer }: { layer: LayerI }) {
   }
 
   return (
-    <Source id={layer.id} type="geojson" data={makeWfsUrl(layer)}>
+    <Source id={layer.id} type="geojson" data={makeWfsUrl(layer, bounds)} bounds={bounds}>
       <Layer {...mapBoxLayer} key={layer.id} id={layer.id} />
     </Source>
   );
 }
 
 function makeMapBoxLayer(layer: LayerI): AnyLayer {
-  if (layer.type == "fill") {
+  if (layer.type === "fill") {
     return makeFillLayer(layer);
-  } else if (layer.type == "symbol") {
+  } else if (layer.type === "symbol") {
     return makeSymbolLayer(layer);
   } else {
     return makeRasterLayer(layer);
@@ -316,8 +325,9 @@ function objectToSearchParams(obj: { [key: string]: any }) {
   return params;
 }
 
-export function makeWfsUrl(layer: LayerI) {
+export function makeWfsUrl(layer: LayerI, bounds?: BoundsMatrix) {
   let url = new URL(layer.url);
+  bounds = bounds ? bounds : boundsUtrecht;
   // See https://docs.geoserver.org/stable/en/user/services/wfs/reference.html
   let params = {
     SERVICE: "WFS",
@@ -327,7 +337,7 @@ export function makeWfsUrl(layer: LayerI) {
     acceptsFormat: "application/json",
     typeNames: layer.id,
     srsName: "EPSG:4326",
-    bbox: `${boundsUtrecht.toString()}${
+    bbox: `${bounds.join(",")}${
       layer.url.includes("utrecht") ? ",EPSG:4326" : ""
     }`,
   };
@@ -335,7 +345,8 @@ export function makeWfsUrl(layer: LayerI) {
   return url.toString();
 }
 
-export function makeWmsUrl(layer: LayerI) {
+export function makeWmsUrl(layer: LayerI, bounds?: BoundsMatrix) {
+  bounds = bounds ? bounds : boundsUtrecht;
   let url = new URL(layer.url);
   let params = {
     SERVICE: "WMS",
@@ -350,6 +361,7 @@ export function makeWmsUrl(layer: LayerI) {
     WIDTH: "1000",
     HEIGHT: "1000",
     STYLES: "",
+    BBOX: bounds.join(","),
   };
   url.search = objectToSearchParams(params).toString();
 
