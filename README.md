@@ -4,8 +4,9 @@ Public version available on https://gebouwenpaspoort.pandata.nl/.
 
 ## Issue tracking
 
-Done on a
-[private Bitbucket](https://bitbucket.org/coherenza/gebouwenpaspoort/issues).
+Previously done on a
+[private Bitbucket](https://bitbucket.org/coherenza/gebouwenpaspoort/issues),
+now in Github issues.
 
 ## Local development
 

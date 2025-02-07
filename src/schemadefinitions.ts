@@ -604,7 +604,7 @@ export const Attributes : {[index: string]: Attribute} = {
         "id": "href-luchtfoto"
       },
       {
-        "name": "Google Streetview",
+        "name": "Google Maps",
         "type": "URL",
         "id": "href-streetview"
       },
@@ -825,7 +825,7 @@ export const displayAttributes: Attribute[] =   [
     },
       
     { id : "href-streetview",
-      name : "Google Streetview",
+      name : "Google Maps",
       type : "URL",
     },
       
@@ -1727,8 +1727,6 @@ export const searchableAttributes = [
   "_geo",
   "geo-EPSG28992",
   "bag-aob-id",
-  "bag-aob-gebruiksdoel",
-  "bag-aob-oppervlakte",
   "bag-num-id",
   "bag-num-id-neven",
   "bag-num-postcode",
@@ -1743,7 +1741,6 @@ export const searchableAttributes = [
   "bag-pnd-geo",
   "bag-pnd-geo-EPSG28992",
   "bag-pnd-id",
-  "bag-pnd-oorspronkelijk-bouwjaar",
   "bag-wpl-id",
   "bag-wpl-id-neven",
   "bag-wpl-naam",
@@ -1752,8 +1749,7 @@ export const searchableAttributes = [
   "bwk-subwijknaam",
   "bwk-buurtnaam",
   "bwk-subbuurtnaam",
-  "zk-nummer",
-  "locatie-aanduiding"
+  "zk-nummer"
 ];
 
 export interface GBPObject {
