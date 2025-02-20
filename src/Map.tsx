@@ -25,7 +25,7 @@ import {
   useSearchBox,
 } from "react-instantsearch";
 import { Header } from "./Header";
-import { bagLayer, bagLayerId, LayerSource } from "./Layers";
+import { bagLayer, bagLayerId, LayerSource, makeWmsUrl } from "./Layers";
 import useDebounce from "./useDebounce";
 import { mapboxToken } from "./config";
 import { ToolTip } from "./Tooltip";

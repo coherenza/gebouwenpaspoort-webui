@@ -1,5 +1,5 @@
 import { Cross1Icon, InfoCircledIcon } from "@radix-ui/react-icons";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState, useMemo } from "react";
 import {
   AnyLayer,
   FillLayer,
@@ -12,6 +12,10 @@ import {
 import { AppContext } from "./App";
 import "./Layers.css";
 import { boundsLngLatToMatrix, BoundsMatrix } from "./bounds";
+import { useWFSCapabilities } from "./useCapabilities";
+import { wfsServices } from './config/wfsServices';
+import { WFSService } from './types/wfs';
+import { LayerGroup } from './components/LayerGroup';
 
 export const bagLayerId = "points";
 
@@ -31,11 +35,11 @@ export const layersDefault: LayerI[] = [
     url: "https://service.pdok.nl/hwh/luchtfotocir/wms/v1_0",
   },
   {
-    name: "CBS Buurten 2020",
+    name: "CBS Buurten 2024",
     type: "raster",
-    id: "cbs_buurten_2020",
+    id: "cbs_buurten_2024",
     visible: false,
-    url: "https://service.pdok.nl/cbs/wijkenbuurten/2020/wms/v1_0",
+    url: "https://service.pdok.nl/cbs/wijkenbuurten/2024/wms/v1_0",
   },
   {
     name: "CBS Wijken 2020",
@@ -74,12 +78,26 @@ export const layersDefault: LayerI[] = [
     url: "https://service.pdok.nl/rws/napinfo/wfs/v1_0",
     // url: "https://geodata.nationaalgeoregister.nl/napinfo/wfs",
   },
+  // {
+  //   name: "Kadastrale grenzen (WFS)",
+  //   id: "kadastralekaart:Perceel",
+  //   visible: false,
+  //   type: "fill",
+  //   url: "https://service.pdok.nl/kadaster/kadastralekaart/wfs/v5_0"
+  // },
+  // {
+  //   name: "Kadastrale grenzen (WMS)",
+  //   id: "KadastraleGrens",
+  //   visible: false,
+  //   type: "raster",
+  //   url: "https://service.pdok.nl/kadaster/kadastralekaart/wms/v5_0"
+  // },
   {
-    name: "Kadastrale grenzen (WFS)",
-    id: "kadastralekaart:KadastraleGrens",
+    name: "Kadastrale kaart (WMS)",
+    id: "Kadastralekaart",
     visible: false,
-    type: "fill",
-    url: "https://service.pdok.nl/kadaster/kadastralekaart/wfs/v5_0"
+    type: "raster",
+    url: "https://service.pdok.nl/kadaster/kadastralekaart/wms/v5_0"
   }
   /*{
     name: "AHN3",
@@ -132,27 +150,81 @@ async function getDescription(layer: LayerI): Promise<string> {
 
 /** Fetches description from PDOK XML metadata */
 export function LayerSelector() {
-  const { showLayerSelector, setShowLayerSelector, layers } = useContext(
-    AppContext,
+  const { showLayerSelector, setShowLayerSelector, layers, setLayers } = useContext(AppContext);
+
+  // Create an array of hooks for each service
+  const servicesResults = wfsServices.map(service =>
+    useWFSCapabilities(`${service.url}?request=GetCapabilities`)
   );
 
+  // Combine the results with services
+  const servicesData = useMemo(() =>
+    wfsServices.map((service, index) => ({
+      service,
+      ...servicesResults[index]
+    })), [servicesResults]);
+
+  // Convert WFS feature types to LayerI format - memoized
+  const allWfsLayers = useMemo(() =>
+    servicesData.flatMap(({ service, featureTypes = [] }) =>
+      featureTypes.map(feature => ({
+        name: feature.Title || feature.Name,
+        id: feature.Name,
+        visible: false,
+        type: "fill" as const,
+        url: service.url,
+        serviceId: service.id
+      }))
+    ), [servicesData]);
+
+  // Group layers by service - memoized
+  const layerGroups = useMemo(() => ({
+    base: {
+      title: "Basiskaarten",
+      filter: (layer: LayerI) => !layer.serviceId // Only include layers without a serviceId
+    },
+    ...Object.fromEntries(
+      wfsServices.map(service => [
+        service.id,
+        {
+          title: service.name,
+          filter: (layer: LayerI) => layer.serviceId === service.id
+        }
+      ])
+    )
+  }), []);
+
+  // Add WFS layers to existing layers if not already present
+  useEffect(() => {
+    if (allWfsLayers.length > 0) {
+      setLayers(prevLayers => {
+        // Only add layers that don't already exist
+        const newLayers = allWfsLayers.filter(
+          wfsLayer => !prevLayers.some(layer =>
+            layer.id === wfsLayer.id && layer.url === wfsLayer.url
+          )
+        );
+        return newLayers.length > 0 ? [...prevLayers, ...newLayers] : prevLayers;
+      });
+    }
+  }, [allWfsLayers, setLayers]);
+
   return (
-    <div
-      className={`Sidebar filter-panel ${
-        showLayerSelector ? "filter-panel--open" : ""
-      }`}
-    >
+    <div className={`Sidebar filter-panel ${showLayerSelector ? "filter-panel--open" : ""}`}>
       <div className="Titlebar">
         <h3>Lagen</h3>
-        <button
-          title="Lagen sluiten"
-          onClick={() => setShowLayerSelector(false)}
-        >
+        <button title="Lagen sluiten" onClick={() => setShowLayerSelector(false)}>
           <Cross1Icon />
         </button>
       </div>
       <div className="layers-checkboxes">
-        {layers.map((layer) => <LayerCheckbox layer={layer} key={layer.id} />)}
+        {Object.entries(layerGroups).map(([key, group]) => (
+          <LayerGroup
+            key={key}
+            title={group.title}
+            layers={layers.filter(group.filter)}
+          />
+        ))}
       </div>
     </div>
   );
@@ -227,7 +299,7 @@ export function LayerSource({ layer, bounds }: { layer: LayerI, bounds: BoundsMa
   if (layer.id == bagLayerId) {
     return null;
   }
-  let mapBoxLayer = makeMapBoxLayer(layer);
+  let mapBoxLayers = makeMapBoxLayer(layer);
 
   if (layer.type == "raster") {
     return (
@@ -238,25 +310,48 @@ export function LayerSource({ layer, bounds }: { layer: LayerI, bounds: BoundsMa
         tiles={[makeWmsUrl(layer, bounds)]}
         scheme="xyz"
       >
-        <Layer {...mapBoxLayer} beforeId={bagLayerId} />
+        {mapBoxLayers.map(mapBoxLayer => (
+          <Layer {...mapBoxLayer} key={mapBoxLayer.id} beforeId={bagLayerId} />
+        ))}
       </Source>
     );
   }
 
   return (
     <Source id={layer.id} type="geojson" data={makeWfsUrl(layer, bounds)} bounds={bounds}>
-      <Layer {...mapBoxLayer} key={layer.id} id={layer.id} />
+      {mapBoxLayers.map(mapBoxLayer => (
+        <Layer {...mapBoxLayer} key={mapBoxLayer.id} />
+      ))}
     </Source>
   );
 }
 
-function makeMapBoxLayer(layer: LayerI): AnyLayer {
+function makeMapBoxLayer(layer: LayerI): AnyLayer[] {
   if (layer.type === "fill") {
-    return makeFillLayer(layer);
+    return [
+      {
+        id: layer.id,  // Keep original ID for the fill layer
+        source: layer.id,
+        type: "fill",
+        paint: {
+          "fill-color": stringToColor(layer.id),
+          "fill-opacity": 0.3
+        }
+      },
+      {
+        id: `${layer.id}-line`,  // Only the line layer gets a unique ID
+        source: layer.id,
+        type: "line",
+        paint: {
+          "line-color": "#000000",
+          "line-width": 2
+        }
+      }
+    ];
   } else if (layer.type === "symbol") {
-    return makeSymbolLayer(layer);
+    return [makeSymbolLayer(layer)];
   } else {
-    return makeRasterLayer(layer);
+    return [makeRasterLayer(layer)];
   }
 }
 
@@ -285,16 +380,6 @@ const makeSymbolLayer = (layer: LayerI): SymbolLayer => ({
   },
 });
 
-const makeFillLayer = (layer: LayerI): FillLayer => ({
-  id: layer.id,
-  source: layer.id,
-  type: "fill",
-  paint: {
-    "fill-color": stringToColor(layer.id),
-    "fill-opacity": 0.8,
-  },
-});
-
 const makeRasterLayer = (layer: LayerI): RasterLayer => ({
   id: layer.id,
   type: "raster",
@@ -314,6 +399,7 @@ export interface LayerI {
   type: "raster" | "fill" | "symbol";
   /** Which property is used to draw the text. Only for "symbol" types */
   textField?: string;
+  serviceId?: string;
 }
 
 // Convert object to searchParams
@@ -345,29 +431,32 @@ export function makeWfsUrl(layer: LayerI, bounds?: BoundsMatrix) {
   return url.toString();
 }
 
-export function makeWmsUrl(layer: LayerI, bounds?: BoundsMatrix) {
-  bounds = bounds ? bounds : boundsUtrecht;
-  let url = new URL(layer.url);
-  let params = {
+export function makeWmsUrl(layer: LayerI, _bounds?: BoundsMatrix) {
+
+  const params = {
     SERVICE: "WMS",
     VERSION: "1.3.0",
     REQUEST: "GetMap",
     FORMAT: "image/png",
     TRANSPARENT: "true",
-    layers: layer.id,
+    LAYERS: layer.id,
     DPI: "113",
     CRS: "EPSG:3857",
     FORMAT_OPTIONS: "dpi:113",
     WIDTH: "1000",
     HEIGHT: "1000",
     STYLES: "",
-    BBOX: bounds.join(","),
+    bbox: "{bbox-epsg-3857}",
   };
-  url.search = objectToSearchParams(params).toString();
 
-  // The BBOX values are set by MapBoxGL, and it parses this URL to replace the bbox part. So we can't use the URLSearchParams here.
-  const generated = `${url.toString()}&BBOX={bbox-epsg-3857}`;
-  return generated;
+  // Build the query string manually to ensure the BBOX parameter is not encoded
+  const queryString = Object.entries(params)
+    .map(([key, value]) =>
+      key.toLowerCase() === "bbox" ? `${key}=${value}` : `${key}=${encodeURIComponent(value)}`
+    )
+    .join("&");
+
+  return `${layer.url}?${queryString}`;
 }
 
 // unique color from hash of string
