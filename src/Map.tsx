@@ -25,7 +25,6 @@ import {
   useSearchBox,
 } from "react-instantsearch";
 import { Header } from "./Header";
-import { bagLayer, bagLayerId, LayerSource, makeWmsUrl } from "./Layers";
 import useDebounce from "./useDebounce";
 import { mapboxToken } from "./config";
 import { ToolTip } from "./Tooltip";
@@ -34,6 +33,9 @@ import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import * as turf from "@turf/turf";
 import { boundsLngLatToIS, boundsLngLatToMatrix } from "./bounds";
+import { LayerSource } from "./layers/LayerSource";
+import { bagLayerId } from "./layers/LayerTypes";
+import { bagLayer } from "./layers/LayerStyles";
 
 export const mapStartState = {
   latitude: 52.0907,

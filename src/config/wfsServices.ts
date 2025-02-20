@@ -7,5 +7,10 @@ export const wfsServices: WFSService[] = [
     url: "https://service.pdok.nl/cbs/wijkenbuurten/2024/wfs/v1_0",
     description: "Statistische data per wijk en buurt van het CBS",
   },
-  // Add more WFS services here
+  {
+    id: "bag",
+    name: "BAG items",
+    url: "https://service.pdok.nl/lv/bag/wfs/v2_0",
+    description: "Items in het BAG",
+  },
 ];

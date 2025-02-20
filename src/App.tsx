@@ -21,8 +21,10 @@ import { Filters } from "./Filters";
 import { KeyboardHandler } from "./KeyboardHandler";
 import { MapProvider } from "react-map-gl";
 import { useLocalStorage } from "./useLocalStorage";
-import { LayerI, layersDefault, LayerSelector } from "./Layers";
 import { tourSteps as steps } from "./Tour";
+import { layersDefault } from "./layers/defaultLayers";
+import { LayerI } from "./layers/LayerTypes";
+import { LayerSelector } from "./Layers";
 
 type InteractionOrigin = "map" | "text" | "results" | undefined;
 
