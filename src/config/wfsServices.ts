@@ -10,6 +10,7 @@ export const wfsServices: WFSService[] = [
     name: "BAG pdok",
     url: "https://service.pdok.nl/lv/bag/wfs/v2_0",
     description: "Items in het BAG",
+    textField: "huisnummer",
   },
   {
     name: "Kadastrale kaart",

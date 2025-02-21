@@ -320,7 +320,15 @@ export function Map() {
     layers.filter((l) => l.id == bagLayerId && l.visible).length > 0;
 
   const interactiveLayers = useMemo(() => {
-    let l = layers.filter((l) => l.visible).map((layer) => layer.id);
+    let l: string[] = [];
+    layers.filter((l) => l.visible).forEach((layer) => {
+      // Add base layer ID
+      l.push(layer.id);
+      // For vector layers, also add the symbol layer ID
+      if (layer.type === 'vector') {
+        l.push(`${layer.id}-symbol`);
+      }
+    });
     showBagLayer && l.push(bagLayerId);
     return l;
   }, [layers]);
