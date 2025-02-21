@@ -325,7 +325,12 @@ export function Map() {
       setLastInteractionOrigin("map");
       if (evt.features?.length) {
         const feature = evt.features[0];
-        setClickedFeature(feature);
+        console.log("feature", feature);
+
+        if (feature?.layer?.id !== bagLayerId) {
+          setClickedFeature(feature);
+          return;
+        }
 
         // find item with same bag ID in results, show that
         const item = items.find((i) => i.id == feature?.properties?.id);
