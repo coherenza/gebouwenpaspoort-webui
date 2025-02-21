@@ -8,59 +8,31 @@ import { useWFSCapabilities } from "./useCapabilities";
 import { wfsServices } from './config/wfsServices';
 import { LayerGroup } from "./layers/LayerGroup";
 import { LayerI } from "./layers/LayerTypes";
+import { useLayerGroups } from "./hooks/useLayerGroups";
 
 export const bagLayerId = "points";
 
-/** Fetches description from PDOK XML metadata */
+/** Fetches and displays available map layers */
 export function LayerSelector() {
   const { showLayerSelector, setShowLayerSelector, layers, setLayers } = useContext(AppContext);
 
   // Create an array of hooks for each service
   const servicesResults = wfsServices.map(service =>
-    useWFSCapabilities(`${service.url}?request=GetCapabilities&service=WFS`)
+    useWFSCapabilities(service)
   );
-
-  // Combine the results with services
-  const servicesData = useMemo(() =>
-    wfsServices.map((service, index) => ({
-      service,
-      ...servicesResults[index]
-    })), [servicesResults]);
-
-  // Convert WFS feature types to LayerI format - memoized
-  const allWfsLayers = useMemo(() =>
-    servicesData.flatMap(({ service, featureTypes = [] }) =>
-      featureTypes.map(feature => ({
-        name: feature.Title || feature.Name,
-        id: feature.Name,
-        visible: false,
-        // This is dubious, but it works for now
-        type: "vector" as const,
-        url: service.url,
-        textField: service.textField,
-        serviceId: service.id
-      }))
-    ), [servicesData]);
-
-  // Group layers by service - memoized
-  const layerGroups = useMemo(() => ({
-    base: {
-      title: "Basiskaarten",
-      filter: (layer: LayerI) => !layer.serviceId // Only include layers without a serviceId
-    },
-    ...Object.fromEntries(
-      wfsServices.map(service => [
-        service.id,
-        {
-          title: service.name,
-          filter: (layer: LayerI) => layer.serviceId === service.id
-        }
-      ])
-    )
-  }), []);
 
   // Add WFS layers to existing layers if not already present
   useEffect(() => {
+    const allWfsLayers = servicesResults.flatMap(({ layers = [], error }) => {
+      if (error) {
+        console.error('Error loading service:', error);
+        return [];
+      }
+      return layers;
+    });
+
+    console.log('All WFS layers:', allWfsLayers);
+
     if (allWfsLayers.length > 0) {
       setLayers(prevLayers => {
         // Only add layers that don't already exist
@@ -69,10 +41,15 @@ export function LayerSelector() {
             layer.id === wfsLayer.id && layer.url === wfsLayer.url
           )
         );
+        console.log('Adding new layers:', newLayers);
         return newLayers.length > 0 ? [...prevLayers, ...newLayers] : prevLayers;
       });
     }
-  }, [allWfsLayers, setLayers]);
+  }, [servicesResults, setLayers]);
+
+  // Group layers using the new hook
+  const layerGroups = useLayerGroups(layers);
+  console.log('Layer groups:', layerGroups);
 
   return (
     <div className={`Sidebar filter-panel ${showLayerSelector ? "filter-panel--open" : ""}`}>
@@ -83,11 +60,11 @@ export function LayerSelector() {
         </button>
       </div>
       <div className="layers-checkboxes">
-        {Object.entries(layerGroups).map(([key, group]) => (
+        {layerGroups.map(group => (
           <LayerGroup
-            key={key}
+            key={group.serviceId}
             title={group.title}
-            layers={layers.filter(group.filter)}
+            layers={group.layers}
           />
         ))}
       </div>

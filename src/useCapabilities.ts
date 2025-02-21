@@ -7,31 +7,29 @@ export async function getCapabilitiesWFS(baseUrl: string) {
 }
 
 import { useState, useEffect } from "react";
-
-interface FeatureType {
-  Name: string;
-  Title: string;
-  Abstract: string;
-  textField?: string;
-}
+import { LayerI } from "./layers/LayerTypes";
+import { WFSService } from "./types/wfs";
 
 interface UseWFSCapabilitiesResult {
-  featureTypes: FeatureType[];
+  layers: LayerI[];
   loading: boolean;
   error: Error | null;
   name: string;
 }
 
-export function useWFSCapabilities(url: string): UseWFSCapabilitiesResult {
-  const [featureTypes, setFeatureTypes] = useState<FeatureType[]>([]);
-  const [name, setName] = useState<string>(url.split("/").pop() || "");
+export function useWFSCapabilities(
+  service: WFSService
+): UseWFSCapabilitiesResult {
+  const [layers, setLayers] = useState<LayerI[]>([]);
+  const [name, setName] = useState<string>(service.url.split("/").pop() || "");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     async function fetchCapabilities() {
       try {
-        const response = await fetch(url);
+        const capabilitiesURL = `${service.url}?request=GetCapabilities&service=WFS`;
+        const response = await fetch(capabilitiesURL);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -42,19 +40,27 @@ export function useWFSCapabilities(url: string): UseWFSCapabilitiesResult {
         const featureTypeNodes = xmlDoc.getElementsByTagName("FeatureType");
 
         setName(
-          featureTypeNodes[0].getElementsByTagName("ows:Title")[0]
-            ?.textContent || ""
+          featureTypeNodes[0]?.getElementsByTagName("ows:Title")[0]
+            ?.textContent || service.name
         );
 
-        const types = Array.from(featureTypeNodes).map((node) => ({
-          Name: node.getElementsByTagName("Name")[0]?.textContent || "",
-          Title: node.getElementsByTagName("Title")[0]?.textContent || "",
-          Abstract: node.getElementsByTagName("Abstract")[0]?.textContent || "",
+        const layers: LayerI[] = Array.from(featureTypeNodes).map((node) => ({
+          name:
+            node.getElementsByTagName("Title")[0]?.textContent ||
+            node.getElementsByTagName("Name")[0]?.textContent ||
+            "",
+          id: node.getElementsByTagName("Name")[0]?.textContent || "",
+          visible: false,
+          type: "vector",
+          url: service.url,
+          textField: service.textField,
+          serviceId: service.name,
         }));
 
-        setFeatureTypes(types);
+        setLayers(layers);
         setError(null);
       } catch (err) {
+        console.error("Error fetching capabilities:", err);
         setError(
           err instanceof Error ? err : new Error("Failed to fetch capabilities")
         );
@@ -64,7 +70,7 @@ export function useWFSCapabilities(url: string): UseWFSCapabilitiesResult {
     }
 
     fetchCapabilities();
-  }, [url]);
+  }, [service]);
 
-  return { featureTypes, loading, error, name };
+  return { layers, loading, error, name };
 }

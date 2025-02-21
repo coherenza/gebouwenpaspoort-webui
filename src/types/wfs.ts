@@ -75,8 +75,9 @@ export interface WFSCapabilities {
 }
 
 export interface WFSService {
-  id: string;
+  /** Show to the user */
   name: string;
+  /** Endpoint, with version e.g. `https://service.pdok.nl/cbs/wijkenbuurten/2024/wfs/v1_0` */
   url: string;
   description?: string;
   /** If true, the service does not have an SRS */
