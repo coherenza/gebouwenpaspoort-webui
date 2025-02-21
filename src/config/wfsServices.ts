@@ -19,5 +19,13 @@ export const wfsServices: WFSService[] = [
     url: "https://service.pdok.nl/kadaster/kadastralekaart/wfs/v5_0",
     // "https://service.pdok.nl/kadaster/kadastralekaart/wfs/v5_0?request=GetCapabilities&service=WFS"
     description: "Kadastrale kaart",
+    textField: "tekst",
+  },
+  {
+    id: "monumenten",
+    name: "Monumenten",
+    url: "https://data.geo.cultureelerfgoed.nl/openbaar/wfs/2.0",
+    description: "Monumenten",
+    noSRS: true,
   },
 ];

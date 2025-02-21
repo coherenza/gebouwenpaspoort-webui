@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react";
 import { AppContext } from "../App";
-import { LayerI } from "../types";
+import { LayerI } from "../layers/LayerTypes";
 
 interface LayerCheckboxProps {
   layer: LayerI;

@@ -17,7 +17,7 @@ export function LayerSelector() {
 
   // Create an array of hooks for each service
   const servicesResults = wfsServices.map(service =>
-    useWFSCapabilities(`${service.url}?request=GetCapabilities`)
+    useWFSCapabilities(`${service.url}?request=GetCapabilities&service=WFS`)
   );
 
   // Combine the results with services
@@ -34,8 +34,10 @@ export function LayerSelector() {
         name: feature.Title || feature.Name,
         id: feature.Name,
         visible: false,
-        type: "fill" as const,
+        // This is dubious, but it works for now
+        type: "vector" as const,
         url: service.url,
+        textField: service.textField,
         serviceId: service.id
       }))
     ), [servicesData]);
@@ -100,7 +102,6 @@ const boundsUtrecht: BoundsMatrix = [
   5.25482,
   52.166141,
 ];
-const boundsNL: BoundsMatrix = [3, 50, 7.4, 54];
 
 // Convert object to searchParams
 function objectToSearchParams(obj: { [key: string]: any }) {
@@ -123,9 +124,7 @@ export function makeWfsUrl(layer: LayerI, bounds?: BoundsMatrix) {
     acceptsFormat: "application/json",
     typeNames: layer.id,
     srsName: "EPSG:4326",
-    bbox: `${bounds.join(",")}${
-      layer.url.includes("utrecht") ? ",EPSG:4326" : ""
-    }`,
+    bbox: `${bounds.join(",")},EPSG:4326`
   };
   url.search = objectToSearchParams(params).toString();
   return url.toString();
@@ -156,14 +155,4 @@ export function makeWmsUrl(layer: LayerI, _bounds?: BoundsMatrix) {
     .join("&");
 
   return `${layer.url}?${queryString}`;
-}
-
-// unique color from hash of string
-function stringToColor(str: string) {
-  var hash = 0;
-  for (var i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  var h = hash % 256;
-  return "hsl(" + h + ", 90%, 50%)";
 }

@@ -79,4 +79,8 @@ export interface WFSService {
   name: string;
   url: string;
   description?: string;
+  /** If true, the service does not have an SRS */
+  noSRS?: boolean;
+  /** This is used to render the text of the symbol layer */
+  textField?: string;
 }

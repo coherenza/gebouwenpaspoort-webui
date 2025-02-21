@@ -22,26 +22,4 @@ export const layersDefault: LayerI[] = [
     visible: false,
     url: "https://service.pdok.nl/rvo/indgebfunderingsproblematiek/wms/v1_0",
   },
-  {
-    name: "Monumenten Gemeente",
-    id: "UtrechtOpen:MONUMENTEN_OPEN_GM",
-    visible: false,
-    type: "fill",
-    url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wfs",
-  },
-  {
-    name: "Monument Rijk",
-    id: "UtrechtOpen:MONUMENTEN_OPEN_RM",
-    visible: false,
-    type: "fill",
-    url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wfs",
-  },
-  {
-    name: "NAP Peilmerken",
-    id: "napinfo:nappeilmerken",
-    visible: false,
-    type: "symbol",
-    textField: "napHoogte",
-    url: "https://service.pdok.nl/rws/napinfo/wfs/v1_0",
-  },
 ];

@@ -3,7 +3,7 @@ export interface LayerI {
   id: string;
   visible: boolean;
   url?: string;
-  type: "raster" | "fill" | "symbol";
+  type: "raster" | "fill" | "symbol" | "line" | "vector";
   textField?: string;
   serviceId?: string;
 }

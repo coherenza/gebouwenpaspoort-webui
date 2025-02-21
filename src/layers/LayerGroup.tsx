@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
-import { LayerI } from "./types";
 import { LayerCheckbox } from "./LayerCheckbox";
+import { LayerI } from "./LayerTypes";
 
 interface LayerGroupProps {
   title: string;

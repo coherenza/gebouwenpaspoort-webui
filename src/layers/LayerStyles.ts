@@ -4,7 +4,7 @@ import { stringToColor } from "./utils";
 import { bagLayerId } from "./LayerTypes";
 
 export function makeMapBoxLayer(layer: LayerI): AnyLayer[] {
-  if (layer.type === "fill") {
+  if (layer.type === "vector") {
     return [
       {
         id: layer.id,
@@ -22,6 +22,25 @@ export function makeMapBoxLayer(layer: LayerI): AnyLayer[] {
         paint: {
           "line-color": "#000000",
           "line-width": 2,
+        },
+      },
+      {
+        id: `${layer.id}-symbol`,
+        source: layer.id,
+        type: "symbol",
+        layout: {
+          "text-field": ["get", layer.textField || "tekst"],
+          "icon-image": "marker",
+          "icon-size": ["get", "size"],
+          "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+          "symbol-sort-key": ["get", "sort-key"],
+          "text-size": 12,
+          "icon-padding": 1,
+        },
+        paint: {
+          "text-halo-color": "rgba(255,255,255,0.75)",
+          "text-halo-width": 1,
+          "icon-color": ["get", "color"],
         },
       },
     ];

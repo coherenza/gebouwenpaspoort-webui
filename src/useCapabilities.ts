@@ -11,16 +11,20 @@ import { useState, useEffect } from "react";
 interface FeatureType {
   Name: string;
   Title: string;
+  Abstract: string;
+  textField?: string;
 }
 
 interface UseWFSCapabilitiesResult {
   featureTypes: FeatureType[];
   loading: boolean;
   error: Error | null;
+  name: string;
 }
 
 export function useWFSCapabilities(url: string): UseWFSCapabilitiesResult {
   const [featureTypes, setFeatureTypes] = useState<FeatureType[]>([]);
+  const [name, setName] = useState<string>(url.split("/").pop() || "");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -37,9 +41,15 @@ export function useWFSCapabilities(url: string): UseWFSCapabilitiesResult {
         const xmlDoc = parser.parseFromString(text, "text/xml");
         const featureTypeNodes = xmlDoc.getElementsByTagName("FeatureType");
 
+        setName(
+          featureTypeNodes[0].getElementsByTagName("ows:Title")[0]
+            ?.textContent || ""
+        );
+
         const types = Array.from(featureTypeNodes).map((node) => ({
           Name: node.getElementsByTagName("Name")[0]?.textContent || "",
           Title: node.getElementsByTagName("Title")[0]?.textContent || "",
+          Abstract: node.getElementsByTagName("Abstract")[0]?.textContent || "",
         }));
 
         setFeatureTypes(types);
@@ -56,5 +66,5 @@ export function useWFSCapabilities(url: string): UseWFSCapabilitiesResult {
     fetchCapabilities();
   }, [url]);
 
-  return { featureTypes, loading, error };
+  return { featureTypes, loading, error, name };
 }

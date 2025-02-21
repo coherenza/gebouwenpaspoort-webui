@@ -263,6 +263,11 @@ export function Map() {
     [layers],
   );
 
+  const visibleLayers = useMemo(() => {
+    const active = layers.filter((l) => l.visible);
+    return active;
+  }, [layers]);
+
   const data: GeoJSON.FeatureCollection<GeoJSON.Geometry> = useMemo(() => {
     return {
       type: "FeatureCollection",
@@ -475,9 +480,7 @@ export function Map() {
             <Layer {...bagLayer} />
           </Source>
         )}
-        {layers
-          .filter((layer) => layer.visible)
-          .filter((layer) => layer.id !== bagLayerId)
+        {visibleLayers
           .map((layer) => <LayerSource layer={layer} key={layer.id} bounds={currentBounds ? boundsLngLatToMatrix(currentBounds) : null} />)}
       </MapGL>
       <Dialog
