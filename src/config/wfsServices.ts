@@ -13,4 +13,11 @@ export const wfsServices: WFSService[] = [
     url: "https://service.pdok.nl/lv/bag/wfs/v2_0",
     description: "Items in het BAG",
   },
+  {
+    id: "kadastralekaart",
+    name: "Kadastrale kaart",
+    url: "https://service.pdok.nl/kadaster/kadastralekaart/wfs/v5_0",
+    // "https://service.pdok.nl/kadaster/kadastralekaart/wfs/v5_0?request=GetCapabilities&service=WFS"
+    description: "Kadastrale kaart",
+  },
 ];

@@ -28,6 +28,7 @@ import { Header } from "./Header";
 import useDebounce from "./useDebounce";
 import { mapboxToken } from "./config";
 import { ToolTip } from "./Tooltip";
+import { Dialog } from "./Dialog";
 import CustomIcons from "./Icons";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
@@ -173,6 +174,7 @@ export function Map() {
   const mapRef = useRef<MapRef>();
   const [viewState, setViewState] = useState(mapStartState);
   const [hoverInfo, setHoverInfo] = useState(null);
+  const [clickedFeature, setClickedFeature] = useState(null);
   const [area, setArea] = useState<number | null>(null);
   const [currentBounds, setCurrentBounds] = useState<LngLatBounds | null>(null);
 
@@ -321,8 +323,10 @@ export function Map() {
   const handleMapClick = useCallback(
     (evt: MapLayerMouseEvent) => {
       setLastInteractionOrigin("map");
-      if (evt.features) {
+      if (evt.features?.length) {
         const feature = evt.features[0];
+        setClickedFeature(feature);
+
         // find item with same bag ID in results, show that
         const item = items.find((i) => i.id == feature?.properties?.id);
 
@@ -471,6 +475,10 @@ export function Map() {
           .filter((layer) => layer.id !== bagLayerId)
           .map((layer) => <LayerSource layer={layer} key={layer.id} bounds={currentBounds ? boundsLngLatToMatrix(currentBounds) : null} />)}
       </MapGL>
+      <Dialog
+        feature={clickedFeature}
+        onClose={() => setClickedFeature(null)}
+      />
     </div>
   );
 }

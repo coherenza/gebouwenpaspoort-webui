@@ -1,0 +1,64 @@
+.Dialog__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.Dialog__content {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  max-width: 80vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: var(--box-shadow);
+}
+
+.Dialog__close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.Dialog__close-button:hover {
+  background-color: var(--g1);
+}
+
+.Dialog__properties {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.Dialog__property {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.Dialog__property-key {
+  font-weight: bold;
+  color: var(--g5);
+  word-break: break-word;
+}
+
+.Dialog__property-value {
+  word-break: break-word;
+}

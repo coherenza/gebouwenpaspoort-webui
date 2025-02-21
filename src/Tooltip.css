@@ -6,6 +6,8 @@
   border-bottom: 1px dotted black;
   padding: 0.5rem;
   pointer-events: none;
+  max-height: 300px;
+  overflow: hidden;
 }
 
 .tooltip__key {
