@@ -3,6 +3,15 @@ import { LayerI } from "./LayerTypes";
 import { stringToColor } from "./utils";
 import { bagLayerId } from "./LayerTypes";
 
+/**
+ * We try to find the best way to make MapBox render a layer.
+ * https://docs.mapbox.com/style-spec/reference/layers/#type
+ *
+ * The problem here is that we don't know whether the layer itself will have line, point, polygon data.
+ *
+ * Right now we create layers for fills, lines and symbols, but that also means our line lines will be filled - which looks bad.
+ *
+ */
 export function makeMapBoxLayer(layer: LayerI): AnyLayer[] {
   if (layer.type === "vector") {
     return [
@@ -30,7 +39,7 @@ export function makeMapBoxLayer(layer: LayerI): AnyLayer[] {
         type: "symbol",
         layout: {
           "text-field": ["get", layer.textField || "tekst"],
-          "icon-image": "marker",
+          "icon-image": "my-marker",
           "icon-size": ["get", "size"],
           "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
           "symbol-sort-key": ["get", "sort-key"],
@@ -38,7 +47,7 @@ export function makeMapBoxLayer(layer: LayerI): AnyLayer[] {
           "icon-padding": 1,
         },
         paint: {
-          "text-halo-color": "rgba(255,255,255,0.75)",
+          "text-halo-color": stringToColor(layer.id),
           "text-halo-width": 1,
           "icon-color": ["get", "color"],
         },
@@ -56,7 +65,7 @@ const makeSymbolLayer = (layer: LayerI): SymbolLayer => ({
   type: "symbol",
   layout: {
     "text-field": ["get", layer.textField],
-    "icon-image": "marker",
+    "icon-image": "my-marker",
     "icon-size": ["get", "size"],
     "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
     "symbol-sort-key": ["get", "sort-key"],

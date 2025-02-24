@@ -45,16 +45,20 @@ export const wfsServices: WFSService[] = [
     description: "Kadastrale kaart",
     textField: "tekst",
   },
-  {
-    name: "Monumenten",
-    url: "https://data.geo.cultureelerfgoed.nl/openbaar/wfs/2.0",
-    description: "Monumenten",
-    noSRS: true,
-  },
+  // {
+  //   name: "Monumenten",
+  //   url: "https://data.geo.cultureelerfgoed.nl/openbaar/wfs/2.0",
+  //   description: "Monumenten",
+  //   noSRS: true,
+  // },
   {
     name: "Bestuurlijke Gebieden",
     url: "https://service.pdok.nl/kadaster/bestuurlijkegebieden/wfs/v1_0",
     description: "Bestuurlijke gebieden",
+  },
+  {
+    name: "Utrecht",
+    url: "https://geodata.utrecht.nl/geoserver/UtrechtOpen/wfs",
   },
 ];
 

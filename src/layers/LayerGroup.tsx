@@ -9,7 +9,7 @@ interface LayerGroupProps {
 }
 
 export function LayerGroup({ title, layers }: LayerGroupProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div className="layer-group">

@@ -48,19 +48,19 @@ export const SearchBox = () => {
 
   let handleReset = useCallback(
     (e) => {
-      e.preventDefault();
-      refine("");
+      console.log("handleReset called");
+      clear();
+      // refine("*");
       setCurrent(undefined);
       setLastInteractionOrigin("text");
-      clear();
       clearGeo(startBoundsInstant);
-      // map?.fitBounds(startBounds);
+      map?.fitBounds(startBounds);
       clearRefinements();
       setSearchTerm("");
       setLocationFilter(undefined);
       window.location.href = "/";
     },
-    [map],
+    [map, clear, refine, clearGeo, startBoundsInstant, clearRefinements],
   );
 
   let handleSetSearchTerm = useCallback(

@@ -37,7 +37,6 @@ import { boundsLngLatToIS, boundsLngLatToMatrix } from "./bounds";
 import { LayerSource } from "./layers/LayerSource";
 import { bagLayerId } from "./layers/LayerTypes";
 import { bagLayer } from "./layers/LayerStyles";
-import { BaseHit } from "instantsearch.js";
 import { boundsUtrecht } from "./layers/constants";
 
 export const mapStartState = {
@@ -122,9 +121,6 @@ export function Map() {
   // Add a ref for our custom area control:
   const areaControlRef = useRef<AreaControl | null>(null);
 
-  // Reduce debounce time to make it feel more responsive
-  let debouncedLocationFilter = useDebounce(locationFilter, 300);
-
   // Add a flag to track if we're currently animating
   const isAnimating = useRef(false);
 
@@ -135,20 +131,13 @@ export function Map() {
     }
   }, [current, showFilter, showResults, showLayerSelector, showDetails]);
 
-  // When the returned items change (e.g. after a fulltext query), we move the bounds of the map
-  let moveMapToItemBounds = useCallback(() => {
-    moveBounds();
-  }, [mapRef, items]);
-
   // If user changed the query, move the bounds to the new items
   useEffect(() => {
-    // moveMapToItemBounds();
-  }, [query]);
-
-  // If user changed the locationfilter, move the bounds to the new items
-  useEffect(() => {
-    moveMapToItemBounds();
-  }, [debouncedLocationFilter]);
+    if (lastInteractionOrigin == "map") {
+      return;
+    }
+    moveBounds();
+  }, [query, mapRef.current, items]);
 
   // initialize map
   // Load marker icon
@@ -168,21 +157,20 @@ export function Map() {
       if (!mapRef.current) {
         return;
       }
+      if (query == "") {
+        mapRef.current?.fitBounds(boundsUtrecht)
+        return;
+      }
       if (items.length == 0) {
-        console.log("no items, fitting bounds to utrecht");
         mapRef.current?.fitBounds(boundsUtrecht)
         return;
       }
       const firstItem = items[0];
-      console.log("moveBounds called!", items);
 
-      // move to the first item, on a reasonable zoom
-      console.log("firstItem, centering and zooming", firstItem);
       mapRef.current?.getMap().flyTo({
         center: [firstItem._geoloc.lng, firstItem._geoloc.lat],
         zoom: zoomStreetLevel,
         duration: animationDuration,
-        essential: true // this animation will happen even during movement
       });
 
     }, [mapRef, items, query]);
@@ -204,8 +192,12 @@ export function Map() {
   }, [lastInteractionOrigin, refine, isAnimating]);
 
   const setCenter = useCallback(
-    ({ lat, lng }) => {
-      mapRef.current.setCenter([lng, lat]);
+    (item: GBPObject) => {
+      mapRef.current?.getMap().flyTo({
+        center: [item._geo.lng, item._geo.lat],
+        zoom: zoomStreetLevel,
+        duration: animationDuration,
+      });
     },
     [mapRef],
   );
@@ -248,11 +240,7 @@ export function Map() {
         // If the first item is also an address, we open it on the map.
         // But only if the user was interacting with something other than the map.
         if (index == 0 && isAob && lastInteractionOrigin == "text") {
-          // @ts-ignore
-          moveMapToItemBounds(item);
-          setCurrent(item);
-          // setCenter(item._geoloc);
-          // This can be annying
+          setCurrent(item as unknown as GBPObject);
           // setShowDetails(true);
         }
 
@@ -326,6 +314,7 @@ export function Map() {
         if (type.isAob) {
           setShowDetails(true);
           setCurrent(item as unknown as GBPObject);
+          setCenter(item as unknown as GBPObject);
           return;
         } else {
           setLocationFilter({
