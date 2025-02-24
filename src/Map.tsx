@@ -37,6 +37,8 @@ import { boundsLngLatToIS, boundsLngLatToMatrix } from "./bounds";
 import { LayerSource } from "./layers/LayerSource";
 import { bagLayerId } from "./layers/LayerTypes";
 import { bagLayer } from "./layers/LayerStyles";
+import { BaseHit } from "instantsearch.js";
+import { boundsUtrecht } from "./layers/constants";
 
 export const mapStartState = {
   latitude: 52.0907,
@@ -54,70 +56,7 @@ export const startBounds = new LngLatBounds(
   startBoundsInstant.southWest,
 );
 
-function moveBounds(mapRef, items) {
-  if (!mapRef.current) {
-    return;
-  }
-  // Don't set the bounds if there are no items
-  if (items.length == 0) {
-    return;
-  }
-  const center = mapRef.current.getMap().getBounds().getCenter();
-  let lowLat = center.lat;
-  let highLat = center.lat;
-  let lowLng = center.lng;
-  let highLng = center.lng;
-  items.forEach((item, i) => {
-    let lat0, lat1, lng0, lng1;
-    if (item.geo_bbox) {
-      //console.info(`bounds from geo_bbox for ${JSON.stringify(item['bag-object-type'])} ${JSON.stringify(item.naam)}: ${JSON.stringify(item.geo_bbox)}`);
-      lat0 = Math.min(item.geo_bbox[0].lat, item.geo_bbox[1].lat);
-      lat1 = Math.max(item.geo_bbox[0].lat, item.geo_bbox[1].lat);
-      lng0 = Math.min(item.geo_bbox[0].lng, item.geo_bbox[1].lng);
-      lng1 = Math.max(item.geo_bbox[0].lng, item.geo_bbox[1].lng);
-    } else {
-      const { lat, lng } = item._geoloc;
-      lat0 = lat;
-      lat1 = lat;
-      lng0 = lng;
-      lng1 = lng;
-    }
-    if (i == 0) {
-      lowLat = lat0;
-      highLat = lat1;
-      lowLng = lng0;
-      highLng = lng1;
-    } else {
-      // For some reason the extend method doesn't work, so we do it manually
-      // bounds.extend(item._geoloc);
-      if (lat0 < lowLat) {
-        lowLat = lat0;
-      }
-      if (lat1 > highLat) {
-        highLat = lat1;
-      }
-      if (lng0 < lowLng) {
-        lowLng = lng0;
-      }
-      if (lng1 > highLng) {
-        highLng = lng1;
-      }
-    }
-  });
-  let bounds = undefined;
-  try {
-    bounds = new LngLatBounds(
-      { lat: highLat, lng: highLng },
-      { lat: lowLat, lng: lowLng },
-    );
-    mapRef.current?.fitBounds(bounds, {
-      padding: 25,
-    });
-  } catch (e) {
-    console.error("Error moving bounds", e, "items:", items, "center:", center);
-  }
-}
-
+export const zoomStreetLevel = 18;
 
 // Add this custom control definition before your Map component:
 class AreaControl {
@@ -147,6 +86,8 @@ class AreaControl {
   }
 }
 
+/** Amount of ms to animate the map to the new bounds */
+const animationDuration = 1000;
 
 export function Map() {
   const { refine } = useGeoSearch();
@@ -181,8 +122,11 @@ export function Map() {
   // Add a ref for our custom area control:
   const areaControlRef = useRef<AreaControl | null>(null);
 
-  // We need to wait for new items to load after setting the location filter
-  let debouncedLocationFilter = useDebounce(locationFilter, 1000);
+  // Reduce debounce time to make it feel more responsive
+  let debouncedLocationFilter = useDebounce(locationFilter, 300);
+
+  // Add a flag to track if we're currently animating
+  const isAnimating = useRef(false);
 
   // if the users toggles the sidebars, resize the map
   useEffect(() => {
@@ -193,12 +137,12 @@ export function Map() {
 
   // When the returned items change (e.g. after a fulltext query), we move the bounds of the map
   let moveMapToItemBounds = useCallback(() => {
-    moveBounds(mapRef, items);
+    moveBounds();
   }, [mapRef, items]);
 
   // If user changed the query, move the bounds to the new items
   useEffect(() => {
-    moveMapToItemBounds();
+    // moveMapToItemBounds();
   }, [query]);
 
   // If user changed the locationfilter, move the bounds to the new items
@@ -220,10 +164,33 @@ export function Map() {
     }
   }, [mapRef.current]);
 
+  const moveBounds = useCallback(() => {
+      if (!mapRef.current) {
+        return;
+      }
+      if (items.length == 0) {
+        console.log("no items, fitting bounds to utrecht");
+        mapRef.current?.fitBounds(boundsUtrecht)
+        return;
+      }
+      const firstItem = items[0];
+      console.log("moveBounds called!", items);
+
+      // move to the first item, on a reasonable zoom
+      console.log("firstItem, centering and zooming", firstItem);
+      mapRef.current?.getMap().flyTo({
+        center: [firstItem._geoloc.lng, firstItem._geoloc.lat],
+        zoom: zoomStreetLevel,
+        duration: animationDuration,
+        essential: true // this animation will happen even during movement
+      });
+
+    }, [mapRef, items, query]);
+
   // If the user moves the map, update the query to filter current area
   const updateBoundsQuery = useCallback((evt) => {
-    // only if the user moves
-    if (!evt.originalEvent || lastInteractionOrigin === "text") {
+    // Don't update if we're animating or if it's not a user-initiated event
+    if (!evt.originalEvent || lastInteractionOrigin === "text" || isAnimating.current) {
       return;
     }
     const latLngBounds = mapRef.current.getMap().getBounds();
@@ -234,7 +201,7 @@ export function Map() {
     }
     setLastInteractionOrigin("map");
     setViewState(evt.viewState);
-  }, [lastInteractionOrigin, refine]);
+  }, [lastInteractionOrigin, refine, isAnimating]);
 
   const setCenter = useCallback(
     ({ lat, lng }) => {
@@ -282,8 +249,11 @@ export function Map() {
         // But only if the user was interacting with something other than the map.
         if (index == 0 && isAob && lastInteractionOrigin == "text") {
           // @ts-ignore
+          moveMapToItemBounds(item);
           setCurrent(item);
-          setCenter(item._geoloc);
+          // setCenter(item._geoloc);
+          // This can be annying
+          // setShowDetails(true);
         }
 
         const iconTitle = isAob
@@ -338,7 +308,6 @@ export function Map() {
       setLastInteractionOrigin("map");
       if (evt.features?.length) {
         const feature = evt.features[0];
-        console.log("feature", feature);
 
         if (feature?.layer?.id !== bagLayerId) {
           setClickedFeature(feature);

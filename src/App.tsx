@@ -63,8 +63,6 @@ const AppProvider = () => {
       primaryKey: "id",
       // paginationTotalHits: 1000,
     });
-    console.log("client", searchClient);
-    console.log("client.search", searchClient.search);
     return searchClient;
   }, [apiKey]);
 

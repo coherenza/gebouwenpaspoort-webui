@@ -4,11 +4,11 @@ import { useContext, useEffect, useMemo } from "react";
 import { AppContext } from "./App";
 import "./Layers.css";
 import { BoundsMatrix } from "./bounds";
-import { useWFSCapabilities } from "./useCapabilities";
-import { wfsServices } from './config/wfsServices';
+import { useWFSCapabilities } from "./layers/useCapabilities";
 import { LayerGroup } from "./layers/LayerGroup";
 import { LayerI } from "./layers/LayerTypes";
-import { useLayerGroups } from "./hooks/useLayerGroups";
+import { useLayerGroups } from "./layers/useLayerGroups";
+import { wfsServices } from "./layers/defaultLayers";
 
 export const bagLayerId = "points";
 
@@ -31,8 +31,6 @@ export function LayerSelector() {
       return layers;
     });
 
-    console.log('All WFS layers:', allWfsLayers);
-
     if (allWfsLayers.length > 0) {
       setLayers(prevLayers => {
         // Only add layers that don't already exist
@@ -41,7 +39,6 @@ export function LayerSelector() {
             layer.id === wfsLayer.id && layer.url === wfsLayer.url
           )
         );
-        console.log('Adding new layers:', newLayers);
         return newLayers.length > 0 ? [...prevLayers, ...newLayers] : prevLayers;
       });
     }
@@ -49,7 +46,6 @@ export function LayerSelector() {
 
   // Group layers using the new hook
   const layerGroups = useLayerGroups(layers);
-  console.log('Layer groups:', layerGroups);
 
   return (
     <div className={`Sidebar filter-panel ${showLayerSelector ? "filter-panel--open" : ""}`}>

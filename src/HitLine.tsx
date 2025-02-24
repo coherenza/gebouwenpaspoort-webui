@@ -9,6 +9,7 @@ import "./Hit.css";
 import { AppContext } from "./App";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { useMap } from "react-map-gl";
+import { zoomStreetLevel } from "./Map";
 
 interface HitProps {
   hit: GBPObject;
@@ -35,8 +36,6 @@ function getStatusIcon(status: string) {
 function shouldShowStatus(status: string) {
   return !!statusMapping[status];
 }
-
-const streetLevel = 18;
 
 export const HitLine = ({ hit }: HitProps) => {
   const {
@@ -78,7 +77,7 @@ export const HitLine = ({ hit }: HitProps) => {
       map.flyTo({
         center: [lng, lat],
         animate: true,
-        zoom: streetLevel,
+        zoom: zoomStreetLevel,
         duration: 1000,
       });
       setCurrent(hit);

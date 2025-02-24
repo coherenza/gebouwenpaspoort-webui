@@ -7,8 +7,8 @@ export async function getCapabilitiesWFS(baseUrl: string) {
 }
 
 import { useState, useEffect } from "react";
-import { LayerI } from "./layers/LayerTypes";
-import { WFSService } from "./types/wfs";
+import { LayerI } from "./LayerTypes";
+import { WFSService } from "./layerTypes";
 
 interface UseWFSCapabilitiesResult {
   layers: LayerI[];

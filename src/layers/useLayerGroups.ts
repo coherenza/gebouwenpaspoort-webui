@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { LayerI } from "../layers/LayerTypes";
-import { wfsServices } from "../config/wfsServices";
+import { LayerI } from "./LayerTypes";
+import { wfsServices } from "./defaultLayers";
 
 export interface LayerGroup {
   serviceId: string;

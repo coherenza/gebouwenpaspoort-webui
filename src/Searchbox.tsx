@@ -54,7 +54,7 @@ export const SearchBox = () => {
       setLastInteractionOrigin("text");
       clear();
       clearGeo(startBoundsInstant);
-      map?.fitBounds(startBounds);
+      // map?.fitBounds(startBounds);
       clearRefinements();
       setSearchTerm("");
       setLocationFilter(undefined);
