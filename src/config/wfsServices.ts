@@ -25,4 +25,9 @@ export const wfsServices: WFSService[] = [
     description: "Monumenten",
     noSRS: true,
   },
+  {
+    name: "Bestuurlijke Gebieden",
+    url: "https://service.pdok.nl/kadaster/bestuurlijkegebieden/wfs/v1_0",
+    description: "Bestuurlijke gebieden",
+  },
 ];
