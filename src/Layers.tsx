@@ -1,5 +1,5 @@
-import { Cross1Icon } from "@radix-ui/react-icons";
-import { useContext, useEffect, useMemo } from "react";
+import { Cross1Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 import { AppContext } from "./App";
 import "./Layers.css";
@@ -15,6 +15,7 @@ export const bagLayerId = "points";
 /** Fetches and displays available map layers */
 export function LayerSelector() {
   const { showLayerSelector, setShowLayerSelector, layers, setLayers } = useContext(AppContext);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Create an array of hooks for each service
   const servicesResults = wfsServices.map(service =>
@@ -47,6 +48,23 @@ export function LayerSelector() {
   // Group layers using the new hook
   const layerGroups = useLayerGroups(layers);
 
+  // Filter layer groups based on search term
+  const filteredLayerGroups = useMemo(() => {
+    if (!searchTerm) return layerGroups;
+
+    const searchTermLower = searchTerm.toLowerCase();
+    return layerGroups.map(group => ({
+      ...group,
+      layers: group.layers.filter(layer => {
+        const matchesName = layer.name.toLowerCase().includes(searchTermLower);
+        const matchesId = layer.id.toLowerCase().includes(searchTermLower);
+        const matchesService = group.title.toLowerCase().includes(searchTermLower);
+        const matchesDescription = wfsServices.find(s => s.name === layer.serviceId)?.description?.toLowerCase().includes(searchTermLower);
+        return matchesName || matchesId || matchesService || matchesDescription;
+      })
+    })).filter(group => group.layers.length > 0);
+  }, [layerGroups, searchTerm]);
+
   return (
     <div className={`Sidebar filter-panel ${showLayerSelector ? "filter-panel--open" : ""}`}>
       <div className="Titlebar">
@@ -55,12 +73,23 @@ export function LayerSelector() {
           <Cross1Icon />
         </button>
       </div>
+      <div className="search-container">
+        <MagnifyingGlassIcon className="search-icon" />
+        <input
+          type="text"
+          placeholder="Zoek lagen..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+      </div>
       <div className="layers-checkboxes">
-        {layerGroups.map(group => (
+        {filteredLayerGroups.map(group => (
           <LayerGroup
             key={group.serviceId}
             title={group.title}
             layers={group.layers}
+            isExpanded={!!searchTerm}
           />
         ))}
       </div>

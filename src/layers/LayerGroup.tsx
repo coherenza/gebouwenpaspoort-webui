@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { LayerCheckbox } from "./LayerCheckbox";
 import { LayerI } from "./LayerTypes";
@@ -6,10 +6,16 @@ import { LayerI } from "./LayerTypes";
 interface LayerGroupProps {
   title: string;
   layers: LayerI[];
+  isExpanded?: boolean;
 }
 
-export function LayerGroup({ title, layers }: LayerGroupProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+export function LayerGroup({ title, layers, isExpanded: defaultExpanded = false }: LayerGroupProps) {
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+
+  // Update isExpanded when defaultExpanded changes
+  useEffect(() => {
+    setIsExpanded(defaultExpanded);
+  }, [defaultExpanded]);
 
   return (
     <div className="layer-group">
