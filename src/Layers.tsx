@@ -48,6 +48,20 @@ export function LayerSelector() {
   // Group layers using the new hook
   const layerGroups = useLayerGroups(layers);
 
+  // Get selected layers
+  const selectedLayers = useMemo(() => {
+    return layers.filter(layer => layer.visible);
+  }, [layers]);
+
+  // Handle removing a layer
+  const handleRemoveLayer = (layerId: string) => {
+    setLayers(prevLayers =>
+      prevLayers.map(layer =>
+        layer.id === layerId ? { ...layer, visible: false } : layer
+      )
+    );
+  };
+
   // Filter layer groups based on search term
   const filteredLayerGroups = useMemo(() => {
     if (!searchTerm) return layerGroups;
@@ -73,6 +87,27 @@ export function LayerSelector() {
           <Cross1Icon />
         </button>
       </div>
+
+      {selectedLayers.length > 0 && (
+        <div className="selected-layers">
+          <h4>Geselecteerde lagen</h4>
+          <div className="selected-layers-list">
+            {selectedLayers.map(layer => (
+              <div key={layer.id} className="selected-layer-item">
+                <span>{layer.name}</span>
+                <button
+                  onClick={() => handleRemoveLayer(layer.id)}
+                  title="Verwijder laag"
+                  className="remove-layer-button"
+                >
+                  <Cross1Icon />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="search-container">
         <MagnifyingGlassIcon className="search-icon" />
         <input
@@ -82,6 +117,15 @@ export function LayerSelector() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
         />
+        {searchTerm && (
+          <button
+            className="search-clear-button"
+            onClick={() => setSearchTerm("")}
+            title="Zoekopdracht wissen"
+          >
+            <Cross1Icon />
+          </button>
+        )}
       </div>
       <div className="layers-checkboxes">
         {filteredLayerGroups.map(group => (

@@ -45,11 +45,17 @@ export function makeMapBoxLayer(layer: LayerI): AnyLayer[] {
           "symbol-sort-key": ["get", "sort-key"],
           "text-size": 12,
           "icon-padding": 1,
+          "text-offset": [0, 1.25],
+          "text-anchor": "top",
+          "text-allow-overlap": false,
+          "icon-allow-overlap": true,
+          "text-optional": true,
+          "icon-optional": false,
         },
         paint: {
-          "text-halo-color": stringToColor(layer.id),
+          "text-halo-color": "rgba(255,255,255,0.75)",
           "text-halo-width": 1,
-          "icon-color": ["get", "color"],
+          "icon-color": stringToColor(layer.id),
         },
       },
     ];
@@ -71,6 +77,8 @@ const makeSymbolLayer = (layer: LayerI): SymbolLayer => ({
     "symbol-sort-key": ["get", "sort-key"],
     "text-size": 12,
     "icon-padding": 1,
+    "text-offset": [0, 1.25],
+    "text-anchor": "top",
   },
   paint: {
     "text-halo-color": "rgba(255,255,255,0.75)",
