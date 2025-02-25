@@ -41,3 +41,40 @@
 .Map__buttons--right {
   right: 1rem;
 }
+
+/* Fix MapboxDraw control styling */
+.mapboxgl-ctrl-group {
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Measurement displays */
+.Map__measurements {
+  position: absolute;
+  bottom: 180px;
+  left: 10px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.Map__measurement {
+  background-color: white;
+  border-radius: 4px;
+  padding: 8px 12px;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  font-size: 14px;
+  color: #333;
+  min-width: 120px;
+}
+
+.Map__measurement--area {
+  border-left: 4px solid #3bb2d0;
+}
+
+.Map__measurement--length {
+  border-left: 4px solid #fbb03b;
+}

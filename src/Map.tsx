@@ -57,34 +57,6 @@ export const startBounds = new LngLatBounds(
 
 export const zoomStreetLevel = 18;
 
-// Add this custom control definition before your Map component:
-class AreaControl {
-  _container: HTMLButtonElement | null = null;
-  _map: any;
-
-  onAdd(map: any) {
-    this._map = map;
-    this._container = document.createElement("button");
-    // Use Mapbox control default classes for basic styling
-    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
-    // You can use inline styles to adjust appearance
-    this._container.style.backgroundColor = "#fff";
-    this._container.style.border = "none";
-    this._container.style.padding = "5px";
-    this._container.style.cursor = "default";
-    this._container.type = "button";
-    this._container.style.display = "none"; // Hide control initially
-    return this._container;
-  }
-
-  onRemove() {
-    if (this._container && this._container.parentNode) {
-      this._container.parentNode.removeChild(this._container);
-    }
-    this._map = undefined;
-  }
-}
-
 /** Amount of ms to animate the map to the new bounds */
 const animationDuration = 1000;
 
@@ -116,13 +88,16 @@ export function Map() {
   const [hoverInfo, setHoverInfo] = useState(null);
   const [clickedFeature, setClickedFeature] = useState(null);
   const [area, setArea] = useState<number | null>(null);
+  const [lineLength, setLineLength] = useState<number | null>(null);
   const [currentBounds, setCurrentBounds] = useState<LngLatBounds | null>(null);
-
-  // Add a ref for our custom area control:
-  const areaControlRef = useRef<AreaControl | null>(null);
+  // Add a ref to store the MapboxDraw instance
+  const drawRef = useRef<any>(null);
 
   // Add a flag to track if we're currently animating
   const isAnimating = useRef(false);
+
+  // Add state for tracking active drawing mode
+  const [activeMode, setActiveMode] = useState<string | null>(null);
 
   // if the users toggles the sidebars, resize the map
   useEffect(() => {
@@ -334,66 +309,174 @@ export function Map() {
     const map = mapRef.current?.getMap();
     if (!map) return;
 
-    const draw = new MapboxDraw({
-      displayControlsDefault: false,
-      controls: {
-        polygon: true,
-        trash: true,
-      },
-    });
+    // Create the draw control if it doesn't exist
+    if (!drawRef.current) {
+      drawRef.current = new MapboxDraw({
+        displayControlsDefault: false,
+        controls: {
+          polygon: true,
+          line_string: true,
+          trash: true,
+        },
+        // Set these to true to make the controls more visible
+        boxSelect: true,
+        touchEnabled: true
+      });
 
-    map.addControl(draw, 'bottom-left');
+      // Add the control to the map - position it at the bottom-left
+      map.addControl(drawRef.current, 'bottom-left');
+    }
 
-    const updateArea = (e?: { type: string }) => {
-      const data = draw.getAll();
-      if (data.features.length > 0) {
-        const area = turf.area(data);
-        setArea(Math.round(area * 100) / 100);
+    const updateArea = (e?: any) => {
+      if (!drawRef.current) return;
+
+      const data = drawRef.current.getAll();
+
+      // Calculate area for polygons
+      const polygons = data.features.filter(f => f.geometry.type === 'Polygon');
+      if (polygons.length > 0) {
+        let totalArea = 0;
+        for (const polygon of polygons) {
+          const area = turf.area(polygon);
+          totalArea += area;
+        }
+        setArea(Math.round(totalArea));
       } else {
-        setArea(null);
+        // Hide area measurement when no polygons exist
+        setArea(0);
+      }
+
+      // Calculate length for lines
+      const lines = data.features.filter(f => f.geometry.type === 'LineString');
+      if (lines.length > 0) {
+        let totalLength = 0;
+        for (const line of lines) {
+          const length = turf.length(line, { units: 'meters' });
+          totalLength += length;
+        }
+        setLineLength(Math.round(totalLength));
+      } else {
+        // Hide length measurement when no lines exist
+        setLineLength(0);
       }
     };
 
-    map.on('draw.create', updateArea);
-    map.on('draw.delete', updateArea);
-    map.on('draw.update', updateArea);
+    // Use 'any' type assertion to avoid TypeScript errors with MapboxDraw events
+    (map as any).on('draw.create', updateArea);
+    (map as any).on('draw.update', updateArea);
+    (map as any).on('draw.selectionchange', updateArea);
+    // Add event to update measurements during drawing
+    (map as any).on('draw.render', updateArea);
+
+    // Add event listener for mode change to track active drawing mode
+    (map as any).on('draw.modechange', (e) => {
+      const mode = e.mode;
+      setActiveMode(mode);
+
+      // Update measurements when mode changes
+      updateArea(e);
+    });
+
+    // Add event listener for trash button to ensure measurements are cleared
+    (map as any).on('draw.delete', () => {
+      console.log('draw.delete event triggered');
+      // Get the current data after deletion
+      const data = drawRef.current.getAll();
+
+      // Check if there are any polygons left
+      const polygons = data.features.filter(f => f.geometry.type === 'Polygon');
+      if (polygons.length === 0) {
+        // No polygons left, clear area measurement
+        setArea(0);
+      } else {
+        // Update area measurement for remaining polygons
+        let totalArea = 0;
+        for (const polygon of polygons) {
+          const area = turf.area(polygon);
+          totalArea += area;
+        }
+        setArea(Math.round(totalArea));
+      }
+
+      // Check if there are any lines left
+      const lines = data.features.filter(f => f.geometry.type === 'LineString');
+      if (lines.length === 0) {
+        // No lines left, clear length measurement
+        setLineLength(0);
+      } else {
+        // Update length measurement for remaining lines
+        let totalLength = 0;
+        for (const line of lines) {
+          const length = turf.length(line, { units: 'meters' });
+          totalLength += length;
+        }
+        setLineLength(Math.round(totalLength));
+      }
+    });
+
+    // Add a click event listener to the trash button to ensure it works correctly
+    const trashButton = document.querySelector('.mapbox-gl-draw_trash');
+    if (trashButton) {
+      trashButton.addEventListener('click', () => {
+        console.log('Trash button clicked');
+
+        // Get the currently selected features
+        const selectedFeatures = drawRef.current.getSelectedIds();
+
+        if (selectedFeatures.length === 0) {
+          // No features selected, clear everything
+          drawRef.current.deleteAll();
+          setArea(0);
+          setLineLength(0);
+        } else {
+          // Some features are selected, they will be deleted by MapboxDraw
+          // We need to manually check what remains after deletion
+
+          // First, get the current data
+          const currentData = drawRef.current.getAll();
+
+          // Store the IDs of selected features
+          const selectedIds = new Set(selectedFeatures);
+
+          // Filter out the features that will be deleted
+          const remainingFeatures = currentData.features.filter(f => !selectedIds.has(f.id));
+
+          // Check if there will be any polygons left
+          const remainingPolygons = remainingFeatures.filter(f => f.geometry.type === 'Polygon');
+          if (remainingPolygons.length === 0) {
+            setArea(0);
+          }
+
+          // Check if there will be any lines left
+          const remainingLines = remainingFeatures.filter(f => f.geometry.type === 'LineString');
+          if (remainingLines.length === 0) {
+            setLineLength(0);
+          }
+        }
+      });
+    }
 
     // Cleanup
     return () => {
-      map.removeControl(draw);
-      map.off('draw.create', updateArea);
-      map.off('draw.delete', updateArea);
-      map.off('draw.update', updateArea);
+      if (drawRef.current) {
+        // Remove the click event listener from the trash button
+        const trashButton = document.querySelector('.mapbox-gl-draw_trash');
+        if (trashButton) {
+          // Use a no-op function since we can't access the original handler
+          trashButton.removeEventListener('click', () => {});
+        }
+
+        map.removeControl(drawRef.current);
+        drawRef.current = null;
+      }
+      (map as any).off('draw.create', updateArea);
+      (map as any).off('draw.update', updateArea);
+      (map as any).off('draw.selectionchange', updateArea);
+      (map as any).off('draw.render', updateArea);
+      (map as any).off('draw.modechange', updateArea);
+      (map as any).off('draw.delete');
     };
   }, [mapRef.current]); // Only run once when map is initialized
-
-  // Add useEffect to create our custom area control
-  useEffect(() => {
-    const map = mapRef.current?.getMap();
-    if (!map) return;
-    if (!areaControlRef.current) {
-      areaControlRef.current = new AreaControl();
-      map.addControl(areaControlRef.current, 'bottom-left');
-    }
-    return () => {
-      if (areaControlRef.current) {
-        map.removeControl(areaControlRef.current);
-        areaControlRef.current = null;
-      }
-    };
-  }, [mapRef.current]);
-
-  // Update the custom control button text when the area changes
-  useEffect(() => {
-    if (areaControlRef.current && areaControlRef.current._container) {
-      if (area !== null) {
-        areaControlRef.current._container.textContent = `${area} m²`;
-        areaControlRef.current._container.style.display = "block";
-      } else {
-        areaControlRef.current._container.style.display = "none";
-      }
-    }
-  }, [area]);
 
   return (
     <div className="Map__wrapper">
@@ -420,6 +503,23 @@ export function Map() {
           <button onClick={() => setShowDetails(!showDetails)}>Details</button>
         )}
       </div>
+
+      {/* Measurement displays */}
+      {(area > 0 || lineLength > 0) && (
+        <div className="Map__measurements">
+          {area > 0 && (
+            <div className="Map__measurement Map__measurement--area">
+              Oppervlakte: {area} m²
+            </div>
+          )}
+          {lineLength > 0 && (
+            <div className="Map__measurement Map__measurement--length">
+              Lengte: {lineLength} m
+            </div>
+          )}
+        </div>
+      )}
+
       <Header />
       <MapGL
         trackResize={true}
