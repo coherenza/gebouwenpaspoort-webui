@@ -134,6 +134,7 @@ export function LayerSelector() {
             title={group.title}
             layers={group.layers}
             isExpanded={!!searchTerm}
+            setSearchTerm={setSearchTerm}
           />
         ))}
       </div>

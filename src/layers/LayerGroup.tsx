@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { LayerCheckbox } from "./LayerCheckbox";
 import { LayerI } from "./LayerTypes";
@@ -7,9 +7,10 @@ interface LayerGroupProps {
   title: string;
   layers: LayerI[];
   isExpanded?: boolean;
+  setSearchTerm: Dispatch<SetStateAction<string>>;
 }
 
-export function LayerGroup({ title, layers, isExpanded: defaultExpanded = false }: LayerGroupProps) {
+export function LayerGroup({ title, layers, isExpanded: defaultExpanded = false, setSearchTerm }: LayerGroupProps) {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
   // Update isExpanded when defaultExpanded changes
@@ -29,7 +30,11 @@ export function LayerGroup({ title, layers, isExpanded: defaultExpanded = false 
       {isExpanded && (
         <div className="layer-group__content">
           {layers.map((layer) => (
-            <LayerCheckbox layer={layer} key={layer.id} />
+            <LayerCheckbox
+              layer={layer}
+              key={layer.id}
+              setSearchTerm={setSearchTerm}
+            />
           ))}
         </div>
       )}

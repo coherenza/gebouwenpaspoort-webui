@@ -1,12 +1,13 @@
-import { useContext } from "react";
+import { useContext, Dispatch, SetStateAction } from "react";
 import { AppContext } from "../App";
 import { LayerI } from "./LayerTypes";
 
 interface LayerCheckboxProps {
   layer: LayerI;
+  setSearchTerm: Dispatch<SetStateAction<string>>;
 }
 
-export function LayerCheckbox({ layer }: LayerCheckboxProps) {
+export function LayerCheckbox({ layer, setSearchTerm }: LayerCheckboxProps) {
   const { setLayers } = useContext(AppContext);
 
   const handleChange = (checked: boolean) => {
@@ -15,6 +16,11 @@ export function LayerCheckbox({ layer }: LayerCheckboxProps) {
         l.id === layer.id ? { ...l, visible: checked } : l
       )
     );
+
+    // Clear the search when turning on a layer
+    if (checked) {
+      setSearchTerm("");
+    }
   };
 
   return (

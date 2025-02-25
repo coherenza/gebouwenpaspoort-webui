@@ -36,7 +36,7 @@ export const SearchBox = () => {
     setShowDetails,
   } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState("");
-  const debouncedSearchTerm = useDebounce(searchTerm, 200);
+  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
   const { refine: clearRefinements } = useClearRefinements();
 
   // We keep track of the `sortBy` in a more efficient way to prevent unnecessary searches
