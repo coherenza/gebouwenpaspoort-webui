@@ -130,6 +130,34 @@ export function LayerSelector() {
     })).filter(group => group.layers.length > 0);
   }, [layerGroups, searchTerm]);
 
+  // Function to select the first layer from filtered results
+  const selectFirstFilteredLayer = () => {
+    // Find the first available layer from filtered groups
+    for (const group of filteredLayerGroups) {
+      if (group.layers.length > 0) {
+        const firstLayer = group.layers[0];
+        // Only select if not already visible
+        if (!firstLayer.visible) {
+          setLayers(prevLayers =>
+            prevLayers.map(layer =>
+              layer.id === firstLayer.id ? { ...layer, visible: true } : layer
+            )
+          );
+          // Clear the search term after selection
+          setSearchTerm("");
+        }
+        break;
+      }
+    }
+  };
+
+  // Handle key press in search input
+  const handleSearchKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && searchTerm.trim() !== '') {
+      selectFirstFilteredLayer();
+    }
+  };
+
   return (
     <div className={`Sidebar filter-panel ${showLayerSelector ? "filter-panel--open" : ""}`}>
       <div className="Titlebar">
@@ -174,6 +202,7 @@ export function LayerSelector() {
           placeholder="Zoek lagen..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={handleSearchKeyPress}
           className="search-input"
         />
         {searchTerm && (
