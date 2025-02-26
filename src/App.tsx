@@ -3,7 +3,7 @@ import "./reset.css";
 import "./App.css";
 import "./global.css";
 
-import React, { createContext, useEffect, useMemo } from "react";
+import React, { createContext, useEffect, useMemo, useState } from "react";
 import {
   Configure,
   InstantSearch,
@@ -28,7 +28,7 @@ import { LayerSelector } from "./Layers";
 
 type InteractionOrigin = "map" | "text" | "results" | undefined;
 
-interface AppContextI {
+export interface AppContextI {
   setCurrent: (gebouw: GBPObject) => void;
   current: GBPObject | undefined;
   setShowDetails: (b: boolean) => void;
@@ -46,6 +46,9 @@ interface AppContextI {
   /** Where the user had its last interaction */
   lastInteractionOrigin: InteractionOrigin;
   setLastInteractionOrigin: (origin: InteractionOrigin) => void;
+  /** Whether to show BAG items (search results) on the map */
+  showBagLayer: boolean;
+  setShowBagLayer: (b: boolean) => void;
 }
 
 export const AppContext = createContext<AppContextI>(undefined);
@@ -109,7 +112,7 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   >(undefined);
   const [apiKeyTemp, setApiKeyTemp] = React.useState("");
   const [validApiKey, setValidApiKey] = React.useState(false);
-  const { setIsOpen } = useTour();
+  const [showBagLayer, setShowBagLayer] = useLocalStorage("showBagLayer", true);
 
   const { refine } = useRefinementList({ attribute: "pdok-locatie-id" });
   const { refine: clearLocationFilter } = useClearRefinements({
@@ -148,6 +151,11 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
     });
   }, [apiKey]);
 
+  // Reset current when locationFilter changes
+  useEffect(() => {
+    setCurrent(undefined);
+  }, [locationFilter]);
+
   return (
     <AppContext.Provider
       value={{
@@ -167,6 +175,8 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
         setShowResults,
         setLocationFilter,
         locationFilter,
+        showBagLayer,
+        setShowBagLayer,
       }}
     >
       <MapProvider>

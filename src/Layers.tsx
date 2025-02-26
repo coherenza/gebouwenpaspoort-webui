@@ -14,10 +14,15 @@ export const bagLayerId = "points";
 
 /** Fetches and displays available map layers */
 export function LayerSelector() {
-  const { showLayerSelector, setShowLayerSelector, layers, setLayers } = useContext(AppContext);
+  const {
+    showLayerSelector,
+    setShowLayerSelector,
+    layers,
+    setLayers,
+    showBagLayer,
+    setShowBagLayer
+  } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState("");
-
-  // Create an array of hooks for each service
   const servicesResults = wfsServices.map(service =>
     useWFSCapabilities(service)
   );
@@ -88,10 +93,15 @@ export function LayerSelector() {
         </button>
       </div>
 
-      {selectedLayers.length > 0 && (
-        <div className="selected-layers">
+         <div className="selected-layers">
           <h4>Geselecteerde lagen</h4>
           <div className="selected-layers-list">
+          <button
+            // className={`bag-layer-button ${showBagLayer ? 'active' : ''}`}
+            onClick={() => setShowBagLayer(!showBagLayer)}
+          >
+            {showBagLayer ? "Verberg Zoekresultaten" : "Toon Zoekresultaten"}
+          </button>
             {selectedLayers.map(layer => (
               <div key={layer.id} className="selected-layer-item">
                 <span>{layer.name}</span>
@@ -106,7 +116,6 @@ export function LayerSelector() {
             ))}
           </div>
         </div>
-      )}
 
       <div className="search-container">
         <MagnifyingGlassIcon className="search-icon" />

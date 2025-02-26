@@ -34,8 +34,11 @@ export function LayerSource({ layer, bounds = boundsNL }: LayerSourceProps) {
     );
   }
 
+  // For GeoJSON sources, we use the bounds in the WFS URL but don't pass it as a prop
+  const wfsUrl = makeWfsUrl(layer, effectiveBounds);
+
   return (
-    <Source id={layer.id} type="geojson" data={makeWfsUrl(layer, effectiveBounds)} bounds={effectiveBounds}>
+    <Source id={layer.id} type="geojson" data={wfsUrl}>
       {mapBoxLayers.map(mapBoxLayer => (
         <Layer {...mapBoxLayer} key={mapBoxLayer.id} />
       ))}

@@ -78,3 +78,5 @@
 .Map__measurement--length {
   border-left: 4px solid #fbb03b;
 }
+
+/* Remove the search controls styles since they've been moved to Layers.css */

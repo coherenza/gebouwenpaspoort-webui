@@ -1,4 +1,5 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
+import { useEffect } from "react";
 import "./Dialog.css";
 
 interface DialogProps {
@@ -8,6 +9,23 @@ interface DialogProps {
 
 export function Dialog({ feature, onClose }: DialogProps) {
   if (!feature) return null;
+
+  // Add event listener for Escape key
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    // Add event listener
+    window.addEventListener("keydown", handleKeyDown);
+
+    // Clean up
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
 
   return (
     <div className="Dialog__overlay" onClick={onClose}>

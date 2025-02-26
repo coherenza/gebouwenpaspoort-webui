@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Our hook
 export default function useDebounce(value, delay) {
@@ -27,29 +27,8 @@ export default function useDebounce(value, delay) {
     // Only re-call effect if value changes
     // You could also add the "delay" var to inputs array if you ...
     // ... need to be able to change that dynamically.
-    [value],
+    [value]
   );
 
   return debouncedValue;
-}
-
-export function useThrottle<T>(value: T, interval = 500): T {
-  const [throttledValue, setThrottledValue] = useState<T>(value);
-  const lastExecuted = useRef<number>(Date.now());
-
-  useEffect(() => {
-    if (Date.now() >= lastExecuted.current + interval) {
-      lastExecuted.current = Date.now();
-      setThrottledValue(value);
-    } else {
-      const timerId = setTimeout(() => {
-        lastExecuted.current = Date.now();
-        setThrottledValue(value);
-      }, interval);
-
-      return () => clearTimeout(timerId);
-    }
-  }, [value, interval]);
-
-  return throttledValue;
 }

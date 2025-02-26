@@ -25,7 +25,6 @@ import {
   useSearchBox,
 } from "react-instantsearch";
 import { Header } from "./Header";
-import useDebounce from "./useDebounce";
 import { mapboxToken } from "./config";
 import { ToolTip } from "./Tooltip";
 import { Dialog } from "./Dialog";
@@ -38,6 +37,7 @@ import { LayerSource } from "./layers/LayerSource";
 import { bagLayerId } from "./layers/LayerTypes";
 import { bagLayer } from "./layers/LayerStyles";
 import { boundsUtrecht } from "./layers/constants";
+import { BAGLayer } from "./layers/defaultLayers";
 
 export const mapStartState = {
   latitude: 52.0907,
@@ -45,15 +45,19 @@ export const mapStartState = {
   zoom: 11,
 };
 
+// Create startBoundsInstant from boundsUtrecht
 export const startBoundsInstant = {
-  northEast: { lng: 5.2739270893989385, lat: 52.173599476147416 },
-  southWest: { lng: 4.975922939008171, lat: 52.013504913663525 },
+  northEast: { lng: boundsUtrecht[2], lat: boundsUtrecht[3] },
+  southWest: { lng: boundsUtrecht[0], lat: boundsUtrecht[1] },
 };
 
-export const startBounds = new LngLatBounds(
-  startBoundsInstant.northEast,
-  startBoundsInstant.southWest,
-);
+// Create startBounds from boundsUtrecht
+export const startBounds = [
+  boundsUtrecht[0], // Southwest longitude
+  boundsUtrecht[1], // Southwest latitude
+  boundsUtrecht[2], // Northeast longitude
+  boundsUtrecht[3]  // Northeast latitude
+];
 
 export const zoomStreetLevel = 18;
 
@@ -82,6 +86,8 @@ export function Map() {
     showLayerSelector,
     locationFilter,
     layers,
+    showBagLayer,
+    setShowBagLayer,
   } = useContext(AppContext);
   const mapRef = useRef<MapRef>();
   const [viewState, setViewState] = useState(mapStartState);
@@ -95,9 +101,6 @@ export function Map() {
 
   // Add a flag to track if we're currently animating
   const isAnimating = useRef(false);
-
-  // Add state for tracking active drawing mode
-  const [activeMode, setActiveMode] = useState<string | null>(null);
 
   // if the users toggles the sidebars, resize the map
   useEffect(() => {
@@ -133,19 +136,34 @@ export function Map() {
         return;
       }
       if (query == "") {
-        mapRef.current?.fitBounds(boundsUtrecht)
+        isAnimating.current = true;
+        mapRef.current?.fitBounds(boundsUtrecht, {
+          animate: true,
+          duration: animationDuration,
+        }).once('moveend', () => {
+          isAnimating.current = false;
+        });
         return;
       }
       if (items.length == 0) {
-        mapRef.current?.fitBounds(boundsUtrecht)
+        isAnimating.current = true;
+        mapRef.current?.fitBounds(boundsUtrecht, {
+          animate: true,
+          duration: animationDuration,
+        }).once('moveend', () => {
+          isAnimating.current = false;
+        });
         return;
       }
       const firstItem = items[0];
 
+      isAnimating.current = true;
       mapRef.current?.getMap().flyTo({
         center: [firstItem._geoloc.lng, firstItem._geoloc.lat],
         zoom: zoomStreetLevel,
         duration: animationDuration,
+      }).once('moveend', () => {
+        isAnimating.current = false;
       });
 
     }, [mapRef, items, query]);
@@ -179,46 +197,36 @@ export function Map() {
 
   const handleHover = useCallback(
     (event) => {
-      const {
-        features,
-        point: { x, y },
-      } = event;
+      const { features, point } = event;
       const hoveredFeature = features && features[0];
-      if (!mapRef.current) {
-        return;
-      }
-      if (hoveredFeature) {
-        mapRef.current.getCanvas().style.cursor = "pointer";
-      } else {
-        mapRef.current.getCanvas().style.cursor = "";
-      }
-      setHoverInfo(hoveredFeature && { feature: hoveredFeature, x, y });
+
+      if (!mapRef.current) return;
+
+      // Update cursor style based on whether a feature is hovered
+      mapRef.current.getCanvas().style.cursor = hoveredFeature ? "pointer" : "";
+
+      // Update hover info with feature and position
+      setHoverInfo(hoveredFeature && { feature: hoveredFeature, x: point.x, y: point.y });
     },
     [layers],
   );
 
-  const visibleLayers = useMemo(() => {
-    const active = layers.filter((l) => l.visible);
-    return active;
-  }, [layers]);
+  const visibleLayers = useMemo(() => layers.filter(layer => layer.visible), [layers]);
 
   const data: GeoJSON.FeatureCollection<GeoJSON.Geometry> = useMemo(() => {
     return {
       type: "FeatureCollection",
       id: bagLayerId,
       features: items.map((item, index) => {
-        const isCurrent = item.id == current?.id ||
-          locationFilter?.id == item.id;
-
+        const isCurrent = item.id === current?.id || locationFilter?.id === item.id;
         const { color, isAob, label } = getObjectType(item);
 
-        // If the first item is also an address, we open it on the map.
-        // But only if the user was interacting with something other than the map.
-        if (index == 0 && isAob && lastInteractionOrigin == "text") {
+        // Auto-select first address item when searching
+        if (index === 0 && isAob && lastInteractionOrigin === "text") {
           setCurrent(item as unknown as GBPObject);
-          // setShowDetails(true);
         }
 
+        // Determine icon title based on item type
         const iconTitle = isAob
           ? item.hoofdadres["bag-num-huisnummer-letter-aanduiding"]
           : item.naam;
@@ -230,15 +238,14 @@ export function Map() {
             coordinates: [item._geoloc.lng, item._geoloc.lat],
           },
           properties: {
-            // These are be displayed in the popup
+            // Display property
             [label]: item.naam,
-            // These are used to style the point.
-            // Add the keys to `hiddenProps` in `Tooltip.tsx` to hide them from the tooltip.
+
+            // Styling properties
             id: item.id,
             size: isCurrent ? 1.4 : 1,
             "text-size": isCurrent ? 15 : 12,
-            // Lower = shown on top
-            "sort-key": isCurrent ? 0 : 1,
+            "sort-key": isCurrent ? 0 : 1, // Lower = shown on top
             type: item["bag-object-type"],
             color: isCurrent ? "#000000" : color,
             title: iconTitle,
@@ -249,48 +256,52 @@ export function Map() {
     };
   }, [items, current, lastInteractionOrigin]);
 
-  const showBagLayer =
-    layers.filter((l) => l.id == bagLayerId && l.visible).length > 0;
+  // Check if search results exist
+  const hasSearchResults = useMemo(() => {
+    return items.length > 0;
+  }, [items]);
 
   const interactiveLayers = useMemo(() => {
-    let l: string[] = [];
-    layers.filter((l) => l.visible).forEach((layer) => {
-      // Add base layer ID
-      l.push(layer.id);
-      // For vector layers, also add the symbol layer ID
-      if (layer.type === 'vector') {
-        l.push(`${layer.id}-symbol`);
-      }
-    });
-    showBagLayer && l.push(bagLayerId);
-    return l;
-  }, [layers]);
+    // Get layer IDs from visible layers
+    const visibleLayerIds = layers
+      .filter(layer => layer.visible)
+      .flatMap(layer =>
+        layer.type === 'vector'
+          ? [layer.id, `${layer.id}-symbol`]
+          : [layer.id]
+      );
+
+    // Add BAG layer ID if it's visible
+    if (showBagLayer && hasSearchResults) {
+      visibleLayerIds.push(bagLayerId);
+    }
+
+    return visibleLayerIds;
+  }, [layers, showBagLayer, hasSearchResults]);
 
   const handleMapClick = useCallback(
     (evt: MapLayerMouseEvent) => {
       setLastInteractionOrigin("map");
-      if (evt.features?.length) {
-        const feature = evt.features[0];
 
-        if (feature?.layer?.id !== bagLayerId) {
-          setClickedFeature(feature);
-          return;
-        }
+      // No features clicked
+      if (!evt.features?.length) return;
 
-        // find item with same bag ID in results, show that
-        const item = items.find((i) => i.id == feature?.properties?.id);
+      const feature = evt.features[0];
 
-        if (!item) {
-          return;
-        }
+      // Handle BAG layer clicks
+      if (feature?.layer?.id === bagLayerId) {
+        // Find the corresponding item in search results
+        const itemId = feature?.properties?.id;
+        const item = items.find(i => i.id === itemId);
+        if (!item) return;
 
-        const type = getObjectType(item);
+        // Handle different item types
+        const { isAob } = getObjectType(item);
 
-        if (type.isAob) {
+        if (isAob) {
           setShowDetails(true);
           setCurrent(item as unknown as GBPObject);
           setCenter(item as unknown as GBPObject);
-          return;
         } else {
           setLocationFilter({
             id: item.id as string,
@@ -298,7 +309,8 @@ export function Map() {
           });
         }
       } else {
-        console.warn("no features on this point", evt);
+        // Handle other layer clicks
+        setClickedFeature(feature);
       }
     },
     [items],
@@ -318,7 +330,8 @@ export function Map() {
           line_string: true,
           trash: true,
         },
-        // Set these to true to make the controls more visible
+        // Ensure proper selection behavior
+        defaultMode: 'simple_select',
         boxSelect: true,
         touchEnabled: true
       });
@@ -327,7 +340,8 @@ export function Map() {
       map.addControl(drawRef.current, 'bottom-left');
     }
 
-    const updateArea = (e?: any) => {
+    // Consolidated function to calculate and update measurements
+    const updateMeasurements = () => {
       if (!drawRef.current) return;
 
       const data = drawRef.current.getAll();
@@ -335,125 +349,53 @@ export function Map() {
       // Calculate area for polygons
       const polygons = data.features.filter(f => f.geometry.type === 'Polygon');
       if (polygons.length > 0) {
-        let totalArea = 0;
-        for (const polygon of polygons) {
-          const area = turf.area(polygon);
-          totalArea += area;
-        }
+        const totalArea = polygons.reduce((sum, polygon) => sum + turf.area(polygon), 0);
         setArea(Math.round(totalArea));
       } else {
-        // Hide area measurement when no polygons exist
         setArea(0);
       }
 
       // Calculate length for lines
       const lines = data.features.filter(f => f.geometry.type === 'LineString');
       if (lines.length > 0) {
-        let totalLength = 0;
-        for (const line of lines) {
-          const length = turf.length(line, { units: 'meters' });
-          totalLength += length;
-        }
+        const totalLength = lines.reduce((sum, line) =>
+          sum + turf.length(line, { units: 'meters' }), 0);
         setLineLength(Math.round(totalLength));
       } else {
-        // Hide length measurement when no lines exist
         setLineLength(0);
       }
     };
 
-    // Use 'any' type assertion to avoid TypeScript errors with MapboxDraw events
-    (map as any).on('draw.create', updateArea);
-    (map as any).on('draw.update', updateArea);
-    (map as any).on('draw.selectionchange', updateArea);
-    // Add event to update measurements during drawing
-    (map as any).on('draw.render', updateArea);
+    // Register all event listeners
+    (map as any).on('draw.create', updateMeasurements);
+    (map as any).on('draw.update', updateMeasurements);
+    (map as any).on('draw.selectionchange', updateMeasurements);
+    (map as any).on('draw.render', updateMeasurements);
+    (map as any).on('draw.modechange', updateMeasurements);
 
-    // Add event listener for mode change to track active drawing mode
-    (map as any).on('draw.modechange', (e) => {
-      const mode = e.mode;
-      setActiveMode(mode);
+    // Special handler for delete events to ensure measurements are reset
+    const handleDeleteEvent = () => {
+      // Simple approach: recalculate measurements after deletion
+      updateMeasurements();
+    };
 
-      // Update measurements when mode changes
-      updateArea(e);
-    });
+    (map as any).on('draw.delete', handleDeleteEvent);
 
-    // Add event listener for trash button to ensure measurements are cleared
-    (map as any).on('draw.delete', () => {
-      console.log('draw.delete event triggered');
-      // Get the current data after deletion
-      const data = drawRef.current.getAll();
-
-      // Check if there are any polygons left
-      const polygons = data.features.filter(f => f.geometry.type === 'Polygon');
-      if (polygons.length === 0) {
-        // No polygons left, clear area measurement
-        setArea(0);
-      } else {
-        // Update area measurement for remaining polygons
-        let totalArea = 0;
-        for (const polygon of polygons) {
-          const area = turf.area(polygon);
-          totalArea += area;
-        }
-        setArea(Math.round(totalArea));
-      }
-
-      // Check if there are any lines left
-      const lines = data.features.filter(f => f.geometry.type === 'LineString');
-      if (lines.length === 0) {
-        // No lines left, clear length measurement
-        setLineLength(0);
-      } else {
-        // Update length measurement for remaining lines
-        let totalLength = 0;
-        for (const line of lines) {
-          const length = turf.length(line, { units: 'meters' });
-          totalLength += length;
-        }
-        setLineLength(Math.round(totalLength));
-      }
-    });
-
-    // Add a click event listener to the trash button to ensure it works correctly
+    // Add a click event listener to the trash button
     const trashButton = document.querySelector('.mapbox-gl-draw_trash');
+
+    // Define the handler function outside so we can reference it in the cleanup
+    const handleTrashClick = (e) => {
+      if (!drawRef.current) return;
+
+      // Simple approach: delete all features and reset measurements
+      drawRef.current.deleteAll();
+      setArea(0);
+      setLineLength(0);
+    };
+
     if (trashButton) {
-      trashButton.addEventListener('click', () => {
-        console.log('Trash button clicked');
-
-        // Get the currently selected features
-        const selectedFeatures = drawRef.current.getSelectedIds();
-
-        if (selectedFeatures.length === 0) {
-          // No features selected, clear everything
-          drawRef.current.deleteAll();
-          setArea(0);
-          setLineLength(0);
-        } else {
-          // Some features are selected, they will be deleted by MapboxDraw
-          // We need to manually check what remains after deletion
-
-          // First, get the current data
-          const currentData = drawRef.current.getAll();
-
-          // Store the IDs of selected features
-          const selectedIds = new Set(selectedFeatures);
-
-          // Filter out the features that will be deleted
-          const remainingFeatures = currentData.features.filter(f => !selectedIds.has(f.id));
-
-          // Check if there will be any polygons left
-          const remainingPolygons = remainingFeatures.filter(f => f.geometry.type === 'Polygon');
-          if (remainingPolygons.length === 0) {
-            setArea(0);
-          }
-
-          // Check if there will be any lines left
-          const remainingLines = remainingFeatures.filter(f => f.geometry.type === 'LineString');
-          if (remainingLines.length === 0) {
-            setLineLength(0);
-          }
-        }
-      });
+      trashButton.addEventListener('click', handleTrashClick);
     }
 
     // Cleanup
@@ -462,19 +404,20 @@ export function Map() {
         // Remove the click event listener from the trash button
         const trashButton = document.querySelector('.mapbox-gl-draw_trash');
         if (trashButton) {
-          // Use a no-op function since we can't access the original handler
-          trashButton.removeEventListener('click', () => {});
+          trashButton.removeEventListener('click', handleTrashClick);
         }
 
         map.removeControl(drawRef.current);
         drawRef.current = null;
       }
-      (map as any).off('draw.create', updateArea);
-      (map as any).off('draw.update', updateArea);
-      (map as any).off('draw.selectionchange', updateArea);
-      (map as any).off('draw.render', updateArea);
-      (map as any).off('draw.modechange', updateArea);
-      (map as any).off('draw.delete');
+
+      // Remove all event listeners
+      (map as any).off('draw.create', updateMeasurements);
+      (map as any).off('draw.update', updateMeasurements);
+      (map as any).off('draw.selectionchange', updateMeasurements);
+      (map as any).off('draw.render', updateMeasurements);
+      (map as any).off('draw.modechange', updateMeasurements);
+      (map as any).off('draw.delete', handleDeleteEvent);
     };
   }, [mapRef.current]); // Only run once when map is initialized
 
@@ -509,12 +452,12 @@ export function Map() {
         <div className="Map__measurements">
           {area > 0 && (
             <div className="Map__measurement Map__measurement--area">
-              Oppervlakte: {area} m²
+              Oppervlakte: {area.toLocaleString()} m²
             </div>
           )}
           {lineLength > 0 && (
             <div className="Map__measurement Map__measurement--length">
-              Lengte: {lineLength} m
+              Lengte: {lineLength.toLocaleString()} m
             </div>
           )}
         </div>
@@ -526,7 +469,6 @@ export function Map() {
         id="mainMap"
         initialViewState={viewState}
         mapboxAccessToken={mapboxToken}
-        // maxBounds={startBounds}
         onMouseMove={handleHover}
         onMouseOut={() => setHoverInfo(null)}
         onClick={handleMapClick}
@@ -540,13 +482,14 @@ export function Map() {
         {hoverInfo && <ToolTip {...hoverInfo} />}
         <NavigationControl position={"bottom-right"} />
         <GeolocateControl position={"bottom-left"} />
-        {/* TODO: Layer ordering. This is currently not supported. https://github.com/alex3165/react-mapbox-gl/issues/606 */}
-        {showBagLayer && (
+        {/* Show BAG layer (search results) when it's toggled on */}
+        {showBagLayer && hasSearchResults && (
           <Source type="geojson" data={data}>
             <Layer {...bagLayer} />
           </Source>
         )}
         {visibleLayers
+          .filter(layer => layer.id !== bagLayerId)
           .map((layer) => <LayerSource layer={layer} key={layer.id} bounds={currentBounds ? boundsLngLatToMatrix(currentBounds) : null} />)}
       </MapGL>
       <Dialog
