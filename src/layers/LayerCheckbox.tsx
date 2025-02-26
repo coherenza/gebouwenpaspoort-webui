@@ -1,6 +1,8 @@
 import { useContext, Dispatch, SetStateAction } from "react";
 import { AppContext } from "../App";
 import { LayerI } from "./LayerTypes";
+import { CustomCheckbox } from "../components/CustomCheckbox";
+import "../components/CustomCheckbox.css";
 
 interface LayerCheckboxProps {
   layer: LayerI;
@@ -24,14 +26,11 @@ export function LayerCheckbox({ layer, setSearchTerm }: LayerCheckboxProps) {
   };
 
   return (
-    <div className="layer-checkbox">
-      <input
-        type="checkbox"
-        id={layer.id}
-        checked={layer.visible}
-        onChange={(e) => handleChange(e.target.checked)}
-      />
-      <label htmlFor={layer.id}>{layer.name}</label>
-    </div>
+    <CustomCheckbox
+      checked={layer.visible}
+      onChange={handleChange}
+      label={layer.name}
+      className="layer-checkbox"
+    />
   );
 }

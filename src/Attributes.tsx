@@ -107,21 +107,19 @@ export function AttributeCollapsible({
 }: AttributeTitleProps) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="Attribute">
-      <div
-        className={"Attribute__title__" + (open ? "open" : "closed")}
+    <div className="layer-group">
+      <button
+        className="layer-group__header"
         onClick={() => setOpen(!open)}
       >
-        {attribute.name} {showCount && `(${count})`}
-        <span className="icon">
-          {open ? <ChevronDownIcon /> : <ChevronUpIcon />}
-        </span>
-      </div>
-      {
-        <div className={"Attribute__content__" + (open ? "open" : "closed")}>
+        {open ? <ChevronDownIcon /> : <ChevronRightIcon />}
+        <h4>{attribute.name} {showCount && `(${count})`}</h4>
+      </button>
+      {open && (
+        <div className="layer-group__content">
           {children}
         </div>
-      }
+      )}
     </div>
   );
 }
@@ -197,27 +195,21 @@ function AttributeItem({
   }
   return (
     <div className="Attribute__item" key={`ai_${item.id}${i}`}>
-      <h4
-        className={filterMatch
-          ? "Attribute__item__title Attribute__Refined"
-          : "Attribute__item__title"}
-        onClick={() => setOpen(!open)}
-      >
-        <span className="icon">
-          {open ? <ChevronDownIcon /> : <ChevronRightIcon />}
-        </span>
-        {title}
-      </h4>
-      {open &&
-        collection.attributes.map((attribute) => (
-          // We can't use Highlight here, or maybe we can, but I don't know how to pass a path for
-          // a resource that is stored in an array (e.g. `prop[0].subProp`) to the `Highlight` component.
-          <PropValHighlights
-            key={"pvhi_" + attribute.id}
-            hit={item[attribute.id]}
-            attribute={attribute}
-          />
-        ))}
+      <div className="layer-group__header attribute-item-header" onClick={() => setOpen(!open)}>
+        {open ? <ChevronDownIcon /> : <ChevronRightIcon />}
+        <h4 className={filterMatch ? "Attribute__Refined" : ""}>{title}</h4>
+      </div>
+      {open && (
+        <div className="layer-group__content attribute-item-content">
+          {collection.attributes.map((attribute) => (
+            <PropValHighlights
+              key={"pvhi_" + attribute.id}
+              hit={item[attribute.id]}
+              attribute={attribute}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

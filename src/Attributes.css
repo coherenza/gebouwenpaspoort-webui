@@ -1,9 +1,13 @@
+/* Import the layer group styles */
+@import url("./Layers.css");
+
 .Attribute {
   border-top: 1px solid var(--g1);
   border-bottom: 1px solid var(--g1);
 }
 
-.Attribute__title__closed,
+/* These styles are now replaced by layer-group styles */
+/* .Attribute__title__closed,
 .Attribute__title__open {
   cursor: pointer;
   color: var(--primary-color-dark);
@@ -24,7 +28,7 @@
 
 .Attribute__content__closed {
   display: none;
-}
+} */
 
 .Attribute__propval {
   display: flex;
@@ -51,24 +55,33 @@
 }
 
 .Attribute__item {
-  border: 1px solid var(--g4);
   border-radius: var(--border-radius);
-  background-color: var(--g1);
   margin: 1ex 0;
+  border: 1px solid #eee;
+  overflow: hidden;
 }
 
-.Attribute__item__title {
-  cursor: pointer;
+/* Updated styles for attribute items */
+.attribute-item-header {
+  border-bottom: none;
+  background-color: #f9f9f9;
 }
 
-.Attribute__item__title > .icon {
-  color: var(--primary-color-dark);
+.attribute-item-header:hover {
+  background-color: #f0f0f0;
 }
 
-.Attribute__item__title:hover {
-  background: var(--g0);
-  border-radius: var(--border-radius);
-  color: var(--primary-color-dark);
+.attribute-item-content {
+  padding: 0.5rem;
+  background-color: white;
+}
+
+.Attribute__Refined {
+  color: #0066ff;
+}
+
+.Attribute__list {
+  padding-left: 0.5rem;
 }
 
 .Attribute__link {
@@ -80,8 +93,4 @@
 
 .Attribute__link:hover {
   background: var(--g1);
-}
-
-.Attribute__Refined {
-  background-color: var(--accent-color);
 }

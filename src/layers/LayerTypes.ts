@@ -101,4 +101,6 @@ export interface WFSService {
 export interface WMService {
   name: string;
   url: string;
+  /** Description of the WMS service */
+  description?: string;
 }

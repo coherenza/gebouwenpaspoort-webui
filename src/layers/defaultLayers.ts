@@ -18,13 +18,6 @@ export const layersDefault: LayerI[] = [
     visible: false,
     url: "https://service.pdok.nl/hwh/luchtfotocir/wms/v1_0",
   },
-  {
-    name: "Funderingsproblematiek",
-    type: "raster",
-    id: "indgebfunderingsproblematiek",
-    visible: false,
-    url: "https://service.pdok.nl/rvo/indgebfunderingsproblematiek/wms/v1_0",
-  },
 ];
 
 import { WFSService, WMService } from "./LayerTypes";
@@ -69,9 +62,17 @@ export const wmsServices: WMService[] = [
   {
     name: "Luchtfoto",
     url: "https://service.pdok.nl/hwh/luchtfotocir/wms/v1_0",
+    description: "Luchtfoto's van Nederland",
   },
   {
     name: "Actueel Hoogtebestand Nederland",
-    url: "https://service.pdok.nl/hwh/hoogtebestand/wms/v1_0",
+    url: "https://service.pdok.nl/rws/ahn/wms/v1_0",
+    description: "Hoogtegegevens van Nederland",
+  },
+  {
+    name: "Funderingsproblematiek",
+    // id: "indgebfunderingsproblematiek",
+    // visible: false,
+    url: "https://service.pdok.nl/rvo/indgebfunderingsproblematiek/wms/v1_0",
   },
 ];

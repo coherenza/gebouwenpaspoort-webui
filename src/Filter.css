@@ -1,27 +1,52 @@
-.Filter {
+/* Import the layer group styles */
+@import url("./Layers.css");
+
+/* Additional styles specific to filters */
+.ais-RangeInput {
+  padding: 0.5rem 1rem;
+}
+
+.ais-RangeInput-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ais-RangeInput-input {
+  width: 80px;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.ais-RangeInput-submit {
+  background-color: #0066ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.25rem 0.75rem;
+  font-size: 14px;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.Filter:hover {
-  background: var(--g0);
-  border-radius: var(--border-radius);
-  color: var(--primary-color-dark);
+.ais-RangeInput-submit:hover {
+  background-color: #0055dd;
 }
 
-.RefinementList li > label, label.ais-RefinementList-label {
-  display: block;
-  margin-left: 1.5em;
-}
-
-.RefinementList li > input[type="checkbox"],
-label.ais-RefinementList-label > input[type="checkbox"] {
-  margin-left: -1.5em;
+/* Override any remaining old styles */
+.RefinementList li > label,
+label.ais-RefinementList-label {
+  display: flex;
+  align-items: center;
+  margin-left: 0;
 }
 
 .ais-RefinementList-labelText {
-  margin-left: 0.3em;
+  margin-left: 0;
 }
 
 li.ais-RefinementList-item > ul.ais-RefinementList-list {
-  margin-left: 1.3em;
+  margin-left: 1.5rem;
 }

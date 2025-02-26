@@ -1,0 +1,62 @@
+/* Custom Refinement List Styles */
+.ais-RefinementList-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ais-RefinementList-item {
+  margin-bottom: 0.1rem;
+}
+
+.refinement-checkbox {
+  padding-left: 0.25rem;
+  flex-grow: 1;
+}
+
+.hierarchical-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.toggle-button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  color: #333;
+}
+
+.toggle-button-wrapper:hover {
+  color: #0066ff;
+}
+
+.toggle-button-wrapper svg {
+  width: 16px;
+  height: 16px;
+}
+
+.invisible {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+/* Nested items styling */
+.ais-RefinementList-list.nested-list {
+  margin-left: 1rem;
+  padding-left: 0.25rem;
+  border-left: 1px solid #eee;
+}
+
+/* Selected item styling */
+.ais-RefinementList-item--selected
+  > .hierarchical-item
+  .custom-checkbox-container {
+  background-color: #f0f8ff;
+}

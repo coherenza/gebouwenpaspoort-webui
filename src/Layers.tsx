@@ -1,14 +1,16 @@
-import { Cross1Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { Cross1Icon, MagnifyingGlassIcon, EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 import { useContext, useEffect, useMemo, useState } from "react";
 
 import { AppContext } from "./App";
 import "./Layers.css";
 import { BoundsMatrix } from "./bounds";
-import { useWFSCapabilities } from "./layers/useCapabilities";
+import { useWFSCapabilities, useWMSCapabilities } from "./layers/useCapabilities";
 import { LayerGroup } from "./layers/LayerGroup";
 import { LayerI } from "./layers/LayerTypes";
 import { useLayerGroups } from "./layers/useLayerGroups";
-import { wfsServices } from "./layers/defaultLayers";
+import { wfsServices, wmsServices } from "./layers/defaultLayers";
+import { CustomCheckbox } from "./components/CustomCheckbox";
+import "./components/CustomCheckbox.css";
 
 export const bagLayerId = "points";
 
@@ -23,15 +25,22 @@ export function LayerSelector() {
     setShowBagLayer
   } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState("");
-  const servicesResults = wfsServices.map(service =>
+
+  // Create an array of hooks for each WFS service
+  const wfsServicesResults = wfsServices.map(service =>
     useWFSCapabilities(service)
+  );
+
+  // Create an array of hooks for each WMS service
+  const wmsServicesResults = wmsServices.map(service =>
+    useWMSCapabilities(service)
   );
 
   // Add WFS layers to existing layers if not already present
   useEffect(() => {
-    const allWfsLayers = servicesResults.flatMap(({ layers = [], error }) => {
+    const allWfsLayers = wfsServicesResults.flatMap(({ layers = [], error }) => {
       if (error) {
-        console.error('Error loading service:', error);
+        console.error('Error loading WFS service:', error);
         return [];
       }
       return layers;
@@ -48,9 +57,32 @@ export function LayerSelector() {
         return newLayers.length > 0 ? [...prevLayers, ...newLayers] : prevLayers;
       });
     }
-  }, [servicesResults, setLayers]);
+  }, [wfsServicesResults, setLayers]);
 
-  // Group layers using the new hook
+  // Add WMS layers to existing layers if not already present
+  useEffect(() => {
+    const allWmsLayers = wmsServicesResults.flatMap(({ layers = [], error }) => {
+      if (error) {
+        console.error('Error loading WMS service:', error);
+        return [];
+      }
+      return layers;
+    });
+
+    if (allWmsLayers.length > 0) {
+      setLayers(prevLayers => {
+        // Only add layers that don't already exist
+        const newLayers = allWmsLayers.filter(
+          wmsLayer => !prevLayers.some(layer =>
+            layer.id === wmsLayer.id && layer.url === wmsLayer.url
+          )
+        );
+        return newLayers.length > 0 ? [...prevLayers, ...newLayers] : prevLayers;
+      });
+    }
+  }, [wmsServicesResults, setLayers]);
+
+  // Group layers using the hook
   const layerGroups = useLayerGroups(layers);
 
   // Get selected layers
@@ -78,7 +110,21 @@ export function LayerSelector() {
         const matchesName = layer.name.toLowerCase().includes(searchTermLower);
         const matchesId = layer.id.toLowerCase().includes(searchTermLower);
         const matchesService = group.title.toLowerCase().includes(searchTermLower);
-        const matchesDescription = wfsServices.find(s => s.name === layer.serviceId)?.description?.toLowerCase().includes(searchTermLower);
+
+        // Check in both WFS and WMS services for descriptions
+        let matchesDescription = false;
+
+        // Check WFS service descriptions
+        if (group.serviceId && !group.serviceId.startsWith('WMS:')) {
+          matchesDescription = wfsServices.find(s => s.name === layer.serviceId)?.description?.toLowerCase().includes(searchTermLower) || false;
+        }
+
+        // Check WMS service (no descriptions in WMS services currently, but added for future)
+        if (group.serviceId && group.serviceId.startsWith('WMS:')) {
+          const wmsServiceName = group.serviceId.substring(5);
+          matchesDescription = wmsServices.find(s => s.name === wmsServiceName)?.description?.toLowerCase().includes(searchTermLower) || false;
+        }
+
         return matchesName || matchesId || matchesService || matchesDescription;
       })
     })).filter(group => group.layers.length > 0);
@@ -96,12 +142,16 @@ export function LayerSelector() {
          <div className="selected-layers">
           <h4>Geselecteerde lagen</h4>
           <div className="selected-layers-list">
-          <button
-            // className={`bag-layer-button ${showBagLayer ? 'active' : ''}`}
-            onClick={() => setShowBagLayer(!showBagLayer)}
-          >
-            {showBagLayer ? "Verberg Zoekresultaten" : "Toon Zoekresultaten"}
-          </button>
+          <div className="selected-layer-item">
+            <span>Zoekresultaten</span>
+            <button
+              onClick={() => setShowBagLayer(!showBagLayer)}
+              title={showBagLayer ? "Verberg zoekresultaten" : "Toon zoekresultaten"}
+              className={`toggle-layer-button ${showBagLayer ? 'active' : ''}`}
+            >
+              {showBagLayer ? <EyeOpenIcon /> : <EyeClosedIcon />}
+            </button>
+          </div>
             {selectedLayers.map(layer => (
               <div key={layer.id} className="selected-layer-item">
                 <span>{layer.name}</span>

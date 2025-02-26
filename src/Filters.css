@@ -1,3 +1,6 @@
+/* Import the layer group styles */
+@import url("./Layers.css");
+
 .filter-panel {
   max-width: 20rem;
   display: none;
