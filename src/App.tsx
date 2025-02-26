@@ -22,7 +22,7 @@ import { KeyboardHandler } from "./KeyboardHandler";
 import { MapProvider } from "react-map-gl";
 import { useLocalStorage } from "./useLocalStorage";
 import { tourSteps as steps } from "./Tour";
-import { layersDefault } from "./layers/defaultLayers";
+import { layersDefault } from "./layers/defaultServices";
 import { LayerI } from "./layers/LayerTypes";
 import { LayerSelector } from "./Layers";
 
@@ -106,7 +106,7 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   const [showResults, setShowResults] = useLocalStorage("showResults", true);
   const [showLayers, setShowLayers] = useLocalStorage("showLayers", false);
   const [showDetails, setShowDetails] = useLocalStorage("showDetails", true);
-  const [layers, setLayers] = React.useState<LayerI[]>(layersDefault);
+  const [layers, setLayers] = React.useState<LayerI[]>([]);
   const [locationFilter, setLocationFilterInternal] = React.useState<
     LocationFilter | undefined
   >(undefined);

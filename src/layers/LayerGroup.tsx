@@ -32,7 +32,7 @@ export function LayerGroup({ title, layers, isExpanded: defaultExpanded = false,
           {layers.map((layer) => (
             <LayerCheckbox
               layer={layer}
-              key={layer.id}
+              key={`${layer.serviceId || 'noservice'}-${layer.url || 'nourl'}-${layer.id}`}
               setSearchTerm={setSearchTerm}
             />
           ))}

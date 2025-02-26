@@ -7,7 +7,7 @@ import { BoundsMatrix } from "./bounds";
 import { LayerGroup } from "./layers/LayerGroup";
 import { LayerI } from "./layers/LayerTypes";
 import { useLayerGroups } from "./layers/useLayerGroups";
-import { wfsServices, wmsServices } from "./layers/defaultLayers";
+import { wfsServices, wmsServices } from "./layers/defaultServices";
 import { CustomCheckbox } from "./components/CustomCheckbox";
 import "./components/CustomCheckbox.css";
 import { detectServiceType } from "./layers/detectService";
@@ -36,11 +36,27 @@ export function LayerSelector() {
   // Add a counter to track service updates
   const [serviceUpdateCounter, setServiceUpdateCounter] = useState(0);
 
+  // Add a console log to check the WMS services before passing to useAllServices
+  console.log("WMS Services before passing to useAllServices:", wmsServices);
+
   // Use our new hook to fetch all services at once
   const { allLayers: serviceLayers, isLoading, errors } = useAllServices(wfsServices, wmsServices, serviceUpdateCounter);
 
+  // Add debug logging
+  useEffect(() => {
+    console.log("WMS Services:", wmsServices);
+    console.log("WMS Services length:", wmsServices.length);
+    console.log("Service Layers:", serviceLayers);
+    console.log("WMS Layers:", serviceLayers.filter(layer => layer.type === "raster"));
+  }, [serviceLayers]);
+
   // Group layers using the hook
   const layerGroups = useLayerGroups(layers);
+
+  // Add debug logging for layer groups
+  useEffect(() => {
+    console.log("Layer Groups:", layerGroups);
+  }, [layerGroups]);
 
   // Get selected layers
   const selectedLayers = useMemo(() => {
@@ -81,13 +97,20 @@ export function LayerSelector() {
   // Add service layers to existing layers if not already present
   useEffect(() => {
     if (serviceLayers.length > 0) {
+      console.log("Adding service layers to existing layers:", serviceLayers);
+
       setLayers(prevLayers => {
         // Only add layers that don't already exist
         const newLayers = serviceLayers.filter(
           serviceLayer => !prevLayers.some(layer =>
-            layer.id === serviceLayer.id && layer.url === serviceLayer.url
+            // Check for duplicate by ID and URL
+            (layer.id === serviceLayer.id && layer.url === serviceLayer.url) ||
+            // Also check for duplicate by ID and service ID
+            (layer.id === serviceLayer.id && layer.serviceId === serviceLayer.serviceId)
           )
         );
+
+        console.log("New layers to add:", newLayers.length);
         return newLayers.length > 0 ? [...prevLayers, ...newLayers] : prevLayers;
       });
     }
@@ -154,6 +177,41 @@ export function LayerSelector() {
 
     try {
       const result = await detectServiceType(serviceUrl);
+      console.log("Service detection result:", result);
+
+      // If we have a service but also an error, it's a warning
+      if (result.service && result.error && result.type) {
+        // We can still add the service, but show the warning
+        const warningMessage = result.error;
+
+        // Add the service to the appropriate list
+        if (result.type === 'WFS') {
+          // Check if service already exists
+          const exists = wfsServices.some(s => s.url === result.service?.url);
+          if (!exists && result.service) {
+            wfsServices.push(result.service as any);
+            setServiceSuccess(`Added WFS service: ${result.service.name} (with warning: ${warningMessage})`);
+            setServiceUrl("");
+            // Increment the counter to trigger a re-fetch
+            setServiceUpdateCounter(prev => prev + 1);
+          } else {
+            setServiceError("This service is already added");
+          }
+        } else if (result.type === 'WMS') {
+          // Check if service already exists
+          const exists = wmsServices.some(s => s.url === result.service?.url);
+          if (!exists && result.service) {
+            wmsServices.push(result.service as any);
+            setServiceSuccess(`Added WMS service: ${result.service.name} (with warning: ${warningMessage})`);
+            setServiceUrl("");
+            // Increment the counter to trigger a re-fetch
+            setServiceUpdateCounter(prev => prev + 1);
+          } else {
+            setServiceError("This service is already added");
+          }
+        }
+        return;
+      }
 
       if (!result.type || !result.service) {
         setServiceError(result.error || "Could not detect a valid service");
@@ -187,6 +245,7 @@ export function LayerSelector() {
         }
       }
     } catch (error) {
+      console.error("Error in handleAddService:", error);
       setServiceError(`Error adding service: ${error instanceof Error ? error.message : String(error)}`);
     } finally {
       setIsAddingService(false);

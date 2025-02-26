@@ -37,7 +37,7 @@ import { LayerSource } from "./layers/LayerSource";
 import { bagLayerId } from "./layers/LayerTypes";
 import { bagLayer } from "./layers/LayerStyles";
 import { boundsUtrecht } from "./layers/constants";
-import { BAGLayer } from "./layers/defaultLayers";
+import { BAGLayer } from "./layers/defaultServices";
 
 export const mapStartState = {
   latitude: 52.0907,

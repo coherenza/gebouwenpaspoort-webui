@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { LayerI } from "./LayerTypes";
-import { wfsServices, wmsServices } from "./defaultLayers";
+import { wfsServices, wmsServices } from "./defaultServices";
 
 export interface LayerGroup {
   serviceId: string;
@@ -24,9 +24,12 @@ export function useLayerGroups(layers: LayerI[]): LayerGroup[] {
     // Group layers by WMS service
     wmsServices.forEach((service) => {
       groupedLayers.set(
-        `WMS: ${service.name}`,
+        service.name,
         layers.filter(
-          (layer) => layer.url?.startsWith(service.url) && !layer.serviceId // Only include if not already assigned to a WFS service
+          (layer) =>
+            // Match by URL or by serviceId
+            layer.url?.startsWith(service.url) ||
+            layer.serviceId === service.name
         )
       );
     });

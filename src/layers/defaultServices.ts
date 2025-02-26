@@ -59,11 +59,15 @@ export const wfsServices: WFSService[] = [
 ];
 
 export const wmsServices: WMService[] = [
-  // {
-  //   name: "Luchtfoto",
-  //   url: "https://service.pdok.nl/hwh/luchtfotocir/wms/v1_0",
-  //   description: "Luchtfoto's van Nederland",
-  // },
+  {
+    name: "Luchtfoto",
+    url: "https://service.pdok.nl/hwh/luchtfotocir/wms/v1_0",
+    description: "Luchtfoto's van Nederland",
+  },
+  {
+    name: "Provincie Utrecht",
+    url: "https://gis.provincie-utrecht.nl/server/services/Opendata/m01_1_3_luchtkwaliteit/MapServer/WMSServer",
+  },
   {
     name: "Actueel Hoogtebestand Nederland",
     url: "https://service.pdok.nl/rws/ahn/wms/v1_0",
