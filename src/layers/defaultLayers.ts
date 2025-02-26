@@ -59,11 +59,11 @@ export const wfsServices: WFSService[] = [
 ];
 
 export const wmsServices: WMService[] = [
-  {
-    name: "Luchtfoto",
-    url: "https://service.pdok.nl/hwh/luchtfotocir/wms/v1_0",
-    description: "Luchtfoto's van Nederland",
-  },
+  // {
+  //   name: "Luchtfoto",
+  //   url: "https://service.pdok.nl/hwh/luchtfotocir/wms/v1_0",
+  //   description: "Luchtfoto's van Nederland",
+  // },
   {
     name: "Actueel Hoogtebestand Nederland",
     url: "https://service.pdok.nl/rws/ahn/wms/v1_0",

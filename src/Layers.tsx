@@ -1,21 +1,23 @@
-import { Cross1Icon, MagnifyingGlassIcon, EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
+import { Cross1Icon, MagnifyingGlassIcon, EyeOpenIcon, EyeClosedIcon, PlusIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import { useContext, useEffect, useMemo, useState } from "react";
 
 import { AppContext } from "./App";
 import "./Layers.css";
 import { BoundsMatrix } from "./bounds";
-import { useWFSCapabilities, useWMSCapabilities } from "./layers/useCapabilities";
 import { LayerGroup } from "./layers/LayerGroup";
 import { LayerI } from "./layers/LayerTypes";
 import { useLayerGroups } from "./layers/useLayerGroups";
 import { wfsServices, wmsServices } from "./layers/defaultLayers";
 import { CustomCheckbox } from "./components/CustomCheckbox";
 import "./components/CustomCheckbox.css";
+import { detectServiceType } from "./layers/detectService";
+import { useAllServices } from "./layers/useAllServices";
 
 export const bagLayerId = "points";
 
 /** Fetches and displays available map layers */
 export function LayerSelector() {
+  // Context hooks must be at the top
   const {
     showLayerSelector,
     setShowLayerSelector,
@@ -24,63 +26,18 @@ export function LayerSelector() {
     showBagLayer,
     setShowBagLayer
   } = useContext(AppContext);
+
+  // All useState hooks must be called before any conditional logic
   const [searchTerm, setSearchTerm] = useState("");
+  const [serviceUrl, setServiceUrl] = useState("");
+  const [isAddingService, setIsAddingService] = useState(false);
+  const [serviceError, setServiceError] = useState<string | null>(null);
+  const [serviceSuccess, setServiceSuccess] = useState<string | null>(null);
+  // Add a counter to track service updates
+  const [serviceUpdateCounter, setServiceUpdateCounter] = useState(0);
 
-  // Create an array of hooks for each WFS service
-  const wfsServicesResults = wfsServices.map(service =>
-    useWFSCapabilities(service)
-  );
-
-  // Create an array of hooks for each WMS service
-  const wmsServicesResults = wmsServices.map(service =>
-    useWMSCapabilities(service)
-  );
-
-  // Add WFS layers to existing layers if not already present
-  useEffect(() => {
-    const allWfsLayers = wfsServicesResults.flatMap(({ layers = [], error }) => {
-      if (error) {
-        console.error('Error loading WFS service:', error);
-        return [];
-      }
-      return layers;
-    });
-
-    if (allWfsLayers.length > 0) {
-      setLayers(prevLayers => {
-        // Only add layers that don't already exist
-        const newLayers = allWfsLayers.filter(
-          wfsLayer => !prevLayers.some(layer =>
-            layer.id === wfsLayer.id && layer.url === wfsLayer.url
-          )
-        );
-        return newLayers.length > 0 ? [...prevLayers, ...newLayers] : prevLayers;
-      });
-    }
-  }, [wfsServicesResults, setLayers]);
-
-  // Add WMS layers to existing layers if not already present
-  useEffect(() => {
-    const allWmsLayers = wmsServicesResults.flatMap(({ layers = [], error }) => {
-      if (error) {
-        console.error('Error loading WMS service:', error);
-        return [];
-      }
-      return layers;
-    });
-
-    if (allWmsLayers.length > 0) {
-      setLayers(prevLayers => {
-        // Only add layers that don't already exist
-        const newLayers = allWmsLayers.filter(
-          wmsLayer => !prevLayers.some(layer =>
-            layer.id === wmsLayer.id && layer.url === wmsLayer.url
-          )
-        );
-        return newLayers.length > 0 ? [...prevLayers, ...newLayers] : prevLayers;
-      });
-    }
-  }, [wmsServicesResults, setLayers]);
+  // Use our new hook to fetch all services at once
+  const { allLayers: serviceLayers, isLoading, errors } = useAllServices(wfsServices, wmsServices, serviceUpdateCounter);
 
   // Group layers using the hook
   const layerGroups = useLayerGroups(layers);
@@ -89,15 +46,6 @@ export function LayerSelector() {
   const selectedLayers = useMemo(() => {
     return layers.filter(layer => layer.visible);
   }, [layers]);
-
-  // Handle removing a layer
-  const handleRemoveLayer = (layerId: string) => {
-    setLayers(prevLayers =>
-      prevLayers.map(layer =>
-        layer.id === layerId ? { ...layer, visible: false } : layer
-      )
-    );
-  };
 
   // Filter layer groups based on search term
   const filteredLayerGroups = useMemo(() => {
@@ -130,6 +78,41 @@ export function LayerSelector() {
     })).filter(group => group.layers.length > 0);
   }, [layerGroups, searchTerm]);
 
+  // Add service layers to existing layers if not already present
+  useEffect(() => {
+    if (serviceLayers.length > 0) {
+      setLayers(prevLayers => {
+        // Only add layers that don't already exist
+        const newLayers = serviceLayers.filter(
+          serviceLayer => !prevLayers.some(layer =>
+            layer.id === serviceLayer.id && layer.url === serviceLayer.url
+          )
+        );
+        return newLayers.length > 0 ? [...prevLayers, ...newLayers] : prevLayers;
+      });
+    }
+  }, [serviceLayers, setLayers]);
+
+  // Clear success message after 5 seconds
+  useEffect(() => {
+    if (serviceSuccess) {
+      const timer = setTimeout(() => {
+        setServiceSuccess(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [serviceSuccess]);
+
+  // Event handlers and other functions
+  // Handle removing a layer
+  const handleRemoveLayer = (layerId: string) => {
+    setLayers(prevLayers =>
+      prevLayers.map(layer =>
+        layer.id === layerId ? { ...layer, visible: false } : layer
+      )
+    );
+  };
+
   // Function to select the first layer from filtered results
   const selectFirstFilteredLayer = () => {
     // Find the first available layer from filtered groups
@@ -158,6 +141,59 @@ export function LayerSelector() {
     }
   };
 
+  // Function to handle adding a new service
+  const handleAddService = async () => {
+    if (!serviceUrl.trim()) {
+      setServiceError("Please enter a valid URL");
+      return;
+    }
+
+    setIsAddingService(true);
+    setServiceError(null);
+    setServiceSuccess(null);
+
+    try {
+      const result = await detectServiceType(serviceUrl);
+
+      if (!result.type || !result.service) {
+        setServiceError(result.error || "Could not detect a valid service");
+        return;
+      }
+
+      // Add the service to the appropriate list
+      if (result.type === 'WFS') {
+        // Check if service already exists
+        const exists = wfsServices.some(s => s.url === result.service?.url);
+        if (!exists && result.service) {
+          wfsServices.push(result.service as any);
+          setServiceSuccess(`Added WFS service: ${result.service.name}`);
+          setServiceUrl("");
+          // Increment the counter to trigger a re-fetch
+          setServiceUpdateCounter(prev => prev + 1);
+        } else {
+          setServiceError("This service is already added");
+        }
+      } else if (result.type === 'WMS') {
+        // Check if service already exists
+        const exists = wmsServices.some(s => s.url === result.service?.url);
+        if (!exists && result.service) {
+          wmsServices.push(result.service as any);
+          setServiceSuccess(`Added WMS service: ${result.service.name}`);
+          setServiceUrl("");
+          // Increment the counter to trigger a re-fetch
+          setServiceUpdateCounter(prev => prev + 1);
+        } else {
+          setServiceError("This service is already added");
+        }
+      }
+    } catch (error) {
+      setServiceError(`Error adding service: ${error instanceof Error ? error.message : String(error)}`);
+    } finally {
+      setIsAddingService(false);
+    }
+  };
+
+  // Render component
   return (
     <div className={`Sidebar filter-panel ${showLayerSelector ? "filter-panel--open" : ""}`}>
       <div className="Titlebar">
@@ -167,9 +203,9 @@ export function LayerSelector() {
         </button>
       </div>
 
-         <div className="selected-layers">
-          <h4>Geselecteerde lagen</h4>
-          <div className="selected-layers-list">
+      <div className="selected-layers">
+        <h4>Geselecteerde lagen</h4>
+        <div className="selected-layers-list">
           <div className="selected-layer-item">
             <span>Zoekresultaten</span>
             <button
@@ -180,21 +216,20 @@ export function LayerSelector() {
               {showBagLayer ? <EyeOpenIcon /> : <EyeClosedIcon />}
             </button>
           </div>
-            {selectedLayers.map(layer => (
-              <div key={layer.id} className="selected-layer-item">
-                <span>{layer.name}</span>
-                <button
-                  onClick={() => handleRemoveLayer(layer.id)}
-                  title="Verwijder laag"
-                  className="remove-layer-button"
-                >
-                  <Cross1Icon />
-                </button>
-              </div>
-            ))}
-          </div>
+          {selectedLayers.map(layer => (
+            <div key={layer.id} className="selected-layer-item">
+              <span>{layer.name}</span>
+              <button
+                onClick={() => handleRemoveLayer(layer.id)}
+                title="Verwijder laag"
+                className="remove-layer-button"
+              >
+                <Cross1Icon />
+              </button>
+            </div>
+          ))}
         </div>
-
+      </div>
       <div className="search-container">
         <MagnifyingGlassIcon className="search-icon" />
         <input
@@ -216,15 +251,57 @@ export function LayerSelector() {
         )}
       </div>
       <div className="layers-checkboxes">
-        {filteredLayerGroups.map(group => (
-          <LayerGroup
-            key={group.serviceId}
-            title={group.title}
-            layers={group.layers}
-            isExpanded={!!searchTerm}
-            setSearchTerm={setSearchTerm}
+        {isLoading ? (
+          <div className="loading-message">Loading services...</div>
+        ) : (
+          filteredLayerGroups.map(group => (
+            <LayerGroup
+              key={group.serviceId}
+              title={group.title}
+              layers={group.layers}
+              isExpanded={!!searchTerm}
+              setSearchTerm={setSearchTerm}
+            />
+          ))
+        )}
+      </div>
+      <div className="add-service-container">
+        <div className="service-header">
+          <h4>Voeg service toe</h4>
+          <div className="service-info-tooltip">
+            <InfoCircledIcon className="info-icon" />
+            <div className="tooltip-content">
+              <p>Voeg een WFS of WMS service toe door de URL in te voeren.</p>
+              <p>Bijvoorbeeld:</p>
+              <ul>
+                <li>https://service.pdok.nl/hwh/luchtfotocir/wms/v1_0</li>
+                <li>https://service.pdok.nl/kadaster/bestuurlijkegebieden/wfs/v1_0</li>
+              </ul>
+              <p>Het systeem detecteert automatisch of het een WFS of WMS service is.</p>
+            </div>
+          </div>
+        </div>
+        <div className="service-input-container">
+          <input
+            type="text"
+            placeholder="Service URL..."
+            value={serviceUrl}
+            onChange={(e) => setServiceUrl(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleAddService()}
+            className="service-input"
+            disabled={isAddingService}
           />
-        ))}
+          <button
+            onClick={handleAddService}
+            title="Voeg service toe"
+            className="add-service-button"
+            disabled={isAddingService}
+          >
+            {isAddingService ? "..." : <PlusIcon />}
+          </button>
+        </div>
+        {serviceError && <div className="service-error">{serviceError}</div>}
+        {serviceSuccess && <div className="service-success">{serviceSuccess}</div>}
       </div>
     </div>
   );
