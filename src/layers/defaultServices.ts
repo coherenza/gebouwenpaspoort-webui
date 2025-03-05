@@ -61,7 +61,7 @@ export const wfsServices: WFSService[] = [
 export const wmsServices: WMService[] = [
   {
     name: "Luchtfoto",
-    url: "https://service.pdok.nl/hwh/luchtfotocir/wms/v1_0",
+    url: "https://service.pdok.nl/hwh/luchtfotorgb/wms/v1_0",
     description: "Luchtfoto's van Nederland",
   },
   {
@@ -75,8 +75,14 @@ export const wmsServices: WMService[] = [
   },
   {
     name: "Funderingsproblematiek",
-    // id: "indgebfunderingsproblematiek",
-    // visible: false,
     url: "https://service.pdok.nl/rvo/indgebfunderingsproblematiek/wms/v1_0",
+  },
+  {
+    name: "Fietsplatform",
+    url: "https://service.pdok.nl/fietsplatform/landelijke-fietsroutes/wms/v1_0",
+  },
+  {
+    name: "Wandelnet",
+    url: "https://service.pdok.nl/wandelnet/landelijke-wandelroutes/wms/v1_0",
   },
 ];

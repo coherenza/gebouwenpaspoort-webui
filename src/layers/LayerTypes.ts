@@ -6,6 +6,8 @@ export interface LayerI {
   type: "raster" | "fill" | "symbol" | "line" | "vector";
   textField?: string;
   serviceId?: string;
+  /** Unique identifier for React keys, especially useful for ESRI services with duplicate layer IDs */
+  uniqueId?: string;
 }
 
 export const bagLayerId = "points";

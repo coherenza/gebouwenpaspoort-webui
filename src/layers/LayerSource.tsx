@@ -12,9 +12,6 @@ interface LayerSourceProps {
 }
 
 export function LayerSource({ layer, bounds = boundsNL }: LayerSourceProps) {
-  if (layer.id == bagLayerId) {
-    return null;
-  }
   let mapBoxLayers = makeMapBoxLayer(layer);
   const effectiveBounds = bounds || boundsNL;
 

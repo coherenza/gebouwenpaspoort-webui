@@ -11,7 +11,7 @@ import { wfsServices, wmsServices } from "./layers/defaultServices";
 import { CustomCheckbox } from "./components/CustomCheckbox";
 import "./components/CustomCheckbox.css";
 import { detectServiceType } from "./layers/detectService";
-import { useAllServices } from "./layers/useAllServices";
+import { useAllServices } from "./layers/useGEOServices";
 
 export const bagLayerId = "points";
 
@@ -35,9 +35,6 @@ export function LayerSelector() {
   const [serviceSuccess, setServiceSuccess] = useState<string | null>(null);
   // Add a counter to track service updates
   const [serviceUpdateCounter, setServiceUpdateCounter] = useState(0);
-
-  // Add a console log to check the WMS services before passing to useAllServices
-  console.log("WMS Services before passing to useAllServices:", wmsServices);
 
   // Use our new hook to fetch all services at once
   const { allLayers: serviceLayers, isLoading, errors } = useAllServices(wfsServices, wmsServices, serviceUpdateCounter);
@@ -128,11 +125,17 @@ export function LayerSelector() {
 
   // Event handlers and other functions
   // Handle removing a layer
-  const handleRemoveLayer = (layerId: string) => {
+  const handleRemoveLayer = (layerId: string, uniqueId?: string, serviceId?: string, url?: string) => {
     setLayers(prevLayers =>
-      prevLayers.map(layer =>
-        layer.id === layerId ? { ...layer, visible: false } : layer
-      )
+      prevLayers.map(layer => {
+        // If uniqueId is provided, use it for comparison
+        if (uniqueId) {
+          const currentUniqueId = layer.uniqueId || `${layer.serviceId || 'noservice'}-${layer.url || 'nourl'}-${layer.id}`;
+          return uniqueId === currentUniqueId ? { ...layer, visible: false } : layer;
+        }
+        // Otherwise fall back to just comparing IDs (for backward compatibility)
+        return layer.id === layerId ? { ...layer, visible: false } : layer;
+      })
     );
   };
 
@@ -145,9 +148,16 @@ export function LayerSelector() {
         // Only select if not already visible
         if (!firstLayer.visible) {
           setLayers(prevLayers =>
-            prevLayers.map(layer =>
-              layer.id === firstLayer.id ? { ...layer, visible: true } : layer
-            )
+            prevLayers.map(layer => {
+              // Create a composite ID for comparison if uniqueId is not available
+              const firstLayerUniqueId = firstLayer.uniqueId ||
+                `${firstLayer.serviceId || 'noservice'}-${firstLayer.url || 'nourl'}-${firstLayer.id}`;
+              const currentUniqueId = layer.uniqueId ||
+                `${layer.serviceId || 'noservice'}-${layer.url || 'nourl'}-${layer.id}`;
+
+              // Compare using uniqueId or composite ID
+              return firstLayerUniqueId === currentUniqueId ? { ...layer, visible: true } : layer;
+            })
           );
           // Clear the search term after selection
           setSearchTerm("");
@@ -276,10 +286,13 @@ export function LayerSelector() {
             </button>
           </div>
           {selectedLayers.map(layer => (
-            <div key={layer.id} className="selected-layer-item">
+            <div
+              key={layer.uniqueId || `${layer.serviceId || 'noservice'}-${layer.url || 'nourl'}-${layer.id}`}
+              className="selected-layer-item"
+            >
               <span>{layer.name}</span>
               <button
-                onClick={() => handleRemoveLayer(layer.id)}
+                onClick={() => handleRemoveLayer(layer.id, layer.uniqueId, layer.serviceId, layer.url)}
                 title="Verwijder laag"
                 className="remove-layer-button"
               >

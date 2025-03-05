@@ -18,6 +18,16 @@ export function LayerGroup({ title, layers, isExpanded: defaultExpanded = false,
     setIsExpanded(defaultExpanded);
   }, [defaultExpanded]);
 
+  // Helper function to get a unique key for each layer
+  const getLayerKey = (layer: LayerI): string => {
+    // Use uniqueId if available (added in our enhanced ESRI layer handling)
+    if ((layer as any).uniqueId) {
+      return (layer as any).uniqueId;
+    }
+    // Fall back to the composite ID approach
+    return `${layer.serviceId || 'noservice'}-${layer.url || 'nourl'}-${layer.id}`;
+  };
+
   return (
     <div className="layer-group">
       <button
@@ -32,7 +42,7 @@ export function LayerGroup({ title, layers, isExpanded: defaultExpanded = false,
           {layers.map((layer) => (
             <LayerCheckbox
               layer={layer}
-              key={`${layer.serviceId || 'noservice'}-${layer.url || 'nourl'}-${layer.id}`}
+              key={getLayerKey(layer)}
               setSearchTerm={setSearchTerm}
             />
           ))}

@@ -87,7 +87,6 @@ export function Map() {
     locationFilter,
     layers,
     showBagLayer,
-    setShowBagLayer,
   } = useContext(AppContext);
   const mapRef = useRef<MapRef>();
   const [viewState, setViewState] = useState(mapStartState);
@@ -484,13 +483,12 @@ export function Map() {
         <GeolocateControl position={"bottom-left"} />
         {/* Show BAG layer (search results) when it's toggled on */}
         {showBagLayer && hasSearchResults && (
-          <Source type="geojson" data={data}>
+          <Source id={bagLayerId} type="geojson" data={data}>
             <Layer {...bagLayer} />
           </Source>
         )}
         {visibleLayers
-          .filter(layer => layer.id !== bagLayerId)
-          .map((layer) => <LayerSource layer={layer} key={layer.id} bounds={currentBounds ? boundsLngLatToMatrix(currentBounds) : null} />)}
+          .map((layer) => <LayerSource layer={layer} key={layer.uniqueId || `${layer.serviceId || 'noservice'}-${layer.url || 'nourl'}-${layer.id}`} bounds={currentBounds ? boundsLngLatToMatrix(currentBounds) : null} />)}
       </MapGL>
       <Dialog
         feature={clickedFeature}

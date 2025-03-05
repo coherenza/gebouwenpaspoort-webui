@@ -2976,6 +2976,7 @@
         "npm:@vitejs/plugin-react@^4.3.1",
         "npm:algoliasearch@^5.2.2",
         "npm:deploy-gh@~0.2.1",
+        "npm:fast-xml-parser@^5.0.4",
         "npm:instantsearch.css@8.5.0",
         "npm:instantsearch.js@^4.74.0",
         "npm:mapbox-gl@^3.6.0",
