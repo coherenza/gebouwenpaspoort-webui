@@ -46,10 +46,9 @@ Alternatively, you could copy the contents of the `dist` directory into
 
 ### Blue / Green deployment
 
-Meilisearch is hosted on DigitalOcean at [http://green.pandata.nl] and
-[http://blue.pandata.nl]. Check `config.ts` to see the one we're currently
-using. In order to change from blue to green or vice versa, change
-`const server` in `config.ts`.
+Meilisearch is hosted on DigitalOcean at [http://green.pandata.nl] and [http://blue.pandata.nl].
+Check `config.ts` to see the one we're currently using.
+In order to change from blue to green or vice versa, change the value of `const server` in `config.ts`.
 
 The domains [http://green.pandata.nl] and [http://blue.pandata.nl] point to load
 balancers at DigitalOcean. This is configured in the DNS A-records for the
