@@ -109,14 +109,12 @@ export function Map() {
   const prevItemIdsRef = useRef<string[]>([]);
 
   const moveBounds = useCallback((itemsList: GBPObject[]) => {
-    console.log("moveBounds...", itemsList[0]);
     if (!mapRef.current) {
       console.log("No map ref");
       return;
     }
     // If no query and no location filter, move to boundsUtrecht
     if (query == "" && locationFilter == null && lastInteractionOrigin == "query") {
-      console.log("User removed query");
       isAnimating.current = true;
       mapRef.current?.fitBounds(boundsUtrecht, {
         animate: true,
@@ -139,7 +137,6 @@ export function Map() {
       // if query contains a number, set first hit as current
       if (lastInteractionOrigin == "query" && queryHasNumber(query)) {
         const firstItem = itemsList[0];
-        console.log("Moving to first item", firstItem);
         isAnimating.current = true;
         mapRef.current?.getMap().flyTo({
           center: [(firstItem as any)._geoloc?.lng || firstItem._geo?.lng, (firstItem as any)._geoloc?.lat || firstItem._geo?.lat],
@@ -152,7 +149,6 @@ export function Map() {
         setShowDetails(true);
       } else {
         // show all items
-        console.log("set bounds to all items");
 
         // Create a new bounds object
         const bounds = new LngLatBounds();
@@ -248,11 +244,12 @@ export function Map() {
   const onMoveEnd = useCallback((evt) => {
 
     // Don't update if we're animating or if it's not a user-initiated event
-    if (!evt.originalEvent || lastInteractionOrigin !== "mapMove" || isAnimating.current) {
+    if (!evt.originalEvent || isAnimating.current) {
       return;
     }
     setLastInteractionOrigin("mapMove");
     const latLngBounds = mapRef.current.getMap().getBounds();
+    console.log("latLngBounds moveEnd", latLngBounds);
     if (latLngBounds) {
       setCurrentBounds(latLngBounds);
       const boundsIS = boundsLngLatToIS(latLngBounds);
@@ -332,7 +329,7 @@ export function Map() {
         };
       }),
     };
-  }, [items, current, lastInteractionOrigin]);
+  }, [items, current, lastInteractionOrigin, locationFilter]);
 
   // Check if search results exist
   const hasSearchResults = useMemo(() => {
@@ -381,10 +378,15 @@ export function Map() {
           setCurrent(item as unknown as GBPObject);
           setCenter(item as unknown as GBPObject);
         } else {
-          setLocationFilter({
-            id: item.id as string,
-            name: item.naam as string,
-          });
+          if (locationFilter?.id !== item.id) {
+            setLocationFilter({
+              id: item.id as string,
+              name: item.naam as string,
+            });
+          } else {
+            setLocationFilter(undefined);
+          }
+
           // setCenter(item as unknown as GBPObject);
         }
       } else {
@@ -392,7 +394,7 @@ export function Map() {
         setClickedFeature(feature);
       }
     },
-    [items],
+    [items, locationFilter],
   );
 
   // Draw a polygon on the map and calculate the surface area

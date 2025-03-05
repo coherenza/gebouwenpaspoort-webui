@@ -4,11 +4,12 @@ import {
   useGeoSearch,
   useSearchBox,
   useSortBy,
+  useInstantSearch
 } from "react-instantsearch";
 import { useMap } from "react-map-gl";
 import { AppContext } from "./App";
 import { indexName } from "./config";
-import { mapStartState, startBounds, startBoundsInstant } from "./Map";
+import { startBounds, startBoundsInstant } from "./Map";
 import { sortProps } from "./schema";
 import "./Searchbox.css";
 import useDebounce from "./useDebounce";
@@ -34,14 +35,21 @@ export const SearchBox = () => {
     setLastInteractionOrigin,
     setLocationFilter,
     setCurrent,
+    setShowBagLayer,
     setShowDetails,
+    layers,
+    setLayers
   } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 1000);
   const { refine: clearRefinements } = useClearRefinements();
+  const { refresh } = useInstantSearch();
 
   // Add a ref to track the previous debounced search term
   const prevDebouncedTermRef = useRef(debouncedSearchTerm);
+
+  // Add a ref to track if a reset is in progress
+  const resetInProgressRef = useRef(false);
 
   // We keep track of the `sortBy` in a more efficient way to prevent unnecessary searches
   let setSort = useCallback((sort: string) => {
@@ -52,23 +60,55 @@ export const SearchBox = () => {
 
   let handleReset = useCallback(
     (e) => {
-      console.log("handleReset called");
-      clear();
-      // refine("*");
+
+      // If reset is already in progress, perform a hard reset
+      if (resetInProgressRef.current) {
+        // Force a complete reset by reloading the page
+        window.location.href = "/";
+        return;
+      }
+
+      // Set the reset in progress flag
+      resetInProgressRef.current = true;
+
+      // Clear all search state
+      clear(); // Clear search box
+      clearRefinements(); // Clear all refinements
+      clearGeo(startBoundsInstant); // Clear geo search
+
+      // Reset sort order to default
+      setSortBySlow(defaultSort);
+      setSortByQuick(defaultSort);
+
+      // Reset application state
       setCurrent(undefined);
       setLastInteractionOrigin("query");
-      clearGeo(startBoundsInstant);
-      // Convert startBounds array to LngLatBoundsLike format
+      setShowBagLayer(true);
+      setSearchTerm("");
+      setLocationFilter(undefined);
+
+      // Reset URL without triggering a page reload
+      window.history.replaceState({}, "", "/");
+
+      // Reset map view
       map?.fitBounds([
         [startBounds[0], startBounds[1]], // Southwest corner [lng, lat]
         [startBounds[2], startBounds[3]]  // Northeast corner [lng, lat]
       ] as LngLatBoundsLike);
-      clearRefinements();
-      setSearchTerm("");
-      setLocationFilter(undefined);
-      window.location.href = "/";
+
+      // Reset layers
+      const layersDisabled = layers.map(layer => ({ ...layer, visible: false }));
+      setLayers(layersDisabled);
+
+      // Force InstantSearch to refresh its state
+      refresh();
+
+      // Clear the reset in progress flag after a delay
+      setTimeout(() => {
+        resetInProgressRef.current = false;
+      }, 1000);
     },
-    [map, clear, refine, clearGeo, startBoundsInstant, clearRefinements],
+    [map, clear, clearGeo, startBoundsInstant, clearRefinements, layers, setLayers, refresh, setSortBySlow],
   );
 
   let handleSetSearchTerm = useCallback(
@@ -177,16 +217,18 @@ export const SearchBox = () => {
         }}
         onClick={handleToggleExact}
       >
-        {/* {exact ? <CheckboxIcon /> : <BoxIcon />} */}
         Exact
       </button>
       <button
-        title="Verwijder de filters, de zoekopdracht en zoom uit naar de startpositie."
+        title={resetInProgressRef.current ? "Klik nogmaals voor een harde reset" : "Verwijder de filters, de zoekopdracht en zoom uit naar de startpositie."}
         id="reset"
         type="button"
         onClick={handleReset}
+        style={{
+          fontWeight: resetInProgressRef.current ? "bold" : "normal",
+        }}
       >
-        Reset
+        {resetInProgressRef.current ? "Reset" : "Reset"}
       </button>
     </form>
   );
