@@ -120,7 +120,12 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
   });
   const setLocationFilter = (locationFilter: LocationFilter | undefined) => {
     setLocationFilterInternal(locationFilter);
-    locationFilter ? refine(locationFilter.id) : clearLocationFilter();
+    if (locationFilter) {
+      clearLocationFilter(); // Clear existing filter
+      refine(locationFilter.id); // Set new filter
+    } else {
+      clearLocationFilter();
+    }
   };
 
   async function handleSetApiKey(e) {
