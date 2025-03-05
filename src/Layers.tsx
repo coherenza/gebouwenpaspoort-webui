@@ -39,21 +39,8 @@ export function LayerSelector() {
   // Use our new hook to fetch all services at once
   const { allLayers: serviceLayers, isLoading, errors } = useAllServices(wfsServices, wmsServices, serviceUpdateCounter);
 
-  // Add debug logging
-  useEffect(() => {
-    console.log("WMS Services:", wmsServices);
-    console.log("WMS Services length:", wmsServices.length);
-    console.log("Service Layers:", serviceLayers);
-    console.log("WMS Layers:", serviceLayers.filter(layer => layer.type === "raster"));
-  }, [serviceLayers]);
-
   // Group layers using the hook
   const layerGroups = useLayerGroups(layers);
-
-  // Add debug logging for layer groups
-  useEffect(() => {
-    console.log("Layer Groups:", layerGroups);
-  }, [layerGroups]);
 
   // Get selected layers
   const selectedLayers = useMemo(() => {
@@ -94,8 +81,6 @@ export function LayerSelector() {
   // Add service layers to existing layers if not already present
   useEffect(() => {
     if (serviceLayers.length > 0) {
-      console.log("Adding service layers to existing layers:", serviceLayers);
-
       setLayers(prevLayers => {
         // Only add layers that don't already exist
         const newLayers = serviceLayers.filter(
@@ -107,7 +92,6 @@ export function LayerSelector() {
           )
         );
 
-        console.log("New layers to add:", newLayers.length);
         return newLayers.length > 0 ? [...prevLayers, ...newLayers] : prevLayers;
       });
     }
@@ -187,7 +171,6 @@ export function LayerSelector() {
 
     try {
       const result = await detectServiceType(serviceUrl);
-      console.log("Service detection result:", result);
 
       // If we have a service but also an error, it's a warning
       if (result.service && result.error && result.type) {

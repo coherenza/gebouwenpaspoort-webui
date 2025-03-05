@@ -492,7 +492,6 @@ export function useAllServices(
     const seenIds = new Set<string>();
 
     // Process WFS layers first
-    console.log(`Processing ${wfsLayers.length} WFS layers`);
     wfsLayers.forEach((layer) => {
       // Use uniqueId if available, otherwise create a composite ID
       const uniqueId =
@@ -509,8 +508,6 @@ export function useAllServices(
       }
     });
 
-    // Then process WMS layers
-    console.log(`Processing ${wmsLayers.length} WMS layers`);
     wmsLayers.forEach((layer) => {
       // Use uniqueId if available, otherwise create a composite ID
       const uniqueId =
@@ -526,10 +523,6 @@ export function useAllServices(
         uniqueLayers.push(layer);
       }
     });
-
-    console.log(
-      `Total unique layers: ${uniqueLayers.length} (WFS: ${wfsLayers.length}, WMS: ${wmsLayers.length})`
-    );
     setAllLayers(uniqueLayers);
 
     // Only set isLoading to false when we have results for both WFS and WMS services
@@ -540,14 +533,6 @@ export function useAllServices(
       wmsServices.length > 0 ? wmsResults.length === wmsServices.length : true;
 
     setIsLoading(!(wfsLoaded && wmsLoaded));
-
-    // Debug logging
-    console.log("WFS Results:", wfsResults);
-    console.log("WMS Results:", wmsResults);
-    console.log("WFS Layers:", wfsLayers);
-    console.log("WMS Layers:", wmsLayers);
-    console.log("Unique Layers:", uniqueLayers);
-    console.log("Is Loading:", !(wfsLoaded && wmsLoaded));
   }, [wfsResults, wmsResults, wfsServices.length, wmsServices.length]);
 
   return { allLayers, isLoading, errors };

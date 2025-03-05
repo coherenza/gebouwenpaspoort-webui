@@ -12,17 +12,14 @@ export async function detectServiceType(url: string): Promise<{
 }> {
   // Clean the URL by removing any existing query parameters
   const baseUrl = url.split("?")[0];
-  console.log("Attempting to detect service type for URL:", baseUrl);
 
   try {
     // First try WFS
-    console.log("Trying WFS capabilities...");
     let wfsResponse;
     try {
       wfsResponse = await fetch(
         `${baseUrl}?request=GetCapabilities&service=WFS`
       );
-      console.log("WFS response status:", wfsResponse.status);
     } catch (fetchError) {
       console.error("Error fetching WFS capabilities:", fetchError);
       // Continue to try WMS
@@ -30,7 +27,6 @@ export async function detectServiceType(url: string): Promise<{
 
     if (wfsResponse && wfsResponse.ok) {
       const text = await wfsResponse.text();
-      console.log("WFS response received, length:", text.length);
 
       // Check if it's a valid WFS response by looking for WFS-specific elements
       if (
@@ -63,14 +59,11 @@ export async function detectServiceType(url: string): Promise<{
       }
     }
 
-    // Then try WMS
-    console.log("Trying WMS capabilities...");
     let wmsResponse;
     try {
       wmsResponse = await fetch(
         `${baseUrl}?request=GetCapabilities&service=WMS`
       );
-      console.log("WMS response status:", wmsResponse.status);
     } catch (fetchError) {
       console.error("Error fetching WMS capabilities:", fetchError);
       return {
@@ -82,8 +75,6 @@ export async function detectServiceType(url: string): Promise<{
 
     if (wmsResponse && wmsResponse.ok) {
       const text = await wmsResponse.text();
-      console.log("WMS response received, length:", text.length);
-      console.log("First 200 chars of response:", text.substring(0, 200));
 
       // Check if it's a valid WMS response
       if (

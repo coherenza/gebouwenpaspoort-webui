@@ -110,7 +110,7 @@ export function Map() {
 
   // If user changed the query, move the bounds to the new items
   useEffect(() => {
-    if (lastInteractionOrigin == "map") {
+    if (lastInteractionOrigin == "mapMove") {
       return;
     }
     moveBounds();
@@ -131,23 +131,29 @@ export function Map() {
   }, [mapRef.current]);
 
   const moveBounds = useCallback(() => {
-      if (!mapRef.current) {
-        return;
-      }
-      if (query == "") {
-        isAnimating.current = true;
-        mapRef.current?.fitBounds(boundsUtrecht, {
-          animate: true,
-          duration: animationDuration,
+    setLastInteractionOrigin("mapMove");
+    console.log("moveBounds...");
+    if (!mapRef.current) {
+      console.log("No map ref");
+      return;
+    }
+    // If no query and no location filter, move to boundsUtrecht
+    if (query == "" && locationFilter == null) {
+      console.log("No query");
+      isAnimating.current = true;
+      mapRef.current?.fitBounds(boundsUtrecht, {
+        animate: true,
+        duration: animationDuration,
         }).once('moveend', () => {
           isAnimating.current = false;
         });
         return;
-      }
-      if (items.length == 0) {
-        isAnimating.current = true;
-        mapRef.current?.fitBounds(boundsUtrecht, {
-          animate: true,
+    }
+    if (items.length == 0) {
+      console.log("No items");
+      isAnimating.current = true;
+      mapRef.current?.fitBounds(boundsUtrecht, {
+        animate: true,
           duration: animationDuration,
         }).once('moveend', () => {
           isAnimating.current = false;
@@ -156,6 +162,7 @@ export function Map() {
       }
       const firstItem = items[0];
 
+      console.log("Moving to first item", firstItem);
       isAnimating.current = true;
       mapRef.current?.getMap().flyTo({
         center: [firstItem._geoloc.lng, firstItem._geoloc.lat],
@@ -170,7 +177,8 @@ export function Map() {
   // If the user moves the map, update the query to filter current area
   const updateBoundsQuery = useCallback((evt) => {
     // Don't update if we're animating or if it's not a user-initiated event
-    if (!evt.originalEvent || lastInteractionOrigin === "text" || isAnimating.current) {
+    if (!evt.originalEvent || lastInteractionOrigin !== "mapMove" || isAnimating.current) {
+      console.log("Not updating bounds query");
       return;
     }
     const latLngBounds = mapRef.current.getMap().getBounds();
@@ -179,12 +187,13 @@ export function Map() {
       const boundsIS = boundsLngLatToIS(latLngBounds);
       refine(boundsIS);
     }
-    setLastInteractionOrigin("map");
+    setLastInteractionOrigin("mapMove");
     setViewState(evt.viewState);
-  }, [lastInteractionOrigin, refine, isAnimating]);
+  }, [lastInteractionOrigin, refine, isAnimating, showResults, showFilter, showLayerSelector]);
 
   const setCenter = useCallback(
     (item: GBPObject) => {
+      console.log("Setting center", item);
       mapRef.current?.getMap().flyTo({
         center: [item._geo.lng, item._geo.lat],
         zoom: zoomStreetLevel,
@@ -221,7 +230,7 @@ export function Map() {
         const { color, isAob, label } = getObjectType(item);
 
         // Auto-select first address item when searching
-        if (index === 0 && isAob && lastInteractionOrigin === "text") {
+        if (index === 0 && isAob && lastInteractionOrigin === "mapClick") {
           setCurrent(item as unknown as GBPObject);
         }
 
@@ -280,7 +289,7 @@ export function Map() {
 
   const handleMapClick = useCallback(
     (evt: MapLayerMouseEvent) => {
-      setLastInteractionOrigin("map");
+      setLastInteractionOrigin("mapClick");
 
       // No features clicked
       if (!evt.features?.length) return;
@@ -306,6 +315,7 @@ export function Map() {
             id: item.id as string,
             name: item.naam as string,
           });
+          // setCenter(item as unknown as GBPObject);
         }
       } else {
         // Handle other layer clicks

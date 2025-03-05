@@ -26,7 +26,7 @@ import { layersDefault } from "./layers/defaultServices";
 import { LayerI } from "./layers/LayerTypes";
 import { LayerSelector } from "./Layers";
 
-type InteractionOrigin = "map" | "text" | "results" | undefined;
+type InteractionOrigin = "mapMove" | "mapClick" | "query" | "filter" | undefined;
 
 export interface AppContextI {
   setCurrent: (gebouw: GBPObject) => void;
@@ -119,6 +119,7 @@ const App = ({ setApiKey, apiKey, hasCompletedTour }) => {
     includedAttributes: ["pdok-locatie-id"],
   });
   const setLocationFilter = (locationFilter: LocationFilter | undefined) => {
+    console.log("Setting location filter", locationFilter);
     setLocationFilterInternal(locationFilter);
     if (locationFilter) {
       clearLocationFilter(); // Clear existing filter
