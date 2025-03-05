@@ -8,6 +8,7 @@ import {
 import "./Hit.css";
 import { AppContext } from "./App";
 import { TrashIcon } from "@radix-ui/react-icons";
+import CustomIcons from "./Icons";
 import { useMap } from "react-map-gl";
 import { zoomStreetLevel } from "./Map";
 
@@ -15,7 +16,7 @@ interface HitProps {
   hit: GBPObject;
 }
 
-// maps bag statuses to
+// maps bag statuses to icons
 const statusMapping = {
   "Verblijfsobject in gebruik": null,
   "Verblijfsobject in gebruik (niet ingemeten)": null,
@@ -28,6 +29,15 @@ const statusMapping = {
   "Verblijfsobject buiten gebruik": <TrashIcon />,
   "Verblijfsobject ten onrechte opgevoerd": <TrashIcon />,
 };
+
+// icons for different object types
+const icons = Object.fromEntries(
+  CustomIcons.map((icon) => {
+    const customIcon = new Image(24, 24);
+    customIcon.src = icon.src;
+    return [icon.name, customIcon];
+  })
+);
 
 function getStatusIcon(status: string) {
   return statusMapping[status];
@@ -61,7 +71,7 @@ export const HitLine = ({ hit }: HitProps) => {
   if (!hit) return null;
 
   const active = current?.id === hit.id;
-  const { isAob, color, label } = getObjectType(hit);
+  const { isAob, color, label, icon } = getObjectType(hit);
 
   const status = hit["bag-aob"]
     ? hit["bag-aob"][Attributes.bag_aob_status.id]
@@ -94,9 +104,9 @@ export const HitLine = ({ hit }: HitProps) => {
         className={`hit-naam ${
           status && shouldShowStatus(status) ? "hit-naam__deleted" : ""
         }`}
-        title={isAob ? hit[displayAttributes[0].id] : hit["bag-object-type"]}
+        title={isAob ? hit["bag-object-type"] : hit[displayAttributes[0].id]}
       >
-        {isAob ? "" : "🔍 "}
+        {isAob ? "" : icon ? [ <img src={icons[icon].src} alt={label} title={label} className="Icon"/>, " " ] : "🔍 "}
         {isAob ? adres : hit[displayAttributes[0].id]}
       </div>
       <div className="hit-type-wrapper">
@@ -104,6 +114,7 @@ export const HitLine = ({ hit }: HitProps) => {
           <span title={status}>{getStatusIcon(status)}</span>
         )}
         {/* <div className="hit-type">{hit["bag-object-type"]}</div> */}
+        {/* icon ? <img src={icons[icon].src} height="24" width="24"/> : "" */}
         <div
           className="hit-ball"
           title={hit["bag-object-type"] || label}
