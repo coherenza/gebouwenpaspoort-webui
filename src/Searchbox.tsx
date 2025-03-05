@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState, useRef } from "react";
 import {
   useClearRefinements,
   useGeoSearch,
@@ -40,10 +40,13 @@ export const SearchBox = () => {
   const debouncedSearchTerm = useDebounce(searchTerm, 1000);
   const { refine: clearRefinements } = useClearRefinements();
 
+  // Add a ref to track the previous debounced search term
+  const prevDebouncedTermRef = useRef(debouncedSearchTerm);
+
   // We keep track of the `sortBy` in a more efficient way to prevent unnecessary searches
   let setSort = useCallback((sort: string) => {
     setSortBySlow(sort);
-    setLastInteractionOrigin("text");
+    setLastInteractionOrigin("filter");
     setSortByQuick(sort);
   }, []);
 
@@ -53,7 +56,7 @@ export const SearchBox = () => {
       clear();
       // refine("*");
       setCurrent(undefined);
-      setLastInteractionOrigin("text");
+      setLastInteractionOrigin("query");
       clearGeo(startBoundsInstant);
       // Convert startBounds array to LngLatBoundsLike format
       map?.fitBounds([
@@ -76,10 +79,6 @@ export const SearchBox = () => {
       const hasNumber = /\d/.test(e.target.value);
       let q = e.target.value;
 
-      if (q.length > 2) {
-        clearSearchQuery();
-      }
-
       if (sortByQuick == defaultSort) {
         if (hasNumber) {
           // Sorting by indexName = sorting by relevance
@@ -97,23 +96,32 @@ export const SearchBox = () => {
   );
 
   const clearSearchQuery = useCallback(() => {
+    console.log("clearSearchQuery called");
     setLocationFilter(undefined);
-    map?.flyTo(mapStartState);
+    // map?.flyTo(mapStartState);
   }, [map]);
 
   let handleSearch = useCallback(
     (query, exactOnly) => {
+      console.log("handleSearch called", query, exactOnly);
       if (query) {
         setShowDetails(false);
         const modifiedQuery = exactOnly ? `"${query}"` : query;
+
+        // Only set lastInteractionOrigin if this is a user-initiated search
+        // (not from the debounced effect)
+        const isUserInitiated = query === searchTerm;
+        if (isUserInitiated) {
+          setLastInteractionOrigin("query");
+        }
+
         refine(modifiedQuery);
-        setLastInteractionOrigin("text");
         clearGeo(startBoundsInstant);
       } else {
         clearSearchQuery();
       }
     },
-    [sortByQuick, sortBySlow],
+    [refine, setShowDetails, setLastInteractionOrigin, clearGeo, clearSearchQuery, searchTerm],
   );
 
   // On enter, we want to search
@@ -122,13 +130,18 @@ export const SearchBox = () => {
       e.preventDefault();
       handleSearch(searchTerm, exact);
     },
-    [searchTerm, exact],
+    [searchTerm, exact, handleSearch],
   );
 
   // When the debounced search term changes, we want to search
   useEffect(() => {
-    handleSearch(debouncedSearchTerm, exact);
-  }, [debouncedSearchTerm]);
+    // Only search if the debounced term has actually changed
+    if (debouncedSearchTerm && debouncedSearchTerm !== prevDebouncedTermRef.current) {
+      console.log("Debounced search term changed, searching for:", debouncedSearchTerm);
+      handleSearch(debouncedSearchTerm, exact);
+      prevDebouncedTermRef.current = debouncedSearchTerm;
+    }
+  }, [debouncedSearchTerm, exact, handleSearch]);
 
   const handleToggleExact = useCallback(
     (e) => {

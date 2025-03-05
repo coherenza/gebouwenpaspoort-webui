@@ -64,6 +64,10 @@ export const zoomStreetLevel = 18;
 /** Amount of ms to animate the map to the new bounds */
 const animationDuration = 1000;
 
+const queryHasNumber = (query: string) => {
+  return /\d/.test(query);
+};
+
 export function Map() {
   const { refine } = useGeoSearch();
   const { hits: items } = useInfiniteHits({
@@ -101,6 +105,92 @@ export function Map() {
   // Add a flag to track if we're currently animating
   const isAnimating = useRef(false);
 
+  // Add a ref to track the previous item IDs
+  const prevItemIdsRef = useRef<string[]>([]);
+
+  const moveBounds = useCallback((itemsList: GBPObject[]) => {
+    console.log("moveBounds...", itemsList[0]);
+    if (!mapRef.current) {
+      console.log("No map ref");
+      return;
+    }
+    // If no query and no location filter, move to boundsUtrecht
+    if (query == "" && locationFilter == null && lastInteractionOrigin == "query") {
+      console.log("User removed query");
+      isAnimating.current = true;
+      mapRef.current?.fitBounds(boundsUtrecht, {
+        animate: true,
+        duration: animationDuration,
+      }).once('moveend', () => {
+        isAnimating.current = false;
+      });
+      return;
+    }
+    if (itemsList.length == 0) {
+      isAnimating.current = true;
+      mapRef.current?.fitBounds(boundsUtrecht, {
+        animate: true,
+          duration: animationDuration,
+        }).once('moveend', () => {
+          isAnimating.current = false;
+        });
+        return;
+    }
+      // if query contains a number, set first hit as current
+      if (lastInteractionOrigin == "query" && queryHasNumber(query)) {
+        const firstItem = itemsList[0];
+        console.log("Moving to first item", firstItem);
+        isAnimating.current = true;
+        mapRef.current?.getMap().flyTo({
+          center: [(firstItem as any)._geoloc?.lng || firstItem._geo?.lng, (firstItem as any)._geoloc?.lat || firstItem._geo?.lat],
+          zoom: zoomStreetLevel,
+          duration: animationDuration,
+        }).once('moveend', () => {
+          isAnimating.current = false;
+        });
+        setCurrent(firstItem as unknown as GBPObject);
+        setShowDetails(true);
+      } else {
+        // show all items
+        console.log("set bounds to all items");
+
+        // Create a new bounds object
+        const bounds = new LngLatBounds();
+
+        // Extend the bounds to include all items
+        itemsList.forEach(item => {
+          if ((item as any)._geoloc && typeof (item as any)._geoloc.lng === 'number' && typeof (item as any)._geoloc.lat === 'number') {
+            bounds.extend([(item as any)._geoloc.lng, (item as any)._geoloc.lat]);
+          } else if (item._geo && typeof item._geo.lng === 'number' && typeof item._geo.lat === 'number') {
+            bounds.extend([item._geo.lng, item._geo.lat]);
+          }
+        });
+
+        // If bounds are empty, use default bounds
+        if (bounds.isEmpty()) {
+          console.log("No valid coordinates found in results, using default bounds");
+          mapRef.current?.fitBounds(boundsUtrecht, {
+            animate: true,
+            duration: animationDuration,
+          }).once('moveend', () => {
+            isAnimating.current = false;
+          });
+          return;
+        }
+
+        // Fit to bounds with padding
+        isAnimating.current = true;
+        console.log("fit bounds to all items", bounds);
+        mapRef.current?.fitBounds(bounds, {
+          padding: { top: 50, bottom: 50, left: 50, right: 50 },
+          animate: true,
+          duration: animationDuration,
+        }).once('moveend', () => {
+          isAnimating.current = false;
+        });
+      }
+  }, [mapRef, query, lastInteractionOrigin, locationFilter]);
+
   // if the users toggles the sidebars, resize the map
   useEffect(() => {
     if (mapRef.current) {
@@ -110,11 +200,35 @@ export function Map() {
 
   // If user changed the query, move the bounds to the new items
   useEffect(() => {
-    if (lastInteractionOrigin == "mapMove") {
+    // Skip if this is a map move or if we're already animating
+    if (lastInteractionOrigin == "mapMove" || isAnimating.current) {
+      console.log("Skipping moveBounds: lastInteractionOrigin == mapMove or isAnimating");
       return;
     }
-    moveBounds();
-  }, [query, mapRef.current, items]);
+
+    // Get the IDs of the first 3 items (or fewer if there are less than 3)
+    const currentItemIds = items.slice(0, 3).map(item => item.id || '');
+    const prevItemIds = prevItemIdsRef.current;
+
+    // Check if the item IDs have changed
+    const itemsChanged = currentItemIds.length !== prevItemIds.length ||
+      currentItemIds.some((id, index) => id !== prevItemIds[index]);
+
+    // Only call moveBounds if items have actually changed and we have items
+    if (itemsChanged && items.length > 0) {
+      console.log("Items changed, calling moveBounds with latest data", currentItemIds);
+
+      // Use a small timeout to ensure we're using the latest items
+      const timeoutId = setTimeout(() => {
+        moveBounds(items as unknown as GBPObject[]);
+      }, 100);
+
+      // Update the previous item IDs
+      prevItemIdsRef.current = currentItemIds;
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [items, lastInteractionOrigin, moveBounds]);
 
   // initialize map
   // Load marker icon
@@ -130,64 +244,20 @@ export function Map() {
     }
   }, [mapRef.current]);
 
-  const moveBounds = useCallback(() => {
-    setLastInteractionOrigin("mapMove");
-    console.log("moveBounds...");
-    if (!mapRef.current) {
-      console.log("No map ref");
-      return;
-    }
-    // If no query and no location filter, move to boundsUtrecht
-    if (query == "" && locationFilter == null) {
-      console.log("No query");
-      isAnimating.current = true;
-      mapRef.current?.fitBounds(boundsUtrecht, {
-        animate: true,
-        duration: animationDuration,
-        }).once('moveend', () => {
-          isAnimating.current = false;
-        });
-        return;
-    }
-    if (items.length == 0) {
-      console.log("No items");
-      isAnimating.current = true;
-      mapRef.current?.fitBounds(boundsUtrecht, {
-        animate: true,
-          duration: animationDuration,
-        }).once('moveend', () => {
-          isAnimating.current = false;
-        });
-        return;
-      }
-      const firstItem = items[0];
-
-      console.log("Moving to first item", firstItem);
-      isAnimating.current = true;
-      mapRef.current?.getMap().flyTo({
-        center: [firstItem._geoloc.lng, firstItem._geoloc.lat],
-        zoom: zoomStreetLevel,
-        duration: animationDuration,
-      }).once('moveend', () => {
-        isAnimating.current = false;
-      });
-
-    }, [mapRef, items, query]);
-
   // If the user moves the map, update the query to filter current area
-  const updateBoundsQuery = useCallback((evt) => {
+  const onMoveEnd = useCallback((evt) => {
+
     // Don't update if we're animating or if it's not a user-initiated event
     if (!evt.originalEvent || lastInteractionOrigin !== "mapMove" || isAnimating.current) {
-      console.log("Not updating bounds query");
       return;
     }
+    setLastInteractionOrigin("mapMove");
     const latLngBounds = mapRef.current.getMap().getBounds();
     if (latLngBounds) {
       setCurrentBounds(latLngBounds);
       const boundsIS = boundsLngLatToIS(latLngBounds);
       refine(boundsIS);
     }
-    setLastInteractionOrigin("mapMove");
     setViewState(evt.viewState);
   }, [lastInteractionOrigin, refine, isAnimating, showResults, showFilter, showLayerSelector]);
 
@@ -230,9 +300,9 @@ export function Map() {
         const { color, isAob, label } = getObjectType(item);
 
         // Auto-select first address item when searching
-        if (index === 0 && isAob && lastInteractionOrigin === "mapClick") {
-          setCurrent(item as unknown as GBPObject);
-        }
+        // if (index === 0 && isAob && lastInteractionOrigin === "mapClick") {
+        //   setCurrent(item as unknown as GBPObject);
+        // }
 
         // Determine icon title based on item type
         const iconTitle = isAob
@@ -481,7 +551,7 @@ export function Map() {
         onMouseMove={handleHover}
         onMouseOut={() => setHoverInfo(null)}
         onClick={handleMapClick}
-        onMoveEnd={updateBoundsQuery}
+        onMoveEnd={onMoveEnd}
         style={{ width: "100%", height: "100%", flexBasis: "600px", flex: 1 }}
         mapStyle="mapbox://styles/joepio/clefv1fk2001x01msvlmxl79g"
         ref={mapRef}

@@ -73,7 +73,7 @@ export const HitLine = ({ hit }: HitProps) => {
   const handleClick = useCallback(() => {
     if (isAob) {
       let { lng, lat } = hit._geo;
-      setLastInteractionOrigin("results");
+      setLastInteractionOrigin("mapClick");
       map.flyTo({
         center: [lng, lat],
         animate: true,
