@@ -12,6 +12,7 @@ import { mapStartState, startBounds, startBoundsInstant } from "./Map";
 import { sortProps } from "./schema";
 import "./Searchbox.css";
 import useDebounce from "./useDebounce";
+import { LngLatBoundsLike } from "mapbox-gl";
 
 const defaultSort = sortProps[0].sortBy;
 const sortOptions = {
@@ -54,7 +55,11 @@ export const SearchBox = () => {
       setCurrent(undefined);
       setLastInteractionOrigin("text");
       clearGeo(startBoundsInstant);
-      map?.fitBounds(startBounds);
+      // Convert startBounds array to LngLatBoundsLike format
+      map?.fitBounds([
+        [startBounds[0], startBounds[1]], // Southwest corner [lng, lat]
+        [startBounds[2], startBounds[3]]  // Northeast corner [lng, lat]
+      ] as LngLatBoundsLike);
       clearRefinements();
       setSearchTerm("");
       setLocationFilter(undefined);
