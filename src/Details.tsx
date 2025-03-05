@@ -71,7 +71,7 @@ export function Details() {
                   )
                   .reduce((a, b) => a + b, 0)}
               </span>
-              <span>details</span>
+              <span> details</span>
             </div>
             <div className="Sidebar__scroller">
               {displayAttributes.map((attribute, i) => {
